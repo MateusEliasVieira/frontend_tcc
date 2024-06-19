@@ -39,14 +39,21 @@ const AppSidebar = () => {
 
   useEffect(() => {
     try {
-      let login = JSON.parse(localStorage.getItem("login"))
+      var login = JSON.parse(localStorage.getItem("login"))
       if (login.idUsuario !== "" && login.idUsuario !== undefined) {
-        axios.get(PESQUISAR_FUNCIONARIO_POR_ID__GET, {params: {id: login.idUsuario}})
+        axios.get(`${PESQUISAR_FUNCIONARIO_POR_ID__GET}${login.idUsuario}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${login.token}`
+            }
+          })
           .then((response) => {
+            console.log("resposta = "+response)
             setUsuario({...response.data})
           })
           .catch((error) => {
-            console.log("Erro ao buscar usuário por id.")
+            console.log("Erro ao buscar usuário por id: "+error)
           })
       }
     } catch (e) {
@@ -55,7 +62,7 @@ const AppSidebar = () => {
   }, []);
   return (
     <CSidebar
-      style={{backgroundColor:'#2b191b'}}
+      style={{backgroundColor: '#2b191b'}}
       position="fixed"
       unfoldable={unfoldable}
       visible={sidebarShow}
@@ -72,15 +79,15 @@ const AppSidebar = () => {
             <div className="col">
               <p>{usuario.nome} (
                 {usuario.role === "ROLE_ADMIN" ?
-                  <strong style={{color:"green"}}>
+                  <strong style={{color: "green"}}>
                     administrador
                   </strong>
                   :
-                  <strong style={{color:"dodgerblue"}}>
+                  <strong style={{color: "dodgerblue"}}>
                     usuário
                   </strong>
                 }
-              )</p>
+                )</p>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ import {
     CRow,
 } from '@coreui/react'
 import {estados, tipoSanguineo, corOuRaca} from "../../../../constantes/Constantes"
-import axios from "axios";
+import axios, {HttpStatusCode} from "axios";
 import {SALVAR_DADOS_PESSOAIS__POST} from "../../../../endpoints/paciente/fichaCadastroAdmissional/Endpoints";
 
 const DadosPessoais = (props) => {
@@ -75,6 +75,7 @@ const DadosPessoais = (props) => {
             .replace(/(\d{5})(\d{1,3})$/, '$1-$2'); // Insere o hífen após os primeiros 5 dígitos
     };
     const salvar = async () => {
+      var login = JSON.parse(localStorage.getItem("login"));
       if(isFormDataEmpty() === false){
         try {
             const response = await axios.post(
@@ -82,19 +83,18 @@ const DadosPessoais = (props) => {
                 JSON.stringify(formData),
                 {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization':`Bearer ${login.token}`
                     }
                 }
             );
-            if(response.data.paciente.idPaciente != null){
+            if(response.status === HttpStatusCode.Created){
               localStorage.setItem("idPraticanteSalvo",response.data.paciente.idPaciente)
               alert('Dados salvos com sucesso');
             }else{
-              alert("Houve um erro interno do sistema!")
+              alert("Não foi possível cadastrar os dados do praticante!")
             }
-            console.log(response.data)
         } catch (error) {
-          console.log("erro = "+error)
           if (error.response.data?.lista) {
             for(let i = 0; i < error.response.data.lista.length; i++){
               alert(error.response.data.lista[i].nomeCampo+", "+error.response.data.lista[i].mensagem)
@@ -102,7 +102,6 @@ const DadosPessoais = (props) => {
           } else {
             alert(error.response.data?.title || "Erro desconhecido");
           }
-          console.log('Erro ao salvar os dados:', error);
         }
       }else{
         alert("Preencha todos os campos vazios!")
