@@ -13,7 +13,6 @@ import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
-import { AppCabecalhoSuspenso } from './cabecalho/index'
 const AppCabecalho = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
@@ -33,7 +32,6 @@ const AppCabecalho = () => {
           <CNavItem></CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-3">
-          <AppCabecalhoSuspenso />
         </CHeaderNav>
       </CContainer>
       <CHeaderDivider />

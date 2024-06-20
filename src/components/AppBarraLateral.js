@@ -10,7 +10,7 @@ import 'simplebar/dist/simplebar.min.css'
 
 // sidebar nav config
 import navigation from '../_nav'
-import Logo from '../assets/images/Logo.jpg'
+import Logo from '../assets/imagens/Logo.jpg'
 import axios from "axios";
 import {PESQUISAR_FUNCIONARIO_POR_ID__GET} from "../endpoints/usuario/Endpoints";
 

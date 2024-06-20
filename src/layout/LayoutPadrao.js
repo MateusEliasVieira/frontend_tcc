@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {AppContent, AppSidebar, AppFooter, AppCabecalho} from '../components'
-import Logo from '../assets/images/Logo.jpg'
+import Logo from '../assets/imagens/Logo.jpg'
 
 const LayoutPadrao = () => {
     useEffect(() => {
