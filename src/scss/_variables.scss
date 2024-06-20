@@ -1124,8 +1124,8 @@
 // $dropdown-item-padding-y:           $spacer / 4 !default;
 // $dropdown-item-padding-x:           $spacer !default;
 
-// $dropdown-header-color:             $gray-600 !default;
-// $dropdown-header-padding:           $dropdown-padding-y $dropdown-item-padding-x !default;
+// $dropdown-cabecalho-color:             $gray-600 !default;
+// $dropdown-cabecalho-padding:           $dropdown-padding-y $dropdown-item-padding-x !default;
 // scss-docs-end dropdown-variables
 
 // scss-docs-start dropdown-dark-variables
@@ -1140,7 +1140,7 @@
 // $dropdown-dark-link-active-color:   $dropdown-link-active-color !default;
 // $dropdown-dark-link-active-bg:      $dropdown-link-active-bg !default;
 // $dropdown-dark-link-disabled-color: $gray-500 !default;
-// $dropdown-dark-header-color:        $gray-500 !default;
+// $dropdown-dark-cabecalho-color:        $gray-500 !default;
 // scss-docs-end dropdown-dark-variables
 
 
@@ -1281,10 +1281,10 @@
 // $popover-inner-border-radius:       subtract($popover-border-radius, $popover-border-width) !default;
 // $popover-box-shadow:                $box-shadow !default;
 
-// $popover-header-bg:                 shade-color($popover-bg, 6%) !default;
-// $popover-header-color:              $headings-color !default;
-// $popover-header-padding-y:          .5rem !default;
-// $popover-header-padding-x:          $spacer !default;
+// $popover-cabecalho-bg:                 shade-color($popover-bg, 6%) !default;
+// $popover-cabecalho-color:              $headings-color !default;
+// $popover-cabecalho-padding-y:          .5rem !default;
+// $popover-cabecalho-padding-x:          $spacer !default;
 
 // $popover-body-color:                $body-color !default;
 // $popover-body-padding-y:            $spacer !default;
@@ -1312,9 +1312,9 @@
 // $toast-box-shadow:                  $box-shadow !default;
 // $toast-spacing:                     $container-padding-x !default;
 
-// $toast-header-color:                $gray-600 !default;
-// $toast-header-background-color:     rgba($white, .85) !default;
-// $toast-header-border-color:         rgba(0, 0, 0, .05) !default;
+// $toast-cabecalho-color:                $gray-600 !default;
+// $toast-cabecalho-background-color:     rgba($white, .85) !default;
+// $toast-cabecalho-border-color:         rgba(0, 0, 0, .05) !default;
 // scss-docs-end toast-variables
 
 
@@ -1357,13 +1357,13 @@
 
 // $modal-backdrop-bg:                 $black !default;
 // $modal-backdrop-opacity:            .5 !default;
-// $modal-header-border-color:         $border-color !default;
-// $modal-footer-border-color:         $modal-header-border-color !default;
-// $modal-header-border-width:         $modal-content-border-width !default;
-// $modal-footer-border-width:         $modal-header-border-width !default;
-// $modal-header-padding-y:            $modal-inner-padding !default;
-// $modal-header-padding-x:            $modal-inner-padding !default;
-// $modal-header-padding:              $modal-header-padding-y $modal-header-padding-x !default; // Keep this for backwards compatibility
+// $modal-cabecalho-border-color:         $border-color !default;
+// $modal-footer-border-color:         $modal-cabecalho-border-color !default;
+// $modal-cabecalho-border-width:         $modal-content-border-width !default;
+// $modal-footer-border-width:         $modal-cabecalho-border-width !default;
+// $modal-cabecalho-padding-y:            $modal-inner-padding !default;
+// $modal-cabecalho-padding-x:            $modal-inner-padding !default;
+// $modal-cabecalho-padding:              $modal-cabecalho-padding-y $modal-cabecalho-padding-x !default; // Keep this for backwards compatibility
 
 // $modal-sm:                          300px !default;
 // $modal-md:                          500px !default;
@@ -1500,44 +1500,44 @@
 
 
 // Header
-// scss-docs-start header-variables
-// $header-min-height:             4rem !default;
-// $header-padding-y:              $spacer / 2 !default;
-// $header-padding-x:              $spacer / 2 !default;
-// $header-brand-font-size:        $font-size-lg !default;
-// $header-color:                  $medium-emphasis !default;
-// $header-bg:                     $white !default;
-// $header-border-color:           $border-color !default;
-// $header-border-width:           1px !default;
-// $header-hover-color:            $high-emphasis !default;
-// $header-active-color:           $high-emphasis !default;
-// $header-disabled-color:         $disabled !default;
+// scss-docs-start cabecalho-variables
+// $cabecalho-min-height:             4rem !default;
+// $cabecalho-padding-y:              $spacer / 2 !default;
+// $cabecalho-padding-x:              $spacer / 2 !default;
+// $cabecalho-brand-font-size:        $font-size-lg !default;
+// $cabecalho-color:                  $medium-emphasis !default;
+// $cabecalho-bg:                     $white !default;
+// $cabecalho-border-color:           $border-color !default;
+// $cabecalho-border-width:           1px !default;
+// $cabecalho-hover-color:            $high-emphasis !default;
+// $cabecalho-active-color:           $high-emphasis !default;
+// $cabecalho-disabled-color:         $disabled !default;
 
-// Compute the header-brand padding-y so the header-brand will have the same height as header-text and nav-link
+// Compute the cabecalho-brand padding-y so the cabecalho-brand will have the same height as cabecalho-text and nav-link
 // $nav-link-height:               $font-size-base * $line-height-base + $nav-link-padding-y * 2 !default;
-// $header-brand-height:           $header-brand-font-size * $line-height-base !default;
-// $header-brand-padding-y:        ($nav-link-height - $header-brand-height) / 2 !default;
-// $header-brand-margin-end:       1rem !default;
-// $header-brand-font-size:        $font-size-lg !default;
-// $header-brand-color:            $gray-900 !default;
-// $header-brand-hover-color:      shade-color($gray-900, 10%) !default;
+// $cabecalho-brand-height:           $cabecalho-brand-font-size * $line-height-base !default;
+// $cabecalho-brand-padding-y:        ($nav-link-height - $cabecalho-brand-height) / 2 !default;
+// $cabecalho-brand-margin-end:       1rem !default;
+// $cabecalho-brand-font-size:        $font-size-lg !default;
+// $cabecalho-brand-color:            $gray-900 !default;
+// $cabecalho-brand-hover-color:      shade-color($gray-900, 10%) !default;
 
-// $header-toggler-padding-y:      .25rem !default;
-// $header-toggler-padding-x:      .75rem !default;
-// $header-toggler-font-size:      $font-size-lg !default;
-// $header-toggler-bg:             transparent !default;
-// $header-toggler-border:         0 !default;
-// $header-toggler-border-radius:  $btn-border-radius !default;
+// $cabecalho-toggler-padding-y:      .25rem !default;
+// $cabecalho-toggler-padding-x:      .75rem !default;
+// $cabecalho-toggler-font-size:      $font-size-lg !default;
+// $cabecalho-toggler-bg:             transparent !default;
+// $cabecalho-toggler-border:         0 !default;
+// $cabecalho-toggler-border-radius:  $btn-border-radius !default;
 
-// $header-toggler-icon-bg:        url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$header-color}' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !default;
-// $header-toggler-hover-icon-bg:  url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$header-hover-color}' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !default;
-// $header-toggler-border-color:   rgba($black, .1) !default;
+// $cabecalho-toggler-icon-bg:        url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$cabecalho-color}' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !default;
+// $cabecalho-toggler-hover-icon-bg:  url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$cabecalho-hover-color}' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !default;
+// $cabecalho-toggler-border-color:   rgba($black, .1) !default;
 
-// $header-nav-link-padding-x:     .5rem !default;
+// $cabecalho-nav-link-padding-x:     .5rem !default;
 
-// $header-divider-border-width:   1px !default;
-// $header-divider-border-color:   $header-border-color !default;
-// scss-docs-end header-variables
+// $cabecalho-divider-border-width:   1px !default;
+// $cabecalho-divider-border-color:   $cabecalho-border-color !default;
+// scss-docs-end cabecalho-variables
 
 // Subheader
 // scss-docs-start subheader-variables
@@ -1649,11 +1649,11 @@
 // $sidebar-brand-color:                      $high-emphasis-inverse !default;
 // $sidebar-brand-bg:                         rgba($black, .2) !default;
 
-// $sidebar-header-height:                    4rem !default;
-// $sidebar-header-padding-y:                 .75rem !default;
-// $sidebar-header-padding-x:                 1rem !default;
-// $sidebar-header-bg:                        rgba($black, .2) !default;
-// $sidebar-header-height-transition:         height .15s, padding .15s !default;
+// $sidebar-cabecalho-height:                    4rem !default;
+// $sidebar-cabecalho-padding-y:                 .75rem !default;
+// $sidebar-cabecalho-padding-x:                 1rem !default;
+// $sidebar-cabecalho-bg:                        rgba($black, .2) !default;
+// $sidebar-cabecalho-height-transition:         height .15s, padding .15s !default;
 
 // $sidebar-narrow-width:                     4rem !default;
 

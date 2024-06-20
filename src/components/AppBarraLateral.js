@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 
 import {CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler} from '@coreui/react'
 
-import {AppSidebarNav} from './AppSidebarNav'
+import {AppNavBarraLateral} from './AppNavBarraLateral'
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
@@ -14,7 +14,7 @@ import Logo from '../assets/images/Logo.jpg'
 import axios from "axios";
 import {PESQUISAR_FUNCIONARIO_POR_ID__GET} from "../endpoints/usuario/Endpoints";
 
-const AppSidebar = () => {
+const AppBarraLateral = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
@@ -95,7 +95,7 @@ const AppSidebar = () => {
 
       <CSidebarNav>
         <SimpleBar>
-          <AppSidebarNav items={navigation}/>
+          <AppNavBarraLateral items={navigation}/>
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler
@@ -106,4 +106,4 @@ const AppSidebar = () => {
   )
 }
 
-export default React.memo(AppSidebar)
+export default React.memo(AppBarraLateral)

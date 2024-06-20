@@ -22,7 +22,7 @@ import RelacaoDaFamiliaComOExaminado from "./avaliacaoPsicologica/RelacaoDaFamil
 import AvaliacaoPsicologica from "./avaliacaoPsicologica/AvaliacaoPsicologica";
 
 
-const CadastroPraticante = () => {
+const CadastroDePraticante = () => {
   const [activeTab, setActiveTab] = useState('dadosPessoais');
 
   const renderComponent = () => {
@@ -148,4 +148,4 @@ const CadastroPraticante = () => {
   );
 };
 
-export default CadastroPraticante;
+export default CadastroDePraticante;

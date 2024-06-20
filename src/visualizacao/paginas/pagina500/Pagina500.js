@@ -11,7 +11,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilMagnifyingGlass } from '@coreui/icons'
 
-const Page500 = () => {
+const Pagina500 = () => {
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -38,4 +38,4 @@ const Page500 = () => {
   )
 }
 
-export default Page500
+export default Pagina500

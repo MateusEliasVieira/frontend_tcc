@@ -1,6 +1,7 @@
 import React, { Component, Suspense } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
+import LayoutPadrao from "./layout/LayoutPadrao";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -8,14 +9,13 @@ const loading = (
   </div>
 )
 
-// Containers
-const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+// Container
+const DefaultLayout = React.lazy(() => import('./layout/LayoutPadrao'))
 
-// Pages
-const Login = React.lazy(() => import('./views/paginas/login/Login'))
-const Registro = React.lazy(() => import('./views/paginas/registro/Registro'))
-const Page404 = React.lazy(() => import('./views/paginas/pagina404/Page404'))
-const Page500 = React.lazy(() => import('./views/paginas/pagina500/Page500'))
+// Paginas
+const Login = React.lazy(() => import('./visualizacao/paginas/login/Login'))
+const Pagina404 = React.lazy(() => import('./visualizacao/paginas/pagina404/Pagina404'))
+const Pagina500 = React.lazy(() => import('./visualizacao/paginas/pagina500/Pagina500'))
 
 class App extends Component {
   render() {
@@ -23,11 +23,10 @@ class App extends Component {
       <HashRouter>
         <Suspense fallback={loading}>
           <Routes>
-            <Route exact path="/login" name="Login Page" element={<Login />} />
-            <Route exact path="/register" name="Register Page" element={<Register />} />
-            <Route exact path="/404" name="Page 404" element={<Page404 />} />
-            <Route exact path="/500" name="Page 500" element={<Page500 />} />
-            <Route path="*" name="Home" element={<DefaultLayout />} />
+            <Route exact path="/login" name="Pagina de Login" element={<Login />} />
+            <Route exact path="/404" name="Pagina 404" element={<Pagina404 />} />
+            <Route exact path="/500" name="Pagina 500" element={<Pagina500 />} />
+            <Route path="*" name="Inicio" element={<LayoutPadrao />} />
           </Routes>
         </Suspense>
       </HashRouter>

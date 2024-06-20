@@ -13,5 +13,5 @@ const changeState = (state = initialState, { type, ...rest }) => {
   }
 }
 
-const store = createStore(changeState)
-export default store
+const loja = createStore(changeState)
+export default loja

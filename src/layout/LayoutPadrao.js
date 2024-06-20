@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
-import {AppContent, AppSidebar, AppFooter, AppHeader} from '../components/index'
+import {AppContent, AppSidebar, AppFooter, AppCabecalho} from '../components'
 import Logo from '../assets/images/Logo.jpg'
 
-const DefaultLayout = () => {
+const LayoutPadrao = () => {
     useEffect(() => {
       let login = JSON.parse(localStorage.getItem("login"))
       if (!(login.idUsuario !== "" && login.nomeUsuario !== "" && login.token !== "" && login.role !== "")) {
@@ -14,7 +14,7 @@ const DefaultLayout = () => {
         <div>
             <AppSidebar/>
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-                <AppHeader/>
+                <AppCabecalho/>
                 <div className="body flex-grow-1 px-3">
                     <AppContent/>
                 </div>
@@ -24,4 +24,4 @@ const DefaultLayout = () => {
     )
 }
 
-export default DefaultLayout
+export default LayoutPadrao

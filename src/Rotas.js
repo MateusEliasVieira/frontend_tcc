@@ -1,20 +1,20 @@
 import React from 'react'
 
 //Container do Dashboard
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const Dashboard = React.lazy(() => import('./visualizacao/dashboard/Dashboard'))
 
 //Formulários Praticante
-const CadastroPraticante = React.lazy(() => import('./views/forms/formulariosDePraticante/CadastroPraticante'))
+const CadastroPraticante = React.lazy(() => import('./visualizacao/formularios/formulariosDePraticante/CadastroDePraticante'))
 
 //Formulários Funcionário
-const CadastroFuncionario = React.lazy(() => import('./views/forms/formulariosDeUsuario/CadastroDeUsuario'))
-const AtualizacaoFuncionario = React.lazy(() => import('./views/forms/formulariosDeUsuario/AtualizacaoDeUsuario'))
-const PesquisaFuncionario = React.lazy(() => import('./views/forms/formulariosDeUsuario/PesquisaDeUsuario'))
+const CadastroFuncionario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/CadastroDeUsuario'))
+const AtualizacaoFuncionario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/AtualizacaoDeUsuario'))
+const PesquisaFuncionario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/PesquisaDeUsuario'))
 
 // Gráfico
-const Grafico = React.lazy(() => import('./views/graficos/Grafico'))
+const Grafico = React.lazy(() => import('./visualizacao/graficos/Grafico'))
 
-const routes = [
+const rotas = [
   { path: '/', exact: true, name: 'Início' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/graficos-praticantes', name: 'Gráficos', element: Grafico },
@@ -24,4 +24,4 @@ const routes = [
   { path: '/formulario/pesquisar-funcionario/atualizar*', name: 'Atualizar Funcionário', element: AtualizacaoFuncionario },
   { path: '/formulario/pesquisar-funcionario/deletar*', name: 'Deletar Funcionário', element: PesquisaFuncionario }
 ]
-export default routes
+export default rotas
