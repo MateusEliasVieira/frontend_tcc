@@ -4,12 +4,12 @@ import React from 'react'
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 
 //Formulários Praticante
-const CadastroPraticante = React.lazy(() => import('./views/forms/formularios-praticante/CadastroPraticante'))
+const CadastroPraticante = React.lazy(() => import('./views/forms/formulariosDePraticante/CadastroPraticante'))
 
 //Formulários Funcionário
-const CadastroFuncionario = React.lazy(() => import('./views/forms/formularios-funcionario/CadastroDeFuncionario'))
-const AtualizacaoFuncionario = React.lazy(() => import('./views/forms/formularios-funcionario/AtualizacaoDeFuncionario'))
-const PesquisaFuncionario = React.lazy(() => import('./views/forms/formularios-funcionario/PesquisaFuncionario'))
+const CadastroFuncionario = React.lazy(() => import('./views/forms/formulariosDeUsuario/CadastroDeUsuario'))
+const AtualizacaoFuncionario = React.lazy(() => import('./views/forms/formulariosDeUsuario/AtualizacaoDeUsuario'))
+const PesquisaFuncionario = React.lazy(() => import('./views/forms/formulariosDeUsuario/PesquisaDeUsuario'))
 
 // Gráfico
 const Grafico = React.lazy(() => import('./views/graficos/Grafico'))

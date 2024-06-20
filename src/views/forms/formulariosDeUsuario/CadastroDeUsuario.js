@@ -14,9 +14,9 @@ import {
 import axios from 'axios';
 import {estadoCivil, role, vinculo} from "../../../constantes/Constantes";
 import {SALVAR_NOVO_FUNCIONARIO__POST} from "../../../endpoints/usuario/Endpoints";
-import Modal from "../../../components/Modal";
+import Modal from "../../../components/modal/Modal";
 
-const CadastroDeFuncionario = () => {
+const CadastroDeUsuario = () => {
 
   const [displayModal, setDisplayModal] = useState("none")
   const [classModal, setClassModal] = useState("modal fade")
@@ -336,4 +336,4 @@ const CadastroDeFuncionario = () => {
   );
 };
 
-export default CadastroDeFuncionario;
+export default CadastroDeUsuario;

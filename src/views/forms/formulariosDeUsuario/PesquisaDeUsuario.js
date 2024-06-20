@@ -12,10 +12,10 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 import {DELETAR_FUNCIONARIO__DELETE, PESQUISAR_FUNCIONARIO__GET} from "../../../endpoints/usuario/Endpoints";
-import Modal from "../../../components/Modal";
-import ModalOptions from "../../../components/ModalOptions";
+import Modal from "../../../components/modal/Modal";
+import ModalOpcoes from "../../../components/modal/ModalOpcoes";
 
-const PesquisaFuncionario = () => {
+const PesquisaDeUsuario = () => {
 
   const [displayModalOptions, setDisplayModalOptions] = useState(false);
   const [displayModalMensagem, setDisplayModalMensagem] = useState(false);
@@ -133,7 +133,7 @@ const PesquisaFuncionario = () => {
               message={messageModalMensagem}
               handleHideModal={handleHideModalMensagem}
             />
-            <ModalOptions
+            <ModalOpcoes
               classModal={displayModalOptions ? "modal fade show" : "modal fade"}
               dsp={displayModalOptions ? "block" : "none"}
               title={titleModalOptions}
@@ -310,4 +310,4 @@ const PesquisaFuncionario = () => {
   );
 };
 
-export default PesquisaFuncionario;
+export default PesquisaDeUsuario;

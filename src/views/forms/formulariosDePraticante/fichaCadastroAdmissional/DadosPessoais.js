@@ -14,7 +14,7 @@ import {
 } from '@coreui/react'
 import {estados, tipoSanguineo, corOuRaca} from "../../../../constantes/Constantes"
 import axios, {HttpStatusCode} from "axios";
-import {SALVAR_DADOS_PESSOAIS__POST} from "../../../../endpoints/paciente/fichaCadastroAdmissional/Endpoints";
+import {SALVAR_DADOS_PESSOAIS__POST} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
 const DadosPessoais = (props) => {
 

@@ -10,7 +10,7 @@ import {
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
-import {SALVAR_RESPONSAVEL__POST} from "../../../../endpoints/paciente/fichaCadastroAdmissional/Endpoints";
+import {SALVAR_RESPONSAVEL__POST} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
 const ResponsavelPeloPraticante = () => {
   const [formData, setFormData] = useState({

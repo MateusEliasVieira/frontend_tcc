@@ -17,7 +17,7 @@ import CIcon from '@coreui/icons-react'
 import {cilLockLocked, cilUser} from '@coreui/icons'
 import axios from "axios";
 import {LOGIN__POST} from "../../../endpoints/usuario/Endpoints";
-import Modal from "../../../components/Modal";
+import Modal from "../../../components/modal/Modal";
 import "./Login.css"
 
 const Login = () => {

@@ -13,7 +13,7 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import {SALVAR_EDUCACAO__POST} from "../../../../endpoints/paciente/fichaCadastroAdmissional/Endpoints";
+import {SALVAR_EDUCACAO__POST} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
 const Educacao = (props) => {
   const [formData, setFormData] = useState({

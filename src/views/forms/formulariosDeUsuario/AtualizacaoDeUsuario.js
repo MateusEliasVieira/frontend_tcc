@@ -19,9 +19,9 @@ import {
   PESQUISAR_FUNCIONARIO_POR_ID__GET,
   SALVAR_NOVO_FUNCIONARIO__POST
 } from "../../../endpoints/usuario/Endpoints";
-import Modal from "../../../components/Modal";
+import Modal from "../../../components/modal/Modal";
 
-const AtualizacaoDeFuncionario = () => {
+const AtualizacaoDeUsuario = () => {
 
   // Modal mensagem
   const [displayModalMensagem, setDisplayModalMensagem] = useState("none")
@@ -394,4 +394,4 @@ const AtualizacaoDeFuncionario = () => {
   );
 };
 
-export default AtualizacaoDeFuncionario;
+export default AtualizacaoDeUsuario;
