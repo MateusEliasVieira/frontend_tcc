@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CButton,
   CCard,
@@ -6,37 +6,29 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
-  CFormTextarea, CImage,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
-import {estadoCivil, role, vinculo} from "../../../constantes/Constantes";
+import { estadoCivil, role, vinculo } from '../../../constantes/Constantes';
 import {
   ATUALIZAR_USUARIO_PUT,
   PESQUISAR_USUARIO_POR_ID_GET,
-  SALVAR_NOVO_USUARIO_POST
-} from "../../../endpoints/usuario/Endpoints";
-import Modal from "../../../components/modal/Modal";
-import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
-import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
-import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
-import {camposPreenchidos} from "../../../utilidades/VerificadorDeCampos";
+} from '../../../endpoints/usuario/Endpoints';
+import Modal from '../../../components/modal/Modal';
+import { converterImagemEmBase64 } from '../../../utilidades/ConversorDeImagem';
+import { apresentarModal, esconderModal } from '../../../utilidades/ManipuladorDeModal';
+import { formatarDataPadraoAnoMesDia } from '../../../utilidades/ManipuladorDeDatas';
+import { camposPreenchidos } from '../../../utilidades/VerificadorDeCampos';
+import Campo from "../../../components/campos/Campo"; // Certifique-se de que o caminho está correto para o seu projeto
 
 const AtualizacaoDeUsuario = () => {
-
-  // Modal mensagem
-  const [displayModal, setDisplayModal] = useState("none")
-  const [classModal, setClassModal] = useState("modal fade")
-  const [tituloModal, setTituloModal] = useState("")
-  const [conteudoModal, setConteudoModal] = useState("")
-
-  const [possuiFormacao, setPossuiFormacao] = useState(true)
-  const [usuarioExiste, setUsuarioExiste] = useState(true)
-  const [fotoAtual, setFotoAtual] = useState("")
-
+  const [displayModal, setDisplayModal] = useState("none");
+  const [classModal, setClassModal] = useState("modal fade");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
+  const [possuiFormacao, setPossuiFormacao] = useState(true);
+  const [usuarioExiste, setUsuarioExiste] = useState(true);
+  const [fotoAtual, setFotoAtual] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
     idUsuario: '',
     nome: '',
@@ -57,46 +49,45 @@ const AtualizacaoDeUsuario = () => {
 
   const getIdUrl = () => {
     const url = window.location.href;
-    const url_split = url.split("?id=")
-    return url_split[1]
-  }
+    const url_split = url.split("?id=");
+    return url_split[1];
+  };
 
   useEffect(() => {
-    const idUrl = getIdUrl()
+    const idUrl = getIdUrl();
     if (idUrl !== null && idUrl !== "") {
       try {
         const buscarUsuarioPorID = async () => {
-          const response = await axios.get(PESQUISAR_USUARIO_POR_ID__GET,
-            {
-              params: {
-                id: idUrl
-              }
-            })
+          const response = await axios.get(PESQUISAR_USUARIO_POR_ID_GET, {
+            params: {
+              id: idUrl,
+            },
+          });
           if (response.status === 200) {
-            setUsuarioExiste(true)
-            setFormularioDeDados(response.data)
-            setFotoAtual(response.data.foto)
+            setUsuarioExiste(true);
+            setFormularioDeDados(response.data);
+            setFotoAtual(response.data.foto);
           } else {
-            setUsuarioExiste(false)
+            setUsuarioExiste(false);
           }
-        }
-        buscarUsuarioPorID()
-          .catch((error) => {
-            setUsuarioExiste(false)
-          })
+        };
+        buscarUsuarioPorID().catch((error) => {
+          setUsuarioExiste(false);
+        });
       } catch (error) {
-        setUsuarioExiste(false)
+        setUsuarioExiste(false);
       }
     } else {
-      setUsuarioExiste(false)
+      setUsuarioExiste(false);
     }
   }, []);
+
   const recarregarPagina = () => {
-    location.reload()
-  }
+    location.reload();
+  };
+
   const atualizarDadosDoUsuario = async () => {
     if (camposPreenchidos(formularioDeDados)) {
-      // Campos obrigatórios estão preenchidos
       const dados = {
         ...formularioDeDados,
       };
@@ -110,25 +101,21 @@ const AtualizacaoDeUsuario = () => {
             },
           }
         );
-        apresentarModal("Resposta", response.data.mensagem)
+        apresentarModal("Resposta", response.data.mensagem);
       } catch (error) {
-        // Caso seja apenas um erro
         if (error.response.data.titulo !== undefined) {
-          apresentarModal("Atenção", error.response.data.titulo)
+          apresentarModal("Atenção", error.response.data.titulo);
         }
-        // Caso seja uma lista de erros
         if (error.response.data.lista !== undefined) {
-          // Há lista de erros
-          let lista = ""
+          let lista = "";
           error.response.data.lista.forEach((item) => {
-            lista += `Campo ${item.nomeCampo}, ${item.mensagem}` + "\n"
-          })
-          apresentarModal("Atenção", lista)
+            lista += `Campo ${item.nomeCampo}, ${item.mensagem}` + "\n";
+          });
+          apresentarModal("Atenção", lista);
         }
       }
     } else {
-      // Tem algum campo obrigatório não preenchido
-      apresentarModal("Atenção", "Por favor, preencha todos os campos obrigatórios!")
+      apresentarModal("Atenção", "Por favor, preencha todos os campos obrigatórios!");
     }
   };
 
@@ -137,188 +124,162 @@ const AtualizacaoDeUsuario = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            {usuarioExiste ?
-              <strong>Atualização de Usuário</strong>
-              : <strong>Ops</strong>}
+            {usuarioExiste ? <strong>Atualização de Usuário</strong> : <strong>Ops</strong>}
           </CCardHeader>
-          {usuarioExiste ?
+          {usuarioExiste ? (
             <CCardBody>
-              <Modal classModal={classModal} dsp={displayModal} titulo={tituloModal} conteudo={conteudoModal}
-                     esconderModal={esconderModal}/>
+              <Modal
+                classModal={classModal}
+                dsp={displayModal}
+                titulo={tituloModal}
+                conteudo={conteudoModal}
+                esconderModal={esconderModal}
+              />
               <CForm>
-                <div className="mb-3">
-                  <CFormLabel htmlFor="nome">Nome</CFormLabel>
-                  <CFormInput
-                    id="nome"
-                    value={formularioDeDados.nome}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, nome: e.target.value})}
-                  />
-                </div>
+                <Campo
+                  id="nome"
+                  legenda="Nome"
+                  tipo="text"
+                  valor={formularioDeDados.nome}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, nome: e.target.value })}
+                />
 
-                <div className="container text-center" style={{padding: 0}}>
+                <div className="container text-center" style={{ padding: 0 }}>
                   <div className="row">
-
                     <div className="col">
-                      <div className="mb-3">
-                        <CFormLabel htmlFor="foto" style={{display: 'block', textAlign: 'left'}}>Foto (Tamanho máximo:
-                          8MB)</CFormLabel>
-                        <CFormInput
-                          id="foto"
-                          type="file"
-                          onChange={(e) => {
-                            converterImagemEmBase64(e.target.files[0])
-                              .then((resolve) => {
-                                setFormularioDeDados({...formularioDeDados, foto: resolve})
-                                setFotoAtual(resolve)
-                              })
-                              .catch((reject) => {
-                                console.log(reject)
-                              })
-                          }}
-                        />
-                      </div>
+                      <Campo
+                        id="foto"
+                        legenda="Foto (Tamanho máximo: 8MB)"
+                        tipo="file"
+                        setar={(e) => {
+                          converterImagemEmBase64(e.target.files[0])
+                            .then((resolve) => {
+                              setFormularioDeDados({ ...formularioDeDados, foto: resolve });
+                              setFotoAtual(resolve);
+                            })
+                            .catch((reject) => {
+                              console.log(reject);
+                            });
+                        }}
+                      />
                     </div>
-
                     <div className="col col-lg-2">
-                      {formularioDeDados.foto !== "" ?
-                        <div><CImage src={fotoAtual} width={100} height={100} style={{borderRadius: 10}}/> <p>Foto
-                          Atual</p></div> : <></>}
+                      {formularioDeDados.foto !== "" ? (
+                        <div>
+                          <CImage src={fotoAtual} width={100} height={100} style={{ borderRadius: 10 }} />
+                          <p>Foto Atual</p>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
-
                   </div>
                 </div>
 
-                <div className="mb-3">
-                  <CFormLabel htmlFor="dataNascimento">Data de Nascimento</CFormLabel>
-                  <CFormInput
-                    id="dataNascimento"
-                    type="date"
-                    value={formatarDataPadraoAnoMesDia(formularioDeDados.dataNascimento)}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, dataNascimento: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="cpf">CPF</CFormLabel>
-                  <CFormInput
-                    id="cpf"
-                    value={formularioDeDados.cpf}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, cpf: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="exampleFormControlInput1">Estado Civil</CFormLabel>
-                  <CFormSelect
-                    id="estadoCivil"
-                    options={estadoCivil}
-                    value={formularioDeDados.estadoCivil}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, estadoCivil: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="telefone">Telefone</CFormLabel>
-                  <CFormInput
-                    id="telefone"
-                    value={formularioDeDados.telefone}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="email">Email</CFormLabel>
-                  <CFormInput
-                    id="email"
-                    type="email"
-                    value={formularioDeDados.email}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, email: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="cidade">Cidade</CFormLabel>
-                  <CFormInput
-                    id="cidade"
-                    value={formularioDeDados.cidade}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, cidade: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="bairro">Bairro</CFormLabel>
-                  <CFormInput
-                    id="bairro"
-                    value={formularioDeDados.bairro}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, bairro: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="logradouro">Logradouro</CFormLabel>
-                  <CFormInput
-                    id="logradouro"
-                    value={formularioDeDados.logradouro}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, logradouro: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="role">Nível</CFormLabel>
-                  <CFormSelect
-                    id="role"
-                    options={role}
-                    value={formularioDeDados.role}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, role: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="vinculo">Vínculo</CFormLabel>
-                  <CFormSelect
-                    id="vinculo"
-                    options={vinculo}
-                    value={formularioDeDados.vinculo}
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, vinculo: e.target.value})}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="possuiFormacao">Possui Formação?</CFormLabel>
-                  <CFormSelect
-                    id="possuiFormacao"
-                    value={possuiFormacao}
-                    onChange={
-                      (e) => {
-                        setFormularioDeDados({...formularioDeDados, possuiFormacao: !possuiFormacao});
-                        setPossuiFormacao(!possuiFormacao)
-                      }
-                    }
-                  >
-                    <option value={true}>Sim</option>
-                    <option value={false}>Não</option>
-                  </CFormSelect>
-                </div>
-
-                <div className="mb-3">
-                  <CFormLabel htmlFor="detalhesFormacao">Detalhes da Formação</CFormLabel>
-                  <CFormTextarea
-                    id="detalhesFormacao"
-                    type="text"
-                    disabled={possuiFormacao ? false : true}
-                    value={
-                      possuiFormacao ? formularioDeDados.detalhesFormacao : 'Sem Formação'
-                    }
-                    onChange={(e) => setFormularioDeDados({...formularioDeDados, detalhesFormacao: e.target.value})}
-                  />
-                </div>
-
+                <Campo
+                  id="dataNascimento"
+                  legenda="Data de Nascimento"
+                  tipo="date"
+                  valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataNascimento)}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, dataNascimento: e.target.value })}
+                />
+                <Campo
+                  id="cpf"
+                  legenda="CPF"
+                  tipo="text"
+                  valor={formularioDeDados.cpf}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, cpf: e.target.value })}
+                />
+                <Campo
+                  id="estadoCivil"
+                  legenda="Estado Civil"
+                  tipo="select"
+                  valor={formularioDeDados.estadoCivil}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, estadoCivil: e.target.value })}
+                  options={estadoCivil.map(option => ({ label: option, value: option }))}
+                />
+                <Campo
+                  id="telefone"
+                  legenda="Telefone"
+                  tipo="text"
+                  valor={formularioDeDados.telefone}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, telefone: e.target.value })}
+                />
+                <Campo
+                  id="email"
+                  legenda="Email"
+                  tipo="email"
+                  valor={formularioDeDados.email}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, email: e.target.value })}
+                />
+                <Campo
+                  id="cidade"
+                  legenda="Cidade"
+                  tipo="text"
+                  valor={formularioDeDados.cidade}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, cidade: e.target.value })}
+                />
+                <Campo
+                  id="bairro"
+                  legenda="Bairro"
+                  tipo="text"
+                  valor={formularioDeDados.bairro}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, bairro: e.target.value })}
+                />
+                <Campo
+                  id="logradouro"
+                  legenda="Logradouro"
+                  tipo="text"
+                  valor={formularioDeDados.logradouro}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, logradouro: e.target.value })}
+                />
+                <Campo
+                  id="role"
+                  legenda="Nível"
+                  tipo="select"
+                  valor={formularioDeDados.role}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, role: e.target.value })}
+                  options={role.map(option => ({ label: option, value: option }))}
+                />
+                <Campo
+                  id="vinculo"
+                  legenda="Vínculo"
+                  tipo="select"
+                  valor={formularioDeDados.vinculo}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, vinculo: e.target.value })}
+                  options={vinculo.map(option => ({ label: option, value: option }))}
+                />
+                <Campo
+                  id="possuiFormacao"
+                  legenda="Possui Formação?"
+                  tipo="select"
+                  valor={possuiFormacao ? "Sim" : "Não"}
+                  setar={(e) => {
+                    const valor = e.target.value === "Sim";
+                    setFormularioDeDados({ ...formularioDeDados, possuiFormacao: valor });
+                    setPossuiFormacao(valor);
+                  }}
+                  options={[
+                    { label: "Sim", value: "Sim" },
+                    { label: "Não", value: "Não" },
+                  ]}
+                />
+                <Campo
+                  id="detalhesFormacao"
+                  legenda="Detalhes da Formação"
+                  tipo="textarea"
+                  valor={formularioDeDados.detalhesFormacao}
+                  setar={(e) => setFormularioDeDados({ ...formularioDeDados, detalhesFormacao: e.target.value })}
+                  disabled={!possuiFormacao}
+                />
                 <CButton color="primary" onClick={atualizarDadosDoUsuario}>
-                  atualizarDadosDoUsuario
+                  Atualizar Usuário
                 </CButton>
               </CForm>
             </CCardBody>
-            : <strong style={{padding: 15}}>Não foi possível encontrar este usuário.</strong>}
+          ) : (
+            <strong style={{ padding: 15 }}>Não foi possível encontrar este usuário.</strong>
+          )}
         </CCard>
       </CCol>
     </CRow>
@@ -326,3 +287,4 @@ const AtualizacaoDeUsuario = () => {
 };
 
 export default AtualizacaoDeUsuario;
+

@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModalOpcoes = (props) => {
+const ModalComOpcoes = (props) => {
   return (
     <div className={props.classModal} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{display: props.dsp, backgroundColor: 'rgba(0,0,0,0.5)'}} role="dialog">
       <div className="modal-dialog">
@@ -22,4 +22,4 @@ const ModalOpcoes = (props) => {
   )
 }
 
-export default ModalOpcoes;
+export default ModalComOpcoes;
