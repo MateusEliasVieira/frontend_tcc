@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   CButton,
   CCard,
@@ -11,6 +11,7 @@ import {
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
+import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
 
 const CompletudeMatricula = () => {
   const [formData, setFormData] = useState({
@@ -58,7 +59,7 @@ const CompletudeMatricula = () => {
                 id="dataCompletudeMatricula"
                 value={formData.dataCompletudeMatricula}
                 onChange={(e) =>
-                  setFormData({ ...formData, dataCompletudeMatricula: e.target.value })
+                  setFormData({...formData, dataCompletudeMatricula: e.target.value})
                 }
               />
             </div>
@@ -67,9 +68,15 @@ const CompletudeMatricula = () => {
               <CFormInput
                 type="file"
                 id="imagemAssinaturaResponsavel"
-                value={formData.imagemAssinaturaResponsavel}
-                onChange={(e) =>
-                  setFormData({ ...formData, imagemAssinaturaResponsavel: e.target.value })
+                onChange={(e) => {
+                  converterImagemEmBase64(e.target.files[0])
+                    .then((resolve) => {
+                      setFormData({...formData, imagemAssinaturaResponsavel: resolve})
+                    })
+                    .catch((reject) => {
+                      console.log(reject)
+                    })
+                }
                 }
               />
             </div>

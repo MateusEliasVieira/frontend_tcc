@@ -27,16 +27,6 @@ const Educacao = (props) => {
     }
   });
 
-  // Verifica se todos os dados foram preenchidos
-  const isFormDataEmpty = () => {
-    for (const key in formData) {
-      if (formData[key] === "") {
-        return true; // Retorna true se encontrar um valor vazio
-      }
-    }
-    return false; // Retorna false se nenhum valor vazio for encontrado
-  };
-
   const salvar = async () => {
 
     var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo")

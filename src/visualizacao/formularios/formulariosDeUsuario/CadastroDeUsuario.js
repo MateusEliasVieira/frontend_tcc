@@ -13,17 +13,19 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 import {estadoCivil, role, vinculo} from "../../../constantes/Constantes";
-import {SALVAR_NOVO_FUNCIONARIO__POST} from "../../../endpoints/usuario/Endpoints";
+import {SALVAR_NOVO_USUARIO_POST} from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
+import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {camposPreenchidos} from "../../../utilidades/VerificadorDeCampos";
 
 const CadastroDeUsuario = () => {
 
   const [displayModal, setDisplayModal] = useState("none")
   const [classModal, setClassModal] = useState("modal fade")
-  const [titleModal, setTitleModal] = useState("")
-  const [messageModal, setMessageModal] = useState("")
+  const [tituloModal, setTituloModal] = useState("")
+  const [conteudoModal, setConteudoModal] = useState("")
   const [possuiFormacao, setPossuiFormacao] = useState(true)
-
   const [formData, setFormData] = useState({
     nome: '',
     foto: '',
@@ -42,75 +44,18 @@ const CadastroDeUsuario = () => {
     vinculo: '',
     possuiFormacao: false,
   });
-
-  // Transforma imagem em string base64
-  const imageToBase64 = async (image) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64 = reader.result;
-        if (base64.split("").length <= 65343434) {
-          resolve(base64);
-        } else {
-          reject(new Error("O tamanho da imagem excede o limite permitido."));
-        }
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(image);
-    });
-  };
-
-  const fieldsOK = () => {
-    if (
-      formData.nome !== '' &&
-      formData.dataNascimento !== '' &&
-      formData.cpf !== '' &&
-      formData.estadoCivil !== '' &&
-      formData.telefone !== '' &&
-      formData.email !== '' &&
-      formData.nomeUsuario !== '' &&
-      formData.senha !== '' &&
-      formData.cidade !== '' &&
-      formData.bairro !== '' &&
-      formData.logradouro !== '' &&
-      formData.role !== '' &&
-      formData.vinculo !== ''
-    ) {
-      // Todos os campos necessários estão preenchidos
-      return true
-    } else {
-      return false
-    }
-
-  }
-
-  const handleShowModal = (title, message) => {
-    setDisplayModal("block")
-    setClassModal("modal fade show")
-    setTitleModal(title)
-    setMessageModal(message)
-  }
-
-  const handleHideModal = () => {
-    setDisplayModal("none")
-    setClassModal("modal fade")
-    setTitleModal("")
-    setMessageModal("")
-  }
-
   const recarregarPagina = () => {
     location.reload()
   }
-
   const salvar = async () => {
-    if (fieldsOK()) {
+    if (camposPreenchidos(formData)) {
       // Campos obrigatórios estão preenchidos
       const dados = {
         ...formData,
       };
       try {
         const response = await axios.post(
-          SALVAR_NOVO_FUNCIONARIO__POST,
+          SALVAR_NOVO_USUARIO_POST,
           JSON.stringify(dados),
           {
             headers: {
@@ -118,12 +63,12 @@ const CadastroDeUsuario = () => {
             },
           }
         );
-        handleShowModal("Resposta", response.data.mensagem)
+        apresentarModal("Resposta", response.data.mensagem)
         recarregarPagina()
       } catch (error) {
         // Caso seja apenas um erro
         if (error.response.data.title !== undefined) {
-          handleShowModal("Atenção", error.response.data.title)
+          apresentarModal("Atenção", error.response.data.title)
         }
         // Caso seja uma lista de erros
         if (error.response.data.lista !== undefined) {
@@ -132,12 +77,12 @@ const CadastroDeUsuario = () => {
           error.response.data.lista.forEach((item) => {
             lista += `Campo ${item.nomeCampo}, ${item.mensagem}` + "\n"
           })
-          handleShowModal("Atenção", lista)
+          apresentarModal("Atenção", lista)
         }
       }
     } else {
       // Tem algum campo obrigatório não preenchido
-      handleShowModal("Atenção", "Por favor, preencha todos os campos obrigatórios!")
+      apresentarModal("Atenção", "Por favor, preencha todos os campos obrigatórios!")
     }
 
   };
@@ -150,8 +95,8 @@ const CadastroDeUsuario = () => {
             <strong>Registro de Usuário</strong>
           </CCardHeader>
           <CCardBody>
-            <Modal classModal={classModal} dsp={displayModal} title={titleModal} message={messageModal}
-                   handleHideModal={handleHideModal}/>
+            <Modal classModal={classModal} dsp={displayModal} titulo={tituloModal} conteudo={conteudoModal}
+                   esconderModal={esconderModal}/>
             <CForm>
               <div className="mb-3">
                 <CFormLabel htmlFor="nome">Nome</CFormLabel>
@@ -168,9 +113,7 @@ const CadastroDeUsuario = () => {
                   id="foto"
                   type="file"
                   onChange={(e) => {
-                    console.log("Arquivo selecionado:", e.target.files[0]);
-                    const arquivo = e.target.files[0]
-                    imageToBase64(arquivo)
+                    converterImagemEmBase64(e.target.files[0])
                       .then((resolve) => {
                         setFormData({...formData, foto: resolve})
                       })
@@ -180,7 +123,6 @@ const CadastroDeUsuario = () => {
                   }}
                 />
               </div>
-
               <div className="mb-3">
                 <CFormLabel htmlFor="dataNascimento">Data de Nascimento</CFormLabel>
                 <CFormInput

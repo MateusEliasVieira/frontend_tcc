@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -7,8 +6,7 @@ import {
   CCardGroup,
   CCol,
   CContainer,
-  CForm,
-  CFormInput, CImage,
+  CFormInput,
   CInputGroup,
   CInputGroupText,
   CRow,
@@ -16,7 +14,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import {cilLockLocked, cilUser} from '@coreui/icons'
 import axios from "axios";
-import {LOGIN__POST} from "../../../endpoints/usuario/Endpoints";
+import {LOGIN_POST} from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import "./Login.css"
 
@@ -39,7 +37,7 @@ const Login = () => {
   const logar = () => {
     try {
 
-      axios.post(LOGIN__POST,
+      axios.post(LOGIN_POST,
         JSON.stringify({...form}),
         {
           headers: {

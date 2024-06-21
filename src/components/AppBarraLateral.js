@@ -12,7 +12,7 @@ import 'simplebar/dist/simplebar.min.css'
 import navigation from '../_nav'
 import Logo from '../assets/imagens/Logo.jpg'
 import axios from "axios";
-import {PESQUISAR_FUNCIONARIO_POR_ID__GET} from "../endpoints/usuario/Endpoints";
+import {PESQUISAR_USUARIO_POR_ID_GET} from "../endpoints/usuario/Endpoints";
 
 const AppBarraLateral = () => {
   const dispatch = useDispatch()
@@ -41,7 +41,7 @@ const AppBarraLateral = () => {
     try {
       var login = JSON.parse(localStorage.getItem("login"))
       if (login.idUsuario !== "" && login.idUsuario !== undefined) {
-        axios.get(`${PESQUISAR_FUNCIONARIO_POR_ID__GET}${login.idUsuario}`,
+        axios.get(`${PESQUISAR_USUARIO_POR_ID_GET}${login.idUsuario}`,
           {
             headers: {
               'Content-Type': 'application/json',

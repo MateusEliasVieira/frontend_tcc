@@ -6,14 +6,14 @@ const Modal = (props) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="exampleModalLabel">{props.title}</h1>
-            <button type="button" className="btn-close" aria-label="Close" onClick={props.handleHideModal}></button>
+            <h1 className="modal-title fs-5" id="exampleModalLabel">{props.titulo}</h1>
+            <button type="button" className="btn-close" aria-label="Close" onClick={props.esconderModal}></button>
           </div>
           <div className="modal-body">
-            {props.message}
+            {props.conteudo}
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={props.handleHideModal}>Fechar</button>
+            <button type="button" className="btn btn-secondary" onClick={props.esconderModal}>Fechar</button>
           </div>
         </div>
       </div>

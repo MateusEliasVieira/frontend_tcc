@@ -15,26 +15,30 @@ import {
 import axios from 'axios';
 import {estadoCivil, role, vinculo} from "../../../constantes/Constantes";
 import {
-  ATUALIZAR_FUNCIONARIO__PUT,
-  PESQUISAR_FUNCIONARIO_POR_ID__GET,
-  SALVAR_NOVO_FUNCIONARIO__POST
+  ATUALIZAR_USUARIO_PUT,
+  PESQUISAR_USUARIO_POR_ID_GET,
+  SALVAR_NOVO_USUARIO_POST
 } from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
+import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
+import {camposPreenchidos} from "../../../utilidades/VerificadorDeCampos";
 
 const AtualizacaoDeUsuario = () => {
 
   // Modal mensagem
-  const [displayModalMensagem, setDisplayModalMensagem] = useState("none")
-  const [classModalMensagem, setClassModalMensagem] = useState("modal fade")
-  const [titleModalMensagem, setTitleModalMensagem] = useState("")
-  const [messageModalMensagem, setMessageModalMensagem] = useState("")
+  const [displayModal, setDisplayModal] = useState("none")
+  const [classModal, setClassModal] = useState("modal fade")
+  const [tituloModal, setTituloModal] = useState("")
+  const [conteudoModal, setConteudoModal] = useState("")
 
   const [possuiFormacao, setPossuiFormacao] = useState(true)
   const [usuarioExiste, setUsuarioExiste] = useState(true)
-  const [fotoAtual,setFotoAtual] = useState("")
+  const [fotoAtual, setFotoAtual] = useState("")
 
-  const [formData, setFormData] = useState({
-    idUsuario:'',
+  const [formularioDeDados, setFormularioDeDados] = useState({
+    idUsuario: '',
     nome: '',
     foto: '',
     dataNascimento: '',
@@ -61,8 +65,8 @@ const AtualizacaoDeUsuario = () => {
     const idUrl = getIdUrl()
     if (idUrl !== null && idUrl !== "") {
       try {
-        const findUserById = async () => {
-          const response = await axios.get(PESQUISAR_FUNCIONARIO_POR_ID__GET,
+        const buscarUsuarioPorID = async () => {
+          const response = await axios.get(PESQUISAR_USUARIO_POR_ID__GET,
             {
               params: {
                 id: idUrl
@@ -70,15 +74,13 @@ const AtualizacaoDeUsuario = () => {
             })
           if (response.status === 200) {
             setUsuarioExiste(true)
-            setFormData(response.data)
+            setFormularioDeDados(response.data)
             setFotoAtual(response.data.foto)
           } else {
-            // handleShowModal("Aviso",response.data.mensagem)
-            console.log(response)
             setUsuarioExiste(false)
           }
         }
-        findUserById()
+        buscarUsuarioPorID()
           .catch((error) => {
             setUsuarioExiste(false)
           })
@@ -89,85 +91,18 @@ const AtualizacaoDeUsuario = () => {
       setUsuarioExiste(false)
     }
   }, []);
-
-  // Transforma imagem em string base64
-  const imageToBase64 = async (image) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64 = reader.result;
-        if (base64.split("").length <= 65343434) {
-          resolve(base64);
-        } else {
-          reject(new Error("O tamanho da imagem excede o limite permitido."));
-        }
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(image);
-    });
-  };
-
-  const fieldsOK = () => {
-    if (
-      formData.idUsuario !== '' &&
-      formData.nome !== '' &&
-      formData.dataNascimento !== '' &&
-      formData.cpf !== '' &&
-      formData.estadoCivil !== '' &&
-      formData.telefone !== '' &&
-      formData.email !== '' &&
-      formData.cidade !== '' &&
-      formData.bairro !== '' &&
-      formData.logradouro !== '' &&
-      formData.role !== '' &&
-      formData.vinculo !== ''
-    ) {
-      // Todos os campos necessários estão preenchidos
-      return true
-    } else {
-      return false
-    }
-
-  }
-
-  const handleShowModalMensagem = (title, message) => {
-    setDisplayModalMensagem("block")
-    setClassModalMensagem("modal fade show")
-    setTitleModalMensagem(title)
-    setMessageModalMensagem(message)
-  }
-
-  const handleHideModalMensagem = () => {
-    setDisplayModalMensagem("none")
-    setClassModalMensagem("modal fade")
-    setTitleModalMensagem("")
-    setMessageModalMensagem("")
-  }
-
   const recarregarPagina = () => {
     location.reload()
   }
-
-  const formatDateBrasil = (item) => {
-    let data = item.split("T")[0]
-    let data_array = data.split("-")
-    let data_ok = `${data_array[2]}/${data_array[1]}/${data_array[0]}`;
-    return data_ok
-  }
-
-  const formatDateEUA = (item) => {
-    return item.split("T")[0]
-  }
-
-  const atualizar = async () => {
-    if (fieldsOK()) {
+  const atualizarDadosDoUsuario = async () => {
+    if (camposPreenchidos(formularioDeDados)) {
       // Campos obrigatórios estão preenchidos
       const dados = {
-        ...formData,
+        ...formularioDeDados,
       };
       try {
         const response = await axios.put(
-          ATUALIZAR_FUNCIONARIO__PUT,
+          ATUALIZAR_USUARIO_PUT,
           JSON.stringify(dados),
           {
             headers: {
@@ -175,12 +110,11 @@ const AtualizacaoDeUsuario = () => {
             },
           }
         );
-        handleShowModalMensagem("Resposta", response.data.mensagem)
+        apresentarModal("Resposta", response.data.mensagem)
       } catch (error) {
-        console.log("Deu ruim: "+error)
         // Caso seja apenas um erro
-        if (error.response.data.title !== undefined) {
-          handleShowModalMensagem("Atenção", error.response.data.title)
+        if (error.response.data.titulo !== undefined) {
+          apresentarModal("Atenção", error.response.data.titulo)
         }
         // Caso seja uma lista de erros
         if (error.response.data.lista !== undefined) {
@@ -189,14 +123,13 @@ const AtualizacaoDeUsuario = () => {
           error.response.data.lista.forEach((item) => {
             lista += `Campo ${item.nomeCampo}, ${item.mensagem}` + "\n"
           })
-          handleShowModalMensagem("Atenção", lista)
+          apresentarModal("Atenção", lista)
         }
       }
     } else {
       // Tem algum campo obrigatório não preenchido
-      handleShowModalMensagem("Atenção", "Por favor, preencha todos os campos obrigatórios!")
+      apresentarModal("Atenção", "Por favor, preencha todos os campos obrigatórios!")
     }
-
   };
 
   return (
@@ -210,15 +143,15 @@ const AtualizacaoDeUsuario = () => {
           </CCardHeader>
           {usuarioExiste ?
             <CCardBody>
-              <Modal classModal={classModalMensagem} dsp={displayModalMensagem} title={titleModalMensagem} message={messageModalMensagem}
-                     handleHideModal={handleHideModalMensagem}/>
+              <Modal classModal={classModal} dsp={displayModal} titulo={tituloModal} conteudo={conteudoModal}
+                     esconderModal={esconderModal}/>
               <CForm>
                 <div className="mb-3">
                   <CFormLabel htmlFor="nome">Nome</CFormLabel>
                   <CFormInput
                     id="nome"
-                    value={formData.nome}
-                    onChange={(e) => setFormData({...formData, nome: e.target.value})}
+                    value={formularioDeDados.nome}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, nome: e.target.value})}
                   />
                 </div>
 
@@ -233,11 +166,9 @@ const AtualizacaoDeUsuario = () => {
                           id="foto"
                           type="file"
                           onChange={(e) => {
-                            console.log("Arquivo selecionado:", e.target.files[0]);
-                            const arquivo = e.target.files[0]
-                            imageToBase64(arquivo)
+                            converterImagemEmBase64(e.target.files[0])
                               .then((resolve) => {
-                                setFormData({...formData, foto: resolve})
+                                setFormularioDeDados({...formularioDeDados, foto: resolve})
                                 setFotoAtual(resolve)
                               })
                               .catch((reject) => {
@@ -249,7 +180,7 @@ const AtualizacaoDeUsuario = () => {
                     </div>
 
                     <div className="col col-lg-2">
-                      {formData.foto !== "" ?
+                      {formularioDeDados.foto !== "" ?
                         <div><CImage src={fotoAtual} width={100} height={100} style={{borderRadius: 10}}/> <p>Foto
                           Atual</p></div> : <></>}
                     </div>
@@ -262,8 +193,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormInput
                     id="dataNascimento"
                     type="date"
-                    value={formatDateEUA(formData.dataNascimento)}
-                    onChange={(e) => setFormData({...formData, dataNascimento: e.target.value})}
+                    value={formatarDataPadraoAnoMesDia(formularioDeDados.dataNascimento)}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, dataNascimento: e.target.value})}
                   />
                 </div>
 
@@ -271,8 +202,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormLabel htmlFor="cpf">CPF</CFormLabel>
                   <CFormInput
                     id="cpf"
-                    value={formData.cpf}
-                    onChange={(e) => setFormData({...formData, cpf: e.target.value})}
+                    value={formularioDeDados.cpf}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, cpf: e.target.value})}
                   />
                 </div>
 
@@ -281,8 +212,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormSelect
                     id="estadoCivil"
                     options={estadoCivil}
-                    value={formData.estadoCivil}
-                    onChange={(e) => setFormData({...formData, estadoCivil: e.target.value})}
+                    value={formularioDeDados.estadoCivil}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, estadoCivil: e.target.value})}
                   />
                 </div>
 
@@ -290,8 +221,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormLabel htmlFor="telefone">Telefone</CFormLabel>
                   <CFormInput
                     id="telefone"
-                    value={formData.telefone}
-                    onChange={(e) => setFormData({...formData, telefone: e.target.value})}
+                    value={formularioDeDados.telefone}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
                   />
                 </div>
 
@@ -300,8 +231,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormInput
                     id="email"
                     type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    value={formularioDeDados.email}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, email: e.target.value})}
                   />
                 </div>
 
@@ -309,8 +240,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormLabel htmlFor="cidade">Cidade</CFormLabel>
                   <CFormInput
                     id="cidade"
-                    value={formData.cidade}
-                    onChange={(e) => setFormData({...formData, cidade: e.target.value})}
+                    value={formularioDeDados.cidade}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, cidade: e.target.value})}
                   />
                 </div>
 
@@ -318,8 +249,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormLabel htmlFor="bairro">Bairro</CFormLabel>
                   <CFormInput
                     id="bairro"
-                    value={formData.bairro}
-                    onChange={(e) => setFormData({...formData, bairro: e.target.value})}
+                    value={formularioDeDados.bairro}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, bairro: e.target.value})}
                   />
                 </div>
 
@@ -327,8 +258,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormLabel htmlFor="logradouro">Logradouro</CFormLabel>
                   <CFormInput
                     id="logradouro"
-                    value={formData.logradouro}
-                    onChange={(e) => setFormData({...formData, logradouro: e.target.value})}
+                    value={formularioDeDados.logradouro}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, logradouro: e.target.value})}
                   />
                 </div>
 
@@ -337,8 +268,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormSelect
                     id="role"
                     options={role}
-                    value={formData.role}
-                    onChange={(e) => setFormData({...formData, role: e.target.value})}
+                    value={formularioDeDados.role}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, role: e.target.value})}
                   />
                 </div>
 
@@ -347,8 +278,8 @@ const AtualizacaoDeUsuario = () => {
                   <CFormSelect
                     id="vinculo"
                     options={vinculo}
-                    value={formData.vinculo}
-                    onChange={(e) => setFormData({...formData, vinculo: e.target.value})}
+                    value={formularioDeDados.vinculo}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, vinculo: e.target.value})}
                   />
                 </div>
 
@@ -359,7 +290,7 @@ const AtualizacaoDeUsuario = () => {
                     value={possuiFormacao}
                     onChange={
                       (e) => {
-                        setFormData({...formData, possuiFormacao: !possuiFormacao});
+                        setFormularioDeDados({...formularioDeDados, possuiFormacao: !possuiFormacao});
                         setPossuiFormacao(!possuiFormacao)
                       }
                     }
@@ -376,14 +307,14 @@ const AtualizacaoDeUsuario = () => {
                     type="text"
                     disabled={possuiFormacao ? false : true}
                     value={
-                      possuiFormacao ? formData.detalhesFormacao : 'Sem Formação'
+                      possuiFormacao ? formularioDeDados.detalhesFormacao : 'Sem Formação'
                     }
-                    onChange={(e) => setFormData({...formData, detalhesFormacao: e.target.value})}
+                    onChange={(e) => setFormularioDeDados({...formularioDeDados, detalhesFormacao: e.target.value})}
                   />
                 </div>
 
-                <CButton color="primary" onClick={atualizar}>
-                  Atualizar
+                <CButton color="primary" onClick={atualizarDadosDoUsuario}>
+                  atualizarDadosDoUsuario
                 </CButton>
               </CForm>
             </CCardBody>

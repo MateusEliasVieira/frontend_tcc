@@ -11,20 +11,22 @@ import {
   CFormInput, CTable, CTableHead, CTableHeaderCell, CTableRow, CTableBody, CTableDataCell,
 } from '@coreui/react';
 import axios from 'axios';
-import {DELETAR_FUNCIONARIO__DELETE, PESQUISAR_FUNCIONARIO__GET} from "../../../endpoints/usuario/Endpoints";
+import {DELETAR_USUARIO_DELETE, PESQUISAR_USUARIO_GET} from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import ModalOpcoes from "../../../components/modal/ModalOpcoes";
+import {apresentarModal, confirmar, esconderModal, esconderModalDeOpcoes} from "../../../utilidades/ManipuladorDeModal";
 
 const PesquisaDeUsuario = () => {
 
-  const [displayModalOptions, setDisplayModalOptions] = useState(false);
-  const [displayModalMensagem, setDisplayModalMensagem] = useState(false);
+  const [displayModalOpcoes, setDisplayModalOpcoes] = useState(false);
+  const [tituloModalOpcoes, setTituloModalOpcoes] = useState("");
+  const [conteudoModalOpcoes, setConteudoModalOpcoes] = useState("");
 
-  const [titleModalOptions, setTitleModalOptions] = useState("");
-  const [messageModalOptions, setMessageModalOptions] = useState("");
-  const [titleModalMensagem, setTitleModalMensagem] = useState("");
-  const [messageModalMensagem, setMessageModalMensagem] = useState("");
-  const [idToDelete, setIdToDelete] = useState(null);
+  const [displayModal, setDisplayModal] = useState(false);
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
+
+  const [idParaDeletar, setIdParaDeletar] = useState(null);
 
   const [formData, setFormData] = useState({nome: ""});
   const [list, setList] = useState([]);
@@ -34,7 +36,7 @@ const PesquisaDeUsuario = () => {
     setLoad(true);
     const findAll = async () => {
       try {
-        const response = await axios.get(PESQUISAR_FUNCIONARIO__GET, {
+        const response = await axios.get(PESQUISAR_USUARIO_GET, {
           params: {nome: ""}
         });
         setLoad(false);
@@ -50,7 +52,7 @@ const PesquisaDeUsuario = () => {
   const pesquisar = async () => {
     setLoad(true);
     try {
-      const response = await axios.get(PESQUISAR_FUNCIONARIO__GET, {
+      const response = await axios.get(PESQUISAR_USUARIO_GET, {
         params: {nome: formData.nome}
       });
       setLoad(false);
@@ -64,57 +66,17 @@ const PesquisaDeUsuario = () => {
   const deletar = async (id) => {
     if (id !== null) {
       try {
-        const response = await axios.delete(DELETAR_FUNCIONARIO__DELETE, {
+        const response = await axios.delete(DELETAR_USUARIO_DELETE, {
           params: {id: id}
         });
         setList(list.filter(item => item.idUsuario !== id));
-        handleShowModalMensagem("Sucesso", "Usuário deletado com sucesso!");
+        apresentarModal("Sucesso", "Usuário deletado com sucesso!");
       } catch (error) {
         console.log(error);
-        handleShowModalMensagem("Erro", "Erro ao deletar usuário!");
+        apresentarModal("Erro", "Erro ao deletar usuário!");
       }
     } else {
-      handleShowModalMensagem("Erro", "O id do usuário está nulo!");
-    }
-  }
-
-  const formatDate = (item) => {
-    let data = item.split("T")[0];
-    let data_array = data.split("-");
-    let data_ok = `${data_array[2]}/${data_array[1]}/${data_array[0]}`;
-    return data_ok;
-  }
-
-  const handleShowModalMensagem = (title, message) => {
-    setDisplayModalMensagem(true);
-    setTitleModalMensagem(title);
-    setMessageModalMensagem(message);
-  }
-
-  const handleHideModalMensagem = () => {
-    setDisplayModalMensagem(false);
-    setTitleModalMensagem("");
-    setMessageModalMensagem("");
-  }
-
-  const handleShowModalAction = (title, message, id) => {
-    setDisplayModalOptions(true);
-    setTitleModalOptions(title);
-    setMessageModalOptions(message);
-    setIdToDelete(id);
-  }
-
-  const handleHideModalOptions = () => {
-    setDisplayModalOptions(false);
-    setTitleModalOptions("");
-    setMessageModalOptions("");
-    setIdToDelete(null);
-  }
-
-  const handleModalConfirmAction = () => {
-    if (idToDelete !== null) {
-      deletar(idToDelete);
-      handleHideModalOptions();
+      apresentarModal("Erro", "O id do usuário está nulo!");
     }
   }
 
@@ -127,19 +89,19 @@ const PesquisaDeUsuario = () => {
           </CCardHeader>
           <CCardBody>
             <Modal
-              classModal={displayModalMensagem ? "modal fade show" : "modal fade"}
-              dsp={displayModalMensagem ? "block" : "none"}
-              title={titleModalMensagem}
-              message={messageModalMensagem}
-              handleHideModal={handleHideModalMensagem}
+              classModal={displayModal ? "modal fade show" : "modal fade"}
+              dsp={displayModal ? "block" : "none"}
+              titulo={tituloModal}
+              conteudo={conteudoModal}
+              esconderModal={esconderModal}
             />
             <ModalOpcoes
-              classModal={displayModalOptions ? "modal fade show" : "modal fade"}
-              dsp={displayModalOptions ? "block" : "none"}
-              title={titleModalOptions}
-              message={messageModalOptions}
-              handleHideModal={handleHideModalOptions}
-              handleModalConfirmAction={handleModalConfirmAction}
+              classModal={displayModalOpcoes ? "modal fade show" : "modal fade"}
+              dsp={displayModalOpcoes ? "block" : "none"}
+              title={tituloModalOpcoes}
+              conteudo={conteudoModalOpcoes}
+              esconderModalDeOpcoes={esconderModalDeOpcoes}
+              confirmar={confirmar}
             />
             <CForm>
               <div className="container text-center">
