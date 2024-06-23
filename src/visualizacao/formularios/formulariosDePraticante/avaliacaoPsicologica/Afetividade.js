@@ -5,12 +5,10 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormLabel,
   CRow,
-  CFormSelect,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo';
 
 const Afetividade = () => {
   const [formData, setFormData] = useState({
@@ -44,6 +42,14 @@ const Afetividade = () => {
     }
   };
 
+  const opcoes = [
+    { value: '', label: 'Selecionar' },
+    { value: 'SIM', label: 'Sim' },
+    { value: 'NAO', label: 'Não' },
+    { value: 'NAO_OBSERVADO', label: 'Não Observado' },
+    { value: 'PARCIALMENTE', label: 'Parcialmente' },
+  ];
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -52,79 +58,49 @@ const Afetividade = () => {
             <strong>Afetividade</strong>
           </CCardHeader>
           <CCardBody>
-            <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="demonstraAfeicaoEspecialPorAlguem">Demonstra Carinho Especial Por Alguém</CFormLabel>
-                <CFormSelect
-                  id="demonstraAfeicaoEspecialPorAlguem"
-                  value={formData.demonstraAfeicaoEspecialPorAlguem}
-                  onChange={(e) =>
-                    setFormData({...formData, demonstraAfeicaoEspecialPorAlguem: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="compartilhaSuasCoisas">Divide Suas Coisas</CFormLabel>
-                <CFormSelect
-                  id="compartilhaSuasCoisas"
-                  value={formData.compartilhaSuasCoisas}
-                  onChange={(e) =>
-                    setFormData({...formData, compartilhaSuasCoisas: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="ajudaQuandoSolicitado">Ajuda Quando Solicitado</CFormLabel>
-                <CFormSelect
-                  id="ajudaQuandoSolicitado"
-                  value={formData.ajudaQuandoSolicitado}
-                  onChange={(e) =>
-                    setFormData({...formData, ajudaQuandoSolicitado: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="expressaoDeSentimentos">Expressão de Sentimentos (Carinho, Raiva, ...)</CFormLabel>
-                <CFormSelect
-                  id="expressaoDeSentimentos"
-                  value={formData.expressaoDeSentimentos}
-                  onChange={(e) =>
-                    setFormData({...formData, expressaoDeSentimentos: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <CButton color="primary" onClick={salvar}>
-                Salvar
-              </CButton>
-            </CForm>
+            <Campo
+              tipo="select"
+              id="demonstraAfeicaoEspecialPorAlguem"
+              valor={formData.demonstraAfeicaoEspecialPorAlguem}
+              setar={(e) =>
+                setFormData({ ...formData, demonstraAfeicaoEspecialPorAlguem: e.target.value })
+              }
+              legenda="Demonstra Carinho Especial Por Alguém"
+              opcoes={opcoes}
+            />
+            <Campo
+              tipo="select"
+              id="compartilhaSuasCoisas"
+              valor={formData.compartilhaSuasCoisas}
+              setar={(e) =>
+                setFormData({ ...formData, compartilhaSuasCoisas: e.target.value })
+              }
+              legenda="Divide Suas Coisas"
+              opcoes={opcoes}
+            />
+            <Campo
+              tipo="select"
+              id="ajudaQuandoSolicitado"
+              valor={formData.ajudaQuandoSolicitado}
+              setar={(e) =>
+                setFormData({ ...formData, ajudaQuandoSolicitado: e.target.value })
+              }
+              legenda="Ajuda Quando Solicitado"
+              opcoes={opcoes}
+            />
+            <Campo
+              tipo="select"
+              id="expressaoDeSentimentos"
+              valor={formData.expressaoDeSentimentos}
+              setar={(e) =>
+                setFormData({ ...formData, expressaoDeSentimentos: e.target.value })
+              }
+              legenda="Expressão de Sentimentos (Carinho, Raiva, ...)"
+              opcoes={opcoes}
+            />
+            <CButton color="primary" onClick={salvar}>
+              Salvar
+            </CButton>
           </CCardBody>
         </CCard>
       </CCol>

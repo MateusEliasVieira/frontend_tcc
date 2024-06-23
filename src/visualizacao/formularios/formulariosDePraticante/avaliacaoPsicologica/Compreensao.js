@@ -5,11 +5,11 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CFormLabel,
-  CFormSelect,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
+import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Compreensao = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const Compreensao = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -50,56 +50,30 @@ const Compreensao = () => {
             <strong>Compreensão</strong>
           </CCardHeader>
           <CCardBody>
-            <div className="mb-3">
-              <CFormLabel htmlFor="compreendeOrdens">Compreende Ordens</CFormLabel>
-              <CFormSelect
-                id="compreendeOrdens"
-                value={formData.compreendeOrdens}
-                onChange={(e) =>
-                  setFormData({...formData, compreendeOrdens: e.target.value})
-                }
-              >
-                <option value="">Selecionar</option>
-                <option value="SIM">Sim</option>
-                <option value="NAO">Não</option>
-                <option value="NAO_OBSERVADO">Não Observado</option>
-                <option value="PARCIALMENTE">Parcialmente</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="executaOrdensVerbaisSimples">Executa Ordens Verbais Simples</CFormLabel>
-              <CFormSelect
-                id="executaOrdensVerbaisSimples"
-                value={formData.executaOrdensVerbaisSimples}
-                onChange={(e) =>
-                  setFormData({...formData, executaOrdensVerbaisSimples: e.target.value})
-                }
-              >
-                <option value="">Selecionar</option>
-                <option value="SIM">Sim</option>
-                <option value="NAO">Não</option>
-                <option value="NAO_OBSERVADO">Não Observado</option>
-                <option value="PARCIALMENTE">Parcialmente</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="executaOrdensComplexas">Executa Ordens Complexas</CFormLabel>
-              <CFormSelect
-                id="executaOrdensComplexas"
-                value={formData.executaOrdensComplexas}
-                onChange={(e) =>
-                  setFormData({...formData, executaOrdensComplexas: e.target.value})
-                }
-              >
-                <option value="">Selecionar</option>
-                <option value="SIM">Sim</option>
-                <option value="NAO">Não</option>
-                <option value="NAO_OBSERVADO">Não Observado</option>
-                <option value="PARCIALMENTE">Parcialmente</option>
-              </CFormSelect>
-            </div>
+            <Campo
+              tipo="select"
+              id="compreendeOrdens"
+              valor={formData.compreendeOrdens}
+              setar={(e) => setFormData({ ...formData, compreendeOrdens: e.target.value })}
+              legenda="Compreende Ordens"
+              opcoes={preencherLegenda}
+            />
+            <Campo
+              tipo="select"
+              id="executaOrdensVerbaisSimples"
+              valor={formData.executaOrdensVerbaisSimples}
+              setar={(e) => setFormData({ ...formData, executaOrdensVerbaisSimples: e.target.value })}
+              legenda="Executa Ordens Verbais Simples"
+              opcoes={preencherLegenda}
+            />
+            <Campo
+              tipo="select"
+              id="executaOrdensComplexas"
+              valor={formData.executaOrdensComplexas}
+              setar={(e) => setFormData({ ...formData, executaOrdensComplexas: e.target.value })}
+              legenda="Executa Ordens Complexas"
+              opcoes={preencherLegenda}
+            />
 
             {/* Botão para salvar */}
             <CButton color="primary" onClick={salvar}>

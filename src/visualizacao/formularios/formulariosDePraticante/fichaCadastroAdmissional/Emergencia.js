@@ -5,12 +5,11 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
+import {simOuNao} from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
   const [formData, setFormData] = useState({
@@ -35,9 +34,9 @@ const Emergencia = () => {
           },
         }
       );
-      console.log('Dados educacionais salvos com sucesso:', response.data);
+      console.log('Dados salvos com sucesso:', response.data);
     } catch (error) {
-      console.log('Erro ao salvar os dados educacionais:', error);
+      console.log('Erro ao salvar os dados:', error);
     }
   };
 
@@ -49,55 +48,37 @@ const Emergencia = () => {
             <strong>Em caso de emergência</strong>
           </CCardHeader>
           <CCardBody>
-            <div className="mb-3">
-              <CFormLabel htmlFor="ligarPara">Ligar para</CFormLabel>
-              <CFormInput
-                type="text"
-                id="ligarPara"
-                value={formData.ligarPara}
-                onChange={(e) =>
-                  setFormData({ ...formData, ligarPara: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="telefone">Telefone</CFormLabel>
-              <CFormInput
-                type="text"
-                id="telefone"
-                value={formData.telefone}
-                onChange={(e) =>
-                  setFormData({ ...formData, telefone: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="possuiPlanoDeSaude">Possui Plano de Saúde</CFormLabel>
-              <CFormSelect
-                id="possuiPlanoDeSaude"
-                value={formData.possuiPlanoDeSaude}
-                onChange={(e) =>
-                  setFormData({ ...formData, possuiPlanoDeSaude: e.target.value })
-                }
-              >
-                <option value={true}>Sim</option>
-                <option value={false}>Não</option>
-              </CFormSelect>
-            </div>
+            <Campo
+              tipo="text"
+              id="ligarPara"
+              valor={formData.ligarPara}
+              setar={(e) => setFormData({ ...formData, ligarPara: e.target.value })}
+              legenda="Ligar para"
+            />
+            <Campo
+              tipo="text"
+              id="telefone"
+              valor={formData.telefone}
+              setar={(e) => setFormData({ ...formData, telefone: e.target.value })}
+              legenda="Telefone"
+            />
+            <Campo
+              tipo="select"
+              id="possuiPlanoDeSaude"
+              valor={formData.possuiPlanoDeSaude}
+              setar={(e) => setFormData({ ...formData, possuiPlanoDeSaude: e.target.value })}
+              legenda="Possui Plano de Saúde"
+              opcoes={simOuNao}
+            />
             {formData.possuiPlanoDeSaude && (
-              <div className="mb-3">
-                <CFormLabel htmlFor="plano">Qual é o plano?</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="plano"
-                  value={formData.plano}
-                  onChange={(e) =>
-                    setFormData({ ...formData, plano: e.target.value })
-                  }
-                />
-              </div>
+              <Campo
+                tipo="text"
+                id="plano"
+                valor={formData.plano}
+                setar={(e) => setFormData({ ...formData, plano: e.target.value })}
+                legenda="Qual é o plano?"
+              />
             )}
-            {/* Botão para salvar */}
             <CButton color="primary" onClick={salvar}>
               Salvar
             </CButton>

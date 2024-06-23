@@ -5,12 +5,12 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormLabel,
   CRow,
-  CFormSelect,
+  CForm,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
+import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const HabilidadesSociais = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ const HabilidadesSociais = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -53,73 +53,38 @@ const HabilidadesSociais = () => {
           </CCardHeader>
           <CCardBody>
             <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="passividade">Passividade</CFormLabel>
-                <CFormSelect
-                  id="passividade"
-                  value={formData.passividade}
-                  onChange={(e) =>
-                    setFormData({...formData, passividade: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="autoagressao">Autoagressividade</CFormLabel>
-                <CFormSelect
-                  id="autoagressao"
-                  value={formData.autoagressao}
-                  onChange={(e) =>
-                    setFormData({...formData, autoagressao: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="heteroagressividade">Heteroagressividade</CFormLabel>
-                <CFormSelect
-                  id="heteroagressividade"
-                  value={formData.heteroagressividade}
-                  onChange={(e) =>
-                    setFormData({...formData, heteroagressividade: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="assertividade">Assertividade</CFormLabel>
-                <CFormSelect
-                  id="assertividade"
-                  value={formData.assertividade}
-                  onChange={(e) =>
-                    setFormData({...formData, assertividade: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+              <Campo
+                tipo="select"
+                id="passividade"
+                valor={formData.passividade}
+                setar={(e) => setFormData({ ...formData, passividade: e.target.value })}
+                legenda="Passividade"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="autoagressao"
+                valor={formData.autoagressao}
+                setar={(e) => setFormData({ ...formData, autoagressao: e.target.value })}
+                legenda="Autoagressividade"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="heteroagressividade"
+                valor={formData.heteroagressividade}
+                setar={(e) => setFormData({ ...formData, heteroagressividade: e.target.value })}
+                legenda="Heteroagressividade"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="assertividade"
+                valor={formData.assertividade}
+                setar={(e) => setFormData({ ...formData, assertividade: e.target.value })}
+                legenda="Assertividade"
+                opcoes={preencherLegenda}
+              />
 
               <CButton color="primary" onClick={salvar}>
                 Salvar

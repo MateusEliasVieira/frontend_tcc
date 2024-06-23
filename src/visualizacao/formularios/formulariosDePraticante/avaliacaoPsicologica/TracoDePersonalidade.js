@@ -1,208 +1,146 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-    CButton,
-    CCard,
-    CCardBody,
-    CCardHeader,
-    CCol,
-    CForm,
-    CFormLabel,
-    CRow,
-    CFormSelect,
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CForm,
+  CFormLabel,
+  CRow,
+  CFormSelect,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo';
+import {preencherLegenda} from "../../../../constantes/Constantes"; // Importe o componente Campo
 
 const TracoDePersonalidade = () => {
-    const [formData, setFormData] = useState({
-        extroversao: '',
-        fobia: '',
-        obsessao: '',
-        introversao: '',
-        ansiedade: '',
-        histeria: '',
-        dependenciaEmocional: '',
-        timidez: '',
-        paciente: {
-            idPaciente: '',
-        },
-    });
+  const [formData, setFormData] = useState({
+    extroversao: '',
+    fobia: '',
+    obsessao: '',
+    introversao: '',
+    ansiedade: '',
+    histeria: '',
+    dependenciaEmocional: '',
+    timidez: '',
+    paciente: {
+      idPaciente: '',
+    },
+  });
 
-    const salvar = async () => {
-        const dados = {
-            ...formData,
-        };
-
-        try {
-            const response = await axios.post(
-                SEU_ENDPOINT_DE_SALVAR_AQUI,
-                JSON.stringify(dados),
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-            console.log('Aspectos emocionais salvos com sucesso:', response.data);
-        } catch (error) {
-            console.log('Erro ao salvar os aspectos emocionais:', error);
-        }
+  const salvar = async () => {
+    const dados = {
+      ...formData,
     };
 
-    return (
-        <CRow>
-            <CCol xs={12}>
-                <CCard className="mb-4">
-                    <CCardHeader>
-                        <strong>Traços de Personalidade</strong>
-                    </CCardHeader>
-                    <CCardBody>
-                        <CForm>
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="extroversao">Extroversão</CFormLabel>
-                                <CFormSelect
-                                    id="extroversao"
-                                    value={formData.extroversao}
-                                    onChange={(e) =>
-                                        setFormData({...formData, extroversao: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+    try {
+      const response = await axios.post(
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
+        JSON.stringify(dados),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('Aspectos emocionais salvos com sucesso:', response.data);
+    } catch (error) {
+      console.log('Erro ao salvar os aspectos emocionais:', error);
+    }
+  };
 
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="fobia">Fobia</CFormLabel>
-                                <CFormSelect
-                                    id="fobia"
-                                    value={formData.fobia}
-                                    onChange={(e) =>
-                                        setFormData({...formData, fobia: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+  return (
+    <CRow>
+      <CCol xs={12}>
+        <CCard className="mb-4">
+          <CCardHeader>
+            <strong>Traços de Personalidade</strong>
+          </CCardHeader>
+          <CCardBody>
+            <CForm>
+              <Campo
+                id="extroversao"
+                tipo="select"
+                valor={formData.extroversao}
+                setar={valor => setFormData({ ...formData, extroversao: valor })}
+                legenda="Extroversão"
+                opcoes={preencherLegenda}
+              />
 
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="obsessao">Obsessão</CFormLabel>
-                                <CFormSelect
-                                    id="obsessao"
-                                    value={formData.obsessao}
-                                    onChange={(e) =>
-                                        setFormData({...formData, obsessao: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+              <Campo
+                id="fobia"
+                tipo="select"
+                valor={formData.fobia}
+                setar={valor => setFormData({ ...formData, fobia: valor })}
+                legenda="Fobia"
+                opcoes={preencherLegenda}
+              />
 
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="introversao">Introversão</CFormLabel>
-                                <CFormSelect
-                                    id="introversao"
-                                    value={formData.introversao}
-                                    onChange={(e) =>
-                                        setFormData({...formData, introversao: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+              <Campo
+                id="obsessao"
+                tipo="select"
+                valor={formData.obsessao}
+                setar={valor => setFormData({ ...formData, obsessao: valor })}
+                legenda="Obsessão"
+                opcoes={preencherLegenda}
+              />
 
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="ansiedade">Ansiedade</CFormLabel>
-                                <CFormSelect
-                                    id="ansiedade"
-                                    value={formData.ansiedade}
-                                    onChange={(e) =>
-                                        setFormData({...formData, ansiedade: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+              <Campo
+                id="introversao"
+                tipo="select"
+                valor={formData.introversao}
+                setar={valor => setFormData({ ...formData, introversao: valor })}
+                legenda="Introversão"
+                opcoes={preencherLegenda}
+              />
 
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="histeria">Histeria</CFormLabel>
-                                <CFormSelect
-                                    id="histeria"
-                                    value={formData.histeria}
-                                    onChange={(e) =>
-                                        setFormData({...formData, histeria: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+              <Campo
+                id="ansiedade"
+                tipo="select"
+                valor={formData.ansiedade}
+                setar={valor => setFormData({ ...formData, ansiedade: valor })}
+                legenda="Ansiedade"
+                opcoes={preencherLegenda}
+              />
 
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="dependenciaEmocional">Dependência Emocional</CFormLabel>
-                                <CFormSelect
-                                    id="dependenciaEmocional"
-                                    value={formData.dependenciaEmocional}
-                                    onChange={(e) =>
-                                        setFormData({...formData, dependenciaEmocional: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+              <Campo
+                id="histeria"
+                tipo="select"
+                valor={formData.histeria}
+                setar={valor => setFormData({ ...formData, histeria: valor })}
+                legenda="Histeria"
+                opcoes={preencherLegenda}
+              />
 
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="timidez">Timidez</CFormLabel>
-                                <CFormSelect
-                                    id="timidez"
-                                    value={formData.timidez}
-                                    onChange={(e) =>
-                                        setFormData({...formData, timidez: e.target.value})
-                                    }
-                                >
-                                    <option value="">Selecionar</option>
-                                    <option value="SIM">Sim</option>
-                                    <option value="NAO">Não</option>
-                                    <option value="NAO_OBSERVADO">Não Observado</option>
-                                    <option value="PARCIALMENTE">Parcialmente</option>
-                                </CFormSelect>
-                            </div>
+              <Campo
+                id="dependenciaEmocional"
+                tipo="select"
+                valor={formData.dependenciaEmocional}
+                setar={valor => setFormData({ ...formData, dependenciaEmocional: valor })}
+                legenda="Dependência Emocional"
+                opcoes={preencherLegenda}
+              />
 
-                            <CButton color="primary" onClick={salvar}>
-                                Salvar
-                            </CButton>
-                        </CForm>
-                    </CCardBody>
-                </CCard>
-            </CCol>
-        </CRow>
-    );
+              <Campo
+                id="timidez"
+                tipo="select"
+                valor={formData.timidez}
+                setar={valor => setFormData({ ...formData, timidez: valor })}
+                legenda="Timidez"
+                opcoes={preencherLegenda}
+              />
+
+              {/* Botão para salvar */}
+              <CButton color="primary" onClick={salvar}>
+                Salvar
+              </CButton>
+            </CForm>
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
+  );
 };
 
 export default TracoDePersonalidade;
-

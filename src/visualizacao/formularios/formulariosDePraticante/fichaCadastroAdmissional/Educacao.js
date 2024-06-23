@@ -1,21 +1,18 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
-  CForm, CFormCheck,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
-import {SALVAR_EDUCACAO__POST} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
+import { classeDeEscola, tipoInstituicaoEducacional, periodo, role, vinculo } from '../../../../constantes/Constantes';
+import {camposPreenchidos} from "../../../../utilidades/VerificadorDeCampos"; // Importando as constantes corretamente
 
-const Educacao = (props) => {
+const Educacao = () => {
   const [formData, setFormData] = useState({
     serieEscolar: '',
     classeDeEscola: '',
@@ -27,20 +24,23 @@ const Educacao = (props) => {
     }
   });
 
-  const salvar = async () => {
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    if (idPraticanteSalvo) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        paciente: {
+          ...prevFormData.paciente,
+          idPaciente: idPraticanteSalvo
+        }
+      }));
+    }
+  }, []);
 
-    var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo")
-    alert("idPraticanteSalvo = "+idPraticanteSalvo)
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      paciente: {
-        ...prevFormData.paciente,
-        idPaciente: idPraticanteSalvo
-      }
-    }));
-    alert("Form Data - id = "+formData.paciente.idPaciente)
-    if (idPraticanteSalvo != null) {
-      if(isFormDataEmpty() === false){
+  const salvar = async () => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    if (idPraticanteSalvo) {
+      if (camposPreenchidos(formData)) {
         try {
           const response = await axios.post(
             SALVAR_EDUCACAO__POST,
@@ -51,18 +51,17 @@ const Educacao = (props) => {
               },
             }
           );
-          alert('Escolaridade do Praticante salvo com sucesso!')
+          alert('Escolaridade do Praticante salva com sucesso!');
           console.log('Dados educacionais salvos com sucesso:', response.data);
         } catch (error) {
           console.log('Erro ao salvar os dados educacionais:', error);
           alert(error.response.data?.title);
         }
-      }else{
-        alert("Preencha todos os campos vazios!")
+      } else {
+        alert("Preencha todos os campos vazios!");
       }
-    }else{
-      alert("Cadastre os Dados Pessoais do Praticante primeiro!")
-      alert("id salvo = "+idPraticanteSalvo)
+    } else {
+      alert("Cadastre os Dados Pessoais do Praticante primeiro!");
     }
   };
 
@@ -74,77 +73,44 @@ const Educacao = (props) => {
             <strong>Escolaridade do Praticante</strong>
           </CCardHeader>
           <CCardBody>
-            <div className="mb-3">
-              <CFormLabel htmlFor="serieEscolar">Ano/Série Escolar</CFormLabel>
-              <CFormInput
-                type="text"
-                id="serieEscolar"
-                value={formData.serieEscolar}
-                onChange={(e) => setFormData({...formData, serieEscolar: e.target.value})}
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="tipoDeInstituicaoEducacional">
-                Turma
-              </CFormLabel>
-              <CFormSelect
-                id="classeDeEscola"
-                value={formData.classeDeEscola}
-                onChange={(e) =>
-                  setFormData({...formData, classeDeEscola: e.target.value})
-                }
-              >
-                <option value="">Selecionar</option>
-                <option value="ESPECIAL">Especial</option>
-                <option value="INCLUSAO">Inclusão</option>
-                <option value="REGULAR">Regular</option>
-              </CFormSelect>
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="instituicaoEducacional">Instituição de Ensino</CFormLabel>
-              <CFormInput
-                type="text"
-                id="instituicaoEducacional"
-                value={formData.instituicaoEducacional}
-                onChange={(e) =>
-                  setFormData({...formData, instituicaoEducacional: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="tipoDeInstituicaoEducacional">
-                Tipo de Instituição de Ensino
-              </CFormLabel>
-              <CFormSelect
-                id="tipoDeInstituicaoEducacional"
-                value={formData.tipoDeInstituicaoEducacional}
-                onChange={(e) =>
-                  setFormData({...formData, tipoDeInstituicaoEducacional: e.target.value})
-                }
-              >
-                <option value="">Selecionar</option>
-                <option value="PUBLICA">Pública</option>
-                <option value="PRIVADA">Privada</option>
-                {/* Adicione outras opções conforme necessário */}
-              </CFormSelect>
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="periodo">
-                Período
-              </CFormLabel>
-              <CFormSelect
-                id="periodo"
-                value={formData.periodo}
-                onChange={(e) =>
-                  setFormData({...formData, periodo: e.target.value})
-                }
-              >
-                <option value="">Selecionar</option>
-                <option value="MATUTINO">Matutino</option>
-                <option value="VESPERTINO">Vespertino</option>
-                {/* Adicione outras opções conforme necessário */}
-              </CFormSelect>
-            </div>
+            <Campo
+              tipo="text"
+              id="serieEscolar"
+              valor={formData.serieEscolar}
+              setar={(e) => setFormData({ ...formData, serieEscolar: e.target.value })}
+              legenda="Ano/Série Escolar"
+            />
+            <Campo
+              tipo="select"
+              id="classeDeEscola"
+              valor={formData.classeDeEscola}
+              setar={(e) => setFormData({ ...formData, classeDeEscola: e.target.value })}
+              legenda="classeDeEscola"
+              opcoes={classeDeEscola}
+            />
+            <Campo
+              tipo="text"
+              id="instituicaoEducacional"
+              valor={formData.instituicaoEducacional}
+              setar={(e) => setFormData({ ...formData, instituicaoEducacional: e.target.value })}
+              legenda="Instituição de Ensino"
+            />
+            <Campo
+              tipo="select"
+              id="tipoDeInstituicaoEducacional"
+              valor={formData.tipoDeInstituicaoEducacional}
+              setar={(e) => setFormData({ ...formData, tipoDeInstituicaoEducacional: e.target.value })}
+              legenda="Tipo de Instituição de Ensino"
+              opcoes={tipoInstituicaoEducacional}
+            />
+            <Campo
+              tipo="select"
+              id="periodo"
+              valor={formData.periodo}
+              setar={(e) => setFormData({ ...formData, periodo: e.target.value })}
+              legenda="Período"
+              opcoes={periodo}
+            />
             <CButton color="primary" onClick={salvar}>
               Salvar
             </CButton>
@@ -152,7 +118,7 @@ const Educacao = (props) => {
         </CCard>
       </CCol>
     </CRow>
-  )
+  );
 }
 
-export default Educacao
+export default Educacao;

@@ -4,13 +4,12 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CCol,
-  CForm,
-  CFormLabel,
+  CCol, CForm,
   CRow,
-  CFormSelect,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from "../../../../components/campos/Campo";
+import {preencherLegenda} from "../../../../constantes/Constantes"; // Importe o componente Campo
 
 const SaudeMental = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +28,7 @@ const SaudeMental = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -52,56 +51,32 @@ const SaudeMental = () => {
           </CCardHeader>
           <CCardBody>
             <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="apresentaConfusaoMental">Apresenta Confusão Mental</CFormLabel>
-                <CFormSelect
-                  id="apresentaConfusaoMental"
-                  value={formData.apresentaConfusaoMental}
-                  onChange={(e) =>
-                    setFormData({ ...formData, apresentaConfusaoMental: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+              <Campo
+                tipo="select"
+                id="apresentaConfusaoMental"
+                valor={formData.apresentaConfusaoMental}
+                setar={(e) => setFormData({ ...formData, apresentaConfusaoMental: e.target.value })}
+                legenda="Apresenta Confusão Mental"
+                opcoes={preencherLegenda}
+              />
 
-              <div className="mb-3">
-                <CFormLabel htmlFor="apresentaDelirios">Apresenta Delírios</CFormLabel>
-                <CFormSelect
-                  id="apresentaDelirios"
-                  value={formData.apresentaDelirios}
-                  onChange={(e) =>
-                    setFormData({ ...formData, apresentaDelirios: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+              <Campo
+                tipo="select"
+                id="apresentaDelirios"
+                valor={formData.apresentaDelirios}
+                setar={(e) => setFormData({ ...formData, apresentaDelirios: e.target.value })}
+                legenda="Apresenta Delírios"
+                opcoes={preencherLegenda}
+              />
 
-              <div className="mb-3">
-                <CFormLabel htmlFor="apresentaAlucinacoes">Apresenta Alucinações</CFormLabel>
-                <CFormSelect
-                  id="apresentaAlucinacoes"
-                  value={formData.apresentaAlucinacoes}
-                  onChange={(e) =>
-                    setFormData({ ...formData, apresentaAlucinacoes: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+              <Campo
+                tipo="select"
+                id="apresentaAlucinacoes"
+                valor={formData.apresentaAlucinacoes}
+                setar={(e) => setFormData({ ...formData, apresentaAlucinacoes: e.target.value })}
+                legenda="Apresenta Alucinações"
+                opcoes={preencherLegenda}
+              />
 
               {/* Botão para salvar */}
               <CButton color="primary" onClick={salvar}>

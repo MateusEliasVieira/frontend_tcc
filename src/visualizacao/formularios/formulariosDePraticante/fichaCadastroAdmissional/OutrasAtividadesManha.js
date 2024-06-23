@@ -5,12 +5,10 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormInput,
-  CFormLabel,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
 
 const OutrasAtividadesManha = () => {
   const [formData, setFormData] = useState({
@@ -40,7 +38,6 @@ const OutrasAtividadesManha = () => {
 
       const dados = {
         ...formData,
-        dataNascimento: new Date(formData.dataNascimento).toISOString() // Convertendo data para o formato ISOString
       };
 
       try {
@@ -53,9 +50,9 @@ const OutrasAtividadesManha = () => {
             },
           }
         );
-        console.log('Dados educacionais salvos com sucesso:', response.data);
+        console.log('Dados salvos com sucesso:', response.data);
       } catch (error) {
-        console.log('Erro ao salvar os dados educacionais:', error);
+        console.log('Erro ao salvar os dados:', error);
       }
     } else {
       alert('Cadastre os dados pessoais do praticante primeiro!');
@@ -70,86 +67,55 @@ const OutrasAtividadesManha = () => {
             <strong>Outras atividades matutinas</strong>
           </CCardHeader>
           <CCardBody>
-            {/* Campos existentes */}
-            {/* ... */}
-            <div className="mb-3">
-              <CFormLabel htmlFor="segundaFeira">Segunda-feira</CFormLabel>
-              <CFormInput
-                type="text"
-                id="segundaFeira"
-                value={formData.segundaFeira}
-                onChange={(e) =>
-                  setFormData({ ...formData, segundaFeira: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="tercaFeira">Terça-feira</CFormLabel>
-              <CFormInput
-                type="text"
-                id="tercaFeira"
-                value={formData.tercaFeira}
-                onChange={(e) =>
-                  setFormData({ ...formData, tercaFeira: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="quartaFeira">Quarta-feira</CFormLabel>
-              <CFormInput
-                type="text"
-                id="quartaFeira"
-                value={formData.quartaFeira}
-                onChange={(e) =>
-                  setFormData({ ...formData, quartaFeira: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="quintaFeira">Quinta-feira</CFormLabel>
-              <CFormInput
-                type="text"
-                id="quintaFeira"
-                value={formData.quintaFeira}
-                onChange={(e) =>
-                  setFormData({ ...formData, quintaFeira: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="sextaFeira">Sexta-feira</CFormLabel>
-              <CFormInput
-                type="text"
-                id="sextaFeira"
-                value={formData.sextaFeira}
-                onChange={(e) =>
-                  setFormData({ ...formData, sextaFeira: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="sabado">Sábado</CFormLabel>
-              <CFormInput
-                type="text"
-                id="sabado"
-                value={formData.sabado}
-                onChange={(e) =>
-                  setFormData({ ...formData, sabado: e.target.value })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="domingo">Domingo</CFormLabel>
-              <CFormInput
-                type="text"
-                id="domingo"
-                value={formData.domingo}
-                onChange={(e) =>
-                  setFormData({ ...formData, domingo: e.target.value })
-                }
-              />
-            </div>
-            {/* Botão para salvar */}
+            <Campo
+              tipo="text"
+              id="segundaFeira"
+              valor={formData.segundaFeira}
+              setar={(e) => setFormData({ ...formData, segundaFeira: e.target.value })}
+              legenda="Segunda-feira"
+            />
+            <Campo
+              tipo="text"
+              id="tercaFeira"
+              valor={formData.tercaFeira}
+              setar={(e) => setFormData({ ...formData, tercaFeira: e.target.value })}
+              legenda="Terça-feira"
+            />
+            <Campo
+              tipo="text"
+              id="quartaFeira"
+              valor={formData.quartaFeira}
+              setar={(e) => setFormData({ ...formData, quartaFeira: e.target.value })}
+              legenda="Quarta-feira"
+            />
+            <Campo
+              tipo="text"
+              id="quintaFeira"
+              valor={formData.quintaFeira}
+              setar={(e) => setFormData({ ...formData, quintaFeira: e.target.value })}
+              legenda="Quinta-feira"
+            />
+            <Campo
+              tipo="text"
+              id="sextaFeira"
+              valor={formData.sextaFeira}
+              setar={(e) => setFormData({ ...formData, sextaFeira: e.target.value })}
+              legenda="Sexta-feira"
+            />
+            <Campo
+              tipo="text"
+              id="sabado"
+              valor={formData.sabado}
+              setar={(e) => setFormData({ ...formData, sabado: e.target.value })}
+              legenda="Sábado"
+            />
+            <Campo
+              tipo="text"
+              id="domingo"
+              valor={formData.domingo}
+              setar={(e) => setFormData({ ...formData, domingo: e.target.value })}
+              legenda="Domingo"
+            />
             <CButton color="primary" onClick={salvar}>
               Salvar
             </CButton>
@@ -160,4 +126,4 @@ const OutrasAtividadesManha = () => {
   );
 };
 
-export default OutrasAtividadesManha ;
+export default OutrasAtividadesManha;

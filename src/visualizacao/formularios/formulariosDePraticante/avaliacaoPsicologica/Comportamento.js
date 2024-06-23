@@ -6,11 +6,10 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormLabel,
-  CRow,
-  CFormSelect,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo';
+import {preencherLegenda} from "../../../../constantes/Constantes"; // Importando o componente Campo
 
 const Comportamento = () => {
   const [formData, setFormData] = useState({
@@ -46,108 +45,58 @@ const Comportamento = () => {
   };
 
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Comportamento</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="agitacao">Agitação</CFormLabel>
-                <CFormSelect
-                  id="agitacao"
-                  value={formData.agitacao}
-                  onChange={(e) =>
-                    setFormData({ ...formData, agitacao: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="toleranciaFrustracao">Tolerância à Frustração</CFormLabel>
-                <CFormSelect
-                  id="toleranciaFrustracao"
-                  value={formData.toleranciaFrustracao}
-                  onChange={(e) =>
-                    setFormData({ ...formData, toleranciaFrustracao: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="respeitaLimitesRegras">Respeita Limites e Regras</CFormLabel>
-                <CFormSelect
-                  id="respeitaLimitesRegras"
-                  value={formData.respeitaLimitesRegras}
-                  onChange={(e) =>
-                    setFormData({ ...formData, respeitaLimitesRegras: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="oposicao">Oposição</CFormLabel>
-                <CFormSelect
-                  id="oposicao"
-                  value={formData.oposicao}
-                  onChange={(e) =>
-                    setFormData({ ...formData, oposicao: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="atencaoConcentracao">Atenção e Concentração</CFormLabel>
-                <CFormSelect
-                  id="atencaoConcentracao"
-                  value={formData.atencaoConcentracao}
-                  onChange={(e) =>
-                    setFormData({ ...formData, atencaoConcentracao: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-
-                </CFormSelect>
-              </div>
-
-              <CButton color="primary" onClick={salvar}>
-                Salvar
-              </CButton>
-            </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+    <CCard className="mb-4">
+      <CCardHeader>
+        <strong>Comportamento</strong>
+      </CCardHeader>
+      <CCardBody>
+        <CForm>
+          <Campo
+            tipo="select"
+            id="agitacao"
+            valor={formData.agitacao}
+            setar={(e) => setFormData({ ...formData, agitacao: e.target.value })}
+            legenda="Agitação"
+            opcoes={preencherLegenda}
+          />
+          <Campo
+            tipo="select"
+            id="toleranciaFrustracao"
+            valor={formData.toleranciaFrustracao}
+            setar={(e) => setFormData({ ...formData, toleranciaFrustracao: e.target.value })}
+            legenda="Tolerância à Frustração"
+            opcoes={preencherLegenda}
+          />
+          <Campo
+            tipo="select"
+            id="respeitaLimitesRegras"
+            valor={formData.respeitaLimitesRegras}
+            setar={(e) => setFormData({ ...formData, respeitaLimitesRegras: e.target.value })}
+            legenda="Respeita Limites e Regras"
+            opcoes={preencherLegenda}
+          />
+          <Campo
+            tipo="select"
+            id="oposicao"
+            valor={formData.oposicao}
+            setar={(e) => setFormData({ ...formData, oposicao: e.target.value })}
+            legenda="Oposição"
+            opcoes={preencherLegenda}
+          />
+          <Campo
+            tipo="select"
+            id="atencaoConcentracao"
+            valor={formData.atencaoConcentracao}
+            setar={(e) => setFormData({ ...formData, atencaoConcentracao: e.target.value })}
+            legenda="Atenção e Concentração"
+            opcoes={preencherLegenda}
+          />
+          <CButton color="primary" onClick={salvar}>
+            Salvar
+          </CButton>
+        </CForm>
+      </CCardBody>
+    </CCard>
   );
 };
 

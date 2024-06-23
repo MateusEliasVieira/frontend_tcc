@@ -62,7 +62,7 @@ const AppBarraLateral = () => {
   }, []);
   return (
     <CSidebar
-      style={{backgroundColor: '#2b191b'}}
+      style={{backgroundColor: '#706e6e'}}
       position="fixed"
       unfoldable={unfoldable}
       visible={sidebarShow}

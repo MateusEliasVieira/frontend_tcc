@@ -1,23 +1,24 @@
-import React, {useState} from 'react';
+// SobreACrianca.js
+
+import React, { useState } from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
-  CCol,
-  CForm, CFormCheck,
-  CFormInput,
-  CFormLabel, CFormSelect,
+  CCol, CForm,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Importe o componente Campo
+import {simOuNao,alimentacao} from "../../../../constantes/Constantes"; // Importe a constante alimentacao
 
 const SobreACrianca = () => {
   const [formData, setFormData] = useState({
-    fezTerapiaEquina: false,
-    criancaPlanejada: false,
-    cuidadosPreNatais: false,
-    chorouNoNascimento: false,
+    fezTerapiaEquina: '',
+    criancaPlanejada: '',
+    cuidadosPreNatais: '',
+    chorouNoNascimento: '',
     alimentacao: '',
     observacao: '',
     paciente: {
@@ -32,7 +33,7 @@ const SobreACrianca = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -55,75 +56,59 @@ const SobreACrianca = () => {
           </CCardHeader>
           <CCardBody>
             <CForm>
-              <div className="mb-3">
-                <CFormCheck
-                  type="checkbox"
-                  id="fezTerapiaEquina"
-                  label="Já fez equoterapia antes?"
-                  checked={formData.fezTerapiaEquina}
-                  onChange={(e) =>
-                    setFormData({...formData, fezTerapiaEquina: e.target.checked})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormCheck
-                  type="checkbox"
-                  id="criancaPlanejada"
-                  label="Criança planejada?"
-                  checked={formData.criancaPlanejada}
-                  onChange={(e) =>
-                    setFormData({...formData, criancaPlanejada: e.target.checked})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormCheck
-                  type="checkbox"
-                  id="cuidadosPreNatais"
-                  label="Acompanhamento pré-natal?"
-                  checked={formData.cuidadosPreNatais}
-                  onChange={(e) =>
-                    setFormData({...formData, cuidadosPreNatais: e.target.checked})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormCheck
-                  type="checkbox"
-                  id="chorouNoNascimento"
-                  label="Choro ao nascer?"
-                  checked={formData.chorouNoNascimento}
-                  onChange={(e) =>
-                    setFormData({...formData, chorouNoNascimento: e.target.checked})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="alimentacao">Alimentação</CFormLabel>
-                <CFormSelect
-                  id="alimentacao"
-                  value={formData.alimentacao}
-                  onChange={(e) =>
-                    setFormData({...formData, alimentacao: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SEIO">Seio</option>
-                  <option value="MAMADEIRA">Mamadeira</option>
-                </CFormSelect>
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="observacao">Observação</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="observacao"
-                  value={formData.observacao}
-                  onChange={(e) =>
-                    setFormData({...formData, observacao: e.target.value})
-                  }
-                />
-              </div>
+              <Campo
+                tipo="select"
+                id="fezTerapiaEquina"
+                valor={formData.fezTerapiaEquina}
+                setar={valor => setFormData({ ...formData, fezTerapiaEquina: valor })}
+                legenda="Já fez equoterapia antes?"
+                opcoes={simOuNao}
+              />
+
+              <Campo
+                tipo="select"
+                id="criancaPlanejada"
+                valor={formData.criancaPlanejada}
+                setar={valor => setFormData({ ...formData, criancaPlanejada: valor })}
+                legenda="Criança planejada?"
+                opcoes={simOuNao}
+              />
+
+              <Campo
+                tipo="select"
+                id="cuidadosPreNatais"
+                valor={formData.cuidadosPreNatais}
+                setar={valor => setFormData({ ...formData, cuidadosPreNatais: valor })}
+                legenda="Acompanhamento pré-natal?"
+                opcoes={simOuNao}
+              />
+
+              <Campo
+                tipo="select"
+                id="chorouNoNascimento"
+                valor={formData.chorouNoNascimento}
+                setar={valor => setFormData({ ...formData, chorouNoNascimento: valor })}
+                legenda="Choro ao nascer?"
+                opcoes={simOuNao}
+              />
+
+              <Campo
+                tipo="select"
+                id="alimentacao"
+                valor={formData.alimentacao}
+                setar={valor => setFormData({ ...formData, alimentacao: valor })}
+                legenda="Alimentação"
+                opcoes={alimentacao}
+              />
+
+              <Campo
+                tipo="textarea"
+                id="observacao"
+                valor={formData.observacao}
+                setar={valor => setFormData({ ...formData, observacao: valor })}
+                legenda="Observação"
+              />
+
               {/* Botão para salvar */}
               <CButton color="primary" onClick={salvar}>
                 Salvar

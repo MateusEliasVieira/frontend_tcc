@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
-  CFormInput,
-  CFormLabel,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
-import {SALVAR_RESPONSAVEL__POST} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import { SALVAR_RESPONSAVEL__POST } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
 
 const ResponsavelPeloPraticante = () => {
   const [formData, setFormData] = useState({
@@ -28,10 +27,9 @@ const ResponsavelPeloPraticante = () => {
   });
 
   const salvar = async () => {
+    var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
 
-    var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo")
-
-    if (idPacienteSalvo != null) {
+    if (idPraticanteSalvo != null) {
       setFormData(prevFormData => ({
         ...prevFormData,
         paciente: {
@@ -66,94 +64,62 @@ const ResponsavelPeloPraticante = () => {
             <strong>Responsável pelo Praticante</strong>
           </CCardHeader>
           <CCardBody>
-            <div className="mb-3">
-              <CFormLabel htmlFor="nomeResponsavel">Nome do Responsável</CFormLabel>
-              <CFormInput
-                type="text"
-                id="nomeResponsavel"
-                value={formData.nomeResponsavel}
-                onChange={(e) =>
-                  setFormData({...formData, nomeResponsavel: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="grauParentesco">Grau de Parentesco</CFormLabel>
-              <CFormInput
-                type="text"
-                id="grauParentesco"
-                value={formData.grauParentesco}
-                onChange={(e) =>
-                  setFormData({...formData, grauParentesco: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="profissao">Profissão</CFormLabel>
-              <CFormInput
-                type="text"
-                id="profissao"
-                value={formData.profissao}
-                onChange={(e) =>
-                  setFormData({...formData, profissao: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="telefone">Telefone</CFormLabel>
-              <CFormInput
-                type="text"
-                id="telefone"
-                value={formData.telefone}
-                onChange={(e) =>
-                  setFormData({...formData, telefone: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="dataNascimento">Data de Nascimento</CFormLabel>
-              <CFormInput
-                type="date"
-                id="dataNascimento"
-                value={formData.dataNascimento}
-                onChange={(e) =>
-                  setFormData({...formData, dataNascimento: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="email">Email</CFormLabel>
-              <CFormInput
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({...formData, email: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="telefoneTrabalho">Telefone do Trabalho</CFormLabel>
-              <CFormInput
-                type="text"
-                id="telefoneTrabalho"
-                value={formData.telefoneTrabalho}
-                onChange={(e) =>
-                  setFormData({...formData, telefoneTrabalho: e.target.value})
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="rendaFamiliar">Renda Familiar</CFormLabel>
-              <CFormInput
-                type="number"
-                id="rendaFamiliar"
-                value={formData.rendaFamiliar}
-                onChange={(e) =>
-                  setFormData({...formData, rendaFamiliar: e.target.value})
-                }
-              />
-            </div>
+            <Campo
+              tipo="text"
+              id="nomeResponsavel"
+              valor={formData.nomeResponsavel}
+              setar={(e) => setFormData({ ...formData, nomeResponsavel: e.target.value })}
+              legenda="Nome do Responsável"
+            />
+            <Campo
+              tipo="text"
+              id="grauParentesco"
+              valor={formData.grauParentesco}
+              setar={(e) => setFormData({ ...formData, grauParentesco: e.target.value })}
+              legenda="Grau de Parentesco"
+            />
+            <Campo
+              tipo="text"
+              id="profissao"
+              valor={formData.profissao}
+              setar={(e) => setFormData({ ...formData, profissao: e.target.value })}
+              legenda="Profissão"
+            />
+            <Campo
+              tipo="text"
+              id="telefone"
+              valor={formData.telefone}
+              setar={(e) => setFormData({ ...formData, telefone: e.target.value })}
+              legenda="Telefone"
+            />
+            <Campo
+              tipo="date"
+              id="dataNascimento"
+              valor={formData.dataNascimento}
+              setar={(e) => setFormData({ ...formData, dataNascimento: e.target.value })}
+              legenda="Data de Nascimento"
+            />
+            <Campo
+              tipo="email"
+              id="email"
+              valor={formData.email}
+              setar={(e) => setFormData({ ...formData, email: e.target.value })}
+              legenda="Email"
+            />
+            <Campo
+              tipo="text"
+              id="telefoneTrabalho"
+              valor={formData.telefoneTrabalho}
+              setar={(e) => setFormData({ ...formData, telefoneTrabalho: e.target.value })}
+              legenda="Telefone do Trabalho"
+            />
+            <Campo
+              tipo="number"
+              id="rendaFamiliar"
+              valor={formData.rendaFamiliar}
+              setar={(e) => setFormData({ ...formData, rendaFamiliar: e.target.value })}
+              legenda="Renda Familiar"
+            />
             <CButton color="primary" onClick={salvar}>
               Salvar
             </CButton>

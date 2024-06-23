@@ -5,12 +5,12 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormLabel,
   CRow,
-  CFormSelect,
+  CForm,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
+import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Linguagem = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +33,7 @@ const Linguagem = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -56,126 +56,62 @@ const Linguagem = () => {
           </CCardHeader>
           <CCardBody>
             <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="compreensaoVerbal">Verbal Compreensiva</CFormLabel>
-                <CFormSelect
-                  id="compreensaoVerbal"
-                  value={formData.compreensaoVerbal}
-                  onChange={(e) =>
-                    setFormData({ ...formData, compreensaoVerbal: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="gesto">Gestual</CFormLabel>
-                <CFormSelect
-                  id="gesto"
-                  value={formData.gesto}
-                  onChange={(e) =>
-                    setFormData({ ...formData, gesto: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="gritos">Gritos</CFormLabel>
-                <CFormSelect
-                  id="gritos"
-                  value={formData.gritos}
-                  onChange={(e) =>
-                    setFormData({ ...formData, gritos: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="mimicaFacial">Mímica Facial</CFormLabel>
-                <CFormSelect
-                  id="mimicaFacial"
-                  value={formData.mimicaFacial}
-                  onChange={(e) =>
-                    setFormData({ ...formData, mimicaFacial: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="monossilabos">Monossílabos</CFormLabel>
-                <CFormSelect
-                  id="monossilabos"
-                  value={formData.monossilabos}
-                  onChange={(e) =>
-                    setFormData({ ...formData, monossilabos: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="frasesCurtas">Frases Curtas</CFormLabel>
-                <CFormSelect
-                  id="frasesCurtas"
-                  value={formData.frasesCurtas}
-                  onChange={(e) =>
-                    setFormData({ ...formData, frasesCurtas: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value
-                            ="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="frasesCompletas">Frases Completas</CFormLabel>
-                <CFormSelect
-                  id="frasesCompletas"
-                  value={formData.frasesCompletas}
-                  onChange={(e) =>
-                    setFormData({ ...formData, frasesCompletas: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
+              <Campo
+                tipo="select"
+                id="compreensaoVerbal"
+                valor={formData.compreensaoVerbal}
+                setar={(e) => setFormData({ ...formData, compreensaoVerbal: e.target.value })}
+                legenda="Verbal Compreensiva"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="gesto"
+                valor={formData.gesto}
+                setar={(e) => setFormData({ ...formData, gesto: e.target.value })}
+                legenda="Gestual"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="gritos"
+                valor={formData.gritos}
+                setar={(e) => setFormData({ ...formData, gritos: e.target.value })}
+                legenda="Gritos"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="mimicaFacial"
+                valor={formData.mimicaFacial}
+                setar={(e) => setFormData({ ...formData, mimicaFacial: e.target.value })}
+                legenda="Mímica Facial"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="monossilabos"
+                valor={formData.monossilabos}
+                setar={(e) => setFormData({ ...formData, monossilabos: e.target.value })}
+                legenda="Monossílabos"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="frasesCurtas"
+                valor={formData.frasesCurtas}
+                setar={(e) => setFormData({ ...formData, frasesCurtas: e.target.value })}
+                legenda="Frases Curtas"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="frasesCompletas"
+                valor={formData.frasesCompletas}
+                setar={(e) => setFormData({ ...formData, frasesCompletas: e.target.value })}
+                legenda="Frases Completas"
+                opcoes={preencherLegenda}
+              />
               <CButton color="primary" onClick={salvar}>
                 Salvar
               </CButton>

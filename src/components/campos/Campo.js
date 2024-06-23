@@ -1,8 +1,19 @@
-import { CFormInput, CFormLabel, CFormSelect, CFormTextarea } from "@coreui/react";
-import React from "react";
+import React from 'react';
+import {
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CFormTextarea,
+} from '@coreui/react';
 
 const Campo = (props) => {
   const renderField = () => {
+    // Verificação para garantir que `props.valor` não seja uma RegExp
+    if (props.valor instanceof RegExp) {
+      console.error(`Invalid prop valor: ${props.valor} is a RegExp object`);
+      return null;
+    }
+
     switch (props.tipo) {
       case 'select':
         return (
@@ -11,7 +22,8 @@ const Campo = (props) => {
             value={props.valor}
             onChange={props.setar}
           >
-            {props.options.map((option, index) => (
+            <option value="">Selecionar</option>
+            {props.opcoes.map((option, index) => (
               <option key={index} value={option.value}>
                 {option.label}
               </option>

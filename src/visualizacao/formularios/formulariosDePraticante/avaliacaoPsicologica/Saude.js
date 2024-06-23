@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   CButton,
   CCard,
@@ -6,11 +6,10 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormInput,
-  CFormLabel,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Saude = () => {
   const [formData, setFormData] = useState({
@@ -34,7 +33,7 @@ const Saude = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -57,95 +56,62 @@ const Saude = () => {
           </CCardHeader>
           <CCardBody>
             <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="alergias">Alergias</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="alergias"
-                  value={formData.alergias}
-                  onChange={(e) =>
-                    setFormData({...formData, alergias: e.target.value})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="convulsoes">Convulsões? Controladas? tipo?</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="convulsoes"
-                  value={formData.convulsoes}
-                  onChange={(e) =>
-                    setFormData({...formData, convulsoes: e.target.value})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="doencas">Doenças significativas/traumas</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="doencas"
-                  value={formData.doencas}
-                  onChange={(e) =>
-                    setFormData({...formData, doencas: e.target.value})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="digestao">Digestão</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="digestao"
-                  value={formData.digestao}
-                  onChange={(e) =>
-                    setFormData({...formData, digestao: e.target.value})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="transtornoAlimentar">Transtorno Alimentar</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="transtornoAlimentar"
-                  value={formData.transtornoAlimentar}
-                  onChange={(e) =>
-                    setFormData({...formData, transtornoAlimentar: e.target.value})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="respiracao">Respiração</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="respiracao"
-                  value={formData.respiracao}
-                  onChange={(e) =>
-                    setFormData({...formData, respiracao: e.target.value})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="sono">Sono</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="sono"
-                  value={formData.sono}
-                  onChange={(e) =>
-                    setFormData({...formData, sono: e.target.value})
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <CFormLabel htmlFor="deficitCognitivo">Déficit Cognitivo</CFormLabel>
-                <CFormInput
-                  type="text"
-                  id="deficitCognitivo"
-                  value={formData.deficitCognitivo}
-                  onChange={(e) =>
-                    setFormData({...formData, deficitCognitivo: e.target.value})
-                  }
-                />
-              </div>
-              {/* Botão para salvar */}
+              <Campo
+                tipo="text"
+                id="alergias"
+                valor={formData.alergias}
+                setar={(e) => setFormData({ ...formData, alergias: e.target.value })}
+                legenda="Alergias"
+              />
+              <Campo
+                tipo="text"
+                id="convulsoes"
+                valor={formData.convulsoes}
+                setar={(e) => setFormData({ ...formData, convulsoes: e.target.value })}
+                legenda="Convulsões? Controladas? tipo?"
+              />
+              <Campo
+                tipo="text"
+                id="doencas"
+                valor={formData.doencas}
+                setar={(e) => setFormData({ ...formData, doencas: e.target.value })}
+                legenda="Doenças significativas/traumas"
+              />
+              <Campo
+                tipo="text"
+                id="digestao"
+                valor={formData.digestao}
+                setar={(e) => setFormData({ ...formData, digestao: e.target.value })}
+                legenda="Digestão"
+              />
+              <Campo
+                tipo="text"
+                id="transtornoAlimentar"
+                valor={formData.transtornoAlimentar}
+                setar={(e) => setFormData({ ...formData, transtornoAlimentar: e.target.value })}
+                legenda="Transtorno Alimentar"
+              />
+              <Campo
+                tipo="text"
+                id="respiracao"
+                valor={formData.respiracao}
+                setar={(e) => setFormData({ ...formData, respiracao: e.target.value })}
+                legenda="Respiração"
+              />
+              <Campo
+                tipo="text"
+                id="sono"
+                valor={formData.sono}
+                setar={(e) => setFormData({ ...formData, sono: e.target.value })}
+                legenda="Sono"
+              />
+              <Campo
+                tipo="text"
+                id="deficitCognitivo"
+                valor={formData.deficitCognitivo}
+                setar={(e) => setFormData({ ...formData, deficitCognitivo: e.target.value })}
+                legenda="Déficit Cognitivo"
+              />
               <CButton color="primary" onClick={salvar}>
                 Salvar
               </CButton>

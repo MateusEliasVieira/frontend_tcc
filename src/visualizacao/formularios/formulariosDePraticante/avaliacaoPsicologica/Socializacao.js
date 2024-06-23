@@ -1,3 +1,5 @@
+// Socializacao.js
+
 import React, { useState } from 'react';
 import {
   CButton,
@@ -5,12 +7,11 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormLabel,
   CRow,
-  CFormSelect,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo';
+import {preencherLegenda} from "../../../../constantes/Constantes"; // Importe o componente Campo
 
 const Socializacao = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ const Socializacao = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -53,97 +54,61 @@ const Socializacao = () => {
             <strong>Socialização</strong>
           </CCardHeader>
           <CCardBody>
-            <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="interageBemComOutrasCriancas">Interage Bem com Outras Crianças</CFormLabel>
-                <CFormSelect
+            <CRow>
+              <CCol md={6}>
+                <Campo
                   id="interageBemComOutrasCriancas"
-                  value={formData.interageBemComOutrasCriancas}
-                  onChange={(e) =>
-                    setFormData({ ...formData, interageBemComOutrasCriancas: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+                  tipo="select"
+                  valor={formData.interageBemComOutrasCriancas}
+                  setar={valor => setFormData({ ...formData, interageBemComOutrasCriancas: valor })}
+                  legenda="Interage Bem com Outras Crianças"
+                  opcoes={preencherLegenda}
+                />
 
-              <div className="mb-3">
-                <CFormLabel htmlFor="interageBemComAdultos">Interage Bem com Adultos</CFormLabel>
-                <CFormSelect
+                <Campo
                   id="interageBemComAdultos"
-                  value={formData.interageBemComAdultos}
-                  onChange={(e) =>
-                    setFormData({ ...formData, interageBemComAdultos: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+                  tipo="select"
+                  valor={formData.interageBemComAdultos}
+                  setar={valor => setFormData({ ...formData, interageBemComAdultos: valor })}
+                  legenda="Interage Bem com Adultos"
+                  opcoes={preencherLegenda}
+                />
 
-              <div className="mb-3">
-                <CFormLabel htmlFor="buscaContatoSocial">Busca Contato Social</CFormLabel>
-                <CFormSelect
+                <Campo
                   id="buscaContatoSocial"
-                  value={formData.buscaContatoSocial}
-                  onChange={(e) =>
-                    setFormData({ ...formData, buscaContatoSocial: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+                  tipo="select"
+                  valor={formData.buscaContatoSocial}
+                  setar={valor => setFormData({ ...formData, buscaContatoSocial: valor })}
+                  legenda="Busca Contato Social"
+                  opcoes={preencherLegenda}
+                />
+              </CCol>
 
-              <div className="mb-3">
-                <CFormLabel htmlFor="temOportunidadeContato">Tem Oportunidade de Contato Social</CFormLabel>
-                <CFormSelect
+              <CCol md={6}>
+                <Campo
                   id="temOportunidadeContato"
-                  value={formData.temOportunidadeContato}
-                  onChange={(e) =>
-                    setFormData({ ...formData, temOportunidadeContato: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+                  tipo="select"
+                  valor={formData.temOportunidadeContato}
+                  setar={valor => setFormData({ ...formData, temOportunidadeContato: valor })}
+                  legenda="Tem Oportunidade de Contato Social"
+                  opcoes={preencherLegenda}
+                />
 
-              <div className="mb-3">
-                <CFormLabel htmlFor="fazContatoVisual">Faz Contato Visual</CFormLabel>
-                <CFormSelect
+                <Campo
                   id="fazContatoVisual"
-                  value={formData.fazContatoVisual}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fazContatoVisual: e.target.value })
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
+                  tipo="select"
+                  valor={formData.fazContatoVisual}
+                  setar={valor => setFormData({ ...formData, fazContatoVisual: valor })}
+                  legenda="Faz Contato Visual"
+                  opcoes={preencherLegenda}
+                />
+              </CCol>
+            </CRow>
 
-              {/* Botão para salvar */}
-              <CButton color="primary" onClick={salvar}>
-                Salvar
-              </CButton>
-            </CForm>
+            {/* Botão para salvar */}
+            <CButton color="primary" onClick={salvar}>
+              Salvar
+            </CButton>
           </CCardBody>
         </CCard>
       </CCol>

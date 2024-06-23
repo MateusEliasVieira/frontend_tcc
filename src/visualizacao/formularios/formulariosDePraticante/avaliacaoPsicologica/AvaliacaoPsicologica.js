@@ -6,10 +6,9 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormLabel,
-  CRow,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo';
 
 const AvaliacaoPsicologica = () => {
   const [formData, setFormData] = useState({
@@ -43,58 +42,44 @@ const AvaliacaoPsicologica = () => {
   };
 
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Avaliação Psicológica</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="expectativasFamiliaresTerapiaEquina">Expectativa da Família Quanto à Equoterapia?</CFormLabel>
-                <textarea
-                  id="expectativasFamiliaresTerapiaEquina"
-                  className="form-control"
-                  value={formData.expectativasFamiliaresTerapiaEquina}
-                  onChange={(e) =>
-                    setFormData({...formData, expectativasFamiliaresTerapiaEquina: e.target.value})
-                  }
-                />
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="resumoCasoObservacoesComplementares">Síntese do Caso e Observações Complementares</CFormLabel>
-                <textarea
-                  id="resumoCasoObservacoesComplementares"
-                  className="form-control"
-                  value={formData.resumoCasoObservacoesComplementares}
-                  onChange={(e) =>
-                    setFormData({...formData, resumoCasoObservacoesComplementares: e.target.value})
-                  }
-                />
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="imagemAssinaturaOuCRPECarimbo">Imagem da Assinatura ou CRP e Carimbo</CFormLabel>
-                <input
-                  type="file"
-                  id="imagemAssinaturaOuCRPECarimbo"
-                  className="form-control"
-                  onChange={(e) =>
-                    setFormData({...formData, imagemAssinaturaOuCRPECarimbo: e.target.files[0]})
-                  }
-                />
-              </div>
-
-              <CButton color="primary" onClick={salvar}>
-                Salvar
-              </CButton>
-            </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+    <CCard className="mb-4">
+      <CCardHeader>
+        <strong>Avaliação Psicológica</strong>
+      </CCardHeader>
+      <CCardBody>
+        <CForm>
+          <Campo
+            tipo="textarea"
+            id="expectativasFamiliaresTerapiaEquina"
+            valor={formData.expectativasFamiliaresTerapiaEquina}
+            setar={(e) =>
+              setFormData({ ...formData, expectativasFamiliaresTerapiaEquina: e.target.value })
+            }
+            legenda="Expectativa da Família Quanto à Equoterapia?"
+          />
+          <Campo
+            tipo="textarea"
+            id="resumoCasoObservacoesComplementares"
+            valor={formData.resumoCasoObservacoesComplementares}
+            setar={(e) =>
+              setFormData({ ...formData, resumoCasoObservacoesComplementares: e.target.value })
+            }
+            legenda="Síntese do Caso e Observações Complementares"
+          />
+          <Campo
+            tipo="file"
+            id="imagemAssinaturaOuCRPECarimbo"
+            setar={(e) =>
+              setFormData({ ...formData, imagemAssinaturaOuCRPECarimbo: e.target.files[0] })
+            }
+            legenda="Imagem da Assinatura ou CRP e Carimbo"
+          />
+          <CButton color="primary" onClick={salvar}>
+            Salvar
+          </CButton>
+        </CForm>
+      </CCardBody>
+    </CCard>
   );
 };
 

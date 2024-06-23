@@ -5,12 +5,12 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormLabel,
   CRow,
-  CFormSelect,
+  CForm,
 } from '@coreui/react';
 import axios from 'axios';
+import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
+import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const RelacaoDaFamiliaComOExaminado = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
 
     try {
       const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
+        'SEU_ENDPOINT_DE_SALVAR_AQUI',
         JSON.stringify(dados),
         {
           headers: {
@@ -55,108 +55,54 @@ const RelacaoDaFamiliaComOExaminado = () => {
           </CCardHeader>
           <CCardBody>
             <CForm>
-              <div className="mb-3">
-                <CFormLabel htmlFor="adequado">Adequado</CFormLabel>
-                <CFormSelect
-                  id="adequado"
-                  value={formData.adequado}
-                  onChange={(e) =>
-                    setFormData({...formData, adequado: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="superprotecao">Superproteção</CFormLabel>
-                <CFormSelect
-                  id="superprotecao"
-                  value={formData.superprotecao}
-                  onChange={(e) =>
-                    setFormData({...formData, superprotecao: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="dificuldadePerceberDeficiencias">Dificuldade em Perceber Deficiências</CFormLabel>
-                <CFormSelect
-                  id="dificuldadePerceberDeficiencias"
-                  value={formData.dificuldadePerceberDeficiencias}
-                  onChange={(e) =>
-                    setFormData({...formData, dificuldadePerceberDeficiencias: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="rejeicao">Rejeição</CFormLabel>
-                <CFormSelect
-                  id="rejeicao"
-                  value={formData.rejeicao}
-                  onChange={(e) =>
-                    setFormData({...formData, rejeicao: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="indiferenca">Indiferença</CFormLabel>
-                <CFormSelect
-                  id="indiferenca"
-                  value={formData.indiferenca}
-                  onChange={(e) =>
-                    setFormData({...formData, indiferenca: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
-              <div className="mb-3">
-                <CFormLabel htmlFor="ansiedadePercebidaEntrevistador">Ansiedade</CFormLabel>
-                <CFormSelect
-                  id="ansiedadePercebidaEntrevistador"
-                  value={formData.ansiedadePercebidaEntrevistador}
-                  onChange={(e) =>
-                    setFormData({...formData, ansiedadePercebidaEntrevistador: e.target.value})
-                  }
-                >
-                  <option value="">Selecionar</option>
-                  <option value="SIM">Sim</option>
-                  <option value="NAO">Não</option>
-                  <option value="NAO_OBSERVADO">Não Observado</option>
-                  <option value="PARCIALMENTE">Parcialmente</option>
-                </CFormSelect>
-              </div>
-
+              <Campo
+                tipo="select"
+                id="adequado"
+                valor={formData.adequado}
+                setar={(e) => setFormData({ ...formData, adequado: e.target.value })}
+                legenda="Adequado"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="superprotecao"
+                valor={formData.superprotecao}
+                setar={(e) => setFormData({ ...formData, superprotecao: e.target.value })}
+                legenda="Superproteção"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="dificuldadePerceberDeficiencias"
+                valor={formData.dificuldadePerceberDeficiencias}
+                setar={(e) => setFormData({ ...formData, dificuldadePerceberDeficiencias: e.target.value })}
+                legenda="Dificuldade em Perceber Deficiências"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="rejeicao"
+                valor={formData.rejeicao}
+                setar={(e) => setFormData({ ...formData, rejeicao: e.target.value })}
+                legenda="Rejeição"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="indiferenca"
+                valor={formData.indiferenca}
+                setar={(e) => setFormData({ ...formData, indiferenca: e.target.value })}
+                legenda="Indiferença"
+                opcoes={preencherLegenda}
+              />
+              <Campo
+                tipo="select"
+                id="ansiedadePercebidaEntrevistador"
+                valor={formData.ansiedadePercebidaEntrevistador}
+                setar={(e) => setFormData({ ...formData, ansiedadePercebidaEntrevistador: e.target.value })}
+                legenda="Ansiedade"
+                opcoes={preencherLegenda}
+              />
               <CButton color="primary" onClick={salvar}>
                 Salvar
               </CButton>
