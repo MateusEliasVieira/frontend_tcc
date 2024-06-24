@@ -56,7 +56,7 @@ const CompletudeMatricula = () => {
                 id="dataCompletudeMatricula"
                 valor={formData.dataCompletudeMatricula}
                 setar={(e) => setFormData({ ...formData, dataCompletudeMatricula: e.target.value })}
-                legenda="Data da Matrícula"
+                legenda="Data da matrícula"
               />
               <Campo
                 tipo="file"
@@ -70,7 +70,7 @@ const CompletudeMatricula = () => {
                       console.log(reject);
                     });
                 }}
-                legenda="Imagem da Assinatura do Responsável"
+                legenda="Imagem da assinatura do responsável"
               />
               {/* Botão para salvar */}
               <CButton color="primary" onClick={salvar}>

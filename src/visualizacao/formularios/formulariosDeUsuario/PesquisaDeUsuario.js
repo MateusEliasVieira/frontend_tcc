@@ -97,7 +97,7 @@ const PesquisaDeUsuario = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Pesquisar Funcionário</strong>
+            <strong>Pesquisar Usuário</strong>
           </CCardHeader>
           <CCardBody>
             <Modal
@@ -119,18 +119,16 @@ const PesquisaDeUsuario = () => {
               }}
             />
             <CForm>
-              <div className="container text-center">
+              <div className="container">
                 <div className="row">
-                  <div className="col-8">
+                  <div className="col">
                     <Campo
                       id="nome"
                       tipo="text"
                       valor={formData.nome}
                       setar={(e) => setFormData({ ...formData, nome: e.target.value })}
-                      legenda="Pesquisar nome"
+                      legenda=""
                     />
-                  </div>
-                  <div className="col-1">
                     <CButton color="primary" onClick={pesquisar}>
                       Pesquisar
                     </CButton>

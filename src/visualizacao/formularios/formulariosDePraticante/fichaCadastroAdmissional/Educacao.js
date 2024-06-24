@@ -85,7 +85,7 @@ const Educacao = () => {
               id="classeDeEscola"
               valor={formData.classeDeEscola}
               setar={(e) => setFormData({ ...formData, classeDeEscola: e.target.value })}
-              legenda="classeDeEscola"
+              legenda="Classe de escola"
               opcoes={classeDeEscola}
             />
             <Campo

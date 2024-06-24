@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {estados, tipoSanguineo, corOuRaca} from '../../../../constantes/Constantes';
+import {estados, tipoSanguineo, corOuRaca, sexo} from '../../../../constantes/Constantes';
 import {
   aplicaMascaraDeCartaoDoSUS,
   aplicaMascaraDeCEP,
@@ -155,34 +155,14 @@ const DadosPessoais = (props) => {
               setar={(e) => setFormData({...formData, fatorRH: e.target.value})}
               legenda="Fator RH"
             />
-            <div className="mb-3">
-              <CFormCheck
-                type="radio"
-                id="sexoMasculino"
-                name="sexo"
-                label="Masculino"
-                value="MASCULINO"
-                checked={formData.sexo === 'MASCULINO'}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setFormData({...formData, sexo: e.target.value});
-                  }
-                }}
-              />
-              <CFormCheck
-                type="radio"
-                id="sexoFeminino"
-                name="sexo"
-                label="Feminino"
-                value="FEMININO"
-                checked={formData.sexo === 'FEMININO'}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setFormData({...formData, sexo: e.target.value});
-                  }
-                }}
-              />
-            </div>
+            <Campo
+              tipo="select"
+              id="sexo"
+              legenda="Sexo"
+              valor={formData.sexo}
+              setar={(e) => setFormData({...formData, sexo: e.target.value})}
+              opcoes={sexo}
+            />
             <Campo
               tipo="select"
               id="naturalidade"

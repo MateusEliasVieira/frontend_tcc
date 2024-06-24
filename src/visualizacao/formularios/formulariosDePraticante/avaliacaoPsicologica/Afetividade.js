@@ -9,6 +9,7 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 import Campo from '../../../../components/campos/Campo';
+import {preencherLegenda} from "../../../../constantes/Constantes";
 
 const Afetividade = () => {
   const [formData, setFormData] = useState({
@@ -42,14 +43,6 @@ const Afetividade = () => {
     }
   };
 
-  const opcoes = [
-    { value: '', label: 'Selecionar' },
-    { value: 'SIM', label: 'Sim' },
-    { value: 'NAO', label: 'Não' },
-    { value: 'NAO_OBSERVADO', label: 'Não Observado' },
-    { value: 'PARCIALMENTE', label: 'Parcialmente' },
-  ];
-
   return (
     <CRow>
       <CCol xs={12}>
@@ -65,8 +58,8 @@ const Afetividade = () => {
               setar={(e) =>
                 setFormData({ ...formData, demonstraAfeicaoEspecialPorAlguem: e.target.value })
               }
-              legenda="Demonstra Carinho Especial Por Alguém"
-              opcoes={opcoes}
+              legenda="Demonstra carinho especial por alguém?"
+              opcoes={preencherLegenda}
             />
             <Campo
               tipo="select"
@@ -75,8 +68,8 @@ const Afetividade = () => {
               setar={(e) =>
                 setFormData({ ...formData, compartilhaSuasCoisas: e.target.value })
               }
-              legenda="Divide Suas Coisas"
-              opcoes={opcoes}
+              legenda="Divide suas coisas?"
+              opcoes={preencherLegenda}
             />
             <Campo
               tipo="select"
@@ -85,8 +78,8 @@ const Afetividade = () => {
               setar={(e) =>
                 setFormData({ ...formData, ajudaQuandoSolicitado: e.target.value })
               }
-              legenda="Ajuda Quando Solicitado"
-              opcoes={opcoes}
+              legenda="Ajuda quando solicitado?"
+              opcoes={preencherLegenda}
             />
             <Campo
               tipo="select"
@@ -95,8 +88,8 @@ const Afetividade = () => {
               setar={(e) =>
                 setFormData({ ...formData, expressaoDeSentimentos: e.target.value })
               }
-              legenda="Expressão de Sentimentos (Carinho, Raiva, ...)"
-              opcoes={opcoes}
+              legenda="Expressão de sentimentos (Carinho, Raiva, ...)?"
+              opcoes={preencherLegenda}
             />
             <CButton color="primary" onClick={salvar}>
               Salvar

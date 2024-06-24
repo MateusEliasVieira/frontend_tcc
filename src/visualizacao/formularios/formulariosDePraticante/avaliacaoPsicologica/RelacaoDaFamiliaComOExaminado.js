@@ -60,7 +60,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                 id="adequado"
                 valor={formData.adequado}
                 setar={(e) => setFormData({ ...formData, adequado: e.target.value })}
-                legenda="Adequado"
+                legenda="Adequado?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -68,7 +68,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                 id="superprotecao"
                 valor={formData.superprotecao}
                 setar={(e) => setFormData({ ...formData, superprotecao: e.target.value })}
-                legenda="Superproteção"
+                legenda="Superproteção?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -76,7 +76,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                 id="dificuldadePerceberDeficiencias"
                 valor={formData.dificuldadePerceberDeficiencias}
                 setar={(e) => setFormData({ ...formData, dificuldadePerceberDeficiencias: e.target.value })}
-                legenda="Dificuldade em Perceber Deficiências"
+                legenda="Dificuldade em perceber deficiências?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -84,7 +84,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                 id="rejeicao"
                 valor={formData.rejeicao}
                 setar={(e) => setFormData({ ...formData, rejeicao: e.target.value })}
-                legenda="Rejeição"
+                legenda="Rejeição?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -92,7 +92,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                 id="indiferenca"
                 valor={formData.indiferenca}
                 setar={(e) => setFormData({ ...formData, indiferenca: e.target.value })}
-                legenda="Indiferença"
+                legenda="Indiferença?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -100,7 +100,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                 id="ansiedadePercebidaEntrevistador"
                 valor={formData.ansiedadePercebidaEntrevistador}
                 setar={(e) => setFormData({ ...formData, ansiedadePercebidaEntrevistador: e.target.value })}
-                legenda="Ansiedade"
+                legenda="Ansiedade?"
                 opcoes={preencherLegenda}
               />
               <CButton color="primary" onClick={salvar}>

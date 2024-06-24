@@ -66,14 +66,14 @@ const Rotina = () => {
                 id="preferenciasPorBrincadeiras"
                 valor={formData.preferenciasPorBrincadeiras}
                 setar={(e) => setFormData({ ...formData, preferenciasPorBrincadeiras: e.target.value })}
-                legenda="Preferências e Aversões"
+                legenda="Preferências e aversões"
               />
               <Campo
                 tipo="select"
                 id="aceitaMudancasNaRotina"
                 valor={formData.aceitaMudancasNaRotina}
                 setar={(e) => setFormData({ ...formData, aceitaMudancasNaRotina: e.target.value })}
-                legenda="Aceita Mudanças na sua Rotina?"
+                legenda="Aceita mudanças na sua rotina?"
                 opcoes={simOuNao}
               />
               <Campo
@@ -81,7 +81,7 @@ const Rotina = () => {
                 id="consideracoesSobreRotina"
                 valor={formData.consideracoesSobreRotina}
                 setar={(e) => setFormData({ ...formData, consideracoesSobreRotina: e.target.value })}
-                legenda="Considerações Sobre Rotina"
+                legenda="Considerações sobre rotina"
               />
               <CButton color="primary" onClick={salvar}>
                 Salvar

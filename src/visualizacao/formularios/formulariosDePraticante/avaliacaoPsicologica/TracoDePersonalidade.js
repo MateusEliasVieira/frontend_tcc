@@ -64,7 +64,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.extroversao}
                 setar={valor => setFormData({ ...formData, extroversao: valor })}
-                legenda="Extroversão"
+                legenda="É extrovertido(a)?"
                 opcoes={preencherLegenda}
               />
 
@@ -73,7 +73,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.fobia}
                 setar={valor => setFormData({ ...formData, fobia: valor })}
-                legenda="Fobia"
+                legenda="Tem fobia?"
                 opcoes={preencherLegenda}
               />
 
@@ -82,7 +82,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.obsessao}
                 setar={valor => setFormData({ ...formData, obsessao: valor })}
-                legenda="Obsessão"
+                legenda="Possui alguma obsessão?"
                 opcoes={preencherLegenda}
               />
 
@@ -91,7 +91,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.introversao}
                 setar={valor => setFormData({ ...formData, introversao: valor })}
-                legenda="Introversão"
+                legenda="É introvertido?"
                 opcoes={preencherLegenda}
               />
 
@@ -100,7 +100,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.ansiedade}
                 setar={valor => setFormData({ ...formData, ansiedade: valor })}
-                legenda="Ansiedade"
+                legenda="Tem ansiedade?"
                 opcoes={preencherLegenda}
               />
 
@@ -109,7 +109,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.histeria}
                 setar={valor => setFormData({ ...formData, histeria: valor })}
-                legenda="Histeria"
+                legenda="Tem histeria?"
                 opcoes={preencherLegenda}
               />
 
@@ -118,7 +118,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.dependenciaEmocional}
                 setar={valor => setFormData({ ...formData, dependenciaEmocional: valor })}
-                legenda="Dependência Emocional"
+                legenda="Tem alguma dependência emocional?"
                 opcoes={preencherLegenda}
               />
 
@@ -127,7 +127,7 @@ const TracoDePersonalidade = () => {
                 tipo="select"
                 valor={formData.timidez}
                 setar={valor => setFormData({ ...formData, timidez: valor })}
-                legenda="Timidez"
+                legenda="É timido(a)?"
                 opcoes={preencherLegenda}
               />
 

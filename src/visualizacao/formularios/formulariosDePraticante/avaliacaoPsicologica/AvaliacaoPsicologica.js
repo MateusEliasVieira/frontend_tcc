@@ -55,7 +55,7 @@ const AvaliacaoPsicologica = () => {
             setar={(e) =>
               setFormData({ ...formData, expectativasFamiliaresTerapiaEquina: e.target.value })
             }
-            legenda="Expectativa da Família Quanto à Equoterapia?"
+            legenda="Qual a expectativa da família quanto à equoterapia?"
           />
           <Campo
             tipo="textarea"
@@ -64,7 +64,7 @@ const AvaliacaoPsicologica = () => {
             setar={(e) =>
               setFormData({ ...formData, resumoCasoObservacoesComplementares: e.target.value })
             }
-            legenda="Síntese do Caso e Observações Complementares"
+            legenda="Síntese do caso e observações complementares"
           />
           <Campo
             tipo="file"
@@ -72,7 +72,7 @@ const AvaliacaoPsicologica = () => {
             setar={(e) =>
               setFormData({ ...formData, imagemAssinaturaOuCRPECarimbo: e.target.files[0] })
             }
-            legenda="Imagem da Assinatura ou CRP e Carimbo"
+            legenda="Imagem da assinatura ou CRP e carimbo"
           />
           <CButton color="primary" onClick={salvar}>
             Salvar

@@ -61,7 +61,7 @@ const Linguagem = () => {
                 id="compreensaoVerbal"
                 valor={formData.compreensaoVerbal}
                 setar={(e) => setFormData({ ...formData, compreensaoVerbal: e.target.value })}
-                legenda="Verbal Compreensiva"
+                legenda="Tem linguagem verbal compreensiva?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -69,7 +69,7 @@ const Linguagem = () => {
                 id="gesto"
                 valor={formData.gesto}
                 setar={(e) => setFormData({ ...formData, gesto: e.target.value })}
-                legenda="Gestual"
+                legenda="Gestual?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -77,7 +77,7 @@ const Linguagem = () => {
                 id="gritos"
                 valor={formData.gritos}
                 setar={(e) => setFormData({ ...formData, gritos: e.target.value })}
-                legenda="Gritos"
+                legenda="Gritos?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -85,7 +85,7 @@ const Linguagem = () => {
                 id="mimicaFacial"
                 valor={formData.mimicaFacial}
                 setar={(e) => setFormData({ ...formData, mimicaFacial: e.target.value })}
-                legenda="Mímica Facial"
+                legenda="Mímica facial?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -93,7 +93,7 @@ const Linguagem = () => {
                 id="monossilabos"
                 valor={formData.monossilabos}
                 setar={(e) => setFormData({ ...formData, monossilabos: e.target.value })}
-                legenda="Monossílabos"
+                legenda="Monossílabos?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -101,7 +101,7 @@ const Linguagem = () => {
                 id="frasesCurtas"
                 valor={formData.frasesCurtas}
                 setar={(e) => setFormData({ ...formData, frasesCurtas: e.target.value })}
-                legenda="Frases Curtas"
+                legenda="Fala frases curtas?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -109,7 +109,7 @@ const Linguagem = () => {
                 id="frasesCompletas"
                 valor={formData.frasesCompletas}
                 setar={(e) => setFormData({ ...formData, frasesCompletas: e.target.value })}
-                legenda="Frases Completas"
+                legenda="Fala frases completas?"
                 opcoes={preencherLegenda}
               />
               <CButton color="primary" onClick={salvar}>

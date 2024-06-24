@@ -70,7 +70,7 @@ const SobreACrianca = () => {
                 id="criancaPlanejada"
                 valor={formData.criancaPlanejada}
                 setar={valor => setFormData({ ...formData, criancaPlanejada: valor })}
-                legenda="Criança planejada?"
+                legenda="A criança foi planejada?"
                 opcoes={simOuNao}
               />
 
@@ -79,7 +79,7 @@ const SobreACrianca = () => {
                 id="cuidadosPreNatais"
                 valor={formData.cuidadosPreNatais}
                 setar={valor => setFormData({ ...formData, cuidadosPreNatais: valor })}
-                legenda="Acompanhamento pré-natal?"
+                legenda="Teve acompanhamento pré-natal?"
                 opcoes={simOuNao}
               />
 
@@ -88,7 +88,7 @@ const SobreACrianca = () => {
                 id="chorouNoNascimento"
                 valor={formData.chorouNoNascimento}
                 setar={valor => setFormData({ ...formData, chorouNoNascimento: valor })}
-                legenda="Choro ao nascer?"
+                legenda="Chorou ao nascer?"
                 opcoes={simOuNao}
               />
 
@@ -97,7 +97,7 @@ const SobreACrianca = () => {
                 id="alimentacao"
                 valor={formData.alimentacao}
                 setar={valor => setFormData({ ...formData, alimentacao: valor })}
-                legenda="Alimentação"
+                legenda="Qual foi a alimentação?"
                 opcoes={alimentacao}
               />
 

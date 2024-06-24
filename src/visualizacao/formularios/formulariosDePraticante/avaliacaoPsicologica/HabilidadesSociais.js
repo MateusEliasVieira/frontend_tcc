@@ -58,7 +58,7 @@ const HabilidadesSociais = () => {
                 id="passividade"
                 valor={formData.passividade}
                 setar={(e) => setFormData({ ...formData, passividade: e.target.value })}
-                legenda="Passividade"
+                legenda="Passividade?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -66,7 +66,7 @@ const HabilidadesSociais = () => {
                 id="autoagressao"
                 valor={formData.autoagressao}
                 setar={(e) => setFormData({ ...formData, autoagressao: e.target.value })}
-                legenda="Autoagressividade"
+                legenda="Autoagressividade?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -74,7 +74,7 @@ const HabilidadesSociais = () => {
                 id="heteroagressividade"
                 valor={formData.heteroagressividade}
                 setar={(e) => setFormData({ ...formData, heteroagressividade: e.target.value })}
-                legenda="Heteroagressividade"
+                legenda="Heteroagressividade?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -82,7 +82,7 @@ const HabilidadesSociais = () => {
                 id="assertividade"
                 valor={formData.assertividade}
                 setar={(e) => setFormData({ ...formData, assertividade: e.target.value })}
-                legenda="Assertividade"
+                legenda="Assertividade?"
                 opcoes={preencherLegenda}
               />
 

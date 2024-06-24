@@ -61,7 +61,7 @@ const Socializacao = () => {
                   tipo="select"
                   valor={formData.interageBemComOutrasCriancas}
                   setar={valor => setFormData({ ...formData, interageBemComOutrasCriancas: valor })}
-                  legenda="Interage Bem com Outras Crianças"
+                  legenda="Interage bem com outras crianças?"
                   opcoes={preencherLegenda}
                 />
 
@@ -70,7 +70,7 @@ const Socializacao = () => {
                   tipo="select"
                   valor={formData.interageBemComAdultos}
                   setar={valor => setFormData({ ...formData, interageBemComAdultos: valor })}
-                  legenda="Interage Bem com Adultos"
+                  legenda="Interage bem com adultos?"
                   opcoes={preencherLegenda}
                 />
 
@@ -79,7 +79,7 @@ const Socializacao = () => {
                   tipo="select"
                   valor={formData.buscaContatoSocial}
                   setar={valor => setFormData({ ...formData, buscaContatoSocial: valor })}
-                  legenda="Busca Contato Social"
+                  legenda="Busca contato social?"
                   opcoes={preencherLegenda}
                 />
               </CCol>
@@ -90,7 +90,7 @@ const Socializacao = () => {
                   tipo="select"
                   valor={formData.temOportunidadeContato}
                   setar={valor => setFormData({ ...formData, temOportunidadeContato: valor })}
-                  legenda="Tem Oportunidade de Contato Social"
+                  legenda="Tem oportunidade de contato social?"
                   opcoes={preencherLegenda}
                 />
 
@@ -99,7 +99,7 @@ const Socializacao = () => {
                   tipo="select"
                   valor={formData.fazContatoVisual}
                   setar={valor => setFormData({ ...formData, fazContatoVisual: valor })}
-                  legenda="Faz Contato Visual"
+                  legenda="Faz contato visual?"
                   opcoes={preencherLegenda}
                 />
               </CCol>

@@ -56,13 +56,13 @@ const _nav_administrador = [
       {
         component: CNavItem,
         name: 'Novo Usuário',
-        to: '/formulario/cadastrar-funcionario',
+        to: '/formulario/cadastrar-usuario',
         icon:<CIcon icon={cilUserPlus} customClassName={"nav-icon"}/>
       },
       {
         component: CNavItem,
         name: 'Visualizar Usuários',
-        to: '/formulario/pesquisar-funcionario',
+        to: '/formulario/pesquisar-usuario',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
     ],

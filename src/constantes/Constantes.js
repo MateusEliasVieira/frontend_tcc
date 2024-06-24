@@ -95,6 +95,10 @@ const simOuNao = [
   {label: 'Sim', value: 'true'},
   {label: 'Não', value: 'false'}
 ];
+const sexo = [
+  {label: 'Masculino', value: 'MASCULINO'},
+  {label: 'Feminino', value: 'FEMININO'}
+];
 
 export {
   estados,
@@ -108,5 +112,6 @@ export {
   periodo,
   simOuNao,
   preencherLegenda,
-  alimentacao
+  alimentacao,
+  sexo
 };

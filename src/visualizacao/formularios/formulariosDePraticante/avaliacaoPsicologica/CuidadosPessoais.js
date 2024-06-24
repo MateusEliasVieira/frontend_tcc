@@ -57,7 +57,7 @@ const CuidadosPessoais = () => {
                 id="higienePessoalSozinho"
                 valor={formData.higienePessoalSozinho}
                 setar={(e) => setFormData({ ...formData, higienePessoalSozinho: e.target.value })}
-                legenda="Executa higiene pessoal sozinho(a)"
+                legenda="Executa higiene pessoal sozinho(a)?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -65,7 +65,7 @@ const CuidadosPessoais = () => {
                 id="vesteRoupasCalcadosSozinho"
                 valor={formData.vesteRoupasCalcadosSozinho}
                 setar={(e) => setFormData({ ...formData, vesteRoupasCalcadosSozinho: e.target.value })}
-                legenda="Veste as roupas/sapatos sozinho(a)"
+                legenda="Veste as roupas/sapatos sozinho(a)?"
                 opcoes={preencherLegenda}
               />
               <Campo
@@ -73,7 +73,7 @@ const CuidadosPessoais = () => {
                 id="seAlimentaSozinho"
                 valor={formData.seAlimentaSozinho}
                 setar={(e) => setFormData({ ...formData, seAlimentaSozinho: e.target.value })}
-                legenda="Se alimenta sozinho(a)"
+                legenda="Se alimenta sozinho(a)?"
                 opcoes={preencherLegenda}
               />
 

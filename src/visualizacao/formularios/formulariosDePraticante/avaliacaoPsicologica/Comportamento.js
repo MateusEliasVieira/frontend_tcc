@@ -56,7 +56,7 @@ const Comportamento = () => {
             id="agitacao"
             valor={formData.agitacao}
             setar={(e) => setFormData({ ...formData, agitacao: e.target.value })}
-            legenda="Agitação"
+            legenda="Tem comportamento agitado?"
             opcoes={preencherLegenda}
           />
           <Campo
@@ -64,7 +64,7 @@ const Comportamento = () => {
             id="toleranciaFrustracao"
             valor={formData.toleranciaFrustracao}
             setar={(e) => setFormData({ ...formData, toleranciaFrustracao: e.target.value })}
-            legenda="Tolerância à Frustração"
+            legenda="Tem tolerância à frustração?"
             opcoes={preencherLegenda}
           />
           <Campo
@@ -72,7 +72,7 @@ const Comportamento = () => {
             id="respeitaLimitesRegras"
             valor={formData.respeitaLimitesRegras}
             setar={(e) => setFormData({ ...formData, respeitaLimitesRegras: e.target.value })}
-            legenda="Respeita Limites e Regras"
+            legenda="Respeita limites e regras?"
             opcoes={preencherLegenda}
           />
           <Campo
@@ -80,7 +80,7 @@ const Comportamento = () => {
             id="oposicao"
             valor={formData.oposicao}
             setar={(e) => setFormData({ ...formData, oposicao: e.target.value })}
-            legenda="Oposição"
+            legenda="Oposição?"
             opcoes={preencherLegenda}
           />
           <Campo
@@ -88,7 +88,7 @@ const Comportamento = () => {
             id="atencaoConcentracao"
             valor={formData.atencaoConcentracao}
             setar={(e) => setFormData({ ...formData, atencaoConcentracao: e.target.value })}
-            legenda="Atenção e Concentração"
+            legenda="Possui atenção e concentração?"
             opcoes={preencherLegenda}
           />
           <CButton color="primary" onClick={salvar}>

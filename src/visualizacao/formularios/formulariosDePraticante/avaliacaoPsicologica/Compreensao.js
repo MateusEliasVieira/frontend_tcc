@@ -55,7 +55,7 @@ const Compreensao = () => {
               id="compreendeOrdens"
               valor={formData.compreendeOrdens}
               setar={(e) => setFormData({ ...formData, compreendeOrdens: e.target.value })}
-              legenda="Compreende Ordens"
+              legenda="Compreende ordens ?"
               opcoes={preencherLegenda}
             />
             <Campo
@@ -63,7 +63,7 @@ const Compreensao = () => {
               id="executaOrdensVerbaisSimples"
               valor={formData.executaOrdensVerbaisSimples}
               setar={(e) => setFormData({ ...formData, executaOrdensVerbaisSimples: e.target.value })}
-              legenda="Executa Ordens Verbais Simples"
+              legenda="Executa ordens verbais simples?"
               opcoes={preencherLegenda}
             />
             <Campo
@@ -71,7 +71,7 @@ const Compreensao = () => {
               id="executaOrdensComplexas"
               valor={formData.executaOrdensComplexas}
               setar={(e) => setFormData({ ...formData, executaOrdensComplexas: e.target.value })}
-              legenda="Executa Ordens Complexas"
+              legenda="Executa ordens complexas?"
               opcoes={preencherLegenda}
             />
 

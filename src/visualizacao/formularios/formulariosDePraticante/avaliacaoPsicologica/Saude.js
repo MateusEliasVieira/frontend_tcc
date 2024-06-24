@@ -68,7 +68,7 @@ const Saude = () => {
                 id="convulsoes"
                 valor={formData.convulsoes}
                 setar={(e) => setFormData({ ...formData, convulsoes: e.target.value })}
-                legenda="Convulsões? Controladas? tipo?"
+                legenda="Convulsões? Controladas? Tipo?"
               />
               <Campo
                 tipo="text"
@@ -89,7 +89,7 @@ const Saude = () => {
                 id="transtornoAlimentar"
                 valor={formData.transtornoAlimentar}
                 setar={(e) => setFormData({ ...formData, transtornoAlimentar: e.target.value })}
-                legenda="Transtorno Alimentar"
+                legenda="Transtorno alimentar"
               />
               <Campo
                 tipo="text"
@@ -110,7 +110,7 @@ const Saude = () => {
                 id="deficitCognitivo"
                 valor={formData.deficitCognitivo}
                 setar={(e) => setFormData({ ...formData, deficitCognitivo: e.target.value })}
-                legenda="Déficit Cognitivo"
+                legenda="Déficit cognitivo"
               />
               <CButton color="primary" onClick={salvar}>
                 Salvar

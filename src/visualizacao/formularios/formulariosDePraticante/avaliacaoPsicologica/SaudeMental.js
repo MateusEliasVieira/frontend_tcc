@@ -56,7 +56,7 @@ const SaudeMental = () => {
                 id="apresentaConfusaoMental"
                 valor={formData.apresentaConfusaoMental}
                 setar={(e) => setFormData({ ...formData, apresentaConfusaoMental: e.target.value })}
-                legenda="Apresenta Confusão Mental"
+                legenda="Apresenta confusão mental?"
                 opcoes={preencherLegenda}
               />
 
@@ -65,7 +65,7 @@ const SaudeMental = () => {
                 id="apresentaDelirios"
                 valor={formData.apresentaDelirios}
                 setar={(e) => setFormData({ ...formData, apresentaDelirios: e.target.value })}
-                legenda="Apresenta Delírios"
+                legenda="Apresenta delírios?"
                 opcoes={preencherLegenda}
               />
 
@@ -74,7 +74,7 @@ const SaudeMental = () => {
                 id="apresentaAlucinacoes"
                 valor={formData.apresentaAlucinacoes}
                 setar={(e) => setFormData({ ...formData, apresentaAlucinacoes: e.target.value })}
-                legenda="Apresenta Alucinações"
+                legenda="Apresenta alucinações?"
                 opcoes={preencherLegenda}
               />
 

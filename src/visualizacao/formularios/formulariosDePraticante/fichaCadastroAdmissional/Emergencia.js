@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   CButton,
   CCard,
@@ -12,10 +12,13 @@ import Campo from '../../../../components/campos/Campo'; // Importando o compone
 import {simOuNao} from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
+
+  const[possuiPlanoDeSaude,setPossuiPlanoDeSaude]=useState('')
+
   const [formData, setFormData] = useState({
     ligarPara: '',
     telefone: '',
-    possuiPlanoDeSaude: false,
+    possuiPlanoDeSaude: '',
     plano: '',
   });
 
@@ -52,33 +55,38 @@ const Emergencia = () => {
               tipo="text"
               id="ligarPara"
               valor={formData.ligarPara}
-              setar={(e) => setFormData({ ...formData, ligarPara: e.target.value })}
+              setar={(e) => setFormData({...formData, ligarPara: e.target.value})}
               legenda="Ligar para"
             />
             <Campo
               tipo="text"
               id="telefone"
               valor={formData.telefone}
-              setar={(e) => setFormData({ ...formData, telefone: e.target.value })}
+              setar={(e) => setFormData({...formData, telefone: e.target.value})}
               legenda="Telefone"
             />
             <Campo
               tipo="select"
               id="possuiPlanoDeSaude"
               valor={formData.possuiPlanoDeSaude}
-              setar={(e) => setFormData({ ...formData, possuiPlanoDeSaude: e.target.value })}
-              legenda="Possui Plano de Saúde"
+              setar={(e) => {
+                setFormData({...formData, possuiPlanoDeSaude: e.target.value})
+                setPossuiPlanoDeSaude(e.target.value)
+              }}
+              legenda="Possui plano de saúde?"
               opcoes={simOuNao}
             />
-            {formData.possuiPlanoDeSaude && (
-              <Campo
+            {possuiPlanoDeSaude === 'true' ?
+              (<Campo
                 tipo="text"
                 id="plano"
                 valor={formData.plano}
-                setar={(e) => setFormData({ ...formData, plano: e.target.value })}
+                setar={(e) => setFormData({...formData, plano: e.target.value})}
                 legenda="Qual é o plano?"
-              />
-            )}
+              />)
+              :
+              (<></>)
+            }
             <CButton color="primary" onClick={salvar}>
               Salvar
             </CButton>
