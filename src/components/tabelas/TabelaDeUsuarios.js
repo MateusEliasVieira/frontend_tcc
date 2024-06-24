@@ -8,6 +8,7 @@ import {
   CTableBody,
   CTableDataCell
 } from '@coreui/react';
+import {apresentarModalDeOpcoes} from "../../utilidades/ManipuladorDeModal";
 
 const formatDate = (date) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -16,20 +17,20 @@ const formatDate = (date) => {
 
 const TabelaDeUsuarios = ({ list, handleShowModalAction }) => {
   return (
-    <CTable class="table table-bordered">
+    <CTable className="table table-bordered">
       <CTableHead>
         <CTableRow>
           <CTableHeaderCell>ID</CTableHeaderCell>
           <CTableHeaderCell>Nome</CTableHeaderCell>
           <CTableHeaderCell>CPF</CTableHeaderCell>
-          <CTableHeaderCell>Data.N</CTableHeaderCell>
-          <CTableHeaderCell>E.Civil</CTableHeaderCell>
+          <CTableHeaderCell>Data Nascimento</CTableHeaderCell>
+          <CTableHeaderCell>E. Civil</CTableHeaderCell>
           <CTableHeaderCell>Email</CTableHeaderCell>
           <CTableHeaderCell>Telefone</CTableHeaderCell>
           <CTableHeaderCell>Formação</CTableHeaderCell>
-          <CTableHeaderCell>D.Formação</CTableHeaderCell>
+          <CTableHeaderCell>D. Formação</CTableHeaderCell>
           <CTableHeaderCell>Nível</CTableHeaderCell>
-          <CTableHeaderCell>Vinculo</CTableHeaderCell>
+          <CTableHeaderCell>Vínculo</CTableHeaderCell>
           <CTableHeaderCell>Cidade</CTableHeaderCell>
           <CTableHeaderCell>Bairro</CTableHeaderCell>
           <CTableHeaderCell>Logradouro</CTableHeaderCell>
@@ -41,82 +42,24 @@ const TabelaDeUsuarios = ({ list, handleShowModalAction }) => {
         {
           list.map((item) => (
             <CTableRow key={item.idUsuario}>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "50px"
-              }}>{item.idUsuario}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.nome}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.cpf}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{formatDate(item.dataNascimento)}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.estadoCivil}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.email}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.telefone}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.possuiFormacao ? 'Sim' : 'Não'}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.detalhesFormacao}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.role === 'ROLE_USER' ? 'Usuário' : 'Administrador'}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.vinculo}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.cidade}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.bairro}</CTableDataCell>
-              <CTableDataCell style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                minWidth: "150px"
-              }}>{item.logradouro}</CTableDataCell>
-              <CTableDataCell
-                style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "50px" }}>{item.idUsuario}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.nome}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.cpf}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{formatDate(item.dataNascimento)}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.estadoCivil}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.email}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.telefone}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.possuiFormacao ? 'Sim' : 'Não'}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.detalhesFormacao}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.role === 'ROLE_USER' ? 'Usuário' : 'Administrador'}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.vinculo}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.cidade}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.bairro}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.logradouro}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>
                 <img src={item.foto} width={100} height={100} alt="Foto" />
               </CTableDataCell>
-              <CTableDataCell
-                style={{ textAlign: "center", verticalAlign: "middle", minWidth: "230px" }}>
+              <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "230px" }}>
                 <div className="container text-center">
                   <div className="row">
                     <div className="col">
@@ -125,8 +68,7 @@ const TabelaDeUsuarios = ({ list, handleShowModalAction }) => {
                       }}>Atualizar</CButton>
                     </div>
                     <div className="col">
-                      <CButton color="danger"
-                               onClick={() => handleShowModalAction("Confirmar Deleção", "Deseja realmente deletar este usuário?", item.idUsuario)}>Deletar</CButton>
+                      <CButton color="danger" onClick={() => apresentarModalDeOpcoes("Confirmar Deleção", "Deseja realmente deletar este usuário?", item.idUsuario)}>Deletar</CButton>
                     </div>
                   </div>
                 </div>

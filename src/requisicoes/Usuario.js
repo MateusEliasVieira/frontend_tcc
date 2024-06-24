@@ -1,40 +1,69 @@
 import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import axios from "axios";
 import {apresentarModal} from "../utilidades/ManipuladorDeModal";
+import {DELETAR_USUARIO_DELETE, PESQUISAR_USUARIO_GET} from "../endpoints/usuario/Endpoints";
 
-var login = JSON.stringify(localStorage.getItem("login"))
+var login = JSON.parse(localStorage.getItem("login"));
 
-const salvar = async (formularioDeDados,endpoint) => {
+const salvar = async (formularioDeDados, endpoint, setDisplayModal, setClassModal, setTituloModal, setConteudoModal) => {
   if (camposPreenchidos(formularioDeDados)) {
     try {
-      const response = await axios.post(endpoint,JSON.stringify(...formularioDeDados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization':`Bearer ${login.token}`
-          },
-        }
-      );
-      apresentarModal("Resposta", response.data.mensagem)
+      const response = await axios.post(endpoint, JSON.stringify({...formularioDeDados}), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+      });
+      apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setClassModal, setTituloModal, setConteudoModal);
     } catch (error) {
-      // Caso seja apenas um erro
       if (error.response.data.title !== undefined) {
-        apresentarModal("Atenção", error.response.data.title)
+        apresentarModal("Atenção", error.response.data.title, setDisplayModal, setClassModal, setTituloModal, setConteudoModal);
       }
-      // Caso seja uma lista de erros
       if (error.response.data.lista !== undefined) {
-        // Há lista de erros
-        let lista = ""
+        let lista = "";
         error.response.data.lista.forEach((item) => {
-          lista += `Campo ${item.nomeCampo}, ${item.mensagem}` + "\n"
-        })
-        apresentarModal("Atenção", lista)
+          lista += `<strong>*</strong> ${item.mensagem}` + "<br/>";
+        });
+        apresentarModal("Atenção", lista, setDisplayModal, setClassModal, setTituloModal, setConteudoModal);
       }
     }
   } else {
-    // Tem algum campo obrigatório não preenchido
-    apresentarModal("Atenção", "Por favor, preencha todos os campos!")
+    apresentarModal("Atenção", "Por favor, preencha todos os campos!", setDisplayModal, setClassModal, setTituloModal, setConteudoModal);
   }
 };
 
-export {salvar}
+const deletar = async (id, setList, setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (id !== null) {
+    try {
+      const response = await axios.delete(DELETAR_USUARIO_DELETE, {
+        params: {id: id},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+      });
+      setList(prevList => prevList.filter(item => item.idUsuario !== id));
+      apresentarModal("Aviso", "Usuário deletado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal);
+    } catch (error) {
+      apresentarModal("Atenção", error.response.data.title, setDisplayModal, setTituloModal, setConteudoModal);
+    }
+  } else {
+    apresentarModal("Atenção", "O id do usuário está nulo!", setDisplayModal, setTituloModal, setConteudoModal);
+  }
+};
+const pesquisar = async (formData, setList, setDisplayModal, setTituloModal, setConteudoModal) => {
+  try {
+    const response = await axios.get(PESQUISAR_USUARIO_GET, {
+      params: {nome: formData.nome},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${login.token}`
+      },
+    });
+    setList(response.data);
+  } catch (error) {
+    apresentarModal("Atenção", error.response.data.title, setDisplayModal, setTituloModal, setConteudoModal);
+  }
+};
+
+export {salvar, deletar, pesquisar};

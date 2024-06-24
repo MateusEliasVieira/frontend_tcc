@@ -36,7 +36,6 @@ const Login = () => {
 
   const logar = () => {
     try {
-
       axios.post(LOGIN_POST,
         JSON.stringify({...form}),
         {

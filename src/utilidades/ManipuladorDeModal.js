@@ -1,36 +1,38 @@
-const apresentarModal = (title, message) => {
-  setDisplayModal("block")
-  setClassModal("modal fade show")
-  setTituloModal(title)
-  setConteudoModal(message)
-}
-const esconderModal = () => {
-  setDisplayModal("none")
-  setClassModal("modal fade")
-  setTituloModal("")
-  setConteudoModal("")
-}
-const apresentarModalDeOpcoes = (title, message, id) => {
+const apresentarModal = (titulo, conteudo, setDisplayModal, setTituloModal, setConteudoModal) => {
+  setDisplayModal(true);
+  setTituloModal(titulo);
+  setConteudoModal(conteudo);
+};
+
+
+const esconderModal = (setDisplayModal, setTituloModal, setConteudoModal) => {
+  setDisplayModal(false);
+  setTituloModal("");
+  setConteudoModal(""); // Aqui está sendo chamado como uma função
+};
+
+const apresentarModalDeOpcoes = (titulo, conteudo, setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes) => {
   setDisplayModalOpcoes(true);
-  setTituloModalOpcoes(title);
-  setConteudoModalOpcoes(message);
-  setIdParaDeletar(id);
-}
-const esconderModalDeOpcoes = () => {
+  setTituloModalOpcoes(titulo);
+  setConteudoModalOpcoes(conteudo);
+};
+
+const esconderModalDeOpcoes = (setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes, setIdParaDeletar) => {
   setDisplayModalOpcoes(false);
   setTituloModalOpcoes("");
   setConteudoModalOpcoes("");
   setIdParaDeletar(null);
-}
-const confirmar = () => {
+};
+
+const confirmar = (idParaDeletar, deletar, esconderModalDeOpcoes) => {
   if (idParaDeletar !== null) {
     deletar(idParaDeletar);
     esconderModalDeOpcoes();
   }
-}
+};
 
 export {
   apresentarModal, esconderModal,
   apresentarModalDeOpcoes, esconderModalDeOpcoes,
   confirmar
-}
+};

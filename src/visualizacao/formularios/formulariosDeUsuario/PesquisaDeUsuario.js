@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -9,18 +9,18 @@ import {
   CRow
 } from '@coreui/react';
 import axios from 'axios';
-import { DELETAR_USUARIO_DELETE, PESQUISAR_USUARIO_GET } from "../../../endpoints/usuario/Endpoints";
+import {DELETAR_USUARIO_DELETE, PESQUISAR_USUARIO_GET} from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import ModalComOpcoes from "../../../components/modal/ModalComOpcoes";
 import {
   apresentarModal,
   apresentarModalDeOpcoes,
-  confirmar,
   esconderModal,
   esconderModalDeOpcoes
 } from "../../../utilidades/ManipuladorDeModal";
-import Campo from "../../../components/campos/Campo"
-import TabelaDeUsuarios from "../../../components/tabelas/TabelaDeUsuarios"
+import Campo from "../../../components/campos/Campo";
+import TabelaDeUsuarios from "../../../components/tabelas/TabelaDeUsuarios";
+import {deletar, pesquisar} from "../../../requisicoes/Usuario"; // Importa os métodos ajustados
 
 const PesquisaDeUsuario = () => {
   const [displayModalOpcoes, setDisplayModalOpcoes] = useState(false);
@@ -33,64 +33,30 @@ const PesquisaDeUsuario = () => {
 
   const [idParaDeletar, setIdParaDeletar] = useState(null);
 
-  const [formData, setFormData] = useState({ nome: "" });
+  const [formData, setFormData] = useState({nome: ""});
   const [list, setList] = useState([]);
-  const [load, setLoad] = useState(false);
 
   useEffect(() => {
-    setLoad(true);
-    const findAll = async () => {
+    const buscarTodosUsuarios = async () => {
       try {
         const response = await axios.get(PESQUISAR_USUARIO_GET, {
-          params: { nome: "" }
+          params: {nome: ""}
         });
-        setLoad(false);
         setList(response.data);
       } catch (error) {
         console.log(error);
-        setLoad(false);
       }
-    }
-    findAll();
+    };
+    buscarTodosUsuarios();
   }, []);
 
-  const pesquisar = async () => {
-    setLoad(true);
-    try {
-      const response = await axios.get(PESQUISAR_USUARIO_GET, {
-        params: { nome: formData.nome }
-      });
-      setLoad(false);
-      setList(response.data);
-    } catch (error) {
-      console.log(error);
-      setLoad(false);
-    }
-  }
 
-  const deletar = async (id) => {
-    if (id !== null) {
-      try {
-        const response = await axios.delete(DELETAR_USUARIO_DELETE, {
-          params: { id: id }
-        });
-        setList(list.filter(item => item.idUsuario !== id));
-        apresentarModal("Sucesso", "Usuário deletado com sucesso!");
-      } catch (error) {
-        console.log(error);
-        apresentarModal("Erro", "Erro ao deletar usuário!");
-      }
-    } else {
-      apresentarModal("Erro", "O id do usuário está nulo!");
-    }
-  }
 
-  const handleShowModalAction = (titulo, conteudo, id) => {
-    setTituloModalOpcoes(titulo);
-    setConteudoModalOpcoes(conteudo);
-    setIdParaDeletar(id);
-    setDisplayModalOpcoes(true);
-  }
+
+
+  const deletarUsuario = async () => {
+    await deletar(idParaDeletar, setList, setDisplayModal, setTituloModal, setConteudoModal);
+  };
 
   return (
     <CRow>
@@ -104,19 +70,19 @@ const PesquisaDeUsuario = () => {
               classModal={displayModal ? "modal fade show" : "modal fade"}
               dsp={displayModal ? "block" : "none"}
               titulo={tituloModal}
-              conteudo={conteudoModal}
-              esconderModal={esconderModal}
+              conteudo={<div dangerouslySetInnerHTML={{ __html: conteudoModal }} />}
+              setConteudoModal={setConteudoModal}
+              esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
             />
+
             <ModalComOpcoes
               classModal={displayModalOpcoes ? "modal fade show" : "modal fade"}
               dsp={displayModalOpcoes ? "block" : "none"}
-              title={tituloModalOpcoes}
+              titulo={tituloModalOpcoes}
+              setConteduoModalOpcoes={setConteudoModalOpcoes}
               conteudo={conteudoModalOpcoes}
-              esconderModalDeOpcoes={esconderModalDeOpcoes}
-              confirmar={() => {
-                deletar(idParaDeletar);
-                setDisplayModalOpcoes(false);
-              }}
+              esconderModalDeOpcoes={() => esconderModalDeOpcoes(setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes)}
+              confirmar={deletarUsuario}
             />
             <CForm>
               <div className="container">
@@ -126,10 +92,11 @@ const PesquisaDeUsuario = () => {
                       id="nome"
                       tipo="text"
                       valor={formData.nome}
-                      setar={(e) => setFormData({ ...formData, nome: e.target.value })}
+                      setar={(e) => setFormData({...formData, nome: e.target.value})}
                       legenda=""
                     />
-                    <CButton color="primary" onClick={pesquisar}>
+                    <CButton color="primary" onClick={
+                      ()=> pesquisar(formData, setList, setDisplayModal, setTituloModal, setConteudoModal)}>
                       Pesquisar
                     </CButton>
                   </div>
@@ -140,25 +107,28 @@ const PesquisaDeUsuario = () => {
         </CCard>
       </CCol>
 
-      <CCol>
-        <CCard>
-          <CCardHeader>
-            <strong>Resultado da Pesquisa</strong>
-          </CCardHeader>
-          <CCardBody>
-            {
-              load ? <h5>Carregando...</h5>
-                :
-                list.length > 0 ?
-                  <div style={{ maxHeight: '800px', overflow: 'auto' }}>
-                    <TabelaDeUsuarios list={list} apresentarModalDeOpcoes={apresentarModalDeOpcoes} />
+      {
+        list.length > 0 ? (
+            <CCol>
+              <CCard>
+                <CCardHeader>
+                  <strong>Resultado da Pesquisa</strong>
+                </CCardHeader>
+                <CCardBody>
+                  <div style={{maxHeight: '800px', overflow: 'auto'}}>
+                    <TabelaDeUsuarios list={list} apresentarModalDeOpcoes={(titulo, conteudo, id) => {
+                      setTituloModalOpcoes(titulo);
+                      setConteudoModalOpcoes(conteudo);
+                      setIdParaDeletar(id);
+                      setDisplayModalOpcoes(true);
+                    }}/>
                   </div>
-                  :
-                  <h5>Nenhum resultado encontrado para '{formData.nome}'</h5>
-            }
-          </CCardBody>
-        </CCard>
-      </CCol>
+                </CCardBody>
+              </CCard>
+            </CCol>
+          ) :
+          <></>
+      }
     </CRow>
   );
 };

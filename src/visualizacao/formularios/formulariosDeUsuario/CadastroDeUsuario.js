@@ -38,8 +38,13 @@ const CadastroDeUsuario = () => {
             <strong>Registro de Usuário</strong>
           </CCardHeader>
           <CCardBody>
-            <Modal classModal={classModal} dsp={displayModal} titulo={tituloModal} conteudo={conteudoModal}
-                   esconderModal={esconderModal}/>
+            <Modal
+              classModal={classModal}
+              dsp={displayModal}
+              titulo={tituloModal}
+              conteudo={<div dangerouslySetInnerHTML={{ __html: conteudoModal }} />}
+              esconderModal={() => esconderModal(setDisplayModal, setClassModal, setTituloModal, setConteudoModal)}
+            />
             <CForm>
               <Campo
                 legenda="Nome"
@@ -170,8 +175,7 @@ const CadastroDeUsuario = () => {
               }
 
               <CButton color="primary" onClick={() => {
-                salvar(formData, SALVAR_NOVO_USUARIO_POST)
-              }}>
+                salvar(formData, SALVAR_NOVO_USUARIO_POST, setDisplayModal, setClassModal, setTituloModal, setConteudoModal)}} >
                 Salvar
               </CButton>
             </CForm>
