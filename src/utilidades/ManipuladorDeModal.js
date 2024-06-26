@@ -17,11 +17,10 @@ const apresentarModalDeOpcoes = (titulo, conteudo, setDisplayModalOpcoes, setTit
   setConteudoModalOpcoes(conteudo);
 };
 
-const esconderModalDeOpcoes = (setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes, setIdParaDeletar) => {
+const esconderModalDeOpcoes = (setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes) => {
   setDisplayModalOpcoes(false);
   setTituloModalOpcoes("");
   setConteudoModalOpcoes("");
-  setIdParaDeletar(null);
 };
 
 const confirmar = (idParaDeletar, deletar, esconderModalDeOpcoes) => {

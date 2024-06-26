@@ -32,17 +32,17 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setClassModa
   }
 };
 
-const deletar = async (id, setList, setDisplayModal, setTituloModal, setConteudoModal) => {
-  if (id !== null) {
+const deletar = async (idParaDeletar, setList, setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (idParaDeletar !== null) {
     try {
       const response = await axios.delete(DELETAR_USUARIO_DELETE, {
-        params: {id: id},
+        params: {id: idParaDeletar},
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${login.token}`
         },
       });
-      setList(prevList => prevList.filter(item => item.idUsuario !== id));
+      setList(prevList => prevList.filter(item => item.idUsuario !== idParaDeletar));
       apresentarModal("Aviso", "Usuário deletado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal);
     } catch (error) {
       apresentarModal("Atenção", error.response.data.title, setDisplayModal, setTituloModal, setConteudoModal);

@@ -50,10 +50,6 @@ const PesquisaDeUsuario = () => {
     buscarTodosUsuarios();
   }, []);
 
-
-
-
-
   const deletarUsuario = async () => {
     await deletar(idParaDeletar, setList, setDisplayModal, setTituloModal, setConteudoModal);
   };
@@ -79,7 +75,7 @@ const PesquisaDeUsuario = () => {
               classModal={displayModalOpcoes ? "modal fade show" : "modal fade"}
               dsp={displayModalOpcoes ? "block" : "none"}
               titulo={tituloModalOpcoes}
-              setConteduoModalOpcoes={setConteudoModalOpcoes}
+              setConteudoModalOpcoes={setConteudoModalOpcoes}
               conteudo={conteudoModalOpcoes}
               esconderModalDeOpcoes={() => esconderModalDeOpcoes(setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes)}
               confirmar={deletarUsuario}
@@ -116,12 +112,7 @@ const PesquisaDeUsuario = () => {
                 </CCardHeader>
                 <CCardBody>
                   <div style={{maxHeight: '800px', overflow: 'auto'}}>
-                    <TabelaDeUsuarios list={list} apresentarModalDeOpcoes={(titulo, conteudo, id) => {
-                      setTituloModalOpcoes(titulo);
-                      setConteudoModalOpcoes(conteudo);
-                      setIdParaDeletar(id);
-                      setDisplayModalOpcoes(true);
-                    }}/>
+                    <TabelaDeUsuarios list={list} setDisplayModalOpcoes={setDisplayModalOpcoes} setTituloModalOpcoes={setTituloModalOpcoes} setConteudoModalOpcoes={setConteudoModalOpcoes} setIdParaDeletar={setIdParaDeletar}/>
                   </div>
                 </CCardBody>
               </CCard>

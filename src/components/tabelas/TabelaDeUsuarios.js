@@ -15,7 +15,7 @@ const formatDate = (date) => {
   return new Date(date).toLocaleDateString(undefined, options);
 }
 
-const TabelaDeUsuarios = ({ list, handleShowModalAction }) => {
+const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes, setIdParaDeletar}) => {
   return (
     <CTable className="table table-bordered">
       <CTableHead>
@@ -41,6 +41,7 @@ const TabelaDeUsuarios = ({ list, handleShowModalAction }) => {
       <CTableBody>
         {
           list.map((item) => (
+
             <CTableRow key={item.idUsuario}>
               <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "50px" }}>{item.idUsuario}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center", verticalAlign: "middle", minWidth: "150px" }}>{item.nome}</CTableDataCell>
@@ -68,7 +69,16 @@ const TabelaDeUsuarios = ({ list, handleShowModalAction }) => {
                       }}>Atualizar</CButton>
                     </div>
                     <div className="col">
-                      <CButton color="danger" onClick={() => apresentarModalDeOpcoes("Confirmar Deleção", "Deseja realmente deletar este usuário?", item.idUsuario)}>Deletar</CButton>
+                      <CButton color="danger" onClick={() => {
+                        console.log(item)
+                        apresentarModalDeOpcoes("Confirmar Deleção",
+                        "Deseja realmente deletar este usuário?",
+                        setDisplayModalOpcoes,
+                        setTituloModalOpcoes,
+                        setConteudoModalOpcoes)
+                        setIdParaDeletar(item.idUsuario)
+                      }
+                      }>Deletar</CButton>
                     </div>
                   </div>
                 </div>
