@@ -62,7 +62,7 @@ const atualizarDadosDoUsuario = async (formularioDeDados, setDisplayModal, setTi
       if (error.response.data.lista !== undefined) {
         let lista = "";
         error.response.data.lista.forEach((item) => {
-          lista += `Campo ${item.nomeCampo}, ${item.mensagem}` + "\n";
+          lista += `<strong>*</strong> ${item.titulo}` + "<br/>";
         });
         apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
       }

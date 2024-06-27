@@ -8,7 +8,7 @@ import {
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
-import { SALVAR_RESPONSAVEL__POST } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import { SALVAR_RESPONSAVEL_DO_PRATICANTE_POST } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
 
 const ResponsavelPeloPraticante = () => {
@@ -39,7 +39,7 @@ const ResponsavelPeloPraticante = () => {
       }));
       try {
         const response = await axios.post(
-          SALVAR_RESPONSAVEL__POST,
+          SALVAR_RESPONSAVEL_DO_PRATICANTE_POST,
           JSON.stringify(formData),
           {
             headers: {

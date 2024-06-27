@@ -70,8 +70,8 @@ const AtualizacaoDeUsuario = () => {
               <Modal
                 dsp={displayModal}
                 titulo={tituloModal}
-                conteudo={conteudoModal}
-                esconderModal={esconderModal}
+                conteudo={<div dangerouslySetInnerHTML={{ __html: conteudoModal }} />}
+                esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
               />
               <CForm>
                 <Campo
