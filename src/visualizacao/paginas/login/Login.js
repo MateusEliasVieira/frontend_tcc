@@ -17,13 +17,13 @@ import axios from "axios";
 import {LOGIN_POST} from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import "./Login.css"
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 
 const Login = () => {
 
   const [displayModal, setDisplayModal] = useState("none")
-  const [classModal, setClassModal] = useState("modal fade")
-  const [titleModal, setTitleModal] = useState("")
-  const [messageModal, setMessageModal] = useState("")
+  const [tituloModal, setTituloModal] = useState("")
+  const [conteudoModal, setConteudoModal] = useState("")
 
   const [form, setForm] = useState({
     nomeUsuario: '',
@@ -40,7 +40,7 @@ const Login = () => {
         JSON.stringify({...form}),
         {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
         }
       )
@@ -53,6 +53,7 @@ const Login = () => {
           }
         })
         .catch((error) => {
+          console.log("Erro "+error)
           if (error.response.data !== undefined) {
             if (error.response.data.lista !== undefined) {
               // Tem lista de erro
@@ -60,36 +61,27 @@ const Login = () => {
               error.response.data.lista.forEach((item) => {
                 erros += `${item.mensagem} \n`
               })
-              handleShowModal("Aviso", erros)
+              apresentarModal("Aviso", erros, setDisplayModal, setTituloModal, setConteudoModal)
             } else {
-              handleShowModal("Aviso", error.response.data.mensagem)
+              apresentarModal("Aviso", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
             }
           }else{
-            handleShowModal("Aviso", "Erro interno do sistema.")
+            apresentarModal("Aviso", "Erro interno do sistema", setDisplayModal, setTituloModal, setConteudoModal)
           }
         })
     } catch (e) {
-      handleShowModal("Aviso", "Erro interno do sistema.")
+      apresentarModal("Aviso", "Erro interno do sistema", setDisplayModal, setTituloModal, setConteudoModal)
     }
-  }
-  const handleShowModal = (title, message) => {
-    setDisplayModal("block")
-    setClassModal("modal fade show")
-    setTitleModal(title)
-    setMessageModal(message)
-  }
-
-  const handleHideModal = () => {
-    setDisplayModal("none")
-    setClassModal("modal fade")
-    setTitleModal("")
-    setMessageModal("")
   }
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <Modal classModal={classModal} dsp={displayModal} title={titleModal} message={messageModal}
-             handleHideModal={handleHideModal}/>
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{ __html: conteudoModal }} />}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={8}>
