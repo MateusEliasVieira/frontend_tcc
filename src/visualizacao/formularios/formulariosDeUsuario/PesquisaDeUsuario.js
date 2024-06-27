@@ -20,14 +20,14 @@ import {
 } from "../../../utilidades/ManipuladorDeModal";
 import Campo from "../../../components/campos/Campo";
 import TabelaDeUsuarios from "../../../components/tabelas/TabelaDeUsuarios";
-import {deletar, pesquisar} from "../../../requisicoes/Usuario"; // Importa os métodos ajustados
+import {buscarTodosUsuarios, deletar, pesquisar} from "../../../requisicoes/Usuario"; // Importa os métodos ajustados
 
 const PesquisaDeUsuario = () => {
-  const [displayModalOpcoes, setDisplayModalOpcoes] = useState(false);
+  const [displayModalOpcoes, setDisplayModalOpcoes] = useState("none");
   const [tituloModalOpcoes, setTituloModalOpcoes] = useState("");
   const [conteudoModalOpcoes, setConteudoModalOpcoes] = useState("");
 
-  const [displayModal, setDisplayModal] = useState(false);
+  const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
 
@@ -37,21 +37,13 @@ const PesquisaDeUsuario = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    const buscarTodosUsuarios = async () => {
-      try {
-        const response = await axios.get(PESQUISAR_USUARIO_GET, {
-          params: {nome: ""}
-        });
-        setList(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    buscarTodosUsuarios();
+    buscarTodosUsuarios(setList);
   }, []);
 
   const deletarUsuario = async () => {
-    await deletar(idParaDeletar, setList, setDisplayModal, setTituloModal, setConteudoModal);
+    await deletar(idParaDeletar, setList, setDisplayModal, setTituloModal, setConteudoModal).then(()=>{
+      esconderModalDeOpcoes(setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes)
+    })
   };
 
   return (
@@ -63,17 +55,14 @@ const PesquisaDeUsuario = () => {
           </CCardHeader>
           <CCardBody>
             <Modal
-              classModal={displayModal ? "modal fade show" : "modal fade"}
-              dsp={displayModal ? "block" : "none"}
+              dsp={displayModal}
               titulo={tituloModal}
-              conteudo={<div dangerouslySetInnerHTML={{ __html: conteudoModal }} />}
+              conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
               setConteudoModal={setConteudoModal}
               esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
             />
-
             <ModalComOpcoes
-              classModal={displayModalOpcoes ? "modal fade show" : "modal fade"}
-              dsp={displayModalOpcoes ? "block" : "none"}
+              dsp={displayModalOpcoes}
               titulo={tituloModalOpcoes}
               setConteudoModalOpcoes={setConteudoModalOpcoes}
               conteudo={conteudoModalOpcoes}
@@ -88,13 +77,16 @@ const PesquisaDeUsuario = () => {
                       id="nome"
                       tipo="text"
                       valor={formData.nome}
-                      setar={(e) => setFormData({...formData, nome: e.target.value})}
-                      legenda=""
+                      setar={(e) => {
+                        setFormData({...formData, nome: e.target.value})
+                        if (e.target.value.trim() === "") {
+                          buscarTodosUsuarios(setList)
+                        } else {
+                          pesquisar(formData, setList, setDisplayModal, setTituloModal, setConteudoModal)
+                        }
+                      }}
+                      legenda="Digite o nome"
                     />
-                    <CButton color="primary" onClick={
-                      ()=> pesquisar(formData, setList, setDisplayModal, setTituloModal, setConteudoModal)}>
-                      Pesquisar
-                    </CButton>
                   </div>
                 </div>
               </div>
@@ -112,13 +104,25 @@ const PesquisaDeUsuario = () => {
                 </CCardHeader>
                 <CCardBody>
                   <div style={{maxHeight: '800px', overflow: 'auto'}}>
-                    <TabelaDeUsuarios list={list} setDisplayModalOpcoes={setDisplayModalOpcoes} setTituloModalOpcoes={setTituloModalOpcoes} setConteudoModalOpcoes={setConteudoModalOpcoes} setIdParaDeletar={setIdParaDeletar}/>
+                    <TabelaDeUsuarios list={list} setDisplayModalOpcoes={setDisplayModalOpcoes}
+                                      setTituloModalOpcoes={setTituloModalOpcoes}
+                                      setConteudoModalOpcoes={setConteudoModalOpcoes}
+                                      setIdParaDeletar={setIdParaDeletar}/>
                   </div>
                 </CCardBody>
               </CCard>
             </CCol>
           ) :
-          <></>
+          <CCol>
+            <CCard>
+              <CCardHeader>
+                <strong>Ops</strong>
+              </CCardHeader>
+              <CCardBody>
+                <p>Nenhum resultado obtido para: {formData.nome}</p>
+              </CCardBody>
+            </CCard>
+          </CCol>
       }
     </CRow>
   );

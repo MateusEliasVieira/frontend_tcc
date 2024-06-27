@@ -65,13 +65,12 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
                   <div className="row">
                     <div className="col">
                       <CButton color="primary" onClick={() => {
-                        window.location.href = `/#/formulario/pesquisar-funcionario/atualizar?id=${item.idUsuario}`
+                        window.location.href = `/#/formulario/atualizar-usuario/atualizar?id=${item.idUsuario}`
                       }}>Atualizar</CButton>
                     </div>
                     <div className="col">
                       <CButton color="danger" onClick={() => {
-                        console.log(item)
-                        apresentarModalDeOpcoes("Confirmar Deleção",
+                        apresentarModalDeOpcoes("Atenção",
                         "Deseja realmente deletar este usuário?",
                         setDisplayModalOpcoes,
                         setTituloModalOpcoes,

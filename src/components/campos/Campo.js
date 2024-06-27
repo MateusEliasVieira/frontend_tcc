@@ -61,7 +61,7 @@ const Campo = (props) => {
 
   return (
     <div className="mb-3">
-      <CFormLabel htmlFor={props.id}>{props.legenda}</CFormLabel>
+      <CFormLabel htmlFor={props.id} style={{display:"block",textAlign:"left"}}>{props.legenda}</CFormLabel>
       {renderField()}
     </div>
   );

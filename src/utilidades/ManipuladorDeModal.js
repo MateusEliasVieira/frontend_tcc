@@ -1,32 +1,31 @@
 const apresentarModal = (titulo, conteudo, setDisplayModal, setTituloModal, setConteudoModal) => {
-  setDisplayModal(true);
+  setDisplayModal("block");
   setTituloModal(titulo);
   setConteudoModal(conteudo);
 };
 
-
 const esconderModal = (setDisplayModal, setTituloModal, setConteudoModal) => {
-  setDisplayModal(false);
+  setDisplayModal("none");
   setTituloModal("");
-  setConteudoModal(""); // Aqui está sendo chamado como uma função
+  setConteudoModal("");
 };
 
 const apresentarModalDeOpcoes = (titulo, conteudo, setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes) => {
-  setDisplayModalOpcoes(true);
+  setDisplayModalOpcoes("block");
   setTituloModalOpcoes(titulo);
   setConteudoModalOpcoes(conteudo);
 };
 
 const esconderModalDeOpcoes = (setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes) => {
-  setDisplayModalOpcoes(false);
+  setDisplayModalOpcoes("none");
   setTituloModalOpcoes("");
   setConteudoModalOpcoes("");
 };
 
-const confirmar = (idParaDeletar, deletar, esconderModalDeOpcoes) => {
+const confirmar = (idParaDeletar, deletar, esconderModalDeOpcoes,setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes) => {
   if (idParaDeletar !== null) {
     deletar(idParaDeletar);
-    esconderModalDeOpcoes();
+    esconderModalDeOpcoes(setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes);
   }
 };
 

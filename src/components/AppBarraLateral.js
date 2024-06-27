@@ -41,19 +41,22 @@ const AppBarraLateral = () => {
     try {
       var login = JSON.parse(localStorage.getItem("login"))
       if (login.idUsuario !== "" && login.idUsuario !== undefined) {
-        axios.get(`${PESQUISAR_USUARIO_POR_ID_GET}${login.idUsuario}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${login.token}`
-            }
-          })
-          .then((response) => {
-            console.log("resposta = "+response)
-            setUsuario({...response.data})
-          })
+        axios.get(PESQUISAR_USUARIO_POR_ID_GET, {
+          params: {
+            id: login.idUsuario
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${login.token}`
+          },
+        })
+      .
+        then((response) => {
+          console.log("resposta = " + response)
+          setUsuario({...response.data})
+        })
           .catch((error) => {
-            console.log("Erro ao buscar usuário por id: "+error)
+            console.log("Erro ao buscar usuário por id: " + error)
           })
       }
     } catch (e) {

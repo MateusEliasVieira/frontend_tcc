@@ -9,6 +9,7 @@ const CadastroPraticante = React.lazy(() => import('./visualizacao/formularios/f
 //Formulários Funcionário
 const CadastroDeUsuario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/CadastroDeUsuario'))
 const PesquisaDeUsuario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/PesquisaDeUsuario'))
+const AtualizacaoDeUsuario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/AtualizacaoDeUsuario'))
 
 // Gráfico
 const Grafico = React.lazy(() => import('./visualizacao/graficos/Grafico'))
@@ -20,5 +21,6 @@ const rotas = [
   { path: '/formulario/cadastrar-praticante', name: 'Novo Praticante', element: CadastroPraticante },
   { path: '/formulario/cadastrar-usuario', name: 'Novo Usuário', element: CadastroDeUsuario },
   { path: '/formulario/pesquisar-usuario', name: 'Visualizar Usuários', element: PesquisaDeUsuario },
+  { path: '/formulario/atualizar-usuario/*', name: 'Atualizar Usuário', element:  AtualizacaoDeUsuario},
 ]
 export default rotas
