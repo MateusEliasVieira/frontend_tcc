@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -7,11 +7,14 @@ import {
   CCol,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
-import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
+import Campo from '../../../../components/campos/Campo';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {
+  SALVAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints"; // Importando o componente Campo
 
 const OutrasAtividadesTarde = () => {
-  const [formData, setFormData] = useState({
+  const [formularioDeDados, setFormularioDeDados] = useState({
     segundaFeira: '',
     tercaFeira: '',
     quartaFeira: '',
@@ -19,45 +22,23 @@ const OutrasAtividadesTarde = () => {
     sextaFeira: '',
     sabado: '',
     domingo: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    var idPacienteSalvo = localStorage.getItem('idPacienteSalvo');
-
-    if (idPacienteSalvo != null) {
-      setFormData((prevFormData) => ({
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
         ...prevFormData,
-        paciente: {
-          ...prevFormData.paciente,
-          idPaciente: idPacienteSalvo,
-        },
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
+        }
       }));
-
-      const dados = {
-        ...formData,
-      };
-
-      try {
-        const response = await axios.post(
-          SEU_ENDPOINT_DE_SALVAR_AQUI,
-          JSON.stringify(dados),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        console.log('Dados salvos com sucesso:', response.data);
-      } catch (error) {
-        console.log('Erro ao salvar os dados:', error);
-      }
-    } else {
-      alert('Cadastre os dados pessoais do praticante primeiro!');
     }
-  };
+  }, []);
 
   return (
     <CRow>
@@ -70,53 +51,55 @@ const OutrasAtividadesTarde = () => {
             <Campo
               tipo="text"
               id="segundaFeira"
-              valor={formData.segundaFeira}
-              setar={(e) => setFormData({ ...formData, segundaFeira: e.target.value })}
+              valor={formularioDeDados.segundaFeira}
+              setar={(e) => setFormularioDeDados({...formularioDeDados, segundaFeira: e.target.value})}
               legenda="Segunda-feira"
             />
             <Campo
               tipo="text"
               id="tercaFeira"
-              valor={formData.tercaFeira}
-              setar={(e) => setFormData({ ...formData, tercaFeira: e.target.value })}
+              valor={formularioDeDados.tercaFeira}
+              setar={(e) => setFormularioDeDados({...formularioDeDados, tercaFeira: e.target.value})}
               legenda="Terça-feira"
             />
             <Campo
               tipo="text"
               id="quartaFeira"
-              valor={formData.quartaFeira}
-              setar={(e) => setFormData({ ...formData, quartaFeira: e.target.value })}
+              valor={formularioDeDados.quartaFeira}
+              setar={(e) => setFormularioDeDados({...formularioDeDados, quartaFeira: e.target.value})}
               legenda="Quarta-feira"
             />
             <Campo
               tipo="text"
               id="quintaFeira"
-              valor={formData.quintaFeira}
-              setar={(e) => setFormData({ ...formData, quintaFeira: e.target.value })}
+              valor={formularioDeDados.quintaFeira}
+              setar={(e) => setFormularioDeDados({...formularioDeDados, quintaFeira: e.target.value})}
               legenda="Quinta-feira"
             />
             <Campo
               tipo="text"
               id="sextaFeira"
-              valor={formData.sextaFeira}
-              setar={(e) => setFormData({ ...formData, sextaFeira: e.target.value })}
+              valor={formularioDeDados.sextaFeira}
+              setar={(e) => setFormularioDeDados({...formularioDeDados, sextaFeira: e.target.value})}
               legenda="Sexta-feira"
             />
             <Campo
               tipo="text"
               id="sabado"
-              valor={formData.sabado}
-              setar={(e) => setFormData({ ...formData, sabado: e.target.value })}
+              valor={formularioDeDados.sabado}
+              setar={(e) => setFormularioDeDados({...formularioDeDados, sabado: e.target.value})}
               legenda="Sábado"
             />
             <Campo
               tipo="text"
               id="domingo"
-              valor={formData.domingo}
-              setar={(e) => setFormData({ ...formData, domingo: e.target.value })}
+              valor={formularioDeDados.domingo}
+              setar={(e) => setFormularioDeDados({...formularioDeDados, domingo: e.target.value})}
               legenda="Domingo"
             />
-            <CButton color="primary" onClick={salvar}>
+            <CButton color="primary" onClick={()=>{
+              salvar(formularioDeDados,SALVAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POST)
+            }}>
               Salvar
             </CButton>
           </CCardBody>

@@ -1,7 +1,6 @@
 import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import axios, {HttpStatusCode} from "axios";
 import {SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST} from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
-import {apresentarModal} from "../utilidades/ManipuladorDeModal";
 
 var login = JSON.parse(localStorage.getItem('login'));
 var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
@@ -44,8 +43,9 @@ const salvarDadosPessoais = async (formularioDeDados) => {
   }
 };
 
-const salvar = async (formularioDeDados,endpoint) => {
+const salvar = async (formularioDeDados, endpoint) => {
   if (idPraticanteSalvo) {
+    alert("Id "+idPraticanteSalvo)
     if (camposPreenchidos(formularioDeDados)) {
       try {
         const response = await axios.post(
@@ -61,7 +61,7 @@ const salvar = async (formularioDeDados,endpoint) => {
         alert('Dados salvos com sucesso');
       } catch (error) {
         console.log('Erro ao salvar os dados:', error);
-        alert(error.response.data.titulo);
+        alert("nao salvou")
       }
     } else {
       alert("Preencha todos os campos vazios!");
@@ -71,4 +71,4 @@ const salvar = async (formularioDeDados,endpoint) => {
   }
 };
 
-export {salvarDadosPessoais,salvar}
+export {salvarDadosPessoais, salvar}
