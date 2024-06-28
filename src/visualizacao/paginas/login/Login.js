@@ -49,11 +49,10 @@ const Login = () => {
             localStorage.setItem('login', JSON.stringify(response.data));
             window.location.href = "/"
           } else {
-            console.log(response)
+            console.log("Login inválido "+response)
           }
         })
         .catch((error) => {
-          console.log("Erro "+error)
           if (error.response.data !== undefined) {
             if (error.response.data.lista !== undefined) {
               // Tem lista de erro

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -8,39 +8,34 @@ import {
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
-import { converterImagemEmBase64 } from "../../../../utilidades/ConversorDeImagem";
-import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
+import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
+import Campo from '../../../../components/campos/Campo';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {
+  SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints"; // Importando o componente Campo
 
 const CompletudeMatricula = () => {
-  const [formData, setFormData] = useState({
+  const [formularioDeDados, setFormularioDeDados] = useState({
     dataCompletudeMatricula: '',
     imagemAssinaturaResponsavel: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-      dataCompletudeMatricula: formData.dataCompletudeMatricula.toISOString() // Convertendo data para o formato ISOString
-    };
-
-    try {
-      const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados educacionais salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados educacionais:', error);
+      }));
     }
-  };
+  }, []);
 
   return (
     <CRow>
@@ -54,8 +49,8 @@ const CompletudeMatricula = () => {
               <Campo
                 tipo="date"
                 id="dataCompletudeMatricula"
-                valor={formData.dataCompletudeMatricula}
-                setar={(e) => setFormData({ ...formData, dataCompletudeMatricula: e.target.value })}
+                valor={formularioDeDados.dataCompletudeMatricula}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, dataCompletudeMatricula: e.target.value})}
                 legenda="Data da matrícula"
               />
               <Campo
@@ -64,7 +59,7 @@ const CompletudeMatricula = () => {
                 setar={(e) => {
                   converterImagemEmBase64(e.target.files[0])
                     .then((resolve) => {
-                      setFormData({ ...formData, imagemAssinaturaResponsavel: resolve });
+                      setFormularioDeDados({...formularioDeDados, imagemAssinaturaResponsavel: resolve});
                     })
                     .catch((reject) => {
                       console.log(reject);
@@ -73,7 +68,10 @@ const CompletudeMatricula = () => {
                 legenda="Imagem da assinatura do responsável"
               />
               {/* Botão para salvar */}
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" onClick={() => {
+                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST)
+              }
+              }>
                 Salvar
               </CButton>
             </CForm>

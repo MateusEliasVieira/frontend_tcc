@@ -22,8 +22,8 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloMod
       });
       apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
     } catch (error) {
-      if (error.response.data.title !== undefined) {
-        apresentarModal("Atenção", error.response.data.title, setDisplayModal, setTituloModal, setConteudoModal);
+      if (error.response.data.titulo !== undefined) {
+        apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
       }
       if (error.response.data.lista !== undefined) {
         let lista = "";
@@ -85,7 +85,7 @@ const deletar = async (idParaDeletar, setList, setDisplayModal, setTituloModal, 
       setList(prevList => prevList.filter(item => item.idUsuario !== idParaDeletar));
       apresentarModal("Aviso", "Usuário deletado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal);
     } catch (error) {
-      apresentarModal("Atenção", error.response.data.title, setDisplayModal, setTituloModal, setConteudoModal);
+      apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
     }
   } else {
     apresentarModal("Atenção", "O id do usuário está nulo!", setDisplayModal, setTituloModal, setConteudoModal);
@@ -144,7 +144,7 @@ const pesquisar = async (formData, setList, setDisplayModal, setTituloModal, set
     });
     setList(response.data);
   } catch (error) {
-    apresentarModal("Atenção", error.response.data.title, setDisplayModal, setTituloModal, setConteudoModal);
+    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
   }
 };
 

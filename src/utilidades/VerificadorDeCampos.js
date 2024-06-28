@@ -5,7 +5,7 @@ const camposPreenchidos = (jsonObject) => {
     }
     // Verifica se o valor é um objeto e realiza a checagem recursivamente
     if (typeof jsonObject[key] === 'object' && !Array.isArray(jsonObject[key])) {
-      if (!areAllFieldsFilled(jsonObject[key])) {
+      if (!camposPreenchidos(jsonObject[key])) {
         return false;
       }
     }

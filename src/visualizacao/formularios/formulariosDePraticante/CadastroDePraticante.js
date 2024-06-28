@@ -78,7 +78,7 @@ const CadastroDePraticante = () => {
     <div>
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'dadosPessoais' ? 'active' : ''}`} onClick={() => setActiveTab('dadosPessoais')}>Dados Pessoais do Praticante</button>
+          <button className={`nav-link ${activeTab === 'dadosPessoais' ? 'active' : ''}`} onClick={() => setActiveTab('dadosPessoais')}>Dados Pessoais</button>
         </li>
         <li className="nav-item">
           <button className={`nav-link ${activeTab === 'educacao' ? 'active' : ''}`} onClick={() => setActiveTab('educacao')}>Educação</button>

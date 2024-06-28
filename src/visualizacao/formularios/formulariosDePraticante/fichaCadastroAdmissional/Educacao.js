@@ -7,63 +7,35 @@ import {
   CCol,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
 import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
 import { classeDeEscola, tipoInstituicaoEducacional, periodo, role, vinculo } from '../../../../constantes/Constantes';
-import {camposPreenchidos} from "../../../../utilidades/VerificadorDeCampos"; // Importando as constantes corretamente
+import {salvar} from "../../../../requisicoes/Praticante";
+import {SALVAR_EDUCACAO_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints"; // Importando as constantes corretamente
 
 const Educacao = () => {
-  const [formData, setFormData] = useState({
+  const [formularioDeDados, setFormularioDeDados] = useState({
     serieEscolar: '',
     classeDeEscola: '',
     instituicaoEducacional: '',
     tipoDeInstituicaoEducacional: '',
     periodo: '',
-    paciente: {
-      idPaciente: ''
+    praticante: {
+      idPraticante: ''
     }
   });
 
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     if (idPraticanteSalvo) {
-      setFormData(prevFormData => ({
+      setFormularioDeDados(prevFormData => ({
         ...prevFormData,
-        paciente: {
-          ...prevFormData.paciente,
-          idPaciente: idPraticanteSalvo
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
       }));
     }
   }, []);
-
-  const salvar = async () => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    if (idPraticanteSalvo) {
-      if (camposPreenchidos(formData)) {
-        try {
-          const response = await axios.post(
-            SALVAR_EDUCACAO__POST,
-            JSON.stringify(formData),
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-          alert('Escolaridade do Praticante salva com sucesso!');
-          console.log('Dados educacionais salvos com sucesso:', response.data);
-        } catch (error) {
-          console.log('Erro ao salvar os dados educacionais:', error);
-          alert(error.response.data?.title);
-        }
-      } else {
-        alert("Preencha todos os campos vazios!");
-      }
-    } else {
-      alert("Cadastre os Dados Pessoais do Praticante primeiro!");
-    }
-  };
 
   return (
     <CRow>
@@ -76,42 +48,44 @@ const Educacao = () => {
             <Campo
               tipo="text"
               id="serieEscolar"
-              valor={formData.serieEscolar}
-              setar={(e) => setFormData({ ...formData, serieEscolar: e.target.value })}
+              valor={formularioDeDados.serieEscolar}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, serieEscolar: e.target.value })}
               legenda="Ano/Série Escolar"
             />
             <Campo
               tipo="select"
               id="classeDeEscola"
-              valor={formData.classeDeEscola}
-              setar={(e) => setFormData({ ...formData, classeDeEscola: e.target.value })}
+              valor={formularioDeDados.classeDeEscola}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, classeDeEscola: e.target.value })}
               legenda="Classe de escola"
               opcoes={classeDeEscola}
             />
             <Campo
               tipo="text"
               id="instituicaoEducacional"
-              valor={formData.instituicaoEducacional}
-              setar={(e) => setFormData({ ...formData, instituicaoEducacional: e.target.value })}
+              valor={formularioDeDados.instituicaoEducacional}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, instituicaoEducacional: e.target.value })}
               legenda="Instituição de Ensino"
             />
             <Campo
               tipo="select"
               id="tipoDeInstituicaoEducacional"
-              valor={formData.tipoDeInstituicaoEducacional}
-              setar={(e) => setFormData({ ...formData, tipoDeInstituicaoEducacional: e.target.value })}
+              valor={formularioDeDados.tipoDeInstituicaoEducacional}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, tipoDeInstituicaoEducacional: e.target.value })}
               legenda="Tipo de Instituição de Ensino"
               opcoes={tipoInstituicaoEducacional}
             />
             <Campo
               tipo="select"
               id="periodo"
-              valor={formData.periodo}
-              setar={(e) => setFormData({ ...formData, periodo: e.target.value })}
+              valor={formularioDeDados.periodo}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, periodo: e.target.value })}
               legenda="Período"
               opcoes={periodo}
             />
-            <CButton color="primary" onClick={salvar}>
+            <CButton color="primary" onClick={()=>{
+              salvar(formularioDeDados,SALVAR_EDUCACAO_DO_PRATICANTE_POST)
+            }}>
               Salvar
             </CButton>
           </CCardBody>

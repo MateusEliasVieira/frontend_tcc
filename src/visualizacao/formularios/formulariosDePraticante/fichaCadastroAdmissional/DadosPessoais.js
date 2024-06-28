@@ -38,8 +38,6 @@ const DadosPessoais = (props) => {
     cep: ''
   });
 
-
-
   return (
     <CRow>
       <CCol xs={12}>
@@ -95,7 +93,7 @@ const DadosPessoais = (props) => {
               id="altura"
               valor={formularioDeDados.altura}
               setar={(e) => setFormularioDeDados({...formularioDeDados, altura: e.target.value})}
-              legenda="Altura"
+              legenda="Altura(cm) Exemplo: 180"
             />
             <Campo
               tipo="select"
