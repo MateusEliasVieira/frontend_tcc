@@ -52,11 +52,10 @@ const AppBarraLateral = () => {
         })
       .
         then((response) => {
-          console.log("resposta = " + response)
           setUsuario({...response.data})
         })
           .catch((error) => {
-            console.log("Erro ao buscar usuário por id: " + error)
+            location.href="/login"
           })
       }
     } catch (e) {

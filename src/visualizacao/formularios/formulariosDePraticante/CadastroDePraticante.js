@@ -23,7 +23,6 @@ import AvaliacaoPsicologica from "./avaliacaoPsicologica/AvaliacaoPsicologica";
 import axios from "axios";
 import {
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
-  BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
 
@@ -140,6 +139,8 @@ const CadastroDePraticante = () => {
                   onClick={() => setActiveTab('completude')}>Completude da Matrícula
           </button>
         </li>
+      </ul>
+      <ul className="nav nav-tabs">
         <li className="nav-item">
           <button className={`nav-link ${activeTab === 'sobreCrianca' ? 'active' : ''}`}
                   onClick={() => setActiveTab('sobreCrianca')}>Sobre a Criança

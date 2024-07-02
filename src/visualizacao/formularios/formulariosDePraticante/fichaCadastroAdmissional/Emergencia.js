@@ -9,7 +9,7 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
-import {simOuNao} from '../../../../constantes/Constantes';
+import {CADASTRADO, simOuNao} from '../../../../constantes/Constantes';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {
   SALVAR_EMERGENCIA_DO_PRATICANTE_POST
@@ -17,6 +17,7 @@ import {
 
 const Emergencia = () => {
 
+  const [desabilitar, setDesabilitar] = useState("")
   const [possuiPlanoDeSaude, setPossuiPlanoDeSaude] = useState('')
   const [formularioDeDados, setFormularioDeDados] = useState({
     ligarPara: '',
@@ -30,6 +31,7 @@ const Emergencia = () => {
 
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const emergencia = localStorage.getItem("emergencia")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -38,6 +40,11 @@ const Emergencia = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
+      if (emergencia === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
   }, []);
 
@@ -45,9 +52,16 @@ const Emergencia = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Em caso de emergência</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Em caso de emergência</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -58,6 +72,7 @@ const Emergencia = () => {
                     valor={formularioDeDados.ligarPara}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, ligarPara: e.target.value})}
                     legenda="Ligar para"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -67,6 +82,7 @@ const Emergencia = () => {
                     valor={formularioDeDados.telefone}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
                     legenda="Telefone"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -80,6 +96,7 @@ const Emergencia = () => {
                     }}
                     legenda="Possui plano de saúde?"
                     opcoes={simOuNao}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 {possuiPlanoDeSaude === 'true' ?
@@ -92,6 +109,7 @@ const Emergencia = () => {
                           setFormularioDeDados({...formularioDeDados, plano: e.target.value})
                         }}
                         legenda="Qual é o plano?"
+                        disabled={desabilitar}
                       />
                     </CCol>
                   )
@@ -99,8 +117,8 @@ const Emergencia = () => {
                   (<></>)
                 }
               </CRow>
-              <CButton color="primary" onClick={() => {
-                salvar(formularioDeDados, SALVAR_EMERGENCIA_DO_PRATICANTE_POST)
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_EMERGENCIA_DO_PRATICANTE_POST, "emergencia", setDesabilitar)
               }}>
                 Salvar
               </CButton>
