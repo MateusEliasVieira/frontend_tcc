@@ -39,7 +39,7 @@ const AppBarraLateral = () => {
 
   useEffect(() => {
     try {
-      var login = JSON.parse(localStorage.getItem("login"))
+      const login = JSON.parse(localStorage.getItem("login"))
       if (login.idUsuario !== "" && login.idUsuario !== undefined) {
         axios.get(PESQUISAR_USUARIO_POR_ID_GET, {
           params: {
@@ -65,7 +65,7 @@ const AppBarraLateral = () => {
   }, []);
   return (
     <CSidebar
-      style={{backgroundColor: '#181717'}}
+      style={{backgroundColor: '#1c323f'}}
       position="fixed"
       unfoldable={unfoldable}
       visible={sidebarShow}
@@ -80,9 +80,9 @@ const AppBarraLateral = () => {
               <img src={usuario.foto} width={100} height={100} style={{margin: 10, borderRadius: '50%'}}/>
             </div>
             <div className="col">
-              <p>{usuario.nome} (
+              <p>{usuario.nome} <br/>
                 {usuario.role === "ROLE_ADMIN" ?
-                  <strong style={{color: "green"}}>
+                  <strong style={{color: "#0ecf8f"}}>
                     administrador
                   </strong>
                   :
@@ -90,7 +90,7 @@ const AppBarraLateral = () => {
                     usuário
                   </strong>
                 }
-                )</p>
+                </p>
             </div>
           </div>
         </div>

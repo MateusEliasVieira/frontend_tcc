@@ -21,6 +21,7 @@ const Campo = (props) => {
             id={props.id}
             value={props.valor}
             onChange={props.setar}
+            disabled={props.disabled}
           >
             <option value="">Selecionar</option>
             {props.opcoes.map((option, index) => (
@@ -45,6 +46,7 @@ const Campo = (props) => {
             id={props.id}
             type="file"
             onChange={props.setar}
+            disabled={props.disabled}
           />
         );
       default:
@@ -54,6 +56,7 @@ const Campo = (props) => {
             type={props.tipo}
             value={props.valor}
             onChange={props.setar}
+            disabled={props.disabled}
           />
         );
     }

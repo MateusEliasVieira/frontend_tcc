@@ -1,11 +1,12 @@
 import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import axios, {HttpStatusCode} from "axios";
 import {SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST} from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {CADASTRADO} from "../constantes/Constantes";
 
 var login = JSON.parse(localStorage.getItem('login'));
 var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
 
-const salvarDadosPessoais = async (formularioDeDados) => {
+const salvarDadosPessoais = async (formularioDeDados,setDesabilitar) => {
   if (camposPreenchidos(formularioDeDados)) {
     try {
       const response = await axios.post(
@@ -20,6 +21,8 @@ const salvarDadosPessoais = async (formularioDeDados) => {
       );
       if (response.status === HttpStatusCode.Created) {
         localStorage.setItem('idPraticanteSalvo', response.data.praticante.idPraticante);
+        localStorage.setItem("dadosPessoaisCadastrado",CADASTRADO)
+        setDesabilitar("disabled")
         alert('Dados salvos com sucesso');
       } else {
         alert('Não foi possível cadastrar os dados do praticante!');
@@ -43,7 +46,7 @@ const salvarDadosPessoais = async (formularioDeDados) => {
   }
 };
 
-const salvar = async (formularioDeDados, endpoint) => {
+const salvar = async (formularioDeDados, endpoint,chaveLocalStorage,setDesabilitar) => {
   if (idPraticanteSalvo) {
     alert("Id "+idPraticanteSalvo)
     if (camposPreenchidos(formularioDeDados)) {
@@ -58,10 +61,28 @@ const salvar = async (formularioDeDados, endpoint) => {
             },
           }
         );
+        localStorage.setItem(chaveLocalStorage,CADASTRADO)
+        setDesabilitar("disabled")
         alert('Dados salvos com sucesso');
       } catch (error) {
-        console.log('Erro ao salvar os dados:', error);
-        alert("nao salvou")
+        const resposta = error.response;
+        if(resposta.data){
+          if(resposta.data.lista){
+            var lista = ""
+            resposta.data.lista.map((item)=>{
+              lista += item.mensagem + "\n"
+            })
+            alert(lista)
+          }else if(resposta.data.mensagem){
+            alert(resposta.data.mensagem)
+          }else if(resposta.data.titulo){
+            alert(resposta.data.titulo)
+          }else{
+            alert("Erro interno do sistema!")
+          }
+        }else{
+          alert("Erro interno do sistema!")
+        }
       }
     } else {
       alert("Preencha todos os campos vazios!");

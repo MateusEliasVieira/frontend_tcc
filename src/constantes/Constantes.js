@@ -100,6 +100,9 @@ const sexo = [
   {label: 'Feminino', value: 'FEMININO'}
 ];
 
+const CADASTRADO = "true"
+const NAO_CADASTRADO = "false"
+
 export {
   estados,
   tipoSanguineo,
@@ -113,5 +116,7 @@ export {
   simOuNao,
   preencherLegenda,
   alimentacao,
-  sexo
+  sexo,
+  CADASTRADO,
+  NAO_CADASTRADO
 };

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
-  CCol,
+  CCol, CContainer,
   CForm,
   CRow,
 } from '@coreui/react';
@@ -55,67 +55,91 @@ const Saude = () => {
             <strong>Saúde do Praticante</strong>
           </CCardHeader>
           <CCardBody>
-            <CForm>
-              <Campo
-                tipo="text"
-                id="alergias"
-                valor={formData.alergias}
-                setar={(e) => setFormData({ ...formData, alergias: e.target.value })}
-                legenda="Alergias"
-              />
-              <Campo
-                tipo="text"
-                id="convulsoes"
-                valor={formData.convulsoes}
-                setar={(e) => setFormData({ ...formData, convulsoes: e.target.value })}
-                legenda="Convulsões? Controladas? Tipo?"
-              />
-              <Campo
-                tipo="text"
-                id="doencas"
-                valor={formData.doencas}
-                setar={(e) => setFormData({ ...formData, doencas: e.target.value })}
-                legenda="Doenças significativas/traumas"
-              />
-              <Campo
-                tipo="text"
-                id="digestao"
-                valor={formData.digestao}
-                setar={(e) => setFormData({ ...formData, digestao: e.target.value })}
-                legenda="Digestão"
-              />
-              <Campo
-                tipo="text"
-                id="transtornoAlimentar"
-                valor={formData.transtornoAlimentar}
-                setar={(e) => setFormData({ ...formData, transtornoAlimentar: e.target.value })}
-                legenda="Transtorno alimentar"
-              />
-              <Campo
-                tipo="text"
-                id="respiracao"
-                valor={formData.respiracao}
-                setar={(e) => setFormData({ ...formData, respiracao: e.target.value })}
-                legenda="Respiração"
-              />
-              <Campo
-                tipo="text"
-                id="sono"
-                valor={formData.sono}
-                setar={(e) => setFormData({ ...formData, sono: e.target.value })}
-                legenda="Sono"
-              />
-              <Campo
-                tipo="text"
-                id="deficitCognitivo"
-                valor={formData.deficitCognitivo}
-                setar={(e) => setFormData({ ...formData, deficitCognitivo: e.target.value })}
-                legenda="Déficit cognitivo"
-              />
+            <CContainer>
+
+              <CRow>
+                <CCol>
+                  <Campo
+                    tipo="text"
+                    id="alergias"
+                    valor={formData.alergias}
+                    setar={(e) => setFormData({...formData, alergias: e.target.value})}
+                    legenda="Alergias"
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="convulsoes"
+                    valor={formData.convulsoes}
+                    setar={(e) => setFormData({...formData, convulsoes: e.target.value})}
+                    legenda="Convulsões? Controladas? Tipo?"
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="doencas"
+                    valor={formData.doencas}
+                    setar={(e) => setFormData({...formData, doencas: e.target.value})}
+                    legenda="Doenças significativas/traumas"
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
+                  <Campo
+                    tipo="text"
+                    id="digestao"
+                    valor={formData.digestao}
+                    setar={(e) => setFormData({...formData, digestao: e.target.value})}
+                    legenda="Digestão"
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="transtornoAlimentar"
+                    valor={formData.transtornoAlimentar}
+                    setar={(e) => setFormData({...formData, transtornoAlimentar: e.target.value})}
+                    legenda="Transtorno alimentar"
+                  />
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="respiracao"
+                    valor={formData.respiracao}
+                    setar={(e) => setFormData({...formData, respiracao: e.target.value})}
+                    legenda="Respiração"
+                  />
+                </CCol>
+                <CCol>
+                  <Campo
+                    tipo="text"
+                    id="sono"
+                    valor={formData.sono}
+                    setar={(e) => setFormData({...formData, sono: e.target.value})}
+                    legenda="Sono"
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="deficitCognitivo"
+                    valor={formData.deficitCognitivo}
+                    setar={(e) => setFormData({...formData, deficitCognitivo: e.target.value})}
+                    legenda="Déficit cognitivo"
+                  />
+                </CCol>
+              </CRow>
               <CButton color="primary" onClick={salvar}>
                 Salvar
               </CButton>
-            </CForm>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>

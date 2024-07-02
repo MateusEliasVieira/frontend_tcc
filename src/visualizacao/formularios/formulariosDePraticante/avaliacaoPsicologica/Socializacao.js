@@ -1,12 +1,12 @@
 // Socializacao.js
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
-  CCol,
+  CCol, CContainer,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
@@ -54,61 +54,63 @@ const Socializacao = () => {
             <strong>Socialização</strong>
           </CCardHeader>
           <CCardBody>
-            <CRow>
-              <CCol md={6}>
-                <Campo
-                  id="interageBemComOutrasCriancas"
-                  tipo="select"
-                  valor={formData.interageBemComOutrasCriancas}
-                  setar={valor => setFormData({ ...formData, interageBemComOutrasCriancas: valor })}
-                  legenda="Interage bem com outras crianças?"
-                  opcoes={preencherLegenda}
-                />
-
-                <Campo
-                  id="interageBemComAdultos"
-                  tipo="select"
-                  valor={formData.interageBemComAdultos}
-                  setar={valor => setFormData({ ...formData, interageBemComAdultos: valor })}
-                  legenda="Interage bem com adultos?"
-                  opcoes={preencherLegenda}
-                />
-
-                <Campo
-                  id="buscaContatoSocial"
-                  tipo="select"
-                  valor={formData.buscaContatoSocial}
-                  setar={valor => setFormData({ ...formData, buscaContatoSocial: valor })}
-                  legenda="Busca contato social?"
-                  opcoes={preencherLegenda}
-                />
-              </CCol>
-
-              <CCol md={6}>
-                <Campo
-                  id="temOportunidadeContato"
-                  tipo="select"
-                  valor={formData.temOportunidadeContato}
-                  setar={valor => setFormData({ ...formData, temOportunidadeContato: valor })}
-                  legenda="Tem oportunidade de contato social?"
-                  opcoes={preencherLegenda}
-                />
-
-                <Campo
-                  id="fazContatoVisual"
-                  tipo="select"
-                  valor={formData.fazContatoVisual}
-                  setar={valor => setFormData({ ...formData, fazContatoVisual: valor })}
-                  legenda="Faz contato visual?"
-                  opcoes={preencherLegenda}
-                />
-              </CCol>
-            </CRow>
-
-            {/* Botão para salvar */}
-            <CButton color="primary" onClick={salvar}>
-              Salvar
-            </CButton>
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    id="interageBemComOutrasCriancas"
+                    tipo="select"
+                    valor={formData.interageBemComOutrasCriancas}
+                    setar={valor => setFormData({...formData, interageBemComOutrasCriancas: valor})}
+                    legenda="Interage bem com outras crianças?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    id="interageBemComAdultos"
+                    tipo="select"
+                    valor={formData.interageBemComAdultos}
+                    setar={valor => setFormData({...formData, interageBemComAdultos: valor})}
+                    legenda="Interage bem com adultos?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    id="buscaContatoSocial"
+                    tipo="select"
+                    valor={formData.buscaContatoSocial}
+                    setar={valor => setFormData({...formData, buscaContatoSocial: valor})}
+                    legenda="Busca contato social?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    id="temOportunidadeContato"
+                    tipo="select"
+                    valor={formData.temOportunidadeContato}
+                    setar={valor => setFormData({...formData, temOportunidadeContato: valor})}
+                    legenda="Tem oportunidade de contato social?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    id="fazContatoVisual"
+                    tipo="select"
+                    valor={formData.fazContatoVisual}
+                    setar={valor => setFormData({...formData, fazContatoVisual: valor})}
+                    legenda="Faz contato visual?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+              </CRow>
+              <CButton color="primary" onClick={salvar}>
+                Salvar
+              </CButton>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>

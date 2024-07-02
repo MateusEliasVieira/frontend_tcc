@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
-  CCol,
-  CForm,
+  CCol, CContainer,
+  CForm, CRow,
 } from '@coreui/react';
 import axios from 'axios';
 import Campo from '../../../../components/campos/Campo';
@@ -50,51 +50,63 @@ const Comportamento = () => {
         <strong>Comportamento</strong>
       </CCardHeader>
       <CCardBody>
-        <CForm>
-          <Campo
-            tipo="select"
-            id="agitacao"
-            valor={formData.agitacao}
-            setar={(e) => setFormData({ ...formData, agitacao: e.target.value })}
-            legenda="Tem comportamento agitado?"
-            opcoes={preencherLegenda}
-          />
-          <Campo
-            tipo="select"
-            id="toleranciaFrustracao"
-            valor={formData.toleranciaFrustracao}
-            setar={(e) => setFormData({ ...formData, toleranciaFrustracao: e.target.value })}
-            legenda="Tem tolerância à frustração?"
-            opcoes={preencherLegenda}
-          />
-          <Campo
-            tipo="select"
-            id="respeitaLimitesRegras"
-            valor={formData.respeitaLimitesRegras}
-            setar={(e) => setFormData({ ...formData, respeitaLimitesRegras: e.target.value })}
-            legenda="Respeita limites e regras?"
-            opcoes={preencherLegenda}
-          />
-          <Campo
-            tipo="select"
-            id="oposicao"
-            valor={formData.oposicao}
-            setar={(e) => setFormData({ ...formData, oposicao: e.target.value })}
-            legenda="Oposição?"
-            opcoes={preencherLegenda}
-          />
-          <Campo
-            tipo="select"
-            id="atencaoConcentracao"
-            valor={formData.atencaoConcentracao}
-            setar={(e) => setFormData({ ...formData, atencaoConcentracao: e.target.value })}
-            legenda="Possui atenção e concentração?"
-            opcoes={preencherLegenda}
-          />
+        <CContainer>
+          <CRow>
+            <CCol md="auto">
+              <Campo
+                tipo="select"
+                id="agitacao"
+                valor={formData.agitacao}
+                setar={(e) => setFormData({...formData, agitacao: e.target.value})}
+                legenda="Tem comportamento agitado?"
+                opcoes={preencherLegenda}
+              />
+            </CCol>
+            <CCol md="auto">
+              <Campo
+                tipo="select"
+                id="toleranciaFrustracao"
+                valor={formData.toleranciaFrustracao}
+                setar={(e) => setFormData({...formData, toleranciaFrustracao: e.target.value})}
+                legenda="Tem tolerância à frustração?"
+                opcoes={preencherLegenda}
+              />
+            </CCol>
+            <CCol md="auto">
+              <Campo
+                tipo="select"
+                id="respeitaLimitesRegras"
+                valor={formData.respeitaLimitesRegras}
+                setar={(e) => setFormData({...formData, respeitaLimitesRegras: e.target.value})}
+                legenda="Respeita limites e regras?"
+                opcoes={preencherLegenda}
+              />
+            </CCol>
+            <CCol md="auto">
+              <Campo
+                tipo="select"
+                id="oposicao"
+                valor={formData.oposicao}
+                setar={(e) => setFormData({...formData, oposicao: e.target.value})}
+                legenda="Oposição?"
+                opcoes={preencherLegenda}
+              />
+            </CCol>
+            <CCol md="auto">
+              <Campo
+                tipo="select"
+                id="atencaoConcentracao"
+                valor={formData.atencaoConcentracao}
+                setar={(e) => setFormData({...formData, atencaoConcentracao: e.target.value})}
+                legenda="Possui atenção e concentração?"
+                opcoes={preencherLegenda}
+              />
+            </CCol>
+          </CRow>
           <CButton color="primary" onClick={salvar}>
             Salvar
           </CButton>
-        </CForm>
+        </CContainer>
       </CCardBody>
     </CCard>
   );

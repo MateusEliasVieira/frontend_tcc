@@ -4,7 +4,7 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CCol, CForm,
+  CCol, CContainer, CForm,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
@@ -13,9 +13,12 @@ import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {
   SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST
-} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints"; // Importando o componente Campo
+} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {CADASTRADO} from "../../../../constantes/Constantes"; // Importando o componente Campo
 
 const CompletudeMatricula = () => {
+
+  const [desabilitar,setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     dataCompletudeMatricula: '',
     imagemAssinaturaResponsavel: '',
@@ -26,6 +29,7 @@ const CompletudeMatricula = () => {
 
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const completudeMatricula = localStorage.getItem("completudeMatricula")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -34,6 +38,11 @@ const CompletudeMatricula = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
+      if (completudeMatricula === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
   }, []);
 
@@ -41,40 +50,55 @@ const CompletudeMatricula = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Data de efetivação da matrícula</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Data de efetivação da matrícula</strong>
+              </CCardHeader>
+          }
           <CCardBody>
-            <CForm>
-              <Campo
-                tipo="date"
-                id="dataCompletudeMatricula"
-                valor={formularioDeDados.dataCompletudeMatricula}
-                setar={(e) => setFormularioDeDados({...formularioDeDados, dataCompletudeMatricula: e.target.value})}
-                legenda="Data da matrícula"
-              />
-              <Campo
-                tipo="file"
-                id="imagemAssinaturaResponsavel"
-                setar={(e) => {
-                  converterImagemEmBase64(e.target.files[0])
-                    .then((resolve) => {
-                      setFormularioDeDados({...formularioDeDados, imagemAssinaturaResponsavel: resolve});
-                    })
-                    .catch((reject) => {
-                      console.log(reject);
-                    });
-                }}
-                legenda="Imagem da assinatura do responsável"
-              />
-              {/* Botão para salvar */}
-              <CButton color="primary" onClick={() => {
-                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST)
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="date"
+                    id="dataCompletudeMatricula"
+                    valor={formularioDeDados.dataCompletudeMatricula}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, dataCompletudeMatricula: e.target.value})}
+                    legenda="Data da matrícula"
+                    disabled={desabilitar}
+                  />
+                </CCol>
+                <CCol>
+                  <Campo
+                    tipo="file"
+                    id="imagemAssinaturaResponsavel"
+                    setar={(e) => {
+                      converterImagemEmBase64(e.target.files[0])
+                        .then((resolve) => {
+                          setFormularioDeDados({...formularioDeDados, imagemAssinaturaResponsavel: resolve});
+                        })
+                        .catch((reject) => {
+                          console.log(reject);
+                        });
+                    }}
+                    legenda="Imagem da assinatura do responsável"
+                    disabled={desabilitar}
+                  />
+                </CCol>
+              </CRow>
+
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST,"completudeMatricula", setDesabilitar)
               }
               }>
                 Salvar
               </CButton>
-            </CForm>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>

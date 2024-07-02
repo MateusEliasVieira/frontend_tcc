@@ -1,47 +1,45 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
-  CCol,
+  CCol, CContainer,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
 import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
-import {simOuNao} from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
+import {simOuNao} from '../../../../constantes/Constantes';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {
+  SALVAR_EMERGENCIA_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints"; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
 
-  const[possuiPlanoDeSaude,setPossuiPlanoDeSaude]=useState('')
-
-  const [formData, setFormData] = useState({
+  const [possuiPlanoDeSaude, setPossuiPlanoDeSaude] = useState('')
+  const [formularioDeDados, setFormularioDeDados] = useState({
     ligarPara: '',
     telefone: '',
     possuiPlanoDeSaude: '',
-    plano: '',
+    plano: 'Sem Plano',
+    praticante: {
+      idPraticante: ''
+    }
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados:', error);
+      }));
     }
-  };
+  }, []);
 
   return (
     <CRow>
@@ -51,45 +49,62 @@ const Emergencia = () => {
             <strong>Em caso de emergência</strong>
           </CCardHeader>
           <CCardBody>
-            <Campo
-              tipo="text"
-              id="ligarPara"
-              valor={formData.ligarPara}
-              setar={(e) => setFormData({...formData, ligarPara: e.target.value})}
-              legenda="Ligar para"
-            />
-            <Campo
-              tipo="text"
-              id="telefone"
-              valor={formData.telefone}
-              setar={(e) => setFormData({...formData, telefone: e.target.value})}
-              legenda="Telefone"
-            />
-            <Campo
-              tipo="select"
-              id="possuiPlanoDeSaude"
-              valor={formData.possuiPlanoDeSaude}
-              setar={(e) => {
-                setFormData({...formData, possuiPlanoDeSaude: e.target.value})
-                setPossuiPlanoDeSaude(e.target.value)
-              }}
-              legenda="Possui plano de saúde?"
-              opcoes={simOuNao}
-            />
-            {possuiPlanoDeSaude === 'true' ?
-              (<Campo
-                tipo="text"
-                id="plano"
-                valor={formData.plano}
-                setar={(e) => setFormData({...formData, plano: e.target.value})}
-                legenda="Qual é o plano?"
-              />)
-              :
-              (<></>)
-            }
-            <CButton color="primary" onClick={salvar}>
-              Salvar
-            </CButton>
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="ligarPara"
+                    valor={formularioDeDados.ligarPara}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, ligarPara: e.target.value})}
+                    legenda="Ligar para"
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="telefone"
+                    valor={formularioDeDados.telefone}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
+                    legenda="Telefone"
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="possuiPlanoDeSaude"
+                    valor={formularioDeDados.possuiPlanoDeSaude}
+                    setar={(e) => {
+                      setFormularioDeDados({...formularioDeDados, possuiPlanoDeSaude: e.target.value})
+                      setPossuiPlanoDeSaude(e.target.value)
+                    }}
+                    legenda="Possui plano de saúde?"
+                    opcoes={simOuNao}
+                  />
+                </CCol>
+                {possuiPlanoDeSaude === 'true' ?
+                  (<CCol md="auto">
+                      <Campo
+                        tipo="text"
+                        id="plano"
+                        valor={formularioDeDados.plano}
+                        setar={(e) => {
+                          setFormularioDeDados({...formularioDeDados, plano: e.target.value})
+                        }}
+                        legenda="Qual é o plano?"
+                      />
+                    </CCol>
+                  )
+                  :
+                  (<></>)
+                }
+              </CRow>
+              <CButton color="primary" onClick={() => {
+                salvar(formularioDeDados, SALVAR_EMERGENCIA_DO_PRATICANTE_POST)
+              }}>
+                Salvar
+              </CButton>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>

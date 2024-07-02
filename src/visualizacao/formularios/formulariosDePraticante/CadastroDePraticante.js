@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import DadosPessoais from "./fichaCadastroAdmissional/DadosPessoais";
 import Educacao from "./fichaCadastroAdmissional/Educacao";
 import ResponsavelPeloPraticante from "./fichaCadastroAdmissional/ResponsavelPeloPraticante";
@@ -20,55 +20,82 @@ import HabilidadesSociais from "./avaliacaoPsicologica/HabilidadesSociais";
 import Afetividade from "./avaliacaoPsicologica/Afetividade";
 import RelacaoDaFamiliaComOExaminado from "./avaliacaoPsicologica/RelacaoDaFamiliaComOExaminado";
 import AvaliacaoPsicologica from "./avaliacaoPsicologica/AvaliacaoPsicologica";
+import axios from "axios";
+import {
+  BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET
+} from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
 
 const CadastroDePraticante = () => {
+
   const [activeTab, setActiveTab] = useState('dadosPessoais');
 
+  useEffect(() => {
+    const login = JSON.parse(localStorage.getItem("login"))
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo")
+    if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
+      axios.get(BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET, {
+        params: {
+          id: idPraticanteSalvo
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+      })
+        .then((response) => {
+          console.log(response)
+          alert("Ainda não foi concluído o cadastro do praticante " + response.data[0].nomeCompleto)
+        })
+        .catch((erro) => {
+
+        })
+    }
+  }, []);
   const renderComponent = () => {
     switch (activeTab) {
       case 'dadosPessoais':
-        return <DadosPessoais />;
+        return <DadosPessoais/>;
       case 'educacao':
-        return <Educacao />;
+        return <Educacao/>;
       case 'responsavel':
-        return <ResponsavelPeloPraticante />;
+        return <ResponsavelPeloPraticante/>;
       case 'outrasManha':
-        return <OutrasAtividadesManha />;
+        return <OutrasAtividadesManha/>;
       case 'outrasTarde':
-        return <OutrasAtividadesTarde />;
+        return <OutrasAtividadesTarde/>;
       case 'emergencia':
-        return <Emergencia />;
+        return <Emergencia/>;
       case 'completude':
-        return <CompletudeMatricula />;
+        return <CompletudeMatricula/>;
       case 'sobreCrianca':
-        return <SobreACrianca />;
+        return <SobreACrianca/>;
       case 'saude':
-        return <Saude />;
+        return <Saude/>;
       case 'rotina':
-        return <Rotina />;
+        return <Rotina/>;
       case 'cuidados':
-        return <CuidadosPessoais />;
+        return <CuidadosPessoais/>;
       case 'traco':
-        return <TracoDePersonalidade />;
+        return <TracoDePersonalidade/>;
       case 'linguagem':
-        return <Linguagem />;
+        return <Linguagem/>;
       case 'compreensao':
-        return <Compreensao />;
+        return <Compreensao/>;
       case 'saudeMental':
-        return <SaudeMental />;
+        return <SaudeMental/>;
       case 'socializacao':
-        return <Socializacao />;
+        return <Socializacao/>;
       case 'comportamento':
-        return <Comportamento />;
+        return <Comportamento/>;
       case 'habilidades':
-        return <HabilidadesSociais />;
+        return <HabilidadesSociais/>;
       case 'afetividade':
-        return <Afetividade />;
+        return <Afetividade/>;
       case 'relacaoFamilia':
-        return <RelacaoDaFamiliaComOExaminado />;
+        return <RelacaoDaFamiliaComOExaminado/>;
       case 'avaliacao':
-        return <AvaliacaoPsicologica />;
+        return <AvaliacaoPsicologica/>;
       default:
         return null;
     }
@@ -78,67 +105,109 @@ const CadastroDePraticante = () => {
     <div>
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'dadosPessoais' ? 'active' : ''}`} onClick={() => setActiveTab('dadosPessoais')}>Dados Pessoais</button>
+          <button className={`nav-link ${activeTab === 'dadosPessoais' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('dadosPessoais')}>Dados Pessoais
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'educacao' ? 'active' : ''}`} onClick={() => setActiveTab('educacao')}>Educação</button>
+          <button className={`nav-link ${activeTab === 'educacao' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('educacao')}>Educação
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'responsavel' ? 'active' : ''}`} onClick={() => setActiveTab('responsavel')}>Responsável</button>
+          <button className={`nav-link ${activeTab === 'responsavel' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('responsavel')}>Responsável
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'outrasManha' ? 'active' : ''}`} onClick={() => setActiveTab('outrasManha')}>Outras Atividades Manhã</button>
+          <button className={`nav-link ${activeTab === 'outrasManha' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('outrasManha')}>Outras Atividades Manhã
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'outrasTarde' ? 'active' : ''}`} onClick={() => setActiveTab('outrasTarde')}>Outras Atividades Tarde</button>
+          <button className={`nav-link ${activeTab === 'outrasTarde' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('outrasTarde')}>Outras Atividades Tarde
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'emergencia' ? 'active' : ''}`} onClick={() => setActiveTab('emergencia')}>Emergência</button>
+          <button className={`nav-link ${activeTab === 'emergencia' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('emergencia')}>Emergência
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'completude' ? 'active' : ''}`} onClick={() => setActiveTab('completude')}>Completude da Matrícula</button>
+          <button className={`nav-link ${activeTab === 'completude' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('completude')}>Completude da Matrícula
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'sobreCrianca' ? 'active' : ''}`} onClick={() => setActiveTab('sobreCrianca')}>Sobre a Criança</button>
+          <button className={`nav-link ${activeTab === 'sobreCrianca' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('sobreCrianca')}>Sobre a Criança
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'saude' ? 'active' : ''}`} onClick={() => setActiveTab('saude')}>Saúde</button>
+          <button className={`nav-link ${activeTab === 'saude' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('saude')}>Saúde
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'rotina' ? 'active' : ''}`} onClick={() => setActiveTab('rotina')}>Rotina</button>
+          <button className={`nav-link ${activeTab === 'rotina' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('rotina')}>Rotina
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'cuidados' ? 'active' : ''}`} onClick={() => setActiveTab('cuidados')}>Cuidados Pessoais</button>
+          <button className={`nav-link ${activeTab === 'cuidados' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('cuidados')}>Cuidados Pessoais
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'traco' ? 'active' : ''}`} onClick={() => setActiveTab('traco')}>Traços de Personalidade</button>
+          <button className={`nav-link ${activeTab === 'traco' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('traco')}>Traços de Personalidade
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'linguagem' ? 'active' : ''}`} onClick={() => setActiveTab('linguagem')}>Linguagem</button>
+          <button className={`nav-link ${activeTab === 'linguagem' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('linguagem')}>Linguagem
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'compreensao' ? 'active' : ''}`} onClick={() => setActiveTab('compreensao')}>Compreensão</button>
+          <button className={`nav-link ${activeTab === 'compreensao' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('compreensao')}>Compreensão
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'saudeMental' ? 'active' : ''}`} onClick={() => setActiveTab('saudeMental')}>Saúde Mental</button>
+          <button className={`nav-link ${activeTab === 'saudeMental' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('saudeMental')}>Saúde Mental
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'socializacao' ? 'active' : ''}`} onClick={() => setActiveTab('socializacao')}>Socialização</button>
+          <button className={`nav-link ${activeTab === 'socializacao' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('socializacao')}>Socialização
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'comportamento' ? 'active' : ''}`} onClick={() => setActiveTab('comportamento')}>Comportamento</button>
+          <button className={`nav-link ${activeTab === 'comportamento' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('comportamento')}>Comportamento
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'habilidades' ? 'active' : ''}`} onClick={() => setActiveTab('habilidades')}>Habilidades Sociais</button>
+          <button className={`nav-link ${activeTab === 'habilidades' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('habilidades')}>Habilidades Sociais
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'afetividade' ? 'active' : ''}`} onClick={() => setActiveTab('afetividade')}>Afetividade</button>
+          <button className={`nav-link ${activeTab === 'afetividade' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('afetividade')}>Afetividade
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'relacaoFamilia' ? 'active' : ''}`} onClick={() => setActiveTab('relacaoFamilia')}>Relação da Família com o Examinado</button>
+          <button className={`nav-link ${activeTab === 'relacaoFamilia' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('relacaoFamilia')}>Relação da Família com o Examinado
+          </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'avaliacao' ? 'active' : ''}`} onClick={() => setActiveTab('avaliacao')}>Avaliação Psicológica</button>
+          <button className={`nav-link ${activeTab === 'avaliacao' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('avaliacao')}>Avaliação Psicológica
+          </button>
         </li>
       </ul>
       <div className="tab-content">

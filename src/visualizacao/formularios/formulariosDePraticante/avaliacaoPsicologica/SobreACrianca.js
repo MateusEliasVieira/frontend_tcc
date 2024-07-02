@@ -1,17 +1,17 @@
 // SobreACrianca.js
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
-  CCol, CForm,
+  CCol, CContainer, CForm,
   CRow,
 } from '@coreui/react';
 import axios from 'axios';
 import Campo from '../../../../components/campos/Campo'; // Importe o componente Campo
-import {simOuNao,alimentacao} from "../../../../constantes/Constantes"; // Importe a constante alimentacao
+import {simOuNao, alimentacao} from "../../../../constantes/Constantes"; // Importe a constante alimentacao
 
 const SobreACrianca = () => {
   const [formData, setFormData] = useState({
@@ -55,65 +55,74 @@ const SobreACrianca = () => {
             <strong>Sobre o Praticante</strong>
           </CCardHeader>
           <CCardBody>
-            <CForm>
-              <Campo
-                tipo="select"
-                id="fezTerapiaEquina"
-                valor={formData.fezTerapiaEquina}
-                setar={valor => setFormData({ ...formData, fezTerapiaEquina: valor })}
-                legenda="Já fez equoterapia antes?"
-                opcoes={simOuNao}
-              />
-
-              <Campo
-                tipo="select"
-                id="criancaPlanejada"
-                valor={formData.criancaPlanejada}
-                setar={valor => setFormData({ ...formData, criancaPlanejada: valor })}
-                legenda="A criança foi planejada?"
-                opcoes={simOuNao}
-              />
-
-              <Campo
-                tipo="select"
-                id="cuidadosPreNatais"
-                valor={formData.cuidadosPreNatais}
-                setar={valor => setFormData({ ...formData, cuidadosPreNatais: valor })}
-                legenda="Teve acompanhamento pré-natal?"
-                opcoes={simOuNao}
-              />
-
-              <Campo
-                tipo="select"
-                id="chorouNoNascimento"
-                valor={formData.chorouNoNascimento}
-                setar={valor => setFormData({ ...formData, chorouNoNascimento: valor })}
-                legenda="Chorou ao nascer?"
-                opcoes={simOuNao}
-              />
-
-              <Campo
-                tipo="select"
-                id="alimentacao"
-                valor={formData.alimentacao}
-                setar={valor => setFormData({ ...formData, alimentacao: valor })}
-                legenda="Qual foi a alimentação?"
-                opcoes={alimentacao}
-              />
-
-              <Campo
-                tipo="textarea"
-                id="observacao"
-                valor={formData.observacao}
-                setar={valor => setFormData({ ...formData, observacao: valor })}
-                legenda="Observação"
-              />
-
-              {/* Botão para salvar */}
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="fezTerapiaEquina"
+                    valor={formData.fezTerapiaEquina}
+                    setar={valor => setFormData({...formData, fezTerapiaEquina: valor})}
+                    legenda="Já fez equoterapia antes?"
+                    opcoes={simOuNao}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="criancaPlanejada"
+                    valor={formData.criancaPlanejada}
+                    setar={valor => setFormData({...formData, criancaPlanejada: valor})}
+                    legenda="A criança foi planejada?"
+                    opcoes={simOuNao}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="cuidadosPreNatais"
+                    valor={formData.cuidadosPreNatais}
+                    setar={valor => setFormData({...formData, cuidadosPreNatais: valor})}
+                    legenda="Teve acompanhamento pré-natal?"
+                    opcoes={simOuNao}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="chorouNoNascimento"
+                    valor={formData.chorouNoNascimento}
+                    setar={valor => setFormData({...formData, chorouNoNascimento: valor})}
+                    legenda="Chorou ao nascer?"
+                    opcoes={simOuNao}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="alimentacao"
+                    valor={formData.alimentacao}
+                    setar={valor => setFormData({...formData, alimentacao: valor})}
+                    legenda="Qual foi a alimentação?"
+                    opcoes={alimentacao}
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
+                  <Campo
+                    tipo="textarea"
+                    id="observacao"
+                    valor={formData.observacao}
+                    setar={valor => setFormData({...formData, observacao: valor})}
+                    legenda="Observação"
+                  />
+                </CCol>
+              </CRow>
               <CButton color="primary" onClick={salvar}>
                 Salvar
               </CButton>
-            </CForm>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>

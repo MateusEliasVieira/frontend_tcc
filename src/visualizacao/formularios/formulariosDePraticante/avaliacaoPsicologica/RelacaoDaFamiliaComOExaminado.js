@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   CButton,
   CCard,
@@ -6,11 +6,11 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CForm,
+  CForm, CContainer,
 } from '@coreui/react';
 import axios from 'axios';
 import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
-import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
+import {preencherLegenda} from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const RelacaoDaFamiliaComOExaminado = () => {
   const [formData, setFormData] = useState({
@@ -54,59 +54,78 @@ const RelacaoDaFamiliaComOExaminado = () => {
             <strong>Relação da Família com o Examinado (Percepção do Entrevistador)</strong>
           </CCardHeader>
           <CCardBody>
-            <CForm>
-              <Campo
-                tipo="select"
-                id="adequado"
-                valor={formData.adequado}
-                setar={(e) => setFormData({ ...formData, adequado: e.target.value })}
-                legenda="Adequado?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="superprotecao"
-                valor={formData.superprotecao}
-                setar={(e) => setFormData({ ...formData, superprotecao: e.target.value })}
-                legenda="Superproteção?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="dificuldadePerceberDeficiencias"
-                valor={formData.dificuldadePerceberDeficiencias}
-                setar={(e) => setFormData({ ...formData, dificuldadePerceberDeficiencias: e.target.value })}
-                legenda="Dificuldade em perceber deficiências?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="rejeicao"
-                valor={formData.rejeicao}
-                setar={(e) => setFormData({ ...formData, rejeicao: e.target.value })}
-                legenda="Rejeição?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="indiferenca"
-                valor={formData.indiferenca}
-                setar={(e) => setFormData({ ...formData, indiferenca: e.target.value })}
-                legenda="Indiferença?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="ansiedadePercebidaEntrevistador"
-                valor={formData.ansiedadePercebidaEntrevistador}
-                setar={(e) => setFormData({ ...formData, ansiedadePercebidaEntrevistador: e.target.value })}
-                legenda="Ansiedade?"
-                opcoes={preencherLegenda}
-              />
+            <CContainer>
+              <CRow>
+                <CCol>
+                  <Campo
+                    tipo="select"
+                    id="adequado"
+                    valor={formData.adequado}
+                    setar={(e) => setFormData({...formData, adequado: e.target.value})}
+                    legenda="Adequado?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol>
+                  <Campo
+                    tipo="select"
+                    id="superprotecao"
+                    valor={formData.superprotecao}
+                    setar={(e) => setFormData({...formData, superprotecao: e.target.value})}
+                    legenda="Superproteção?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol>
+                  <Campo
+                    tipo="select"
+                    id="dificuldadePerceberDeficiencias"
+                    valor={formData.dificuldadePerceberDeficiencias}
+                    setar={(e) => setFormData({...formData, dificuldadePerceberDeficiencias: e.target.value})}
+                    legenda="Dificuldade em perceber deficiências?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="rejeicao"
+                    valor={formData.rejeicao}
+                    setar={(e) => setFormData({...formData, rejeicao: e.target.value})}
+                    legenda="Rejeição?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
+                  <Campo
+                    tipo="select"
+                    id="indiferenca"
+                    valor={formData.indiferenca}
+                    setar={(e) => setFormData({...formData, indiferenca: e.target.value})}
+                    legenda="Indiferença?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol>
+                  <Campo
+                    tipo="select"
+                    id="ansiedadePercebidaEntrevistador"
+                    valor={formData.ansiedadePercebidaEntrevistador}
+                    setar={(e) => setFormData({...formData, ansiedadePercebidaEntrevistador: e.target.value})}
+                    legenda="Ansiedade?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+              </CRow>
               <CButton color="primary" onClick={salvar}>
                 Salvar
               </CButton>
-            </CForm>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>
