@@ -65,17 +65,17 @@ const salvar = async (formularioDeDados, endpoint,chaveLocalStorage,setDesabilit
         setDesabilitar("disabled")
         alert('Dados salvos com sucesso');
       } catch (error) {
-        const resposta = error.response;
-        if(resposta.data){
-          if(resposta.data.lista){
+        const resposta = error.response
+        if(resposta.data !== undefined){
+          if(resposta.data.lista !== undefined){
             var lista = ""
             resposta.data.lista.map((item)=>{
               lista += item.mensagem + "\n"
             })
             alert(lista)
-          }else if(resposta.data.mensagem){
+          }else if(resposta.data.mensagem !== undefined){
             alert(resposta.data.mensagem)
-          }else if(resposta.data.titulo){
+          }else if(resposta.data.titulo !== undefined){
             alert(resposta.data.titulo)
           }else{
             alert("Erro interno do sistema!")

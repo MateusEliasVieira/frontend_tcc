@@ -22,6 +22,7 @@ import RelacaoDaFamiliaComOExaminado from "./avaliacaoPsicologica/RelacaoDaFamil
 import AvaliacaoPsicologica from "./avaliacaoPsicologica/AvaliacaoPsicologica";
 import axios from "axios";
 import {
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
   BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
@@ -34,7 +35,7 @@ const CadastroDePraticante = () => {
     const login = JSON.parse(localStorage.getItem("login"))
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo")
     if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
-      axios.get(BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET, {
+      axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
         params: {
           id: idPraticanteSalvo
         },
@@ -45,7 +46,7 @@ const CadastroDePraticante = () => {
       })
         .then((response) => {
           console.log(response)
-          alert("Ainda não foi concluído o cadastro do praticante " + response.data[0].nomeCompleto)
+          alert("Ainda não foi concluído o cadastro do praticante " + response.data.nomeCompleto)
         })
         .catch((erro) => {
 

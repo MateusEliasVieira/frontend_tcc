@@ -11,9 +11,12 @@ import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {
   SALVAR_OUTRAS_ATIVIDADE_MANHA_DO_PRATICANTE_POST
-} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints"; // Importando o componente Campo
+} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {CADASTRADO} from "../../../../constantes/Constantes"; // Importando o componente Campo
 
 const OutrasAtividadesManha = () => {
+
+  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     segundaFeira: '',
     tercaFeira: '',
@@ -29,6 +32,7 @@ const OutrasAtividadesManha = () => {
 
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const outrasAtividadesManha = localStorage.getItem("outrasAtividadesManha");
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -37,6 +41,11 @@ const OutrasAtividadesManha = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
+      if (outrasAtividadesManha === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
   }, []);
 
@@ -44,9 +53,16 @@ const OutrasAtividadesManha = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Outras atividades matutinas</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Outras atividades matutinas</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -57,6 +73,7 @@ const OutrasAtividadesManha = () => {
                     valor={formularioDeDados.segundaFeira}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, segundaFeira: e.target.value})}
                     legenda="Segunda-feira"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -66,6 +83,7 @@ const OutrasAtividadesManha = () => {
                     valor={formularioDeDados.tercaFeira}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, tercaFeira: e.target.value})}
                     legenda="Terça-feira"
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -77,6 +95,7 @@ const OutrasAtividadesManha = () => {
                     valor={formularioDeDados.quartaFeira}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, quartaFeira: e.target.value})}
                     legenda="Quarta-feira"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -86,6 +105,7 @@ const OutrasAtividadesManha = () => {
                     valor={formularioDeDados.quintaFeira}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, quintaFeira: e.target.value})}
                     legenda="Quinta-feira"
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -98,6 +118,7 @@ const OutrasAtividadesManha = () => {
                     valor={formularioDeDados.sextaFeira}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, sextaFeira: e.target.value})}
                     legenda="Sexta-feira"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -107,6 +128,7 @@ const OutrasAtividadesManha = () => {
                     valor={formularioDeDados.sabado}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, sabado: e.target.value})}
                     legenda="Sábado"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -116,11 +138,12 @@ const OutrasAtividadesManha = () => {
                     valor={formularioDeDados.domingo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, domingo: e.target.value})}
                     legenda="Domingo"
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" onClick={() => {
-                salvar(formularioDeDados, SALVAR_OUTRAS_ATIVIDADE_MANHA_DO_PRATICANTE_POST)
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_OUTRAS_ATIVIDADE_MANHA_DO_PRATICANTE_POST, "outrasAtividadesManha", setDesabilitar)
               }}>
                 Salvar
               </CButton>
