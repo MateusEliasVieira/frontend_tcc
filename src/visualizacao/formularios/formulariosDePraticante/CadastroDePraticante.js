@@ -24,6 +24,17 @@ import axios from "axios";
 import {
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import AvaliacaoFisioterapeutica from "./avaliacaoFisioterapeutica/AvaliacaoFisioterapeutica";
+import CoordenacaoMotora from "./avaliacaoFisioterapeutica/CoordenacaoMotora";
+import EquilibrioDinamico from "./avaliacaoFisioterapeutica/EquilibrioDinamico";
+import EquilibrioEstatico from "./avaliacaoFisioterapeutica/EquilibrioEstatico";
+import FormaDeComunicacao from "./avaliacaoFisioterapeutica/FormaDeComunicacao";
+import GruposMusculares from "./avaliacaoFisioterapeutica/GruposMusculares";
+import HabilidadesMotorasAVD from "./avaliacaoFisioterapeutica/HabilidadesMotorasAVD";
+import MobilidadeArticular from "./avaliacaoFisioterapeutica/MobilidadeArticular";
+import QuadroAtual from "./avaliacaoFisioterapeutica/QuadroAtual";
+import SaudeGeralDosPraticantes from "./avaliacaoFisioterapeutica/SaudeGeralDosPraticantes";
+import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeuticoSingular";
 
 
 const CadastroDePraticante = () => {
@@ -58,25 +69,25 @@ const CadastroDePraticante = () => {
         return <DadosPessoais/>;
       case 'educacao':
         return <Educacao/>;
-      case 'responsavel':
+      case 'responsavelPeloPraticante':
         return <ResponsavelPeloPraticante/>;
-      case 'outrasManha':
+      case 'outrasAtividadesManha':
         return <OutrasAtividadesManha/>;
-      case 'outrasTarde':
+      case 'outrasAtividadesTarde':
         return <OutrasAtividadesTarde/>;
       case 'emergencia':
         return <Emergencia/>;
-      case 'completude':
+      case 'completudeMatricula':
         return <CompletudeMatricula/>;
-      case 'sobreCrianca':
+      case 'sobreACrianca':
         return <SobreACrianca/>;
       case 'saude':
         return <Saude/>;
       case 'rotina':
         return <Rotina/>;
-      case 'cuidados':
+      case 'cuidadosPessoais':
         return <CuidadosPessoais/>;
-      case 'traco':
+      case 'tracoDePersonalidade':
         return <TracoDePersonalidade/>;
       case 'linguagem':
         return <Linguagem/>;
@@ -88,14 +99,36 @@ const CadastroDePraticante = () => {
         return <Socializacao/>;
       case 'comportamento':
         return <Comportamento/>;
-      case 'habilidades':
+      case 'habilidadesSociais':
         return <HabilidadesSociais/>;
       case 'afetividade':
         return <Afetividade/>;
-      case 'relacaoFamilia':
+      case 'relacaoDaFamiliaComOExaminado':
         return <RelacaoDaFamiliaComOExaminado/>;
-      case 'avaliacao':
+      case 'avaliacaoPsicologica':
         return <AvaliacaoPsicologica/>;
+      case 'avaliacaoFisioterapeutica':
+        return <AvaliacaoFisioterapeutica/>;
+      case 'coordenacaoMotora':
+        return <CoordenacaoMotora/>;
+      case 'equilibrioDinamico':
+        return <EquilibrioDinamico/>;
+      case 'equilibrioEstatico':
+        return <EquilibrioEstatico/>;
+      case  'formaDeComunicacao':
+        return <FormaDeComunicacao/>;
+      case  'gruposMusculares':
+        return <GruposMusculares/>;
+      case  'habilidadesMotorasAVD':
+        return <HabilidadesMotorasAVD/>;
+      case  'mobilidadeArticular':
+        return <MobilidadeArticular/>;
+      case  'quadroAtual':
+        return <QuadroAtual/>;
+      case  'saudeGeralDosPraticantes':
+        return <SaudeGeralDosPraticantes/>;
+      case  'planoTerapeuticoSingular':
+        return <PlanoTerapeuticoSingular/>;
       default:
         return null;
     }
@@ -115,18 +148,18 @@ const CadastroDePraticante = () => {
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'responsavel' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('responsavel')}>Responsável
+          <button className={`nav-link ${activeTab === 'responsavelPeloPraticante' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('responsavelPeloPraticante')}>Responsável
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'outrasManha' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('outrasManha')}>Outras Atividades Manhã
+          <button className={`nav-link ${activeTab === 'outrasAtividadesManha' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('outrasAtividadesManha')}>Outras Atividades Manhã
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'outrasTarde' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('outrasTarde')}>Outras Atividades Tarde
+          <button className={`nav-link ${activeTab === 'outrasAtividadesTarde' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('outrasAtividadesTarde')}>Outras Atividades Tarde
           </button>
         </li>
         <li className="nav-item">
@@ -135,15 +168,15 @@ const CadastroDePraticante = () => {
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'completude' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('completude')}>Completude da Matrícula
+          <button className={`nav-link ${activeTab === 'completudeMatricula' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('completudeMatricula')}>Completude da Matrícula
           </button>
         </li>
       </ul>
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'sobreCrianca' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('sobreCrianca')}>Sobre a Criança
+          <button className={`nav-link ${activeTab === 'sobreACrianca' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('sobreACrianca')}>Sobre a Criança
           </button>
         </li>
         <li className="nav-item">
@@ -157,13 +190,13 @@ const CadastroDePraticante = () => {
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'cuidados' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('cuidados')}>Cuidados Pessoais
+          <button className={`nav-link ${activeTab === 'cuidadosPessoais' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('cuidadosPessoais')}>Cuidados Pessoais
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'traco' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('traco')}>Traços de Personalidade
+          <button className={`nav-link ${activeTab === 'tracoDePersonalidade' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('tracoDePersonalidade')}>Traços de Personalidade
           </button>
         </li>
         <li className="nav-item">
@@ -192,8 +225,8 @@ const CadastroDePraticante = () => {
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'habilidades' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('habilidades')}>Habilidades Sociais
+          <button className={`nav-link ${activeTab === 'habilidadesSociais' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('habilidadesSociais')}>Habilidades Sociais
           </button>
         </li>
         <li className="nav-item">
@@ -202,15 +235,74 @@ const CadastroDePraticante = () => {
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'relacaoFamilia' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('relacaoFamilia')}>Relação da Família com o Examinado
+          <button className={`nav-link ${activeTab === 'relacaoDaFamiliaComOExaminado' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('relacaoDaFamiliaComOExaminado')}>Relação da Família com o Examinado
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'avaliacao' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('avaliacao')}>Avaliação Psicológica
+          <button className={`nav-link ${activeTab === 'avaliacaoPsicologica' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('avaliacaoPsicologica')}>Avaliação Psicológica
           </button>
         </li>
+      </ul>
+      <ul className="nav nav-tabs">
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'avaliacaoFisioterapeutica' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('avaliacaoFisioterapeutica')}>Avaliação Fisioterapêutica
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'coordenacaoMotora' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('coordenacaoMotora')}>Coordenação Motora
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'equilibrioDinamico' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('equilibrioDinamico')}>Equilíbrio Dinâmico
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'equilibrioEstatico' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('equilibrioEstatico')}>Equilíbrio Estático
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'formaDeComunicacao' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('formaDeComunicacao')}>Forma de Comunicação
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'gruposMusculares' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('gruposMusculares')}>Grupos Musculares
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'habilidadesMotorasAVD' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('habilidadesMotorasAVD')}>Habilidades Motoras AVD
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'mobilidadeArticular' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('mobilidadeArticular')}>Mobilidade Articular
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'quadroAtual' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('quadroAtual')}>Quadro Atual
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'saudeGeralDosPraticantes' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('saudeGeralDosPraticantes')}>Saúde Geral dos Praticantes
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className={`nav-link ${activeTab === 'planoTerapeuticoSingular' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('planoTerapeuticoSingular')}>Plano Terapêutico Singular
+            </button>
+          </li>
+        </ul>
       </ul>
       <div className="tab-content">
         {renderComponent()}

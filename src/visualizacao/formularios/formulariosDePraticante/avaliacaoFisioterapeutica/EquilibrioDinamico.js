@@ -1,0 +1,178 @@
+import React, {useEffect, useState} from 'react';
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CContainer,
+  CForm,
+  CRow,
+} from '@coreui/react';
+import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
+import { salvar } from "../../../../requisicoes/EquilibrioDinamico"; // Importe a função salvar apropriada
+import {
+  SALVAR_EQUILIBRIO_DINAMICO_POST
+} from "../../../../endpoints/avaliacaoFisioterapeutica/Endpoints"; // Certifique-se de que o endpoint está correto
+import { CADASTRADO } from "../../../../constantes/Constantes";
+
+const EquilibrioDinamico = () => {
+  const [desabilitar, setDesabilitar] = useState("");
+  const [formularioDeDados, setFormularioDeDados] = useState({
+    idEquilibrioDinamico: '',
+    engatinhar: '',
+    comentariosEngatinhar: '',
+    marchaVoluntaria: '',
+    comentariosMarchaVoluntaria: '',
+    saltarPesJuntos: '',
+    comentariosSaltarPesJuntos: '',
+    correrDesviandoObstaculos: '',
+    comentariosCorrerDesviandoObstaculos: '',
+    praticante: {
+      idPraticante: '',
+    },
+  });
+
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
+        }
+      }));
+      if (avaliacaoFisioterapeutica === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
+    }
+  }, []);
+  return (
+    <CRow>
+      <CCol xs={12}>
+        <CCard className="mb-4">
+          <CCardHeader>
+            <strong>Equilíbrio Dinâmico</strong>
+          </CCardHeader>
+          <CCardBody>
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="engatinhar"
+                    valor={formularioDeDados.engatinhar}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, engatinhar: e.target.value })}
+                    legenda="Engatinhar"
+                    disabled={desabilitar}
+                    opcoes={[
+                      { valor: 'OPCAO1', label: 'Opção 1' },
+                      { valor: 'OPCAO2', label: 'Opção 2' },
+                      { valor: 'OPCAO3', label: 'Opção 3' }
+                    ]}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="comentariosEngatinhar"
+                    valor={formularioDeDados.comentariosEngatinhar}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosEngatinhar: e.target.value })}
+                    legenda="Comentários Engatinhar"
+                    disabled={desabilitar}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="marchaVoluntaria"
+                    valor={formularioDeDados.marchaVoluntaria}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, marchaVoluntaria: e.target.value })}
+                    legenda="Marcha Voluntária"
+                    disabled={desabilitar}
+                    opcoes={[
+                      { valor: 'OPCAO1', label: 'Opção 1' },
+                      { valor: 'OPCAO2', label: 'Opção 2' },
+                      { valor: 'OPCAO3', label: 'Opção 3' }
+                    ]}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="comentariosMarchaVoluntaria"
+                    valor={formularioDeDados.comentariosMarchaVoluntaria}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosMarchaVoluntaria: e.target.value })}
+                    legenda="Comentários Marcha Voluntária"
+                    disabled={desabilitar}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="saltarPesJuntos"
+                    valor={formularioDeDados.saltarPesJuntos}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, saltarPesJuntos: e.target.value })}
+                    legenda="Saltar com os Pés Juntos"
+                    disabled={desabilitar}
+                    opcoes={[
+                      { valor: 'OPCAO1', label: 'Opção 1' },
+                      { valor: 'OPCAO2', label: 'Opção 2' },
+                      { valor: 'OPCAO3', label: 'Opção 3' }
+                    ]}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="comentariosSaltarPesJuntos"
+                    valor={formularioDeDados.comentariosSaltarPesJuntos}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosSaltarPesJuntos: e.target.value })}
+                    legenda="Comentários Saltar com os Pés Juntos"
+                    disabled={desabilitar}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="correrDesviandoObstaculos"
+                    valor={formularioDeDados.correrDesviandoObstaculos}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, correrDesviandoObstaculos: e.target.value })}
+                    legenda="Correr Desviando Obstáculos"
+                    disabled={desabilitar}
+                    opcoes={[
+                      { valor: 'OPCAO1', label: 'Opção 1' },
+                      { valor: 'OPCAO2', label: 'Opção 2' },
+                      { valor: 'OPCAO3', label: 'Opção 3' }
+                    ]}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="text"
+                    id="comentariosCorrerDesviandoObstaculos"
+                    valor={formularioDeDados.comentariosCorrerDesviandoObstaculos}
+                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosCorrerDesviandoObstaculos: e.target.value })}
+                    legenda="Comentários Correr Desviando Obstáculos"
+                    disabled={desabilitar}
+                  />
+                </CCol>
+              </CRow>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_EQUILIBRIO_DINAMICO_POST, "equilibrioDinamico", setDesabilitar)
+              }}>
+                Salvar
+              </CButton>
+            </CContainer>
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
+  );
+};
+
+export default EquilibrioDinamico;
