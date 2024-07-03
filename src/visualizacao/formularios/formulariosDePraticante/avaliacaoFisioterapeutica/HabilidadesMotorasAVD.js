@@ -8,12 +8,13 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import { salvar } from "../../../../requisicoes/HabilidadesMotorasAVD"; // Importe a função salvar apropriada
-import {
-  SALVAR_HABILIDADES_MOTORAS_AVD_POST
-} from "../../../../endpoints/avaliacaoFisioterapeutica/Endpoints"; // Certifique-se de que o endpoint está correto
+import Campo from '../../../../components/campos/Campo';
+import { salvar } from "../../../../requisicoes/Praticante";
+
 import { CADASTRADO } from "../../../../constantes/Constantes";
+import {
+  SALVAR_HABILIDADES_MOTORAS_AVD_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
 const HabilidadesMotorasAVD = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -41,9 +42,11 @@ const HabilidadesMotorasAVD = () => {
       idPraticante: '',
     },
   });
+
   useEffect(() => {
+
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    const habilidadesMotorasAVD = localStorage.getItem("habilidadesMotorasAVD")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -52,20 +55,28 @@ const HabilidadesMotorasAVD = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
+      if (habilidadesMotorasAVD === CADASTRADO) {
         setDesabilitar("disabled")
       } else {
         setDesabilitar("")
       }
     }
   }, []);
+
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Habilidades Motoras/AVD's</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Habilidades Motoras/AVD's</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -237,7 +248,7 @@ const HabilidadesMotorasAVD = () => {
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_HABILIDADES_MOTORAS_AVD_POST, "habilidadesMotorasAVD", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_HABILIDADES_MOTORAS_AVD_DO_PRATICANTE_POST, "habilidadesMotorasAVD", setDesabilitar)
               }}>
                 Salvar
               </CButton>

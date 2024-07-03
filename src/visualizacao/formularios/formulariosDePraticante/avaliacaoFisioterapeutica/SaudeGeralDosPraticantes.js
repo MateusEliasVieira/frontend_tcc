@@ -8,12 +8,12 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import { salvar } from "../../../../requisicoes/SaudeGeralDosPraticantes"; // Importe a função salvar apropriada
-import {
-  SALVAR_SAUDE_GERAL_DOS_PRATICANTES_POST
-} from "../../../../endpoints/physicalTherapyAssessment/Endpoints"; // Certifique-se de que o endpoint está correto
+import Campo from '../../../../components/campos/Campo';
+import { salvar } from "../../../../requisicoes/Praticante";
 import { CADASTRADO } from "../../../../constantes/Constantes";
+import {
+  SALVAR_SAUDE_GERAL_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
 const SaudeGeralDosPraticantes = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -44,9 +44,10 @@ const SaudeGeralDosPraticantes = () => {
       idPraticante: '',
     },
   });
+
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    const saudeGeralDosPraticantes = localStorage.getItem("saudeGeralDosPraticantes")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -55,13 +56,14 @@ const SaudeGeralDosPraticantes = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
+      if (saudeGeralDosPraticantes === CADASTRADO) {
         setDesabilitar("disabled")
       } else {
         setDesabilitar("")
       }
     }
   }, []);
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -266,7 +268,7 @@ const SaudeGeralDosPraticantes = () => {
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_SAUDE_GERAL_DOS_PRATICANTES_POST, "saudeGeralDosPraticantes", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_SAUDE_GERAL_DO_PRATICANTE_POST, "saudeGeralDosPraticantes", setDesabilitar)
               }}>
                 Salvar
               </CButton>

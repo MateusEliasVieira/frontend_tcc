@@ -8,12 +8,12 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import { salvar } from "../../../../requisicoes/FormaDeComunicacao"; // Importe a função salvar apropriada
+import Campo from '../../../../components/campos/Campo';
+import { salvar } from "../../../../requisicoes/Praticante";
+import {CADASTRADO, simOuNao} from "../../../../constantes/Constantes";
 import {
-  SALVAR_FORMA_DE_COMUNICACAO_POST
-} from "../../../../endpoints/avaliacaoFisioterapeutica/Endpoints"; // Certifique-se de que o endpoint está correto
-import { CADASTRADO } from "../../../../constantes/Constantes";
+  SALVAR_FORMA_COMUNICACAO_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
 const FormaDeComunicacao = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -29,9 +29,11 @@ const FormaDeComunicacao = () => {
       idPraticante: '',
     },
   });
+
   useEffect(() => {
+
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    const formaDeComunicacao = localStorage.getItem("formaDeComunicacao")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -40,31 +42,40 @@ const FormaDeComunicacao = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
+      if (formaDeComunicacao === CADASTRADO) {
         setDesabilitar("disabled")
       } else {
         setDesabilitar("")
       }
     }
   }, []);
+
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Forma de Comunicação</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Forma de Comunicação</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="checkbox"
+                    tipo="select"
                     id="fala"
                     valor={formularioDeDados.fala}
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, fala: e.target.checked })}
                     legenda="Fala"
                     disabled={desabilitar}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -79,12 +90,13 @@ const FormaDeComunicacao = () => {
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="checkbox"
+                    tipo="select"
                     id="gestos"
                     valor={formularioDeDados.gestos}
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, gestos: e.target.checked })}
                     legenda="Gestos"
                     disabled={desabilitar}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -99,12 +111,13 @@ const FormaDeComunicacao = () => {
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="checkbox"
+                    tipo="select"
                     id="usoDosOlhos"
                     valor={formularioDeDados.usoDosOlhos}
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, usoDosOlhos: e.target.checked })}
                     legenda="Uso dos Olhos"
                     disabled={desabilitar}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -119,7 +132,7 @@ const FormaDeComunicacao = () => {
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_FORMA_DE_COMUNICACAO_POST, "formaDeComunicacao", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_FORMA_COMUNICACAO_DO_PRATICANTE_POST, "formaDeComunicacao", setDesabilitar)
               }}>
                 Salvar
               </CButton>

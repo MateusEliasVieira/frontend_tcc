@@ -6,17 +6,18 @@ import {
   CCardHeader,
   CCol,
   CContainer,
-  CForm,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import { salvar } from "../../../../requisicoes/EquilibrioDinamico"; // Importe a função salvar apropriada
+import Campo from '../../../../components/campos/Campo';
+import {salvar} from "../../../../requisicoes/Praticante";
+
+import {CADASTRADO, equilibrioDinamico} from "../../../../constantes/Constantes";
 import {
-  SALVAR_EQUILIBRIO_DINAMICO_POST
-} from "../../../../endpoints/avaliacaoFisioterapeutica/Endpoints"; // Certifique-se de que o endpoint está correto
-import { CADASTRADO } from "../../../../constantes/Constantes";
+  SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
 const EquilibrioDinamico = () => {
+
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
     idEquilibrioDinamico: '',
@@ -35,7 +36,7 @@ const EquilibrioDinamico = () => {
 
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    const equilibrioDinamico = localStorage.getItem("equilibrioDinamico")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -44,7 +45,7 @@ const EquilibrioDinamico = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
+      if (equilibrioDinamico === CADASTRADO) {
         setDesabilitar("disabled")
       } else {
         setDesabilitar("")
@@ -55,9 +56,16 @@ const EquilibrioDinamico = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Equilíbrio Dinâmico</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Equilíbrio Dinâmico</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -66,14 +74,10 @@ const EquilibrioDinamico = () => {
                     tipo="select"
                     id="engatinhar"
                     valor={formularioDeDados.engatinhar}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, engatinhar: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, engatinhar: e.target.value})}
                     legenda="Engatinhar"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'OPCAO1', label: 'Opção 1' },
-                      { valor: 'OPCAO2', label: 'Opção 2' },
-                      { valor: 'OPCAO3', label: 'Opção 3' }
-                    ]}
+                    opcoes={equilibrioDinamico}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -81,7 +85,7 @@ const EquilibrioDinamico = () => {
                     tipo="text"
                     id="comentariosEngatinhar"
                     valor={formularioDeDados.comentariosEngatinhar}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosEngatinhar: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, comentariosEngatinhar: e.target.value})}
                     legenda="Comentários Engatinhar"
                     disabled={desabilitar}
                   />
@@ -91,14 +95,10 @@ const EquilibrioDinamico = () => {
                     tipo="select"
                     id="marchaVoluntaria"
                     valor={formularioDeDados.marchaVoluntaria}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, marchaVoluntaria: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, marchaVoluntaria: e.target.value})}
                     legenda="Marcha Voluntária"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'OPCAO1', label: 'Opção 1' },
-                      { valor: 'OPCAO2', label: 'Opção 2' },
-                      { valor: 'OPCAO3', label: 'Opção 3' }
-                    ]}
+                    opcoes={equilibrioDinamico}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -106,7 +106,10 @@ const EquilibrioDinamico = () => {
                     tipo="text"
                     id="comentariosMarchaVoluntaria"
                     valor={formularioDeDados.comentariosMarchaVoluntaria}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosMarchaVoluntaria: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      comentariosMarchaVoluntaria: e.target.value
+                    })}
                     legenda="Comentários Marcha Voluntária"
                     disabled={desabilitar}
                   />
@@ -116,14 +119,10 @@ const EquilibrioDinamico = () => {
                     tipo="select"
                     id="saltarPesJuntos"
                     valor={formularioDeDados.saltarPesJuntos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, saltarPesJuntos: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, saltarPesJuntos: e.target.value})}
                     legenda="Saltar com os Pés Juntos"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'OPCAO1', label: 'Opção 1' },
-                      { valor: 'OPCAO2', label: 'Opção 2' },
-                      { valor: 'OPCAO3', label: 'Opção 3' }
-                    ]}
+                    opcoes={equilibrioDinamico}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -131,7 +130,10 @@ const EquilibrioDinamico = () => {
                     tipo="text"
                     id="comentariosSaltarPesJuntos"
                     valor={formularioDeDados.comentariosSaltarPesJuntos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosSaltarPesJuntos: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      comentariosSaltarPesJuntos: e.target.value
+                    })}
                     legenda="Comentários Saltar com os Pés Juntos"
                     disabled={desabilitar}
                   />
@@ -141,14 +143,13 @@ const EquilibrioDinamico = () => {
                     tipo="select"
                     id="correrDesviandoObstaculos"
                     valor={formularioDeDados.correrDesviandoObstaculos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, correrDesviandoObstaculos: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      correrDesviandoObstaculos: e.target.value
+                    })}
                     legenda="Correr Desviando Obstáculos"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'OPCAO1', label: 'Opção 1' },
-                      { valor: 'OPCAO2', label: 'Opção 2' },
-                      { valor: 'OPCAO3', label: 'Opção 3' }
-                    ]}
+                    opcoes={equilibrioDinamico}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -156,14 +157,17 @@ const EquilibrioDinamico = () => {
                     tipo="text"
                     id="comentariosCorrerDesviandoObstaculos"
                     valor={formularioDeDados.comentariosCorrerDesviandoObstaculos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, comentariosCorrerDesviandoObstaculos: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      comentariosCorrerDesviandoObstaculos: e.target.value
+                    })}
                     legenda="Comentários Correr Desviando Obstáculos"
                     disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EQUILIBRIO_DINAMICO_POST, "equilibrioDinamico", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST, "equilibrioDinamico", setDesabilitar)
               }}>
                 Salvar
               </CButton>

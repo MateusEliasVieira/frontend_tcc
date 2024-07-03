@@ -99,6 +99,19 @@ const sexo = [
   {label: 'Masculino', value: 'MASCULINO'},
   {label: 'Feminino', value: 'FEMININO'}
 ];
+const equilibrioEstatico = [
+  {label: 'Nenhuma Dificuldade', value: 'NENHUMA_DIFICULDADE'},
+  {label: 'Alguma Dificuldade', value: 'ALGUMA_DIFICULDADE'},
+  {label: 'Bastante Dificuldade', value: 'BASTANTE_DIFICULDADE'},
+  {label: 'Não Realiza', value: 'NAO_REALIZA'}
+]
+const equilibrioDinamico = [
+  {label: 'Engatinha', value: 'ENGATINHA'},
+  {label: 'Marcha Voluntária', value: 'MARCHA_VOLUNTARIA'},
+  {label: 'Saltar com os Dois Pés Juntos', value: 'SALTAR_COM_OS_DOIS_PES_JUNTOS'},
+  {label: 'Correr Desviando de Obstáculos', value: 'CORRER_DESVIANDO_OBSTACULOS'}
+]
+ENGATINHA, MARCHA_VOLUNTARIA, SALTAR_COM_OS_DOIS_PES_JUNTOS, CORRER_DESVIANDO_OBSTACULOS
 
 const CADASTRADO = "true"
 const NAO_CADASTRADO = "false"
@@ -118,5 +131,7 @@ export {
   alimentacao,
   sexo,
   CADASTRADO,
-  NAO_CADASTRADO
+  NAO_CADASTRADO,
+  equilibrioEstatico,
+  equilibrioDinamico
 };

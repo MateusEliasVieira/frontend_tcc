@@ -9,12 +9,12 @@ import {
   CForm,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import {salvar} from "../../../../requisicoes/Praticante"; // Importe a função salvar apropriada
-import {
-  SALVAR_AVALIACAO_FISIOTERAPEUTICA_POST
-} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints"; // Certifique-se de que o endpoint está correto
+import Campo from '../../../../components/campos/Campo';
+import {salvar} from "../../../../requisicoes/Praticante";
 import {CADASTRADO} from "../../../../constantes/Constantes";
+import {
+  SALVAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
 const AvaliacaoFisioterapeutica = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -112,7 +112,7 @@ const AvaliacaoFisioterapeutica = () => {
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_AVALIACAO_FISIOTERAPEUTICA_POST, "avaliacaoFisioterapeutica", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POST, "avaliacaoFisioterapeutica", setDesabilitar)
               }}>
                 Salvar
               </CButton>

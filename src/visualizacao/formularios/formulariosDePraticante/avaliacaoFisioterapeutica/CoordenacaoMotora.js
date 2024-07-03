@@ -8,14 +8,15 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import { salvar } from "../../../../requisicoes/CoordenacaoMotora"; // Importe a função salvar apropriada
+import Campo from '../../../../components/campos/Campo';
+import { salvar } from "../../../../requisicoes/Praticante";
+import {CADASTRADO, simOuNao} from "../../../../constantes/Constantes";
 import {
-  SALVAR_COORDENACAO_MOTORA_POST
-} from "../../../../endpoints/avaliacaoFisioterapeutica/Endpoints"; // Certifique-se de que o endpoint está correto
-import { CADASTRADO } from "../../../../constantes/Constantes";
+  SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
 const CoordenacaoMotora = () => {
+
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
     idCoordenacaoMotora: '',
@@ -36,7 +37,7 @@ const CoordenacaoMotora = () => {
 
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    const coordenacaoMotora = localStorage.getItem("coordenacaoMotora")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -45,7 +46,7 @@ const CoordenacaoMotora = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
+      if (coordenacaoMotora === CADASTRADO) {
         setDesabilitar("disabled")
       } else {
         setDesabilitar("")
@@ -56,9 +57,16 @@ const CoordenacaoMotora = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Coordenação Motora</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Coordenação Motora</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -70,10 +78,7 @@ const CoordenacaoMotora = () => {
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, testeMaoObjeto: e.target.value === 'true' })}
                     legenda="Teste Mão-Objeto"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'true', label: 'Sim' },
-                      { valor: 'false', label: 'Não' },
-                    ]}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -94,10 +99,7 @@ const CoordenacaoMotora = () => {
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, indiceNarizUnilateral: e.target.value === 'true' })}
                     legenda="Índice Nariz Unilateral"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'true', label: 'Sim' },
-                      { valor: 'false', label: 'Não' },
-                    ]}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -118,10 +120,7 @@ const CoordenacaoMotora = () => {
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, testeIndiceIndice: e.target.value === 'true' })}
                     legenda="Teste Índice-Índice"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'true', label: 'Sim' },
-                      { valor: 'false', label: 'Não' },
-                    ]}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -142,10 +141,7 @@ const CoordenacaoMotora = () => {
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, movimentosAlternados: e.target.value === 'true' })}
                     legenda="Movimentos Alternados"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'true', label: 'Sim' },
-                      { valor: 'false', label: 'Não' },
-                    ]}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -166,10 +162,7 @@ const CoordenacaoMotora = () => {
                     setar={(e) => setFormularioDeDados({ ...formularioDeDados, testeAlcancePegar: e.target.value === 'true' })}
                     legenda="Teste Alcance Pegar"
                     disabled={desabilitar}
-                    opcoes={[
-                      { valor: 'true', label: 'Sim' },
-                      { valor: 'false', label: 'Não' },
-                    ]}
+                    opcoes={simOuNao}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -184,7 +177,7 @@ const CoordenacaoMotora = () => {
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_COORDENACAO_MOTORA_POST, "coordenacaoMotora", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST, "coordenacaoMotora", setDesabilitar)
               }}>
                 Salvar
               </CButton>

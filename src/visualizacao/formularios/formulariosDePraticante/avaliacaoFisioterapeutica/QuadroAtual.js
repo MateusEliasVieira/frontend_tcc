@@ -8,12 +8,12 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import { salvar } from "../../../../requisicoes/QuadroAtual"; // Importe a função salvar apropriada
-import {
-  SALVAR_QUADRO_ATUAL_POST
-} from "../../../../endpoints/physicalTherapyAssessment/Endpoints"; // Certifique-se de que o endpoint está correto
+import Campo from '../../../../components/campos/Campo';
+import { salvar } from "../../../../requisicoes/Praticante";
 import { CADASTRADO } from "../../../../constantes/Constantes";
+import {
+  SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
 const QuadroAtual = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -26,9 +26,10 @@ const QuadroAtual = () => {
       idPraticante: '',
     },
   });
+
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    const quadroAtual = localStorage.getItem("quadroAtual")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -37,20 +38,28 @@ const QuadroAtual = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
+      if (quadroAtual === CADASTRADO) {
         setDesabilitar("disabled")
       } else {
         setDesabilitar("")
       }
     }
   }, []);
+
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Quadro Atual</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Quadro Atual</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -82,7 +91,7 @@ const QuadroAtual = () => {
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_QUADRO_ATUAL_POST, "quadroAtual", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST, "quadroAtual", setDesabilitar)
               }}>
                 Salvar
               </CButton>
