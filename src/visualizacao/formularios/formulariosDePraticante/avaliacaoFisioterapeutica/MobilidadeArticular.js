@@ -90,7 +90,7 @@ const MobilidadeArticular = () => {
           <CCardBody>
             <CContainer>
               <CRow>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoAtivaOmbro"
@@ -99,6 +99,8 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Ativa Ombro"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoPassivaOmbro"
@@ -107,6 +109,10 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Passiva Ombro"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="abducaoAtivaOmbro"
@@ -115,6 +121,8 @@ const MobilidadeArticular = () => {
                     legenda="Abdução Ativa Ombro"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="abducaoPassivaOmbro"
@@ -123,6 +131,10 @@ const MobilidadeArticular = () => {
                     legenda="Abdução Passiva Ombro"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="aducaoAtivaOmbro"
@@ -131,6 +143,8 @@ const MobilidadeArticular = () => {
                     legenda="Adução Ativa Ombro"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="aducaoPassivaOmbro"
@@ -140,7 +154,9 @@ const MobilidadeArticular = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
-                <CCol md="auto">
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoAtivaCotovelo"
@@ -149,6 +165,8 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Ativa Cotovelo"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoPassivaCotovelo"
@@ -157,6 +175,10 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Passiva Cotovelo"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="extensaoAtivaCotovelo"
@@ -165,6 +187,8 @@ const MobilidadeArticular = () => {
                     legenda="Extensão Ativa Cotovelo"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="extensaoPassivaCotovelo"
@@ -174,7 +198,9 @@ const MobilidadeArticular = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
-                <CCol md="auto">
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoAtivaQuadril"
@@ -183,6 +209,8 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Ativa Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoPassivaQuadril"
@@ -191,6 +219,10 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Passiva Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="extensaoAtivaQuadril"
@@ -199,6 +231,8 @@ const MobilidadeArticular = () => {
                     legenda="Extensão Ativa Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="extensaoPassivaQuadril"
@@ -207,6 +241,10 @@ const MobilidadeArticular = () => {
                     legenda="Extensão Passiva Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="aducaoAtivaQuadril"
@@ -215,6 +253,8 @@ const MobilidadeArticular = () => {
                     legenda="Adução Ativa Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="aducaoPassivaQuadril"
@@ -223,6 +263,10 @@ const MobilidadeArticular = () => {
                     legenda="Adução Passiva Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="abducaoAtivaQuadril"
@@ -231,6 +275,8 @@ const MobilidadeArticular = () => {
                     legenda="Abdução Ativa Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="abducaoPassivaQuadril"
@@ -239,6 +285,10 @@ const MobilidadeArticular = () => {
                     legenda="Abdução Passiva Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="rotacaoInternaAtivaQuadril"
@@ -250,6 +300,8 @@ const MobilidadeArticular = () => {
                     legenda="Rotação Interna Ativa Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="rotacaoInternaPassivaQuadril"
@@ -261,6 +313,10 @@ const MobilidadeArticular = () => {
                     legenda="Rotação Interna Passiva Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="rotacaoExternaAtivaQuadril"
@@ -272,6 +328,8 @@ const MobilidadeArticular = () => {
                     legenda="Rotação Externa Ativa Quadril"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="rotacaoExternaPassivaQuadril"
@@ -284,7 +342,9 @@ const MobilidadeArticular = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
-                <CCol md="auto">
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="extensaoAtivaJoelho"
@@ -293,6 +353,9 @@ const MobilidadeArticular = () => {
                     legenda="Extensão Ativa Joelho"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
+
                   <Campo
                     tipo="text"
                     id="extensaoPassivaJoelho"
@@ -301,6 +364,10 @@ const MobilidadeArticular = () => {
                     legenda="Extensão Passiva Joelho"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoAtivaJoelho"
@@ -309,6 +376,8 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Ativa Joelho"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="flexaoPassivaJoelho"
@@ -318,7 +387,10 @@ const MobilidadeArticular = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
-                <CCol md="auto">
+              </CRow>
+              <CRow>
+
+                <CCol>
                   <Campo
                     tipo="text"
                     id="dorsiflexaoAtivaTornozelo"
@@ -330,6 +402,8 @@ const MobilidadeArticular = () => {
                     legenda="Dorsiflexão Ativa Tornozelo"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="dorsiflexaoPassivaTornozelo"
@@ -341,6 +415,12 @@ const MobilidadeArticular = () => {
                     legenda="Dorsiflexão Passiva Tornozelo"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+
+                <CCol>
+
                   <Campo
                     tipo="text"
                     id="flexaoPlantarAtivaTornozelo"
@@ -352,6 +432,9 @@ const MobilidadeArticular = () => {
                     legenda="Flexão Plantar Ativa Tornozelo"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
+
                   <Campo
                     tipo="text"
                     id="flexaoPlantarPassivaTornozelo"
@@ -365,6 +448,7 @@ const MobilidadeArticular = () => {
                   />
                 </CCol>
               </CRow>
+
               <CButton color="primary" disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POST, "mobilidadeArticular", setDesabilitar)
               }}>
@@ -375,7 +459,8 @@ const MobilidadeArticular = () => {
         </CCard>
       </CCol>
     </CRow>
-  );
+  )
+    ;
 };
 
 export default MobilidadeArticular;

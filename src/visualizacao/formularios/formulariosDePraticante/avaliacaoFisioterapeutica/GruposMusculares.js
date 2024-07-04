@@ -10,7 +10,7 @@ import {
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
-import {CADASTRADO} from "../../../../constantes/Constantes";
+import {CADASTRADO, gruposMusculares} from "../../../../constantes/Constantes";
 import {
   SALVAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
@@ -20,35 +20,34 @@ const GruposMusculares = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
     idGruposMusculares: '',
-    flexoresOmbroDireito: '',
-    flexoresOmbroEsquerdo: '',
-    extensoresOmbroDireito: '',
-    extensoresOmbroEsquerdo: '',
-    flexoresCotoveloDireito: '',
-    flexoresCotoveloEsquerdo: '',
-    extensoresCotoveloDireito: '',
-    extensoresCotoveloEsquerdo: '',
-    flexoresPulsoDireito: '',
-    flexoresPulsoEsquerdo: '',
-    extensoresPulsoDireito: '',
-    extensoresPulsoEsquerdo: '',
-    flexoresQuadrilDireito: '',
-    flexoresQuadrilEsquerdo: '',
-    extensoresQuadrilDireito: '',
-    extensoresQuadrilEsquerdo: '',
-    flexoresJoelhoDireito: '',
-    flexoresJoelhoEsquerdo: '',
-    dorsiflexoresTornozeloDireito: '',
-    dorsiflexoresTornozeloEsquerdo: '',
-    plantiflexoresTornozeloDireito: '',
-    plantiflexoresTornozeloEsquerdo: '',
+    flexoresOmbroDireito: '-',
+    flexoresOmbroEsquerdo: '-',
+    extensoresOmbroDireito: '-',
+    extensoresOmbroEsquerdo: '-',
+    flexoresCotoveloDireito: '-',
+    flexoresCotoveloEsquerdo: '-',
+    extensoresCotoveloDireito: '-',
+    extensoresCotoveloEsquerdo: '-',
+    flexoresPulsoDireito: '-',
+    flexoresPulsoEsquerdo: '-',
+    extensoresPulsoDireito: '-',
+    extensoresPulsoEsquerdo: '-',
+    flexoresQuadrilDireito: '-',
+    flexoresQuadrilEsquerdo: '-',
+    extensoresQuadrilDireito: '-',
+    extensoresQuadrilEsquerdo: '-',
+    flexoresJoelhoDireito: '-',
+    flexoresJoelhoEsquerdo: '-',
+    dorsiflexoresTornozeloDireito: '-',
+    dorsiflexoresTornozeloEsquerdo: '-',
+    plantiflexoresTornozeloDireito: '-',
+    plantiflexoresTornozeloEsquerdo: '-',
     praticante: {
       idPraticante: '',
     },
   });
 
   useEffect(() => {
-
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     const gruposMusculares = localStorage.getItem("gruposMusculares")
     if (idPraticanteSalvo) {
@@ -86,59 +85,66 @@ const GruposMusculares = () => {
               <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresOmbroDireito"
                     valor={formularioDeDados.flexoresOmbroDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresOmbroDireito: e.target.value})}
                     legenda="Flexores do Ombro Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresOmbroEsquerdo"
                     valor={formularioDeDados.flexoresOmbroEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresOmbroEsquerdo: e.target.value})}
                     legenda="Flexores do Ombro Esquerdo"
                     disabled={desabilitar}
-                  />
-                </CCol>
-                <CCol md="auto">
-                  <Campo
-                    tipo="text"
-                    id="extensoresOmbroDireito"
-                    valor={formularioDeDados.extensoresOmbroDireito}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresOmbroDireito: e.target.value})}
-                    legenda="Extensores do Ombro Direito"
-                    disabled={desabilitar}
-                  />
-                </CCol>
-                <CCol md="auto">
-                  <Campo
-                    tipo="text"
-                    id="extensoresOmbroEsquerdo"
-                    valor={formularioDeDados.extensoresOmbroEsquerdo}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresOmbroEsquerdo: e.target.value})}
-                    legenda="Extensores do Ombro Esquerdo"
-                    disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
               </CRow>
               <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
+                    id="extensoresOmbroDireito"
+                    valor={formularioDeDados.extensoresOmbroDireito}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresOmbroDireito: e.target.value})}
+                    legenda="Extensores do Ombro Direito"
+                    disabled={desabilitar}
+                    opcoes={gruposMusculares}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="extensoresOmbroEsquerdo"
+                    valor={formularioDeDados.extensoresOmbroEsquerdo}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresOmbroEsquerdo: e.target.value})}
+                    legenda="Extensores do Ombro Esquerdo"
+                    disabled={desabilitar}
+                    opcoes={gruposMusculares}
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
                     id="flexoresCotoveloDireito"
                     valor={formularioDeDados.flexoresCotoveloDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresCotoveloDireito: e.target.value})}
                     legenda="Flexores do Cotovelo Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresCotoveloEsquerdo"
                     valor={formularioDeDados.flexoresCotoveloEsquerdo}
                     setar={(e) => setFormularioDeDados({
@@ -147,11 +153,14 @@ const GruposMusculares = () => {
                     })}
                     legenda="Flexores do Cotovelo Esquerdo"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="extensoresCotoveloDireito"
                     valor={formularioDeDados.extensoresCotoveloDireito}
                     setar={(e) => setFormularioDeDados({
@@ -160,11 +169,12 @@ const GruposMusculares = () => {
                     })}
                     legenda="Extensores do Cotovelo Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="extensoresCotoveloEsquerdo"
                     valor={formularioDeDados.extensoresCotoveloEsquerdo}
                     setar={(e) => setFormularioDeDados({
@@ -173,75 +183,86 @@ const GruposMusculares = () => {
                     })}
                     legenda="Extensores do Cotovelo Esquerdo"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
               </CRow>
               <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresPulsoDireito"
                     valor={formularioDeDados.flexoresPulsoDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresPulsoDireito: e.target.value})}
                     legenda="Flexores do Pulso Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresPulsoEsquerdo"
                     valor={formularioDeDados.flexoresPulsoEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresPulsoEsquerdo: e.target.value})}
                     legenda="Flexores do Pulso Esquerdo"
                     disabled={desabilitar}
-                  />
-                </CCol>
-                <CCol md="auto">
-                  <Campo
-                    tipo="text"
-                    id="extensoresPulsoDireito"
-                    valor={formularioDeDados.extensoresPulsoDireito}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresPulsoDireito: e.target.value})}
-                    legenda="Extensores do Pulso Direito"
-                    disabled={desabilitar}
-                  />
-                </CCol>
-                <CCol md="auto">
-                  <Campo
-                    tipo="text"
-                    id="extensoresPulsoEsquerdo"
-                    valor={formularioDeDados.extensoresPulsoEsquerdo}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresPulsoEsquerdo: e.target.value})}
-                    legenda="Extensores do Pulso Esquerdo"
-                    disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
               </CRow>
               <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
+                    id="extensoresPulsoDireito"
+                    valor={formularioDeDados.extensoresPulsoDireito}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresPulsoDireito: e.target.value})}
+                    legenda="Extensores do Pulso Direito"
+                    disabled={desabilitar}
+                    opcoes={gruposMusculares}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="extensoresPulsoEsquerdo"
+                    valor={formularioDeDados.extensoresPulsoEsquerdo}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresPulsoEsquerdo: e.target.value})}
+                    legenda="Extensores do Pulso Esquerdo"
+                    disabled={desabilitar}
+                    opcoes={gruposMusculares}
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
                     id="flexoresQuadrilDireito"
                     valor={formularioDeDados.flexoresQuadrilDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresQuadrilDireito: e.target.value})}
                     legenda="Flexores do Quadril Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresQuadrilEsquerdo"
                     valor={formularioDeDados.flexoresQuadrilEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresQuadrilEsquerdo: e.target.value})}
                     legenda="Flexores do Quadril Esquerdo"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="extensoresQuadrilDireito"
                     valor={formularioDeDados.extensoresQuadrilDireito}
                     setar={(e) => setFormularioDeDados({
@@ -250,11 +271,12 @@ const GruposMusculares = () => {
                     })}
                     legenda="Extensores do Quadril Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="extensoresQuadrilEsquerdo"
                     valor={formularioDeDados.extensoresQuadrilEsquerdo}
                     setar={(e) => setFormularioDeDados({
@@ -263,33 +285,38 @@ const GruposMusculares = () => {
                     })}
                     legenda="Extensores do Quadril Esquerdo"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
               </CRow>
               <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresJoelhoDireito"
                     valor={formularioDeDados.flexoresJoelhoDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresJoelhoDireito: e.target.value})}
                     legenda="Flexores do Joelho Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="flexoresJoelhoEsquerdo"
                     valor={formularioDeDados.flexoresJoelhoEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresJoelhoEsquerdo: e.target.value})}
                     legenda="Flexores do Joelho Esquerdo"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="dorsiflexoresTornozeloDireito"
                     valor={formularioDeDados.dorsiflexoresTornozeloDireito}
                     setar={(e) => setFormularioDeDados({
@@ -298,11 +325,12 @@ const GruposMusculares = () => {
                     })}
                     legenda="Dorsiflexores do Tornozelo Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="dorsiflexoresTornozeloEsquerdo"
                     valor={formularioDeDados.dorsiflexoresTornozeloEsquerdo}
                     setar={(e) => setFormularioDeDados({
@@ -311,13 +339,14 @@ const GruposMusculares = () => {
                     })}
                     legenda="Dorsiflexores do Tornozelo Esquerdo"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
               </CRow>
               <CRow>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="plantiflexoresTornozeloDireito"
                     valor={formularioDeDados.plantiflexoresTornozeloDireito}
                     setar={(e) => setFormularioDeDados({
@@ -326,11 +355,12 @@ const GruposMusculares = () => {
                     })}
                     legenda="Plantiflexores do Tornozelo Direito"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
                 <CCol md="auto">
                   <Campo
-                    tipo="text"
+                    tipo="select"
                     id="plantiflexoresTornozeloEsquerdo"
                     valor={formularioDeDados.plantiflexoresTornozeloEsquerdo}
                     setar={(e) => setFormularioDeDados({
@@ -339,6 +369,7 @@ const GruposMusculares = () => {
                     })}
                     legenda="Plantiflexores do Tornozelo Esquerdo"
                     disabled={desabilitar}
+                    opcoes={gruposMusculares}
                   />
                 </CCol>
               </CRow>

@@ -60,47 +60,56 @@ const Afetividade = () => {
           }
           <CCardBody>
             <CContainer>
-
-              <Campo
-                tipo="select"
-                id="demonstraAfeicaoEspecialPorAlguem"
-                valor={formularioDeDados.demonstraAfeicaoEspecialPorAlguem}
-                setar={(e) =>
-                  setFormularioDeDados({...formularioDeDados, demonstraAfeicaoEspecialPorAlguem: e.target.value})
-                }
-                legenda="Demonstra carinho especial por alguém?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="compartilhaSuasCoisas"
-                valor={formularioDeDados.compartilhaSuasCoisas}
-                setar={(e) =>
-                  setFormularioDeDados({...formularioDeDados, compartilhaSuasCoisas: e.target.value})
-                }
-                legenda="Divide suas coisas?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="ajudaQuandoSolicitado"
-                valor={formularioDeDados.ajudaQuandoSolicitado}
-                setar={(e) =>
-                  setFormularioDeDados({...formularioDeDados, ajudaQuandoSolicitado: e.target.value})
-                }
-                legenda="Ajuda quando solicitado?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="expressaoDeSentimentos"
-                valor={formularioDeDados.expressaoDeSentimentos}
-                setar={(e) =>
-                  setFormularioDeDados({...formularioDeDados, expressaoDeSentimentos: e.target.value})
-                }
-                legenda="Expressão de sentimentos (Carinho, Raiva, ...)?"
-                opcoes={preencherLegenda}
-              />
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="demonstraAfeicaoEspecialPorAlguem"
+                    valor={formularioDeDados.demonstraAfeicaoEspecialPorAlguem}
+                    setar={(e) =>
+                      setFormularioDeDados({...formularioDeDados, demonstraAfeicaoEspecialPorAlguem: e.target.value})
+                    }
+                    legenda="Demonstra carinho especial por alguém?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="compartilhaSuasCoisas"
+                    valor={formularioDeDados.compartilhaSuasCoisas}
+                    setar={(e) =>
+                      setFormularioDeDados({...formularioDeDados, compartilhaSuasCoisas: e.target.value})
+                    }
+                    legenda="Divide suas coisas?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="ajudaQuandoSolicitado"
+                    valor={formularioDeDados.ajudaQuandoSolicitado}
+                    setar={(e) =>
+                      setFormularioDeDados({...formularioDeDados, ajudaQuandoSolicitado: e.target.value})
+                    }
+                    legenda="Ajuda quando solicitado?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="expressaoDeSentimentos"
+                    valor={formularioDeDados.expressaoDeSentimentos}
+                    setar={(e) =>
+                      setFormularioDeDados({...formularioDeDados, expressaoDeSentimentos: e.target.value})
+                    }
+                    legenda="Expressão de sentimentos (Carinho, Raiva, ...)?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+              </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_AFETIVIDADE_DO_PRATICANTE_POST, "afetividade", setDesabilitar)
               }

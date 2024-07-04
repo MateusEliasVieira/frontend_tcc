@@ -9,7 +9,7 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
-import { salvar } from "../../../../requisicoes/Praticante";
+import {salvar} from "../../../../requisicoes/Praticante";
 import {CADASTRADO, simOuNao} from "../../../../constantes/Constantes";
 import {
   SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST
@@ -75,102 +75,140 @@ const CoordenacaoMotora = () => {
                     tipo="select"
                     id="testeMaoObjeto"
                     valor={formularioDeDados.testeMaoObjeto}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, testeMaoObjeto: e.target.value === 'true' })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      testeMaoObjeto: e.target.value === 'true'
+                    })}
                     legenda="Teste Mão-Objeto"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesTesteMaoObjeto"
                     valor={formularioDeDados.consideracoesTesteMaoObjeto}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesTesteMaoObjeto: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      consideracoesTesteMaoObjeto: e.target.value
+                    })}
                     legenda="Considerações Teste Mão-Objeto"
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="indiceNarizUnilateral"
                     valor={formularioDeDados.indiceNarizUnilateral}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, indiceNarizUnilateral: e.target.value === 'true' })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      indiceNarizUnilateral: e.target.value === 'true'
+                    })}
                     legenda="Índice Nariz Unilateral"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesIndiceNarizUnilateral"
                     valor={formularioDeDados.consideracoesIndiceNarizUnilateral}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesIndiceNarizUnilateral: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      consideracoesIndiceNarizUnilateral: e.target.value
+                    })}
                     legenda="Considerações Índice Nariz Unilateral"
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="testeIndiceIndice"
                     valor={formularioDeDados.testeIndiceIndice}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, testeIndiceIndice: e.target.value === 'true' })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      testeIndiceIndice: e.target.value === 'true'
+                    })}
                     legenda="Teste Índice-Índice"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesTesteIndiceIndice"
                     valor={formularioDeDados.consideracoesTesteIndiceIndice}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesTesteIndiceIndice: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      consideracoesTesteIndiceIndice: e.target.value
+                    })}
                     legenda="Considerações Teste Índice-Índice"
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="movimentosAlternados"
                     valor={formularioDeDados.movimentosAlternados}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, movimentosAlternados: e.target.value === 'true' })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      movimentosAlternados: e.target.value === 'true'
+                    })}
                     legenda="Movimentos Alternados"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesMovimentosAlternados"
                     valor={formularioDeDados.consideracoesMovimentosAlternados}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesMovimentosAlternados: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      consideracoesMovimentosAlternados: e.target.value
+                    })}
                     legenda="Considerações Movimentos Alternados"
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="testeAlcancePegar"
                     valor={formularioDeDados.testeAlcancePegar}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, testeAlcancePegar: e.target.value === 'true' })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      testeAlcancePegar: e.target.value === 'true'
+                    })}
                     legenda="Teste Alcance Pegar"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesTesteAlcancePegar"
                     valor={formularioDeDados.consideracoesTesteAlcancePegar}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesTesteAlcancePegar: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      consideracoesTesteAlcancePegar: e.target.value
+                    })}
                     legenda="Considerações Teste Alcance Pegar"
                     disabled={desabilitar}
                   />

@@ -6,7 +6,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CForm,
+  CForm, CContainer,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
 import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';
@@ -61,39 +61,49 @@ const CuidadosPessoais = () => {
               </CCardHeader>
           }
           <CCardBody>
-            <CForm>
-              <Campo
-                tipo="select"
-                id="higienePessoalSozinho"
-                valor={formularioDeDados.higienePessoalSozinho}
-                setar={(e) => setFormularioDeDados({ ...formularioDeDados, higienePessoalSozinho: e.target.value })}
-                legenda="Executa higiene pessoal sozinho(a)?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="vesteRoupasCalcadosSozinho"
-                valor={formularioDeDados.vesteRoupasCalcadosSozinho}
-                setar={(e) => setFormularioDeDados({ ...formularioDeDados, vesteRoupasCalcadosSozinho: e.target.value })}
-                legenda="Veste as roupas/sapatos sozinho(a)?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="seAlimentaSozinho"
-                valor={formularioDeDados.seAlimentaSozinho}
-                setar={(e) => setFormularioDeDados({ ...formularioDeDados, seAlimentaSozinho: e.target.value })}
-                legenda="Se alimenta sozinho(a)?"
-                opcoes={preencherLegenda}
-              />
-
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="higienePessoalSozinho"
+                    valor={formularioDeDados.higienePessoalSozinho}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, higienePessoalSozinho: e.target.value})}
+                    legenda="Executa higiene pessoal sozinho(a)?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="vesteRoupasCalcadosSozinho"
+                    valor={formularioDeDados.vesteRoupasCalcadosSozinho}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      vesteRoupasCalcadosSozinho: e.target.value
+                    })}
+                    legenda="Veste as roupas/sapatos sozinho(a)?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="seAlimentaSozinho"
+                    valor={formularioDeDados.seAlimentaSozinho}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, seAlimentaSozinho: e.target.value})}
+                    legenda="Se alimenta sozinho(a)?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+              </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POST, "cuidadosPessoais", setDesabilitar)
               }
               }>
                 Salvar
               </CButton>
-            </CForm>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>

@@ -9,8 +9,8 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
-import { salvar } from "../../../../requisicoes/Praticante";
-import { CADASTRADO } from "../../../../constantes/Constantes";
+import {salvar} from "../../../../requisicoes/Praticante";
+import {CADASTRADO} from "../../../../constantes/Constantes";
 import {
   SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
@@ -63,28 +63,36 @@ const QuadroAtual = () => {
           <CCardBody>
             <CContainer>
               <CRow>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="locomocaoAtual"
                     valor={formularioDeDados.locomocaoAtual}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, locomocaoAtual: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, locomocaoAtual: e.target.value})}
                     legenda="Locomoção Atual"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="restricoes"
                     valor={formularioDeDados.restricoes}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, restricoes: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, restricoes: e.target.value})}
                     legenda="Restrições"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="deformidades"
                     valor={formularioDeDados.deformidades}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, deformidades: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, deformidades: e.target.value})}
                     legenda="Deformidades"
                     disabled={desabilitar}
                   />

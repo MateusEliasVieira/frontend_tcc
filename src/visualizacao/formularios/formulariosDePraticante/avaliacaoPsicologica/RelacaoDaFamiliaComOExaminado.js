@@ -66,7 +66,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
           <CCardBody>
             <CContainer>
               <CRow>
-                <CCol>
+                <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="adequado"
@@ -76,7 +76,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     opcoes={preencherLegenda}
                   />
                 </CCol>
-                <CCol>
+                <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="superprotecao"
@@ -86,10 +86,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     opcoes={preencherLegenda}
                   />
                 </CCol>
-              </CRow>
-
-              <CRow>
-                <CCol>
+                <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="dificuldadePerceberDeficiencias"
@@ -112,9 +109,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     opcoes={preencherLegenda}
                   />
                 </CCol>
-              </CRow>
-              <CRow>
-                <CCol>
+                <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="indiferenca"
@@ -124,7 +119,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     opcoes={preencherLegenda}
                   />
                 </CCol>
-                <CCol>
+                <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="ansiedadePercebidaEntrevistador"

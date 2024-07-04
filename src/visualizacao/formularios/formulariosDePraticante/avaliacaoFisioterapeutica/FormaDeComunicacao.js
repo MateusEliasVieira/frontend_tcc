@@ -9,7 +9,7 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
-import { salvar } from "../../../../requisicoes/Praticante";
+import {salvar} from "../../../../requisicoes/Praticante";
 import {CADASTRADO, simOuNao} from "../../../../constantes/Constantes";
 import {
   SALVAR_FORMA_COMUNICACAO_DO_PRATICANTE_POST
@@ -72,60 +72,67 @@ const FormaDeComunicacao = () => {
                     tipo="select"
                     id="fala"
                     valor={formularioDeDados.fala}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, fala: e.target.checked })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, fala: e.target.checked})}
                     legenda="Fala"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesFala"
                     valor={formularioDeDados.consideracoesFala}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesFala: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesFala: e.target.value})}
                     legenda="Considerações sobre a Fala"
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="gestos"
                     valor={formularioDeDados.gestos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, gestos: e.target.checked })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, gestos: e.target.checked})}
                     legenda="Gestos"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesGestos"
                     valor={formularioDeDados.consideracoesGestos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesGestos: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesGestos: e.target.value})}
                     legenda="Considerações sobre os Gestos"
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
                     id="usoDosOlhos"
                     valor={formularioDeDados.usoDosOlhos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, usoDosOlhos: e.target.checked })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, usoDosOlhos: e.target.checked})}
                     legenda="Uso dos Olhos"
                     disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="consideracoesUsoDosOlhos"
                     valor={formularioDeDados.consideracoesUsoDosOlhos}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, consideracoesUsoDosOlhos: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      consideracoesUsoDosOlhos: e.target.value
+                    })}
                     legenda="Considerações sobre o Uso dos Olhos"
                     disabled={desabilitar}
                   />

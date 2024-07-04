@@ -64,9 +64,9 @@ const AvaliacaoFisioterapeutica = () => {
           <CCardBody>
             <CContainer>
               <CRow>
-                <CCol md="auto">
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="diagnosticoFisioterapeutico"
                     valor={formularioDeDados.diagnosticoFisioterapeutico}
                     setar={(e) => setFormularioDeDados({
@@ -77,9 +77,11 @@ const AvaliacaoFisioterapeutica = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
-                <CCol md="auto">
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="historicoGravidez"
                     valor={formularioDeDados.historicoGravidez}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, historicoGravidez: e.target.value})}
@@ -87,9 +89,11 @@ const AvaliacaoFisioterapeutica = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
-                <CCol md="auto">
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="tonusMuscular"
                     valor={formularioDeDados.tonusMuscular}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, tonusMuscular: e.target.value})}
@@ -97,9 +101,11 @@ const AvaliacaoFisioterapeutica = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
-                <CCol md="auto">
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="conclusaoIndicacaoEquoterapia"
                     valor={formularioDeDados.conclusaoIndicacaoEquoterapia}
                     setar={(e) => setFormularioDeDados({

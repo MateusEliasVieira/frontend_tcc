@@ -4,7 +4,7 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CCol, CForm,
+  CCol, CContainer, CForm,
   CRow,
 } from '@coreui/react';
 import Campo from "../../../../components/campos/Campo";
@@ -58,41 +58,44 @@ const SaudeMental = () => {
               </CCardHeader>
           }
           <CCardBody>
-            <CForm>
-              <Campo
-                tipo="select"
-                id="apresentaConfusaoMental"
-                valor={formularioDeDados.apresentaConfusaoMental}
-                setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaConfusaoMental: e.target.value})}
-                legenda="Apresenta confusão mental?"
-                opcoes={preencherLegenda}
-              />
-
-              <Campo
-                tipo="select"
-                id="apresentaDelirios"
-                valor={formularioDeDados.apresentaDelirios}
-                setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaDelirios: e.target.value})}
-                legenda="Apresenta delírios?"
-                opcoes={preencherLegenda}
-              />
-
-              <Campo
-                tipo="select"
-                id="apresentaAlucinacoes"
-                valor={formularioDeDados.apresentaAlucinacoes}
-                setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaAlucinacoes: e.target.value})}
-                legenda="Apresenta alucinações?"
-                opcoes={preencherLegenda}
-              />
-
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="apresentaConfusaoMental"
+                    valor={formularioDeDados.apresentaConfusaoMental}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaConfusaoMental: e.target.value})}
+                    legenda="Apresenta confusão mental?"
+                    opcoes={preencherLegenda}
+                  /></CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="apresentaDelirios"
+                    valor={formularioDeDados.apresentaDelirios}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaDelirios: e.target.value})}
+                    legenda="Apresenta delírios?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="apresentaAlucinacoes"
+                    valor={formularioDeDados.apresentaAlucinacoes}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaAlucinacoes: e.target.value})}
+                    legenda="Apresenta alucinações?"
+                    opcoes={preencherLegenda}
+                  /></CCol>
+              </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_SAUDE_MENTAL_DO_PRATICANTE_POST, "saudeMental", setDesabilitar)
               }
               }>
                 Salvar
               </CButton>
-            </CForm>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>

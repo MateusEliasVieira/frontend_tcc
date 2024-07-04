@@ -80,7 +80,7 @@ const EquilibrioDinamico = () => {
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosEngatinhar"
@@ -90,6 +90,8 @@ const EquilibrioDinamico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -101,7 +103,7 @@ const EquilibrioDinamico = () => {
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosMarchaVoluntaria"
@@ -114,6 +116,8 @@ const EquilibrioDinamico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -125,7 +129,7 @@ const EquilibrioDinamico = () => {
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosSaltarPesJuntos"
@@ -138,6 +142,8 @@ const EquilibrioDinamico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -152,7 +158,7 @@ const EquilibrioDinamico = () => {
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosCorrerDesviandoObstaculos"

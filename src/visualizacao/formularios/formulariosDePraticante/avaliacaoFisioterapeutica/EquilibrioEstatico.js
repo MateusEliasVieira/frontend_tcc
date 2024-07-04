@@ -87,7 +87,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosApoioCabeca"
@@ -97,6 +97,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -108,7 +110,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosSentarSemApoio"
@@ -121,6 +123,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -132,7 +136,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosSentarComApoio"
@@ -145,6 +149,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -156,7 +162,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosEmPeSemApoio"
@@ -166,6 +172,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -177,7 +185,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosEmPeComApoio"
@@ -187,6 +195,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -201,7 +211,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosPosicaoDeSentinelaOlhosAbertos"
@@ -214,6 +224,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -228,7 +240,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosPosicaoDeSentinelaOlhosFechados"
@@ -241,6 +253,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -252,7 +266,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosUmPeOlhosAbertos"
@@ -265,6 +279,8 @@ const EquilibrioEstatico = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol md="auto">
                   <Campo
                     tipo="select"
@@ -276,7 +292,7 @@ const EquilibrioEstatico = () => {
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
-                <CCol md="auto">
+                <CCol>
                   <Campo
                     tipo="text"
                     id="comentariosUmPeOlhosFechados"

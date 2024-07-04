@@ -111,6 +111,13 @@ const equilibrioDinamico = [
   {label: 'Saltar com os Dois Pés Juntos', value: 'SALTAR_COM_OS_DOIS_PES_JUNTOS'},
   {label: 'Correr Desviando de Obstáculos', value: 'CORRER_DESVIANDO_OBSTACULOS'}
 ]
+const gruposMusculares = [
+  { label: 'Tônus Normal', value: 'TONUS_NORMAL' },
+  { label: 'Discreto Aumento do Tônus', value: 'DISCRETO_AUMENTO_DO_TONUS' },
+  { label: 'Aumento Mais Pronunciado do Tônus', value: 'AUMENTO_MAIS_PRONUNCIADO_DO_TONUS' },
+  { label: 'Aumento Considerável do Tônus', value: 'AUMENTO_CONSIDERAVEL_TONUS' },
+  { label: 'Articulação Afetada Rígida em Flexão ou Extensão', value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' }
+];
 
 const CADASTRADO = "true"
 const NAO_CADASTRADO = "false"
@@ -132,5 +139,6 @@ export {
   CADASTRADO,
   NAO_CADASTRADO,
   equilibrioEstatico,
-  equilibrioDinamico
+  equilibrioDinamico,
+  gruposMusculares
 };

@@ -6,7 +6,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CForm,
+  CForm, CContainer,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
 import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';
@@ -62,47 +62,55 @@ const HabilidadesSociais = () => {
               </CCardHeader>
           }
           <CCardBody>
-            <CForm>
-              <Campo
-                tipo="select"
-                id="passividade"
-                valor={formularioDeDados.passividade}
-                setar={(e) => setFormularioDeDados({ ...formularioDeDados, passividade: e.target.value })}
-                legenda="Passividade?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="autoagressao"
-                valor={formularioDeDados.autoagressao}
-                setar={(e) => setFormularioDeDados({ ...formularioDeDados, autoagressao: e.target.value })}
-                legenda="Autoagressividade?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="heteroagressividade"
-                valor={formularioDeDados.heteroagressividade}
-                setar={(e) => setFormularioDeDados({ ...formularioDeDados, heteroagressividade: e.target.value })}
-                legenda="Heteroagressividade?"
-                opcoes={preencherLegenda}
-              />
-              <Campo
-                tipo="select"
-                id="assertividade"
-                valor={formularioDeDados.assertividade}
-                setar={(e) => setFormularioDeDados({ ...formularioDeDados, assertividade: e.target.value })}
-                legenda="Assertividade?"
-                opcoes={preencherLegenda}
-              />
-
+            <CContainer>
+              <CRow>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="passividade"
+                    valor={formularioDeDados.passividade}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, passividade: e.target.value})}
+                    legenda="Passividade?"
+                    opcoes={preencherLegenda}
+                  /></CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="autoagressao"
+                    valor={formularioDeDados.autoagressao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, autoagressao: e.target.value})}
+                    legenda="Autoagressividade?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="heteroagressividade"
+                    valor={formularioDeDados.heteroagressividade}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, heteroagressividade: e.target.value})}
+                    legenda="Heteroagressividade?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+                <CCol md="auto">
+                  <Campo
+                    tipo="select"
+                    id="assertividade"
+                    valor={formularioDeDados.assertividade}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, assertividade: e.target.value})}
+                    legenda="Assertividade?"
+                    opcoes={preencherLegenda}
+                  />
+                </CCol>
+              </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_POST, "habilidadesSociais", setDesabilitar)
               }
               }>
                 Salvar
               </CButton>
-            </CForm>
+            </CContainer>
           </CCardBody>
         </CCard>
       </CCol>
