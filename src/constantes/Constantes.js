@@ -111,7 +111,6 @@ const equilibrioDinamico = [
   {label: 'Saltar com os Dois Pés Juntos', value: 'SALTAR_COM_OS_DOIS_PES_JUNTOS'},
   {label: 'Correr Desviando de Obstáculos', value: 'CORRER_DESVIANDO_OBSTACULOS'}
 ]
-ENGATINHA, MARCHA_VOLUNTARIA, SALTAR_COM_OS_DOIS_PES_JUNTOS, CORRER_DESVIANDO_OBSTACULOS
 
 const CADASTRADO = "true"
 const NAO_CADASTRADO = "false"

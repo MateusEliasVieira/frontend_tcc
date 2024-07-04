@@ -1,54 +1,62 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol, CContainer,
-  CForm, CRow,
+  CRow,
 } from '@coreui/react';
-import axios from 'axios';
 import Campo from '../../../../components/campos/Campo';
-import {preencherLegenda} from "../../../../constantes/Constantes"; // Importando o componente Campo
+import {CADASTRADO, preencherLegenda} from "../../../../constantes/Constantes";
+import {SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {salvar} from "../../../../requisicoes/Praticante";
 
 const Comportamento = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar,setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     agitacao: '',
     toleranciaFrustracao: '',
     respeitaLimitesRegras: '',
     oposicao: '',
     atencaoConcentracao: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        SEU_ENDPOINT_DE_SALVAR_AQUI,
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const comportamento = localStorage.getItem("comportamento")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Aspectos de comportamento salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os aspectos de comportamento:', error);
+      }));
+      if (comportamento === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CCard className="mb-4">
-      <CCardHeader>
-        <strong>Comportamento</strong>
-      </CCardHeader>
+      {
+        desabilitar === "disabled" ?
+          <CCardHeader style={{backgroundColor: "#1c323f"}}>
+            <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+          </CCardHeader>
+          :
+          <CCardHeader>
+            <strong>Comportamento</strong>
+          </CCardHeader>
+      }
       <CCardBody>
         <CContainer>
           <CRow>
@@ -56,8 +64,8 @@ const Comportamento = () => {
               <Campo
                 tipo="select"
                 id="agitacao"
-                valor={formData.agitacao}
-                setar={(e) => setFormData({...formData, agitacao: e.target.value})}
+                valor={formularioDeDados.agitacao}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, agitacao: e.target.value})}
                 legenda="Tem comportamento agitado?"
                 opcoes={preencherLegenda}
               />
@@ -66,8 +74,8 @@ const Comportamento = () => {
               <Campo
                 tipo="select"
                 id="toleranciaFrustracao"
-                valor={formData.toleranciaFrustracao}
-                setar={(e) => setFormData({...formData, toleranciaFrustracao: e.target.value})}
+                valor={formularioDeDados.toleranciaFrustracao}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, toleranciaFrustracao: e.target.value})}
                 legenda="Tem tolerância à frustração?"
                 opcoes={preencherLegenda}
               />
@@ -76,8 +84,8 @@ const Comportamento = () => {
               <Campo
                 tipo="select"
                 id="respeitaLimitesRegras"
-                valor={formData.respeitaLimitesRegras}
-                setar={(e) => setFormData({...formData, respeitaLimitesRegras: e.target.value})}
+                valor={formularioDeDados.respeitaLimitesRegras}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, respeitaLimitesRegras: e.target.value})}
                 legenda="Respeita limites e regras?"
                 opcoes={preencherLegenda}
               />
@@ -86,8 +94,8 @@ const Comportamento = () => {
               <Campo
                 tipo="select"
                 id="oposicao"
-                valor={formData.oposicao}
-                setar={(e) => setFormData({...formData, oposicao: e.target.value})}
+                valor={formularioDeDados.oposicao}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, oposicao: e.target.value})}
                 legenda="Oposição?"
                 opcoes={preencherLegenda}
               />
@@ -96,14 +104,17 @@ const Comportamento = () => {
               <Campo
                 tipo="select"
                 id="atencaoConcentracao"
-                valor={formData.atencaoConcentracao}
-                setar={(e) => setFormData({...formData, atencaoConcentracao: e.target.value})}
+                valor={formularioDeDados.atencaoConcentracao}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, atencaoConcentracao: e.target.value})}
                 legenda="Possui atenção e concentração?"
                 opcoes={preencherLegenda}
               />
             </CCol>
           </CRow>
-          <CButton color="primary" onClick={salvar}>
+          <CButton color="primary" disabled={desabilitar} onClick={() => {
+            salvar(formularioDeDados, SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST,"comportamento", setDesabilitar)
+          }
+          }>
             Salvar
           </CButton>
         </CContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -8,85 +8,98 @@ import {
   CRow,
   CForm,
 } from '@coreui/react';
-import axios from 'axios';
-import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
-import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
+import Campo from '../../../../components/campos/Campo';
+import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {
+  SALVAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const HabilidadesSociais = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     passividade: '',
     autoagressao: '',
     heteroagressividade: '',
     assertividade: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const habilidadesSociais = localStorage.getItem("habilidadesSociais")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados de comportamento salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados de comportamento:', error);
+      }));
+      if (habilidadesSociais === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Habilidades Sociais</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Habilidades Sociais</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CForm>
               <Campo
                 tipo="select"
                 id="passividade"
-                valor={formData.passividade}
-                setar={(e) => setFormData({ ...formData, passividade: e.target.value })}
+                valor={formularioDeDados.passividade}
+                setar={(e) => setFormularioDeDados({ ...formularioDeDados, passividade: e.target.value })}
                 legenda="Passividade?"
                 opcoes={preencherLegenda}
               />
               <Campo
                 tipo="select"
                 id="autoagressao"
-                valor={formData.autoagressao}
-                setar={(e) => setFormData({ ...formData, autoagressao: e.target.value })}
+                valor={formularioDeDados.autoagressao}
+                setar={(e) => setFormularioDeDados({ ...formularioDeDados, autoagressao: e.target.value })}
                 legenda="Autoagressividade?"
                 opcoes={preencherLegenda}
               />
               <Campo
                 tipo="select"
                 id="heteroagressividade"
-                valor={formData.heteroagressividade}
-                setar={(e) => setFormData({ ...formData, heteroagressividade: e.target.value })}
+                valor={formularioDeDados.heteroagressividade}
+                setar={(e) => setFormularioDeDados({ ...formularioDeDados, heteroagressividade: e.target.value })}
                 legenda="Heteroagressividade?"
                 opcoes={preencherLegenda}
               />
               <Campo
                 tipo="select"
                 id="assertividade"
-                valor={formData.assertividade}
-                setar={(e) => setFormData({ ...formData, assertividade: e.target.value })}
+                valor={formularioDeDados.assertividade}
+                setar={(e) => setFormularioDeDados({ ...formularioDeDados, assertividade: e.target.value })}
                 legenda="Assertividade?"
                 opcoes={preencherLegenda}
               />
 
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_POST, "habilidadesSociais", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CForm>

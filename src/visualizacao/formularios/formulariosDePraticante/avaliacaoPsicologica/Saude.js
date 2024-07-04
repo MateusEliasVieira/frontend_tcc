@@ -1,18 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol, CContainer,
-  CForm,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
-import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
+import Campo from '../../../../components/campos/Campo';
+import {CADASTRADO} from "../../../../constantes/Constantes";
+import {salvar} from "../../../../requisicoes/Praticante";
+import {SALVAR_SAUDE_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const Saude = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     alergias: '',
     convulsoes: '',
     doencas: '',
@@ -21,49 +24,53 @@ const Saude = () => {
     respiracao: '',
     sono: '',
     deficitCognitivo: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const saude = localStorage.getItem("saude")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados de saúde salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados de saúde:', error);
+      }));
+      if (saude === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Saúde do Praticante</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Saúde do Praticante</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
-
               <CRow>
                 <CCol>
                   <Campo
                     tipo="text"
                     id="alergias"
-                    valor={formData.alergias}
-                    setar={(e) => setFormData({...formData, alergias: e.target.value})}
+                    valor={formularioDeDados.alergias}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, alergias: e.target.value})}
                     legenda="Alergias"
                   />
                 </CCol>
@@ -71,8 +78,8 @@ const Saude = () => {
                   <Campo
                     tipo="text"
                     id="convulsoes"
-                    valor={formData.convulsoes}
-                    setar={(e) => setFormData({...formData, convulsoes: e.target.value})}
+                    valor={formularioDeDados.convulsoes}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoes: e.target.value})}
                     legenda="Convulsões? Controladas? Tipo?"
                   />
                 </CCol>
@@ -80,8 +87,8 @@ const Saude = () => {
                   <Campo
                     tipo="text"
                     id="doencas"
-                    valor={formData.doencas}
-                    setar={(e) => setFormData({...formData, doencas: e.target.value})}
+                    valor={formularioDeDados.doencas}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, doencas: e.target.value})}
                     legenda="Doenças significativas/traumas"
                   />
                 </CCol>
@@ -91,8 +98,8 @@ const Saude = () => {
                   <Campo
                     tipo="text"
                     id="digestao"
-                    valor={formData.digestao}
-                    setar={(e) => setFormData({...formData, digestao: e.target.value})}
+                    valor={formularioDeDados.digestao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, digestao: e.target.value})}
                     legenda="Digestão"
                   />
                 </CCol>
@@ -100,8 +107,8 @@ const Saude = () => {
                   <Campo
                     tipo="text"
                     id="transtornoAlimentar"
-                    valor={formData.transtornoAlimentar}
-                    setar={(e) => setFormData({...formData, transtornoAlimentar: e.target.value})}
+                    valor={formularioDeDados.transtornoAlimentar}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, transtornoAlimentar: e.target.value})}
                     legenda="Transtorno alimentar"
                   />
                 </CCol>
@@ -112,8 +119,8 @@ const Saude = () => {
                   <Campo
                     tipo="text"
                     id="respiracao"
-                    valor={formData.respiracao}
-                    setar={(e) => setFormData({...formData, respiracao: e.target.value})}
+                    valor={formularioDeDados.respiracao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, respiracao: e.target.value})}
                     legenda="Respiração"
                   />
                 </CCol>
@@ -121,8 +128,8 @@ const Saude = () => {
                   <Campo
                     tipo="text"
                     id="sono"
-                    valor={formData.sono}
-                    setar={(e) => setFormData({...formData, sono: e.target.value})}
+                    valor={formularioDeDados.sono}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, sono: e.target.value})}
                     legenda="Sono"
                   />
                 </CCol>
@@ -130,13 +137,16 @@ const Saude = () => {
                   <Campo
                     tipo="text"
                     id="deficitCognitivo"
-                    valor={formData.deficitCognitivo}
-                    setar={(e) => setFormData({...formData, deficitCognitivo: e.target.value})}
+                    valor={formularioDeDados.deficitCognitivo}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, deficitCognitivo: e.target.value})}
                     legenda="Déficit cognitivo"
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_SAUDE_DO_PRATICANTE_POST, "saude", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CContainer>

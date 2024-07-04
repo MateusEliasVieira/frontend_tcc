@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -8,77 +8,89 @@ import {
   CRow,
   CForm,
 } from '@coreui/react';
-import axios from 'axios';
-import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
-import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
+import Campo from '../../../../components/campos/Campo';
+import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {
+  SALVAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const CuidadosPessoais = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     higienePessoalSozinho: '',
     vesteRoupasCalcadosSozinho: '',
     seAlimentaSozinho: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const cuidadosPessoais = localStorage.getItem("cuidadosPessoais")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados de cuidados pessoais salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados de cuidados pessoais:', error);
+      }));
+      if (cuidadosPessoais === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Cuidados Pessoais</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Cuidados Pessoais</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CForm>
               <Campo
                 tipo="select"
                 id="higienePessoalSozinho"
-                valor={formData.higienePessoalSozinho}
-                setar={(e) => setFormData({ ...formData, higienePessoalSozinho: e.target.value })}
+                valor={formularioDeDados.higienePessoalSozinho}
+                setar={(e) => setFormularioDeDados({ ...formularioDeDados, higienePessoalSozinho: e.target.value })}
                 legenda="Executa higiene pessoal sozinho(a)?"
                 opcoes={preencherLegenda}
               />
               <Campo
                 tipo="select"
                 id="vesteRoupasCalcadosSozinho"
-                valor={formData.vesteRoupasCalcadosSozinho}
-                setar={(e) => setFormData({ ...formData, vesteRoupasCalcadosSozinho: e.target.value })}
+                valor={formularioDeDados.vesteRoupasCalcadosSozinho}
+                setar={(e) => setFormularioDeDados({ ...formularioDeDados, vesteRoupasCalcadosSozinho: e.target.value })}
                 legenda="Veste as roupas/sapatos sozinho(a)?"
                 opcoes={preencherLegenda}
               />
               <Campo
                 tipo="select"
                 id="seAlimentaSozinho"
-                valor={formData.seAlimentaSozinho}
-                setar={(e) => setFormData({ ...formData, seAlimentaSozinho: e.target.value })}
+                valor={formularioDeDados.seAlimentaSozinho}
+                setar={(e) => setFormularioDeDados({ ...formularioDeDados, seAlimentaSozinho: e.target.value })}
                 legenda="Se alimenta sozinho(a)?"
                 opcoes={preencherLegenda}
               />
 
-              {/* Botão para salvar */}
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POST, "cuidadosPessoais", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CForm>

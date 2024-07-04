@@ -1,21 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormLabel,
   CRow,
-  CFormSelect, CContainer,
+  CContainer,
 } from '@coreui/react';
-import axios from 'axios';
 import Campo from '../../../../components/campos/Campo';
-import {preencherLegenda} from "../../../../constantes/Constantes"; // Importe o componente Campo
+import {CADASTRADO, preencherLegenda} from "../../../../constantes/Constantes";
+import {salvar} from "../../../../requisicoes/Praticante";
+import {
+  SALVAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const TracoDePersonalidade = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     extroversao: '',
     fobia: '',
     obsessao: '',
@@ -24,39 +27,44 @@ const TracoDePersonalidade = () => {
     histeria: '',
     dependenciaEmocional: '',
     timidez: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const tracoDePersonalidade = localStorage.getItem("tracoDePersonalidade")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Aspectos emocionais salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os aspectos emocionais:', error);
+      }));
+      if (tracoDePersonalidade === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Traços de Personalidade</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Traços de Personalidade</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -64,8 +72,8 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="extroversao"
                     tipo="select"
-                    valor={formData.extroversao}
-                    setar={valor => setFormData({...formData, extroversao: valor})}
+                    valor={formularioDeDados.extroversao}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, extroversao: valor})}
                     legenda="É extrovertido(a)?"
                     opcoes={preencherLegenda}
                   />
@@ -74,8 +82,8 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="fobia"
                     tipo="select"
-                    valor={formData.fobia}
-                    setar={valor => setFormData({...formData, fobia: valor})}
+                    valor={formularioDeDados.fobia}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, fobia: valor})}
                     legenda="Tem fobia?"
                     opcoes={preencherLegenda}
                   />
@@ -84,8 +92,8 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="obsessao"
                     tipo="select"
-                    valor={formData.obsessao}
-                    setar={valor => setFormData({...formData, obsessao: valor})}
+                    valor={formularioDeDados.obsessao}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, obsessao: valor})}
                     legenda="Possui alguma obsessão?"
                     opcoes={preencherLegenda}
                   />
@@ -94,8 +102,8 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="introversao"
                     tipo="select"
-                    valor={formData.introversao}
-                    setar={valor => setFormData({...formData, introversao: valor})}
+                    valor={formularioDeDados.introversao}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, introversao: valor})}
                     legenda="É introvertido?"
                     opcoes={preencherLegenda}
                   />
@@ -104,8 +112,8 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="ansiedade"
                     tipo="select"
-                    valor={formData.ansiedade}
-                    setar={valor => setFormData({...formData, ansiedade: valor})}
+                    valor={formularioDeDados.ansiedade}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, ansiedade: valor})}
                     legenda="Tem ansiedade?"
                     opcoes={preencherLegenda}
                   />
@@ -116,8 +124,8 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="histeria"
                     tipo="select"
-                    valor={formData.histeria}
-                    setar={valor => setFormData({...formData, histeria: valor})}
+                    valor={formularioDeDados.histeria}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, histeria: valor})}
                     legenda="Tem histeria?"
                     opcoes={preencherLegenda}
                   />
@@ -126,8 +134,8 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="dependenciaEmocional"
                     tipo="select"
-                    valor={formData.dependenciaEmocional}
-                    setar={valor => setFormData({...formData, dependenciaEmocional: valor})}
+                    valor={formularioDeDados.dependenciaEmocional}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, dependenciaEmocional: valor})}
                     legenda="Tem alguma dependência emocional?"
                     opcoes={preencherLegenda}
                   />
@@ -136,14 +144,17 @@ const TracoDePersonalidade = () => {
                   <Campo
                     id="timidez"
                     tipo="select"
-                    valor={formData.timidez}
-                    setar={valor => setFormData({...formData, timidez: valor})}
+                    valor={formularioDeDados.timidez}
+                    setar={valor => setFormularioDeDados({...formularioDeDados, timidez: valor})}
                     legenda="É timido(a)?"
                     opcoes={preencherLegenda}
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_POST, "tracoDePersonalidade", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CContainer>

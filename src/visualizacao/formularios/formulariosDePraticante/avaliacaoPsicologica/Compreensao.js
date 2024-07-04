@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -7,76 +7,86 @@ import {
   CCol,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
-import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
-import { preencherLegenda } from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
+import Campo from '../../../../components/campos/Campo';
+import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {SALVAR_COMPREENSAO_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const Compreensao = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     compreendeOrdens: '',
     executaOrdensVerbaisSimples: '',
     executaOrdensComplexas: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const compreensao = localStorage.getItem("compreensao")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados:', error);
+      }));
+      if (compreensao === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Compreensão</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Compreensão</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <Campo
               tipo="select"
               id="compreendeOrdens"
-              valor={formData.compreendeOrdens}
-              setar={(e) => setFormData({ ...formData, compreendeOrdens: e.target.value })}
+              valor={formularioDeDados.compreendeOrdens}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, compreendeOrdens: e.target.value })}
               legenda="Compreende ordens ?"
               opcoes={preencherLegenda}
             />
             <Campo
               tipo="select"
               id="executaOrdensVerbaisSimples"
-              valor={formData.executaOrdensVerbaisSimples}
-              setar={(e) => setFormData({ ...formData, executaOrdensVerbaisSimples: e.target.value })}
+              valor={formularioDeDados.executaOrdensVerbaisSimples}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, executaOrdensVerbaisSimples: e.target.value })}
               legenda="Executa ordens verbais simples?"
               opcoes={preencherLegenda}
             />
             <Campo
               tipo="select"
               id="executaOrdensComplexas"
-              valor={formData.executaOrdensComplexas}
-              setar={(e) => setFormData({ ...formData, executaOrdensComplexas: e.target.value })}
+              valor={formularioDeDados.executaOrdensComplexas}
+              setar={(e) => setFormularioDeDados({ ...formularioDeDados, executaOrdensComplexas: e.target.value })}
               legenda="Executa ordens complexas?"
               opcoes={preencherLegenda}
             />
 
-            {/* Botão para salvar */}
-            <CButton color="primary" onClick={salvar}>
+            <CButton color="primary" disabled={desabilitar} onClick={() => {
+              salvar(formularioDeDados, SALVAR_COMPREENSAO_DO_PRATICANTE_POST, "compreensao", setDesabilitar)
+            }
+            }>
               Salvar
             </CButton>
           </CCardBody>

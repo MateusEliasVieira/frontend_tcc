@@ -4,21 +4,20 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CCol, CContainer, CForm,
+  CCol, CContainer,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
 import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
 import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {
   SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
-import {CADASTRADO} from "../../../../constantes/Constantes"; // Importando o componente Campo
+import {CADASTRADO} from "../../../../constantes/Constantes";
 
 const CompletudeMatricula = () => {
 
-  const [desabilitar,setDesabilitar] = useState("")
+  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     dataCompletudeMatricula: '',
     imagemAssinaturaResponsavel: '',
@@ -93,7 +92,7 @@ const CompletudeMatricula = () => {
               </CRow>
 
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST,"completudeMatricula", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST, "completudeMatricula", setDesabilitar)
               }
               }>
                 Salvar

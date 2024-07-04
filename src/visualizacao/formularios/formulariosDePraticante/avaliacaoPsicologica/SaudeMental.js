@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -7,55 +7,63 @@ import {
   CCol, CForm,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
 import Campo from "../../../../components/campos/Campo";
-import {preencherLegenda} from "../../../../constantes/Constantes"; // Importe o componente Campo
+import {CADASTRADO, preencherLegenda} from "../../../../constantes/Constantes";
+import {salvar} from "../../../../requisicoes/Praticante";
+import {SALVAR_SAUDE_MENTAL_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const SaudeMental = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     apresentaConfusaoMental: '',
     apresentaDelirios: '',
     apresentaAlucinacoes: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const saudeMental = localStorage.getItem("saudeMental")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Aspectos mentais salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os aspectos mentais:', error);
+      }));
+      if (saudeMental === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Saúde Mental</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Saúde Mental</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CForm>
               <Campo
                 tipo="select"
                 id="apresentaConfusaoMental"
-                valor={formData.apresentaConfusaoMental}
-                setar={(e) => setFormData({ ...formData, apresentaConfusaoMental: e.target.value })}
+                valor={formularioDeDados.apresentaConfusaoMental}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaConfusaoMental: e.target.value})}
                 legenda="Apresenta confusão mental?"
                 opcoes={preencherLegenda}
               />
@@ -63,8 +71,8 @@ const SaudeMental = () => {
               <Campo
                 tipo="select"
                 id="apresentaDelirios"
-                valor={formData.apresentaDelirios}
-                setar={(e) => setFormData({ ...formData, apresentaDelirios: e.target.value })}
+                valor={formularioDeDados.apresentaDelirios}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaDelirios: e.target.value})}
                 legenda="Apresenta delírios?"
                 opcoes={preencherLegenda}
               />
@@ -72,14 +80,16 @@ const SaudeMental = () => {
               <Campo
                 tipo="select"
                 id="apresentaAlucinacoes"
-                valor={formData.apresentaAlucinacoes}
-                setar={(e) => setFormData({ ...formData, apresentaAlucinacoes: e.target.value })}
+                valor={formularioDeDados.apresentaAlucinacoes}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaAlucinacoes: e.target.value})}
                 legenda="Apresenta alucinações?"
                 opcoes={preencherLegenda}
               />
 
-              {/* Botão para salvar */}
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_SAUDE_MENTAL_DO_PRATICANTE_POST, "saudeMental", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CForm>

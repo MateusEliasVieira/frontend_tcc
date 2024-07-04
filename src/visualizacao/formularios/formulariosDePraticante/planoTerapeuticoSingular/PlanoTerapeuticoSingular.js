@@ -8,12 +8,12 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import Campo from '../../../../components/campos/Campo'; // Certifique-se de que o caminho está correto
-import { salvar } from "../../../../requisicoes/PlanoTerapeuticoSingular"; // Importe a função salvar apropriada
+import Campo from '../../../../components/campos/Campo';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {CADASTRADO} from "../../../../constantes/Constantes";
 import {
-  SALVAR_PLANO_TERAPÊUTICO_SINGULAR_POST
-} from "../../../../endpoints/therapeuticPlan/Endpoints"; // Certifique-se de que o endpoint está correto
-import { CADASTRADO } from "../../../../constantes/Constantes";
+  SALVAR_PLANO_TERAPÊUTICO_SINGULAR_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/planoTerapeuticoSingular/Endpoints";
 
 const PlanoTerapeuticoSingular = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -35,7 +35,7 @@ const PlanoTerapeuticoSingular = () => {
   });
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
+    const planoTerapeuticoSingular = localStorage.getItem("planoTerapeuticoSingular")
     if (idPraticanteSalvo) {
       setFormularioDeDados(prevFormData => ({
         ...prevFormData,
@@ -44,7 +44,7 @@ const PlanoTerapeuticoSingular = () => {
           idPraticante: idPraticanteSalvo
         }
       }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
+      if (planoTerapeuticoSingular === CADASTRADO) {
         setDesabilitar("disabled")
       } else {
         setDesabilitar("")
@@ -55,9 +55,16 @@ const PlanoTerapeuticoSingular = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Plano Terapêutico Singular (PTS)</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Plano Terapêutico Singular (PTS)</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -66,7 +73,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="date"
                     id="dataPlanejamento"
                     valor={formularioDeDados.dataPlanejamento}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, dataPlanejamento: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, dataPlanejamento: e.target.value})}
                     legenda="Data de Planejamento"
                     disabled={desabilitar}
                   />
@@ -74,7 +81,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="responsavelTerapeutico"
                     valor={formularioDeDados.responsavelTerapeutico}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, responsavelTerapeutico: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, responsavelTerapeutico: e.target.value})}
                     legenda="Responsável Terapêutico"
                     disabled={desabilitar}
                   />
@@ -82,7 +89,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="problema"
                     valor={formularioDeDados.problema}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, problema: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, problema: e.target.value})}
                     legenda="Problema"
                     disabled={desabilitar}
                   />
@@ -90,7 +97,10 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="justificativaHipotesesBiologicasSociaisEmocionais"
                     valor={formularioDeDados.justificativaHipotesesBiologicasSociaisEmocionais}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, justificativaHipotesesBiologicasSociaisEmocionais: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      justificativaHipotesesBiologicasSociaisEmocionais: e.target.value
+                    })}
                     legenda="Justificativa e Hipóteses Biológicas, Sociais, Emocionais"
                     disabled={desabilitar}
                   />
@@ -98,7 +108,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="objetivoTerapeutico"
                     valor={formularioDeDados.objetivoTerapeutico}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, objetivoTerapeutico: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, objetivoTerapeutico: e.target.value})}
                     legenda="Objetivo Terapêutico"
                     disabled={desabilitar}
                   />
@@ -106,7 +116,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="medida"
                     valor={formularioDeDados.medida}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, medida: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, medida: e.target.value})}
                     legenda="Medida"
                     disabled={desabilitar}
                   />
@@ -114,7 +124,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="estrategiasIntervencao"
                     valor={formularioDeDados.estrategiasIntervencao}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, estrategiasIntervencao: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, estrategiasIntervencao: e.target.value})}
                     legenda="Estratégias de Intervenção"
                     disabled={desabilitar}
                   />
@@ -122,7 +132,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="selasMediadorasAnimais"
                     valor={formularioDeDados.selasMediadorasAnimais}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, selasMediadorasAnimais: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, selasMediadorasAnimais: e.target.value})}
                     legenda="Selas Mediadoras Animais"
                     disabled={desabilitar}
                   />
@@ -130,7 +140,7 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="evolucao"
                     valor={formularioDeDados.evolucao}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, evolucao: e.target.value })}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, evolucao: e.target.value})}
                     legenda="Evolução"
                     disabled={desabilitar}
                   />
@@ -138,14 +148,17 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="text"
                     id="imagemCarimboAssinaturaTerapeutas"
                     valor={formularioDeDados.imagemCarimboAssinaturaTerapeutas}
-                    setar={(e) => setFormularioDeDados({ ...formularioDeDados, imagemCarimboAssinaturaTerapeutas: e.target.value })}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      imagemCarimboAssinaturaTerapeutas: e.target.value
+                    })}
                     legenda="Imagem do Carimbo/Assinatura dos Terapeutas"
                     disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_PLANO_TERAPÊUTICO_SINGULAR_POST, "planoTerapeuticoSingular", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_PLANO_TERAPÊUTICO_SINGULAR_DO_PRATICANTE_POST, "planoTerapeuticoSingular", setDesabilitar)
               }}>
                 Salvar
               </CButton>

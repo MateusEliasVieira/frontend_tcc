@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -6,84 +6,94 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormCheck,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
 import Campo from '../../../../components/campos/Campo';
-import {simOuNao} from "../../../../constantes/Constantes"; // Ajuste o caminho conforme a estrutura do seu projeto
+import {CADASTRADO, simOuNao} from "../../../../constantes/Constantes";
+import {salvar} from "../../../../requisicoes/Praticante";
+import {SALVAR_ROTINA_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const Rotina = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     brincadeiras: '',
     preferenciasPorBrincadeiras: '',
     aceitaMudancasNaRotina: '',
     consideracoesSobreRotina: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const rotina = localStorage.getItem("rotina")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados de preferências de brincadeiras salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados de preferências de brincadeiras:', error);
+      }));
+      if (rotina === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Preferências de Brincadeiras</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Rotina</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CForm>
               <Campo
                 tipo="textarea"
                 id="brincadeiras"
-                valor={formData.brincadeiras}
-                setar={(e) => setFormData({ ...formData, brincadeiras: e.target.value })}
+                valor={formularioDeDados.brincadeiras}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, brincadeiras: e.target.value})}
                 legenda="Brincadeiras (onde, como, com quem?)"
               />
               <Campo
                 tipo="textarea"
                 id="preferenciasPorBrincadeiras"
-                valor={formData.preferenciasPorBrincadeiras}
-                setar={(e) => setFormData({ ...formData, preferenciasPorBrincadeiras: e.target.value })}
+                valor={formularioDeDados.preferenciasPorBrincadeiras}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, preferenciasPorBrincadeiras: e.target.value})}
                 legenda="Preferências e aversões"
               />
               <Campo
                 tipo="select"
                 id="aceitaMudancasNaRotina"
-                valor={formData.aceitaMudancasNaRotina}
-                setar={(e) => setFormData({ ...formData, aceitaMudancasNaRotina: e.target.value })}
+                valor={formularioDeDados.aceitaMudancasNaRotina}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, aceitaMudancasNaRotina: e.target.value})}
                 legenda="Aceita mudanças na sua rotina?"
                 opcoes={simOuNao}
               />
               <Campo
                 tipo="textarea"
                 id="consideracoesSobreRotina"
-                valor={formData.consideracoesSobreRotina}
-                setar={(e) => setFormData({ ...formData, consideracoesSobreRotina: e.target.value })}
+                valor={formularioDeDados.consideracoesSobreRotina}
+                setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesSobreRotina: e.target.value})}
                 legenda="Considerações sobre rotina"
               />
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_ROTINA_DO_PRATICANTE_POST, "rotina", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CForm>

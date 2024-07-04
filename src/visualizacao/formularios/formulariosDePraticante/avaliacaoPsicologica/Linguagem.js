@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -6,14 +6,17 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CForm, CContainer,
+  CContainer,
 } from '@coreui/react';
-import axios from 'axios';
-import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
-import {preencherLegenda} from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
+import Campo from '../../../../components/campos/Campo';
+import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {SALVAR_LINGUAGEM_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const Linguagem = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     compreensaoVerbal: '',
     gesto: '',
     gritos: '',
@@ -21,39 +24,43 @@ const Linguagem = () => {
     monossilabos: '',
     frasesCurtas: '',
     frasesCompletas: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
-
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const linguagem = localStorage.getItem("linguagem")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados de comunicação verbal salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados de comunicação verbal:', error);
+      }));
+      if (linguagem === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Linguagem</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Linguagem</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -61,8 +68,8 @@ const Linguagem = () => {
                   <Campo
                     tipo="select"
                     id="compreensaoVerbal"
-                    valor={formData.compreensaoVerbal}
-                    setar={(e) => setFormData({...formData, compreensaoVerbal: e.target.value})}
+                    valor={formularioDeDados.compreensaoVerbal}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, compreensaoVerbal: e.target.value})}
                     legenda="Tem linguagem verbal compreensiva?"
                     opcoes={preencherLegenda}
                   />
@@ -71,8 +78,8 @@ const Linguagem = () => {
                   <Campo
                     tipo="select"
                     id="gesto"
-                    valor={formData.gesto}
-                    setar={(e) => setFormData({...formData, gesto: e.target.value})}
+                    valor={formularioDeDados.gesto}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, gesto: e.target.value})}
                     legenda="Gestual?"
                     opcoes={preencherLegenda}
                   />
@@ -81,8 +88,8 @@ const Linguagem = () => {
                   <Campo
                     tipo="select"
                     id="gritos"
-                    valor={formData.gritos}
-                    setar={(e) => setFormData({...formData, gritos: e.target.value})}
+                    valor={formularioDeDados.gritos}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, gritos: e.target.value})}
                     legenda="Gritos?"
                     opcoes={preencherLegenda}
                   />
@@ -91,8 +98,8 @@ const Linguagem = () => {
                   <Campo
                     tipo="select"
                     id="mimicaFacial"
-                    valor={formData.mimicaFacial}
-                    setar={(e) => setFormData({...formData, mimicaFacial: e.target.value})}
+                    valor={formularioDeDados.mimicaFacial}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, mimicaFacial: e.target.value})}
                     legenda="Mímica facial?"
                     opcoes={preencherLegenda}
                   />
@@ -101,8 +108,8 @@ const Linguagem = () => {
                   <Campo
                     tipo="select"
                     id="monossilabos"
-                    valor={formData.monossilabos}
-                    setar={(e) => setFormData({...formData, monossilabos: e.target.value})}
+                    valor={formularioDeDados.monossilabos}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, monossilabos: e.target.value})}
                     legenda="Monossílabos?"
                     opcoes={preencherLegenda}
                   />
@@ -113,8 +120,8 @@ const Linguagem = () => {
                   <Campo
                     tipo="select"
                     id="frasesCurtas"
-                    valor={formData.frasesCurtas}
-                    setar={(e) => setFormData({...formData, frasesCurtas: e.target.value})}
+                    valor={formularioDeDados.frasesCurtas}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, frasesCurtas: e.target.value})}
                     legenda="Fala frases curtas?"
                     opcoes={preencherLegenda}
                   />
@@ -123,14 +130,17 @@ const Linguagem = () => {
                   <Campo
                     tipo="select"
                     id="frasesCompletas"
-                    valor={formData.frasesCompletas}
-                    setar={(e) => setFormData({...formData, frasesCompletas: e.target.value})}
+                    valor={formularioDeDados.frasesCompletas}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, frasesCompletas: e.target.value})}
                     legenda="Fala frases completas?"
                     opcoes={preencherLegenda}
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_LINGUAGEM_DO_PRATICANTE_POST, "linguagem", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CContainer>

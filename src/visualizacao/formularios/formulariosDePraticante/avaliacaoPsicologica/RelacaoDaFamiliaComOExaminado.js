@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CButton,
   CCard,
@@ -6,53 +6,63 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CForm, CContainer,
+  CContainer,
 } from '@coreui/react';
-import axios from 'axios';
-import Campo from '../../../../components/campos/Campo'; // Ajuste o caminho conforme a estrutura do seu projeto
-import {preencherLegenda} from '../../../../constantes/Constantes'; // Ajuste o caminho conforme a estrutura do seu projeto
+import Campo from '../../../../components/campos/Campo';
+import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';
+import {salvar} from "../../../../requisicoes/Praticante";
+import {
+  SALVAR_RELACAO_FAMILIAR_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const RelacaoDaFamiliaComOExaminado = () => {
-  const [formData, setFormData] = useState({
+
+  const [desabilitar, setDesabilitar] = useState("")
+  const [formularioDeDados, setFormularioDeDados] = useState({
     adequado: '',
     superprotecao: '',
     dificuldadePerceberDeficiencias: '',
     rejeicao: '',
     indiferenca: '',
     ansiedadePercebidaEntrevistador: '',
-    paciente: {
-      idPaciente: '',
+    praticante: {
+      idPraticante: '',
     },
   });
 
-  const salvar = async () => {
-    const dados = {
-      ...formData,
-    };
-
-    try {
-      const response = await axios.post(
-        'SEU_ENDPOINT_DE_SALVAR_AQUI',
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  useEffect(() => {
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    const relacaoDaFamiliaComOExaminado = localStorage.getItem("relacaoDaFamiliaComOExaminado")
+    if (idPraticanteSalvo) {
+      setFormularioDeDados(prevFormData => ({
+        ...prevFormData,
+        praticante: {
+          ...prevFormData.praticante,
+          idPraticante: idPraticanteSalvo
         }
-      );
-      console.log('Dados de comportamento social salvos com sucesso:', response.data);
-    } catch (error) {
-      console.log('Erro ao salvar os dados de comportamento social:', error);
+      }));
+      if (relacaoDaFamiliaComOExaminado === CADASTRADO) {
+        setDesabilitar("disabled")
+      } else {
+        setDesabilitar("")
+      }
     }
-  };
+  }, []);
 
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Relação da Família com o Examinado (Percepção do Entrevistador)</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Relação da Família com o Examinado (Percepção do Entrevistador)</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -60,8 +70,8 @@ const RelacaoDaFamiliaComOExaminado = () => {
                   <Campo
                     tipo="select"
                     id="adequado"
-                    valor={formData.adequado}
-                    setar={(e) => setFormData({...formData, adequado: e.target.value})}
+                    valor={formularioDeDados.adequado}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, adequado: e.target.value})}
                     legenda="Adequado?"
                     opcoes={preencherLegenda}
                   />
@@ -70,8 +80,8 @@ const RelacaoDaFamiliaComOExaminado = () => {
                   <Campo
                     tipo="select"
                     id="superprotecao"
-                    valor={formData.superprotecao}
-                    setar={(e) => setFormData({...formData, superprotecao: e.target.value})}
+                    valor={formularioDeDados.superprotecao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, superprotecao: e.target.value})}
                     legenda="Superproteção?"
                     opcoes={preencherLegenda}
                   />
@@ -83,8 +93,11 @@ const RelacaoDaFamiliaComOExaminado = () => {
                   <Campo
                     tipo="select"
                     id="dificuldadePerceberDeficiencias"
-                    valor={formData.dificuldadePerceberDeficiencias}
-                    setar={(e) => setFormData({...formData, dificuldadePerceberDeficiencias: e.target.value})}
+                    valor={formularioDeDados.dificuldadePerceberDeficiencias}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      dificuldadePerceberDeficiencias: e.target.value
+                    })}
                     legenda="Dificuldade em perceber deficiências?"
                     opcoes={preencherLegenda}
                   />
@@ -93,8 +106,8 @@ const RelacaoDaFamiliaComOExaminado = () => {
                   <Campo
                     tipo="select"
                     id="rejeicao"
-                    valor={formData.rejeicao}
-                    setar={(e) => setFormData({...formData, rejeicao: e.target.value})}
+                    valor={formularioDeDados.rejeicao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, rejeicao: e.target.value})}
                     legenda="Rejeição?"
                     opcoes={preencherLegenda}
                   />
@@ -105,8 +118,8 @@ const RelacaoDaFamiliaComOExaminado = () => {
                   <Campo
                     tipo="select"
                     id="indiferenca"
-                    valor={formData.indiferenca}
-                    setar={(e) => setFormData({...formData, indiferenca: e.target.value})}
+                    valor={formularioDeDados.indiferenca}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, indiferenca: e.target.value})}
                     legenda="Indiferença?"
                     opcoes={preencherLegenda}
                   />
@@ -115,14 +128,20 @@ const RelacaoDaFamiliaComOExaminado = () => {
                   <Campo
                     tipo="select"
                     id="ansiedadePercebidaEntrevistador"
-                    valor={formData.ansiedadePercebidaEntrevistador}
-                    setar={(e) => setFormData({...formData, ansiedadePercebidaEntrevistador: e.target.value})}
+                    valor={formularioDeDados.ansiedadePercebidaEntrevistador}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      ansiedadePercebidaEntrevistador: e.target.value
+                    })}
                     legenda="Ansiedade?"
                     opcoes={preencherLegenda}
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" onClick={salvar}>
+              <CButton color="primary" disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_RELACAO_FAMILIAR_DO_PRATICANTE_POST, "relacaoDaFamiliaComOExaminado", setDesabilitar)
+              }
+              }>
                 Salvar
               </CButton>
             </CContainer>
