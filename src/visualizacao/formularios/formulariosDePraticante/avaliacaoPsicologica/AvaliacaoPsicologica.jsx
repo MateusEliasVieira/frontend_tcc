@@ -12,10 +12,11 @@ import {salvar} from "../../../../requisicoes/Praticante";
 import {
   SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
 
 const AvaliacaoPsicologica = () => {
 
-  const [desabilitar,setDesabilitar] = useState("")
+  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     expectativasFamiliaresTerapiaEquina: '',
     resumoCasoObservacoesComplementares: '',
@@ -63,29 +64,38 @@ const AvaliacaoPsicologica = () => {
             id="expectativasFamiliaresTerapiaEquina"
             valor={formularioDeDados.expectativasFamiliaresTerapiaEquina}
             setar={(e) =>
-              setFormularioDeDados({ ...formularioDeDados, expectativasFamiliaresTerapiaEquina: e.target.value })
+              setFormularioDeDados({...formularioDeDados, expectativasFamiliaresTerapiaEquina: e.target.value})
             }
             legenda="Qual a expectativa da família quanto à equoterapia?"
+            disabled={desabilitar}
           />
           <Campo
             tipo="textarea"
             id="resumoCasoObservacoesComplementares"
             valor={formularioDeDados.resumoCasoObservacoesComplementares}
             setar={(e) =>
-              setFormularioDeDados({ ...formularioDeDados, resumoCasoObservacoesComplementares: e.target.value })
+              setFormularioDeDados({...formularioDeDados, resumoCasoObservacoesComplementares: e.target.value})
             }
             legenda="Síntese do caso e observações complementares"
+            disabled={desabilitar}
           />
           <Campo
             tipo="file"
             id="imagemAssinaturaOuCRPECarimbo"
             setar={(e) =>
-              setFormularioDeDados({ ...formularioDeDados, imagemAssinaturaOuCRPECarimbo: e.target.files[0] })
+              converterImagemEmBase64(e.target.files[0])
+                .then((imagemBase64) => {
+                  setFormularioDeDados({...formularioDeDados, imagemAssinaturaOuCRPECarimbo: imagemBase64})
+                })
+                .catch(()=>{
+                  alert("Falha ao selecionar imagem!")
+                })
             }
             legenda="Imagem da assinatura ou CRP e carimbo"
+            disabled={desabilitar}
           />
           <CButton color="primary" disabled={desabilitar} onClick={() => {
-            salvar(formularioDeDados, SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST,"avaliacaoPsicologica", setDesabilitar)
+            salvar(formularioDeDados, SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST, "avaliacaoPsicologica", setDesabilitar)
           }
           }>
             Salvar

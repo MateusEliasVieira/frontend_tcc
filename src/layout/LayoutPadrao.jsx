@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
-import {AppContent, AppSidebar, AppFooter, AppCabecalho} from '../components'
-import Logo from '../assets/imagens/Logo.jpg'
+import {AppContent, AppSidebar, AppRodaPe, AppCabecalho} from '../components/index'
 
 const LayoutPadrao = () => {
     useEffect(() => {
@@ -18,7 +17,7 @@ const LayoutPadrao = () => {
                 <div className="body flex-grow-1 px-3">
                     <AppContent/>
                 </div>
-                <AppFooter/>
+                <AppRodaPe/>
             </div>
         </div>
     )

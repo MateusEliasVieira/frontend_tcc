@@ -12,7 +12,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
 
-import { AppBreadcrumb } from './index'
+import { AppBreadcrumb } from '././index'
 const AppCabecalho = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)

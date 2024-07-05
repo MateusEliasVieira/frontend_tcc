@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CFormCheck,
   CFormInput,
   CFormLabel,
   CFormSelect,
@@ -45,6 +46,15 @@ const Campo = (props) => {
           <CFormInput
             id={props.id}
             type="file"
+            onChange={props.setar}
+            disabled={props.disabled}
+          />
+        );
+      case 'checkbox':
+        return (
+          <CFormCheck
+            id={props.id}
+            type="checkbox"
             onChange={props.setar}
             disabled={props.disabled}
           />

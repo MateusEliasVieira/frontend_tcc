@@ -68,6 +68,7 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, agitacao: e.target.value})}
                 legenda="Tem comportamento agitado?"
                 opcoes={preencherLegenda}
+                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -78,6 +79,7 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, toleranciaFrustracao: e.target.value})}
                 legenda="Tem tolerância à frustração?"
                 opcoes={preencherLegenda}
+                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -88,6 +90,7 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, respeitaLimitesRegras: e.target.value})}
                 legenda="Respeita limites e regras?"
                 opcoes={preencherLegenda}
+                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -98,6 +101,7 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, oposicao: e.target.value})}
                 legenda="Oposição?"
                 opcoes={preencherLegenda}
+                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -108,6 +112,7 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, atencaoConcentracao: e.target.value})}
                 legenda="Possui atenção e concentração?"
                 opcoes={preencherLegenda}
+                disabled={desabilitar}
               />
             </CCol>
           </CRow>

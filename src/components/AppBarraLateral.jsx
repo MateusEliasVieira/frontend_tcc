@@ -55,7 +55,7 @@ const AppBarraLateral = () => {
           setUsuario({...response.data})
         })
           .catch((error) => {
-            location.href="/login"
+            location.href="/#/login"
           })
       }
     } catch (e) {

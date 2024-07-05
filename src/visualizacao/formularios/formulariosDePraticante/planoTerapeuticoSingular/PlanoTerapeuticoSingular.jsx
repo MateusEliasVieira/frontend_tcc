@@ -6,7 +6,7 @@ import {
   CCardHeader,
   CCol,
   CContainer,
-  CRow,
+  CRow
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
@@ -14,6 +14,7 @@ import {CADASTRADO} from "../../../../constantes/Constantes";
 import {
   SALVAR_PLANO_TERAPÊUTICO_SINGULAR_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/planoTerapeuticoSingular/Endpoints";
+import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
 
 const PlanoTerapeuticoSingular = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -28,11 +29,12 @@ const PlanoTerapeuticoSingular = () => {
     estrategiasIntervencao: '',
     selasMediadorasAnimais: '',
     evolucao: '',
-    imagemCarimboAssinaturaTerapeutas: '',
+    fisioterapeutaImagemDaAssinaturaOuCarimbo: '',
     praticante: {
       idPraticante: '',
     },
   });
+
   useEffect(() => {
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     const planoTerapeuticoSingular = localStorage.getItem("planoTerapeuticoSingular")
@@ -51,6 +53,7 @@ const PlanoTerapeuticoSingular = () => {
       }
     }
   }, []);
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -74,85 +77,125 @@ const PlanoTerapeuticoSingular = () => {
                     id="dataPlanejamento"
                     valor={formularioDeDados.dataPlanejamento}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, dataPlanejamento: e.target.value})}
-                    legenda="Data de Planejamento"
+                    legenda="Data do planejamento"
                     disabled={desabilitar}
                   />
+                </CCol>
+                <CCol>
                   <Campo
                     tipo="text"
                     id="responsavelTerapeutico"
                     valor={formularioDeDados.responsavelTerapeutico}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, responsavelTerapeutico: e.target.value})}
-                    legenda="Responsável Terapêutico"
+                    legenda="Responsável terapêutico"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="problema"
                     valor={formularioDeDados.problema}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, problema: e.target.value})}
-                    legenda="Problema"
+                    legenda="Problema (O que acontece?)"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="justificativaHipotesesBiologicasSociaisEmocionais"
                     valor={formularioDeDados.justificativaHipotesesBiologicasSociaisEmocionais}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
                       justificativaHipotesesBiologicasSociaisEmocionais: e.target.value
                     })}
-                    legenda="Justificativa e Hipóteses Biológicas, Sociais, Emocionais"
+                    legenda="Hipóteses que justificativa o problema biológico, social e emocional: (Por que isso acontece?)"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="objetivoTerapeutico"
                     valor={formularioDeDados.objetivoTerapeutico}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, objetivoTerapeutico: e.target.value})}
-                    legenda="Objetivo Terapêutico"
+                    legenda="Meta terapêutica"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="medida"
                     valor={formularioDeDados.medida}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, medida: e.target.value})}
-                    legenda="Medida"
+                    legenda="Mensuração (Como vou medir?) (Tempo, escalas, repetições etc.)"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="estrategiasIntervencao"
                     valor={formularioDeDados.estrategiasIntervencao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, estrategiasIntervencao: e.target.value})}
-                    legenda="Estratégias de Intervenção"
+                    legenda="Estratégias de intervenção (Plano de ação - o que fazer? Como treinar?)"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="selasMediadorasAnimais"
                     valor={formularioDeDados.selasMediadorasAnimais}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, selasMediadorasAnimais: e.target.value})}
-                    legenda="Selas Mediadoras Animais"
+                    legenda="Mediadores/Animal/Encilhamento"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
+                    tipo="textarea"
                     id="evolucao"
                     valor={formularioDeDados.evolucao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, evolucao: e.target.value})}
-                    legenda="Evolução"
+                    legenda="Como está evoluindo? (Devolutiva)"
                     disabled={desabilitar}
                   />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
                   <Campo
-                    tipo="text"
-                    id="imagemCarimboAssinaturaTerapeutas"
-                    valor={formularioDeDados.imagemCarimboAssinaturaTerapeutas}
-                    setar={(e) => setFormularioDeDados({
-                      ...formularioDeDados,
-                      imagemCarimboAssinaturaTerapeutas: e.target.value
-                    })}
-                    legenda="Imagem do Carimbo/Assinatura dos Terapeutas"
+                    tipo="file"
+                    id="fisioterapeutaImagemDaAssinaturaOuCarimbo"
+                    valor={formularioDeDados.fisioterapeutaImagemDaAssinaturaOuCarimbo}
+                    setar={(e) =>
+                      converterImagemEmBase64(e.target.value).then((imagemBase64)=>{
+                        setFormularioDeDados({
+                          ...formularioDeDados,
+                          fisioterapeutaImagemDaAssinaturaOuCarimbo: imagemBase64,
+                        })
+                      }).catch((erro)=>{
+                        console.log(erro)
+                      })
+                    }
+                    legenda={"Imagem do carimbo/assinatura do fisioterapeuta"}
                     disabled={desabilitar}
                   />
                 </CCol>

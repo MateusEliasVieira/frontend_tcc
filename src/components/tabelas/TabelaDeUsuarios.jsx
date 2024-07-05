@@ -50,7 +50,7 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.email}</CTableDataCell>
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.telefone}</CTableDataCell>
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.possuiFormacao ? 'Sim' : 'Não'}</CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", fontWeight:"bold" }}>{item.role === 'ROLE_USER' ? 'Usuário' : 'Administrador'}</CTableDataCell>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", fontWeight:"bold", color: item.role === 'ROLE_USER' ? 'dodgerblue':'#0ecf8f' }}>{item.role === 'ROLE_USER' ? 'Usuário' : 'Administrador'}</CTableDataCell>
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{formatarVinculo(item.vinculo)}</CTableDataCell>
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "230px" }}>
                 <div className="container text-center">

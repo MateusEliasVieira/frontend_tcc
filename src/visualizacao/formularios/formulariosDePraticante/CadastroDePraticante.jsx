@@ -246,7 +246,6 @@ const CadastroDePraticante = () => {
         </li>
       </ul>
       <ul className="nav nav-tabs">
-        <ul className="nav nav-tabs">
           <li className="nav-item">
             <button className={`nav-link ${activeTab === 'avaliacaoFisioterapeutica' ? 'active' : ''}`}
                     onClick={() => setActiveTab('avaliacaoFisioterapeutica')}>Avaliação Fisioterapêutica
@@ -297,12 +296,13 @@ const CadastroDePraticante = () => {
                     onClick={() => setActiveTab('saudeGeralDosPraticantes')}>Saúde Geral dos Praticantes
             </button>
           </li>
+      </ul>
+      <ul className="nav nav-tabs">
           <li className="nav-item">
             <button className={`nav-link ${activeTab === 'planoTerapeuticoSingular' ? 'active' : ''}`}
                     onClick={() => setActiveTab('planoTerapeuticoSingular')}>Plano Terapêutico Singular
             </button>
           </li>
-        </ul>
       </ul>
       <div className="tab-content">
         {renderComponent()}

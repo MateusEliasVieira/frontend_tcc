@@ -71,6 +71,7 @@ const Afetividade = () => {
                     }
                     legenda="Demonstra carinho especial por alguém?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -83,6 +84,7 @@ const Afetividade = () => {
                     }
                     legenda="Divide suas coisas?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -95,6 +97,7 @@ const Afetividade = () => {
                     }
                     legenda="Ajuda quando solicitado?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -107,6 +110,7 @@ const Afetividade = () => {
                     }
                     legenda="Expressão de sentimentos (Carinho, Raiva, ...)?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
