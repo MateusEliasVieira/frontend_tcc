@@ -71,6 +71,7 @@ const CuidadosPessoais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, higienePessoalSozinho: e.target.value})}
                     legenda="Executa higiene pessoal sozinho(a)?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -84,6 +85,7 @@ const CuidadosPessoais = () => {
                     })}
                     legenda="Veste as roupas/sapatos sozinho(a)?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -94,6 +96,7 @@ const CuidadosPessoais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, seAlimentaSozinho: e.target.value})}
                     legenda="Se alimenta sozinho(a)?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

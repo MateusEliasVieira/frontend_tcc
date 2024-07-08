@@ -73,9 +73,10 @@ const TracoDePersonalidade = () => {
                     id="extroversao"
                     tipo="select"
                     valor={formularioDeDados.extroversao}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, extroversao: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, extroversao: e.target.value})}
                     legenda="É extrovertido(a)?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -83,9 +84,10 @@ const TracoDePersonalidade = () => {
                     id="fobia"
                     tipo="select"
                     valor={formularioDeDados.fobia}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, fobia: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, fobia: e.target.value})}
                     legenda="Tem fobia?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -93,9 +95,10 @@ const TracoDePersonalidade = () => {
                     id="obsessao"
                     tipo="select"
                     valor={formularioDeDados.obsessao}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, obsessao: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, obsessao: e.target.value})}
                     legenda="Possui alguma obsessão?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -103,9 +106,10 @@ const TracoDePersonalidade = () => {
                     id="introversao"
                     tipo="select"
                     valor={formularioDeDados.introversao}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, introversao: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, introversao: e.target.value})}
                     legenda="É introvertido?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -113,9 +117,10 @@ const TracoDePersonalidade = () => {
                     id="ansiedade"
                     tipo="select"
                     valor={formularioDeDados.ansiedade}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, ansiedade: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, ansiedade: e.target.value})}
                     legenda="Tem ansiedade?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -125,9 +130,10 @@ const TracoDePersonalidade = () => {
                     id="histeria"
                     tipo="select"
                     valor={formularioDeDados.histeria}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, histeria: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, histeria: e.target.value})}
                     legenda="Tem histeria?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -135,9 +141,10 @@ const TracoDePersonalidade = () => {
                     id="dependenciaEmocional"
                     tipo="select"
                     valor={formularioDeDados.dependenciaEmocional}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, dependenciaEmocional: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, dependenciaEmocional: e.target.value})}
                     legenda="Tem alguma dependência emocional?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -145,9 +152,10 @@ const TracoDePersonalidade = () => {
                     id="timidez"
                     tipo="select"
                     valor={formularioDeDados.timidez}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, timidez: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, timidez: e.target.value})}
                     legenda="É timido(a)?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

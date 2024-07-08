@@ -56,7 +56,7 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
                 <div className="container text-center">
                   <div className="row">
                     <div className="col">
-                      <CButton color="primary" onClick={() => {
+                      <CButton style={{backgroundColor:"#1c323f",color:"#0ecf8f", border:"1px solid #1c323f"}} onClick={() => {
                         window.location.href = `/#/formulario/atualizar-usuario/atualizar?id=${item.idUsuario}`
                       }}>Atualizar</CButton>
                     </div>

@@ -66,9 +66,9 @@ const ATUALIZAR_SOCIALIZACAO_DO_PRATICANTE_PUT = URL + 'praticante/socializacao/
 const BUSCAR_SOCIALIZACAO_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/socializacao/buscar-socializacao-do-praticante-por-id';
 
 // Traços de Personalidade
-const SALVAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_POST = URL + 'praticante/traços-personalidade/salvar-traços-personalidade-do-praticante';
-const ATUALIZAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_PUT = URL + 'praticante/traços-personalidade/atualizar-traços-personalidade-do-praticante';
-const BUSCAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/traços-personalidade/buscar-traços-personalidade-do-praticante-por-id';
+const SALVAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_POST = URL + 'praticante/tracos-de-personalidade/salvar-tracos-de-personalidade-do-praticante';
+const ATUALIZAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_PUT = URL + 'praticante/tracos-de-personalidade/atualizar-tracos-de-personalidade-do-praticante';
+const BUSCAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/tracos-de-personalidade/buscar-tracos-de-personalidade-do-praticante-por-id';
 
 export {
   SALVAR_AFETIVIDADE_DO_PRATICANTE_POST,

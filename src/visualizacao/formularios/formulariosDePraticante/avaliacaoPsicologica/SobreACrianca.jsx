@@ -71,9 +71,10 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="fezTerapiaEquina"
                     valor={formularioDeDados.fezTerapiaEquina}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, fezTerapiaEquina: valor})}
+                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, fezTerapiaEquina: e.target.value})}
                     legenda="Já fez equoterapia antes?"
                     opcoes={simOuNao}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -81,9 +82,10 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="criancaPlanejada"
                     valor={formularioDeDados.criancaPlanejada}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, criancaPlanejada: valor})}
+                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, criancaPlanejada: e.target.value})}
                     legenda="A criança foi planejada?"
                     opcoes={simOuNao}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -91,9 +93,10 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="cuidadosPreNatais"
                     valor={formularioDeDados.cuidadosPreNatais}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, cuidadosPreNatais: valor})}
+                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, cuidadosPreNatais: e.target.value})}
                     legenda="Teve acompanhamento pré-natal?"
                     opcoes={simOuNao}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -101,9 +104,10 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="chorouNoNascimento"
                     valor={formularioDeDados.chorouNoNascimento}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, chorouNoNascimento: valor})}
+                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, chorouNoNascimento: e.target.value})}
                     legenda="Chorou ao nascer?"
                     opcoes={simOuNao}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -111,9 +115,10 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="alimentacao"
                     valor={formularioDeDados.alimentacao}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, alimentacao: valor})}
+                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, alimentacao: e.target.value})}
                     legenda="Qual foi a alimentação?"
                     opcoes={alimentacao}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -123,8 +128,9 @@ const SobreACrianca = () => {
                     tipo="textarea"
                     id="observacao"
                     valor={formularioDeDados.observacao}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, observacao: valor})}
+                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, observacao: e.target.value})}
                     legenda="Observação"
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

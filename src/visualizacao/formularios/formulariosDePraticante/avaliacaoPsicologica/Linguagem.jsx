@@ -72,6 +72,7 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, compreensaoVerbal: e.target.value})}
                     legenda="Tem linguagem verbal compreensiva?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -82,6 +83,7 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, gesto: e.target.value})}
                     legenda="Gestual?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -92,6 +94,7 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, gritos: e.target.value})}
                     legenda="Gritos?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -102,6 +105,7 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, mimicaFacial: e.target.value})}
                     legenda="Mímica facial?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -112,6 +116,7 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, monossilabos: e.target.value})}
                     legenda="Monossílabos?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -124,6 +129,7 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, frasesCurtas: e.target.value})}
                     legenda="Fala frases curtas?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -134,6 +140,7 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, frasesCompletas: e.target.value})}
                     legenda="Fala frases completas?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

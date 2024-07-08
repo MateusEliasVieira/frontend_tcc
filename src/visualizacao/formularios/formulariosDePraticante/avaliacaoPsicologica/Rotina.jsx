@@ -67,6 +67,7 @@ const Rotina = () => {
                 valor={formularioDeDados.brincadeiras}
                 setar={(e) => setFormularioDeDados({...formularioDeDados, brincadeiras: e.target.value})}
                 legenda="Brincadeiras (onde, como, com quem?)"
+                disabled={desabilitar}
               />
               <Campo
                 tipo="textarea"
@@ -74,6 +75,7 @@ const Rotina = () => {
                 valor={formularioDeDados.preferenciasPorBrincadeiras}
                 setar={(e) => setFormularioDeDados({...formularioDeDados, preferenciasPorBrincadeiras: e.target.value})}
                 legenda="Preferências e aversões"
+                disabled={desabilitar}
               />
               <Campo
                 tipo="select"
@@ -82,6 +84,7 @@ const Rotina = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, aceitaMudancasNaRotina: e.target.value})}
                 legenda="Aceita mudanças na sua rotina?"
                 opcoes={simOuNao}
+                disabled={desabilitar}
               />
               <Campo
                 tipo="textarea"
@@ -89,6 +92,7 @@ const Rotina = () => {
                 valor={formularioDeDados.consideracoesSobreRotina}
                 setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesSobreRotina: e.target.value})}
                 legenda="Considerações sobre rotina"
+                disabled={desabilitar}
               />
               <CButton color="primary" disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_ROTINA_DO_PRATICANTE_POST, "rotina", setDesabilitar)

@@ -48,7 +48,6 @@ const salvarDadosPessoais = async (formularioDeDados,setDesabilitar) => {
 
 const salvar = async (formularioDeDados, endpoint,chaveLocalStorage,setDesabilitar) => {
   if (idPraticanteSalvo) {
-    alert("Id "+idPraticanteSalvo)
     if (camposPreenchidos(formularioDeDados)) {
       try {
         const response = await axios.post(

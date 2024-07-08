@@ -72,6 +72,7 @@ const Saude = () => {
                     valor={formularioDeDados.alergias}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, alergias: e.target.value})}
                     legenda="Alergias"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -81,6 +82,7 @@ const Saude = () => {
                     valor={formularioDeDados.convulsoes}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoes: e.target.value})}
                     legenda="Convulsões? Controladas? Tipo?"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -90,6 +92,7 @@ const Saude = () => {
                     valor={formularioDeDados.doencas}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, doencas: e.target.value})}
                     legenda="Doenças significativas/traumas"
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -101,6 +104,7 @@ const Saude = () => {
                     valor={formularioDeDados.digestao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, digestao: e.target.value})}
                     legenda="Digestão"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -110,6 +114,7 @@ const Saude = () => {
                     valor={formularioDeDados.transtornoAlimentar}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, transtornoAlimentar: e.target.value})}
                     legenda="Transtorno alimentar"
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -122,6 +127,7 @@ const Saude = () => {
                     valor={formularioDeDados.respiracao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, respiracao: e.target.value})}
                     legenda="Respiração"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -131,6 +137,7 @@ const Saude = () => {
                     valor={formularioDeDados.sono}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, sono: e.target.value})}
                     legenda="Sono"
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -140,6 +147,7 @@ const Saude = () => {
                     valor={formularioDeDados.deficitCognitivo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, deficitCognitivo: e.target.value})}
                     legenda="Déficit cognitivo"
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
