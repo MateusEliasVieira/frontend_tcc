@@ -74,6 +74,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, adequado: e.target.value})}
                     legenda="Adequado?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -84,6 +85,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, superprotecao: e.target.value})}
                     legenda="Superproteção?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -97,6 +99,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     })}
                     legenda="Dificuldade em perceber deficiências?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -107,6 +110,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, rejeicao: e.target.value})}
                     legenda="Rejeição?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -117,6 +121,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, indiferenca: e.target.value})}
                     legenda="Indiferença?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -130,6 +135,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                     })}
                     legenda="Ansiedade?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

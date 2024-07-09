@@ -67,9 +67,10 @@ const Socializacao = () => {
                     id="interageBemComOutrasCriancas"
                     tipo="select"
                     valor={formularioDeDados.interageBemComOutrasCriancas}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, interageBemComOutrasCriancas: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, interageBemComOutrasCriancas: e.target.value})}
                     legenda="Interage bem com outras crianças?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -77,9 +78,10 @@ const Socializacao = () => {
                     id="interageBemComAdultos"
                     tipo="select"
                     valor={formularioDeDados.interageBemComAdultos}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, interageBemComAdultos: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, interageBemComAdultos: e.target.value})}
                     legenda="Interage bem com adultos?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -87,9 +89,10 @@ const Socializacao = () => {
                     id="buscaContatoSocial"
                     tipo="select"
                     valor={formularioDeDados.buscaContatoSocial}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, buscaContatoSocial: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, buscaContatoSocial: e.target.value})}
                     legenda="Busca contato social?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -97,9 +100,10 @@ const Socializacao = () => {
                     id="temOportunidadeContato"
                     tipo="select"
                     valor={formularioDeDados.temOportunidadeContato}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, temOportunidadeContato: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, temOportunidadeContato: e.target.value})}
                     legenda="Tem oportunidade de contato social?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -107,9 +111,10 @@ const Socializacao = () => {
                     id="fazContatoVisual"
                     tipo="select"
                     valor={formularioDeDados.fazContatoVisual}
-                    setar={valor => setFormularioDeDados({...formularioDeDados, fazContatoVisual: valor})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, fazContatoVisual: e.target.value})}
                     legenda="Faz contato visual?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

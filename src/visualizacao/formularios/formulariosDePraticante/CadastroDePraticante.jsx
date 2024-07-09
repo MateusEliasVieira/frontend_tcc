@@ -36,98 +36,99 @@ import QuadroAtual from "./avaliacaoFisioterapeutica/QuadroAtual";
 import SaudeGeralDosPraticantes from "./avaliacaoFisioterapeutica/SaudeGeralDosPraticantes";
 import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeuticoSingular";
 
+import "./CadastroDePraticante.css"
 
 const CadastroDePraticante = () => {
-
-  const [activeTab, setActiveTab] = useState('dadosPessoais');
+  const [activeTab, setActiveTab] = useState("dadosPessoais");
 
   useEffect(() => {
-    const login = JSON.parse(localStorage.getItem("login"))
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo")
+    const login = JSON.parse(localStorage.getItem("login"));
+    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
-      axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
-        params: {
-          id: idPraticanteSalvo
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-      })
+      axios
+        .get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
+          params: {
+            id: idPraticanteSalvo,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${login.token}`,
+          },
+        })
         .then((response) => {
-          console.log(response)
-          alert("Ainda não foi concluído o cadastro do praticante " + response.data.nomeCompleto)
+          console.log(response);
+          alert("Ainda não foi concluído o cadastro do praticante " + response.data.nomeCompleto);
         })
         .catch((erro) => {
-
-        })
+        });
     }
   }, []);
+
   const renderComponent = () => {
     switch (activeTab) {
-      case 'dadosPessoais':
+      case "dadosPessoais":
         return <DadosPessoais/>;
-      case 'educacao':
+      case "educacao":
         return <Educacao/>;
-      case 'responsavelPeloPraticante':
+      case "responsavelPeloPraticante":
         return <ResponsavelPeloPraticante/>;
-      case 'outrasAtividadesManha':
+      case "outrasAtividadesManha":
         return <OutrasAtividadesManha/>;
-      case 'outrasAtividadesTarde':
+      case "outrasAtividadesTarde":
         return <OutrasAtividadesTarde/>;
-      case 'emergencia':
+      case "emergencia":
         return <Emergencia/>;
-      case 'completudeMatricula':
+      case "completudeMatricula":
         return <CompletudeMatricula/>;
-      case 'sobreACrianca':
+      case "sobreACrianca":
         return <SobreACrianca/>;
-      case 'saude':
+      case "saude":
         return <Saude/>;
-      case 'rotina':
+      case "rotina":
         return <Rotina/>;
-      case 'cuidadosPessoais':
+      case "cuidadosPessoais":
         return <CuidadosPessoais/>;
-      case 'tracoDePersonalidade':
+      case "tracoDePersonalidade":
         return <TracoDePersonalidade/>;
-      case 'linguagem':
+      case "linguagem":
         return <Linguagem/>;
-      case 'compreensao':
+      case "compreensao":
         return <Compreensao/>;
-      case 'saudeMental':
+      case "saudeMental":
         return <SaudeMental/>;
-      case 'socializacao':
+      case "socializacao":
         return <Socializacao/>;
-      case 'comportamento':
+      case "comportamento":
         return <Comportamento/>;
-      case 'habilidadesSociais':
+      case "habilidadesSociais":
         return <HabilidadesSociais/>;
-      case 'afetividade':
+      case "afetividade":
         return <Afetividade/>;
-      case 'relacaoDaFamiliaComOExaminado':
+      case "relacaoDaFamiliaComOExaminado":
         return <RelacaoDaFamiliaComOExaminado/>;
-      case 'avaliacaoPsicologica':
+      case "avaliacaoPsicologica":
         return <AvaliacaoPsicologica/>;
-      case 'avaliacaoFisioterapeutica':
+      case "avaliacaoFisioterapeutica":
         return <AvaliacaoFisioterapeutica/>;
-      case 'coordenacaoMotora':
+      case "coordenacaoMotora":
         return <CoordenacaoMotora/>;
-      case 'equilibrioDinamico':
+      case "equilibrioDinamico":
         return <EquilibrioDinamico/>;
-      case 'equilibrioEstatico':
+      case "equilibrioEstatico":
         return <EquilibrioEstatico/>;
-      case  'formaDeComunicacao':
+      case "formaDeComunicacao":
         return <FormaDeComunicacao/>;
-      case  'gruposMusculares':
+      case "gruposMusculares":
         return <GruposMusculares/>;
-      case  'habilidadesMotorasAVD':
+      case "habilidadesMotorasAVD":
         return <HabilidadesMotorasAVD/>;
-      case  'mobilidadeArticular':
+      case "mobilidadeArticular":
         return <MobilidadeArticular/>;
-      case  'quadroAtual':
+      case "quadroAtual":
         return <QuadroAtual/>;
-      case  'saudeGeralDosPraticantes':
+      case "saudeGeralDosPraticantes":
         return <SaudeGeralDosPraticantes/>;
-      case  'planoTerapeuticoSingular':
+      case "planoTerapeuticoSingular":
         return <PlanoTerapeuticoSingular/>;
       default:
         return null;
@@ -136,174 +137,266 @@ const CadastroDePraticante = () => {
 
   return (
     <div>
-      <ul className="nav nav-tabs">
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'dadosPessoais' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('dadosPessoais')}>Dados Pessoais
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'educacao' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('educacao')}>Educação
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'responsavelPeloPraticante' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('responsavelPeloPraticante')}>Responsável
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'outrasAtividadesManha' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('outrasAtividadesManha')}>Outras Atividades Manhã
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'outrasAtividadesTarde' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('outrasAtividadesTarde')}>Outras Atividades Tarde
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'emergencia' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('emergencia')}>Emergência
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'completudeMatricula' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('completudeMatricula')}>Completude da Matrícula
-          </button>
-        </li>
-      </ul>
-      <ul className="nav nav-tabs">
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'sobreACrianca' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('sobreACrianca')}>Sobre a Criança
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'saude' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('saude')}>Saúde
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'rotina' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('rotina')}>Rotina
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'cuidadosPessoais' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('cuidadosPessoais')}>Cuidados Pessoais
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'tracoDePersonalidade' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('tracoDePersonalidade')}>Traços de Personalidade
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'linguagem' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('linguagem')}>Linguagem
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'compreensao' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('compreensao')}>Compreensão
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'saudeMental' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('saudeMental')}>Saúde Mental
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'socializacao' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('socializacao')}>Socialização
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'comportamento' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('comportamento')}>Comportamento
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'habilidadesSociais' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('habilidadesSociais')}>Habilidades Sociais
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'afetividade' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('afetividade')}>Afetividade
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'relacaoDaFamiliaComOExaminado' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('relacaoDaFamiliaComOExaminado')}>Relação da Família com o Examinado
-          </button>
-        </li>
-        <li className="nav-item">
-          <button className={`nav-link ${activeTab === 'avaliacaoPsicologica' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('avaliacaoPsicologica')}>Avaliação Psicológica
-          </button>
-        </li>
-      </ul>
-      <ul className="nav nav-tabs">
+      <div id="box-tabs">
+        <ul className="nav nav-tabs">
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'avaliacaoFisioterapeutica' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('avaliacaoFisioterapeutica')}>Avaliação Fisioterapêutica
+            <button
+              className={`nav-link ${activeTab === "dadosPessoais" ? "active" : ""}`}
+              onClick={() => setActiveTab("dadosPessoais")}
+            >
+              Dados Pessoais
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'coordenacaoMotora' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('coordenacaoMotora')}>Coordenação Motora
+            <button
+              className={`nav-link ${activeTab === "educacao" ? "active" : ""}`}
+              onClick={() => setActiveTab("educacao")}
+            >
+              Educação
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'equilibrioDinamico' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('equilibrioDinamico')}>Equilíbrio Dinâmico
+            <button
+              className={`nav-link ${activeTab === "responsavelPeloPraticante" ? "active" : ""}`}
+              onClick={() => setActiveTab("responsavelPeloPraticante")}
+            >
+              Responsável
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'equilibrioEstatico' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('equilibrioEstatico')}>Equilíbrio Estático
+            <button
+              className={`nav-link ${activeTab === "outrasAtividadesManha" ? "active" : ""}`}
+              onClick={() => setActiveTab("outrasAtividadesManha")}
+            >
+              Outras Atividades Manhã
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'formaDeComunicacao' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('formaDeComunicacao')}>Forma de Comunicação
+            <button
+              className={`nav-link ${activeTab === "outrasAtividadesTarde" ? "active" : ""}`}
+              onClick={() => setActiveTab("outrasAtividadesTarde")}
+            >
+              Outras Atividades Tarde
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'gruposMusculares' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('gruposMusculares')}>Grupos Musculares
+            <button
+              className={`nav-link ${activeTab === "emergencia" ? "active" : ""}`}
+              onClick={() => setActiveTab("emergencia")}
+            >
+              Emergência
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'habilidadesMotorasAVD' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('habilidadesMotorasAVD')}>Habilidades Motoras AVD
+            <button
+              className={`nav-link ${activeTab === "completudeMatricula" ? "active" : ""}`}
+              onClick={() => setActiveTab("completudeMatricula")}
+            >
+              Completude Matrícula
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'mobilidadeArticular' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('mobilidadeArticular')}>Mobilidade Articular
+            <button
+              className={`nav-link ${activeTab === "sobreACrianca" ? "active" : ""}`}
+              onClick={() => setActiveTab("sobreACrianca")}
+            >
+              Sobre a Criança
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'quadroAtual' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('quadroAtual')}>Quadro Atual
+            <button
+              className={`nav-link ${activeTab === "saude" ? "active" : ""}`}
+              onClick={() => setActiveTab("saude")}
+            >
+              Saúde
             </button>
           </li>
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'saudeGeralDosPraticantes' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('saudeGeralDosPraticantes')}>Saúde Geral dos Praticantes
+            <button
+              className={`nav-link ${activeTab === "rotina" ? "active" : ""}`}
+              onClick={() => setActiveTab("rotina")}
+            >
+              Rotina
             </button>
           </li>
-      </ul>
-      <ul className="nav nav-tabs">
           <li className="nav-item">
-            <button className={`nav-link ${activeTab === 'planoTerapeuticoSingular' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('planoTerapeuticoSingular')}>Plano Terapêutico Singular
+            <button
+              className={`nav-link ${activeTab === "cuidadosPessoais" ? "active" : ""}`}
+              onClick={() => setActiveTab("cuidadosPessoais")}
+            >
+              Cuidados Pessoais
             </button>
           </li>
-      </ul>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "tracoDePersonalidade" ? "active" : ""}`}
+              onClick={() => setActiveTab("tracoDePersonalidade")}
+            >
+              Traço de Personalidade
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "linguagem" ? "active" : ""}`}
+              onClick={() => setActiveTab("linguagem")}
+            >
+              Linguagem
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "compreensao" ? "active" : ""}`}
+              onClick={() => setActiveTab("compreensao")}
+            >
+              Compreensão
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "saudeMental" ? "active" : ""}`}
+              onClick={() => setActiveTab("saudeMental")}
+            >
+              Saúde Mental
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "socializacao" ? "active" : ""}`}
+              onClick={() => setActiveTab("socializacao")}
+            >
+              Socialização
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "comportamento" ? "active" : ""}`}
+              onClick={() => setActiveTab("comportamento")}
+            >
+              Comportamento
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "habilidadesSociais" ? "active" : ""}`}
+              onClick={() => setActiveTab("habilidadesSociais")}
+            >
+              Habilidades Sociais
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "afetividade" ? "active" : ""}`}
+              onClick={() => setActiveTab("afetividade")}
+            >
+              Afetividade
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "relacaoDaFamiliaComOExaminado" ? "active" : ""}`}
+              onClick={() => setActiveTab("relacaoDaFamiliaComOExaminado")}
+            >
+              Relação da Família
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "avaliacaoPsicologica" ? "active" : ""}`}
+              onClick={() => setActiveTab("avaliacaoPsicologica")}
+            >
+              Avaliação Psicológica
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "avaliacaoFisioterapeutica" ? "active" : ""}`}
+              onClick={() => setActiveTab("avaliacaoFisioterapeutica")}
+            >
+              Avaliação Fisioterapêutica
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "coordenacaoMotora" ? "active" : ""}`}
+              onClick={() => setActiveTab("coordenacaoMotora")}
+            >
+              Coordenação Motora
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "equilibrioDinamico" ? "active" : ""}`}
+              onClick={() => setActiveTab("equilibrioDinamico")}
+            >
+              Equilíbrio Dinâmico
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "equilibrioEstatico" ? "active" : ""}`}
+              onClick={() => setActiveTab("equilibrioEstatico")}
+            >
+              Equilíbrio Estático
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "formaDeComunicacao" ? "active" : ""}`}
+              onClick={() => setActiveTab("formaDeComunicacao")}
+            >
+              Forma de Comunicação
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "gruposMusculares" ? "active" : ""}`}
+              onClick={() => setActiveTab("gruposMusculares")}
+            >
+              Grupos Musculares
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "habilidadesMotorasAVD" ? "active" : ""}`}
+              onClick={() => setActiveTab("habilidadesMotorasAVD")}
+            >
+              Habilidades Motoras AVD
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "mobilidadeArticular" ? "active" : ""}`}
+              onClick={() => setActiveTab("mobilidadeArticular")}
+            >
+              Mobilidade Articular
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "quadroAtual" ? "active" : ""}`}
+              onClick={() => setActiveTab("quadroAtual")}
+            >
+              Quadro Atual
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "saudeGeralDosPraticantes" ? "active" : ""}`}
+              onClick={() => setActiveTab("saudeGeralDosPraticantes")}
+            >
+              Saúde Geral dos Praticantes
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "planoTerapeuticoSingular" ? "active" : ""}`}
+              onClick={() => setActiveTab("planoTerapeuticoSingular")}
+            >
+              Plano Terapêutico Singular
+            </button>
+          </li>
+        </ul>
+      </div>
       <div className="tab-content">
         {renderComponent()}
       </div>

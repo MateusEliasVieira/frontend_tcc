@@ -68,6 +68,7 @@ const SaudeMental = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaConfusaoMental: e.target.value})}
                     legenda="Apresenta confusão mental?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   /></CCol>
                 <CCol md="auto">
                   <Campo
@@ -77,6 +78,7 @@ const SaudeMental = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaDelirios: e.target.value})}
                     legenda="Apresenta delírios?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -87,6 +89,7 @@ const SaudeMental = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, apresentaAlucinacoes: e.target.value})}
                     legenda="Apresenta alucinações?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   /></CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {

@@ -36,9 +36,9 @@ const ATUALIZAR_LINGUAGEM_DO_PRATICANTE_PUT = URL + 'praticante/linguagem/atuali
 const BUSCAR_LINGUAGEM_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/linguagem/buscar-linguagem-do-praticante-por-id';
 
 // Relação Familiar
-const SALVAR_RELACAO_FAMILIAR_DO_PRATICANTE_POST = URL + 'praticante/relacao-familiar/salvar-relacao-familiar-do-praticante';
-const ATUALIZAR_RELACAO_FAMILIAR_DO_PRATICANTE_PUT = URL + 'praticante/relacao-familiar/atualizar-relacao-familiar-do-praticante';
-const BUSCAR_RELACAO_FAMILIAR_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/relacao-familiar/buscar-relacao-familiar-do-praticante-por-id';
+const SALVAR_RELACAO_FAMILIAR_DO_PRATICANTE_POST = URL + 'praticante/relacao-familiar-examinado/salvar-relacao-familiar-examinado-do-praticante';
+const ATUALIZAR_RELACAO_FAMILIAR_DO_PRATICANTE_PUT = URL + 'praticante/relacao-familiar-examinado/atualizar-relacao-familiar-examinado-do-praticante';
+const BUSCAR_RELACAO_FAMILIAR_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/relacao-familiar-examinado/buscar-relacao-familiar-examinado-do-praticante-por-id';
 
 // Rotina
 const SALVAR_ROTINA_DO_PRATICANTE_POST = URL + 'praticante/rotina/salvar-rotina-do-praticante';

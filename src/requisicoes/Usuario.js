@@ -10,6 +10,31 @@ import {
 import {resolve} from "chart.js/helpers";
 
 var login = JSON.parse(localStorage.getItem("login"));
+const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (error.response.data.titulo) {
+    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+  } else if (error.response.data.mensagem) {
+    apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+    setTimeout(() => {
+      window.location = "/#/login"
+    }, 5000)
+  } else {
+    apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+  }
+}
+
+const mensagemParaListaDeErros = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (error.response.data.titulo !== undefined) {
+    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+  }
+  if (error.response.data.lista !== undefined) {
+    let lista = "";
+    error.response.data.lista.forEach((item) => {
+      lista += `<strong>*</strong> ${item.titulo}` + "<br/>";
+    });
+    apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
+  }
+}
 
 const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloModal, setConteudoModal) => {
   if (camposPreenchidos(formularioDeDados)) {
@@ -22,16 +47,9 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloMod
       });
       apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
     } catch (error) {
-      if (error.response.data.titulo !== undefined) {
-        apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-      }
-      if (error.response.data.lista !== undefined) {
-        let lista = "";
-        error.response.data.lista.forEach((item) => {
-          lista += `<strong>*</strong> ${item.mensagem}` + "<br/>";
-        });
-        apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
-      }
+      console.log("Erro = "+error.response.data.mensagem)
+      mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
+      mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
     }
   } else {
     console.log("Preencha todos os campos")
@@ -56,19 +74,11 @@ const atualizarDadosDoUsuario = async (formularioDeDados, setDisplayModal, setTi
       );
       apresentarModal("Resposta", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
     } catch (error) {
-      if (error.response.data.titulo !== undefined) {
-        apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-      }
-      if (error.response.data.lista !== undefined) {
-        let lista = "";
-        error.response.data.lista.forEach((item) => {
-          lista += `<strong>*</strong> ${item.titulo}` + "<br/>";
-        });
-        apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
-      }
+      mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
+      mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
     }
   } else {
-    apresentarModal("Atenção", "Por favor, preencha todos os campos obrigatórios!",setDisplayModal, setTituloModal, setConteudoModal);
+    apresentarModal("Atenção", "Por favor, preencha todos os campos obrigatórios!", setDisplayModal, setTituloModal, setConteudoModal);
   }
 };
 
@@ -85,13 +95,12 @@ const deletar = async (idParaDeletar, setList, setDisplayModal, setTituloModal, 
       setList(prevList => prevList.filter(item => item.idUsuario !== idParaDeletar));
       apresentarModal("Aviso", "Usuário deletado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal);
     } catch (error) {
-      apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+      mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
     }
-  } else {
-    apresentarModal("Atenção", "O id do usuário está nulo!", setDisplayModal, setTituloModal, setConteudoModal);
   }
-};
-const buscarTodosUsuarios = async (setList) => {
+}
+
+const buscarTodosUsuarios = async (setList, setDisplayModal, setTituloModal, setConteudoModal) => {
   try {
     const response = await axios.get(PESQUISAR_USUARIO_GET, {
       params: {nome: ""},
@@ -102,12 +111,11 @@ const buscarTodosUsuarios = async (setList) => {
     });
     setList(response.data);
   } catch (error) {
-    console.log(error);
+    mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
   }
 };
 const buscarUsuarioPorId = async (getIdUrl, setUsuarioExiste, setFormularioDeDados, setFotoAtual) => {
   const idUrl = getIdUrl();
-  console.log("Id para atualizar "+idUrl)
   if (idUrl !== null && idUrl !== "") {
     try {
       const response = await axios.get(PESQUISAR_USUARIO_POR_ID_GET, {
@@ -144,7 +152,7 @@ const pesquisar = async (formData, setList, setDisplayModal, setTituloModal, set
     });
     setList(response.data);
   } catch (error) {
-    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+    mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
   }
 };
 

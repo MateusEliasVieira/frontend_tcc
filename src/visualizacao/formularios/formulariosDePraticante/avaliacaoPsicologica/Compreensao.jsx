@@ -68,6 +68,7 @@ const Compreensao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, compreendeOrdens: e.target.value})}
                     legenda="Compreende ordens ?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -81,6 +82,7 @@ const Compreensao = () => {
                     })}
                     legenda="Executa ordens verbais simples?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -91,6 +93,7 @@ const Compreensao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, executaOrdensComplexas: e.target.value})}
                     legenda="Executa ordens complexas?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

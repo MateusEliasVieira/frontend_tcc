@@ -37,7 +37,7 @@ const PesquisaDeUsuario = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    buscarTodosUsuarios(setList);
+    buscarTodosUsuarios(setList,setDisplayModal, setTituloModal, setConteudoModal);
   }, []);
 
   const deletarUsuario = async () => {
@@ -80,7 +80,7 @@ const PesquisaDeUsuario = () => {
                       setar={(e) => {
                         setFormData({...formData, nome: e.target.value})
                         if (e.target.value.trim() === "") {
-                          buscarTodosUsuarios(setList)
+                          buscarTodosUsuarios(setList,setDisplayModal, setTituloModal, setConteudoModal)
                         } else {
                           pesquisar(formData, setList, setDisplayModal, setTituloModal, setConteudoModal)
                         }

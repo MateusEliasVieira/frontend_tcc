@@ -72,6 +72,7 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, passividade: e.target.value})}
                     legenda="Passividade?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   /></CCol>
                 <CCol md="auto">
                   <Campo
@@ -81,6 +82,7 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, autoagressao: e.target.value})}
                     legenda="Autoagressividade?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -91,6 +93,7 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, heteroagressividade: e.target.value})}
                     legenda="Heteroagressividade?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -101,6 +104,7 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, assertividade: e.target.value})}
                     legenda="Assertividade?"
                     opcoes={preencherLegenda}
+                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>

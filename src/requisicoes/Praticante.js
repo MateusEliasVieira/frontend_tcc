@@ -2,9 +2,36 @@ import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import axios, {HttpStatusCode} from "axios";
 import {SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST} from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
+import {apresentarModal} from "../utilidades/ManipuladorDeModal";
 
 var login = JSON.parse(localStorage.getItem('login'));
 var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+
+const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (error.response.data.titulo) {
+    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+  } else if (error.response.data.mensagem) {
+    apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+    setTimeout(() => {
+      window.location = "/#/login"
+    }, 5000)
+  } else {
+    apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+  }
+}
+
+const mensagemParaListaDeErros = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (error.response.data.titulo !== undefined) {
+    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+  }
+  if (error.response.data.lista !== undefined) {
+    let lista = "";
+    error.response.data.lista.forEach((item) => {
+      lista += `<strong>*</strong> ${item.titulo}` + "<br/>";
+    });
+    apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
+  }
+}
 
 const salvarDadosPessoais = async (formularioDeDados,setDesabilitar) => {
   if (camposPreenchidos(formularioDeDados)) {
@@ -28,18 +55,8 @@ const salvarDadosPessoais = async (formularioDeDados,setDesabilitar) => {
         alert('Não foi possível cadastrar os dados do praticante!');
       }
     } catch (error) {
-      if (error.response.data.titulo !== undefined) {
-        alert(error.response.data.titulo)
-        //apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-      }
-      if (error.response.data.lista !== undefined) {
-        let lista = "";
-        error.response.data.lista.forEach((item) => {
-          lista += `<strong>*</strong> ${item.mensagem}` + "<br/>";
-        });
-        alert(lista)
-        //apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
-      }
+      // mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
+      // mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
     }
   } else {
     alert('Preencha todos os campos vazios!');

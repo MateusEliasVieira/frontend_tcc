@@ -1,0 +1,44 @@
+
+#box-tabs{
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #1c323f;
+  border-radius: 5px 5px 0px 0px;
+}
+.nav-tabs {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+  width: 100%;
+  padding: 0;
+  list-style-type: none;
+}
+.nav .nav-tabs{
+  background-color: #1c323f;
+}
+.nav-item {
+  flex: 1 0 180px; /* Define um tamanho mínimo e flexível para cada item */
+  margin-right: 5px; /* Espaçamento entre os itens */
+  margin-bottom: 5px; /* Espaçamento entre as linhas */
+}
+.nav-link {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 15px;
+  color: #0ecf8f;
+  background-color: #284657;
+  border: none;
+  border-radius: 5px 5px 0px 0px;
+  cursor: pointer;
+  height: 40px; /* Altura fixa para todos os botões */
+  overflow: hidden; /* Evita que conteúdos maiores alterem a altura */
+}
+.nav-link:hover {
+  color: #1c323f;
+  background-color: #0ecf8f;
+  transition: 0.6s;
+}
+.nav-link.active {
+  color: #ffffff;
+  background-color: #0ecf8f;
+}
