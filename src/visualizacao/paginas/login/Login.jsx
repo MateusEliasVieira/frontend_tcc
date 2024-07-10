@@ -30,7 +30,18 @@ const Login = () => {
     senha: ''
   })
 
+  const obterParametroDaURL = () => {
+    // Pega a parte da query da URL (excluindo a parte antes do '?')
+    const url = window.location.href
+    const expirado = url.split("=")[1]
+    return expirado
+  }
+
   useEffect(() => {
+    const expirado = obterParametroDaURL()
+    if(expirado === 'true'){
+      apresentarModal("Aviso", "Sessão expirada! Para continuar faça o login novamente!", setDisplayModal, setTituloModal, setConteudoModal)
+    }
     localStorage.setItem('login', JSON.stringify({idUsuario: "", nomeUsuario: "", token: "", role: ""}));
   }, []);
 
@@ -49,7 +60,7 @@ const Login = () => {
             localStorage.setItem('login', JSON.stringify(response.data));
             window.location.href = "/"
           } else {
-            console.log("Login inválido "+response)
+            console.log("Login inválido " + response)
           }
         })
         .catch((error) => {
@@ -64,7 +75,7 @@ const Login = () => {
             } else {
               apresentarModal("Aviso", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
             }
-          }else{
+          } else {
             apresentarModal("Aviso", "Erro interno do sistema", setDisplayModal, setTituloModal, setConteudoModal)
           }
         })
@@ -78,7 +89,7 @@ const Login = () => {
       <Modal
         dsp={displayModal}
         titulo={tituloModal}
-        conteudo={<div dangerouslySetInnerHTML={{ __html: conteudoModal }} />}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
         esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
       />
       <CContainer>
@@ -89,7 +100,9 @@ const Login = () => {
                 <CCardBody>
                   <div>
                     <h2>Bem Vindo!</h2>
-                    <p className="text-medium-emphasis">Entre com sua conta!</p>
+                    <p className="text-medium-emphasis">Entre com sua conta! <a href=""
+                                                                                style={{textDecoration: "none"}}>Esqueceu
+                      a senha?</a></p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser}/>
@@ -118,18 +131,13 @@ const Login = () => {
                     <CRow>
                       <CCol xs={6}>
                         <CButton
-                          color="primary"
+                          color="dark"
                           className="px-4"
                           onClick={() => {
                             logar()
                           }}
                         >
                           Entrar
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Esqueceu a senha?
                         </CButton>
                       </CCol>
                     </CRow>

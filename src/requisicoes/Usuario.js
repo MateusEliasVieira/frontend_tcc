@@ -11,14 +11,20 @@ import {resolve} from "chart.js/helpers";
 
 var login = JSON.parse(localStorage.getItem("login"));
 const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
+  console.log(error)
   if (error.response.data.titulo) {
     apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
   } else if (error.response.data.mensagem) {
-    apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-    setTimeout(() => {
-      window.location = "/#/login"
-    }, 5000)
-  } else {
+    if (error.response.data.redirecionar) {
+      window.location = error.response.data.redirecionar
+    }else{
+      apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+    }
+  }
+  else if(error.response.data.urlRedirecionamento){
+    window.location = error.response.data.urlRedirecionamento
+  }
+  else {
     apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
   }
 }

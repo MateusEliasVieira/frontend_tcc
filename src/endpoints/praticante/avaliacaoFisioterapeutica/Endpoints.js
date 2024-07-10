@@ -21,9 +21,9 @@ const ATUALIZAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_PUT = URL + 'praticante/equili
 const BUSCAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/equilibrio-estatico/buscar-equilibrio-estatico-do-praticante-por-id';
 
 // Forma de Comunicação
-const SALVAR_FORMA_COMUNICACAO_DO_PRATICANTE_POST = URL + 'praticante/forma-comunicacao/salvar-forma-comunicacao-do-praticante';
-const ATUALIZAR_FORMA_COMUNICACAO_DO_PRATICANTE_PUT = URL + 'praticante/forma-comunicacao/atualizar-forma-comunicacao-do-praticante';
-const BUSCAR_FORMA_COMUNICACAO_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/forma-comunicacao/buscar-forma-comunicacao-do-praticante-por-id';
+const SALVAR_FORMA_COMUNICACAO_DO_PRATICANTE_POST = URL + 'praticante/forma-de-comunicacao/salvar-forma-de-comunicacao-do-praticante';
+const ATUALIZAR_FORMA_COMUNICACAO_DO_PRATICANTE_PUT = URL + 'praticante/forma-de-comunicacao/atualizar-forma-de-comunicacao-do-praticante';
+const BUSCAR_FORMA_COMUNICACAO_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/forma-de-comunicacao/buscar-forma-de-comunicacao-do-praticante-por-id';
 
 // Grupos Musculares
 const SALVAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POST = URL + 'praticante/grupos-musculares/salvar-grupos-musculares-do-praticante';

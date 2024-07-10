@@ -19,16 +19,15 @@ const CoordenacaoMotora = () => {
 
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idCoordenacaoMotora: '',
-    testeMaoObjeto: false,
+    testeMaoObjeto: '',
     consideracoesTesteMaoObjeto: '',
-    indiceNarizUnilateral: false,
+    indiceNarizUnilateral: '',
     consideracoesIndiceNarizUnilateral: '',
-    testeIndiceIndice: false,
+    testeIndiceIndice: '',
     consideracoesTesteIndiceIndice: '',
-    movimentosAlternados: false,
+    movimentosAlternados: '',
     consideracoesMovimentosAlternados: '',
-    testeAlcancePegar: false,
+    testeAlcancePegar: '',
     consideracoesTesteAlcancePegar: '',
     praticante: {
       idPraticante: '',

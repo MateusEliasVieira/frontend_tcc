@@ -18,7 +18,6 @@ import {
 const EquilibrioEstatico = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idEquilibrioEstatico: '',
     apoioCabeca: '',
     comentariosApoioCabeca: '',
     sentarSemApoio: '',

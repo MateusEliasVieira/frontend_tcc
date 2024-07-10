@@ -18,12 +18,11 @@ import {
 const FormaDeComunicacao = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idFormaDeComunicacao: '',
-    fala: false,
+    fala: '',
     consideracoesFala: '',
-    gestos: false,
+    gestos: '',
     consideracoesGestos: '',
-    usoDosOlhos: false,
+    usoDosOlhos: '',
     consideracoesUsoDosOlhos: '',
     praticante: {
       idPraticante: '',
@@ -72,7 +71,7 @@ const FormaDeComunicacao = () => {
                     tipo="select"
                     id="fala"
                     valor={formularioDeDados.fala}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, fala: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, fala: e.target.value})}
                     legenda="Fala"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -95,7 +94,7 @@ const FormaDeComunicacao = () => {
                     tipo="select"
                     id="gestos"
                     valor={formularioDeDados.gestos}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, gestos: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, gestos: e.target.value})}
                     legenda="Gestos"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -118,7 +117,7 @@ const FormaDeComunicacao = () => {
                     tipo="select"
                     id="usoDosOlhos"
                     valor={formularioDeDados.usoDosOlhos}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, usoDosOlhos: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, usoDosOlhos: e.target.value})}
                     legenda="Uso dos Olhos"
                     disabled={desabilitar}
                     opcoes={simOuNao}

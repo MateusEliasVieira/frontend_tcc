@@ -1,15 +1,16 @@
 import React from 'react'
 import {
   CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
   CCol,
   CContainer,
   CFormInput,
-  CInputGroup,
-  CInputGroupText,
+  CFormTextarea,
   CRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilMagnifyingGlass } from '@coreui/icons'
+
 
 const Pagina404 = () => {
   return (
@@ -17,20 +18,28 @@ const Pagina404 = () => {
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={6}>
-            <div className="clearfix">
+            <CContainer className="clearfix">
               <h1 className="float-start display-3 me-4">404</h1>
-              <h4 className="pt-3">Oops! You{"'"}re lost.</h4>
+              <h4 className="pt-3">Oops, nada encontrado! :)</h4>
               <p className="text-medium-emphasis float-start">
-                The page you are looking for was not found.
+                <strong>
+                  O recurso que você tentou acessar não existe, ou então, foi alterado pelo desenvolvedor da página
+                </strong>
               </p>
-            </div>
-            <CInputGroup className="input-prepend">
-              <CInputGroupText>
-                <CIcon icon={cilMagnifyingGlass} />
-              </CInputGroupText>
-              <CFormInput type="text" placeholder="What are you looking for?" />
-              <CButton color="info">Search</CButton>
-            </CInputGroup>
+            </CContainer>
+            <CContainer>
+              <CCard>
+                <CCardHeader>
+                  <strong>Entre em contato</strong>
+                </CCardHeader>
+                <CCardBody>
+                  <CFormInput type="text" placeholder="Nome"/>
+                  <CFormInput type="email" placeholder="Seu email" style={{margin: "10px auto"}}/>
+                  <CFormTextarea placeholder="Informe seu problema!"/>
+                  <CButton color="dark" style={{display: "block", margin: "20px 0px"}}>Enviar</CButton>
+                </CCardBody>
+              </CCard>
+            </CContainer>
           </CCol>
         </CRow>
       </CContainer>

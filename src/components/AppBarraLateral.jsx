@@ -13,11 +13,17 @@ import navigation from '../_nav'
 import Logo from '../assets/imagens/Logo.jpg'
 import axios from "axios";
 import {PESQUISAR_USUARIO_POR_ID_GET} from "../endpoints/usuario/Endpoints";
+import {apresentarModal, esconderModal} from "../utilidades/ManipuladorDeModal";
+import Modal from "./modal/Modal";
 
 const AppBarraLateral = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
 
   const [usuario, setUsuario] = useState({
     idUsuario: '',
@@ -37,6 +43,24 @@ const AppBarraLateral = () => {
     possuiFormacao: false
   })
 
+  const mensagemParaErro = (error) => {
+    if (error.response.data.titulo) {
+      apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+    } else if (error.response.data.mensagem) {
+      if (error.response.data.redirecionar) {
+        window.location = error.response.data.redirecionar
+      }else{
+        apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+      }
+    }
+    else if(error.response.data.urlRedirecionamento){
+      window.location = error.response.data.urlRedirecionamento
+    }
+    else {
+      apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+    }
+  }
+
   useEffect(() => {
     try {
       const login = JSON.parse(localStorage.getItem("login"))
@@ -50,12 +74,11 @@ const AppBarraLateral = () => {
             'Authorization': `Bearer ${login.token}`
           },
         })
-      .
-        then((response) => {
-          setUsuario({...response.data})
-        })
+          .then((response) => {
+            setUsuario({...response.data})
+          })
           .catch((error) => {
-            location.href="/#/login"
+            mensagemParaErro(error)
           })
       }
     } catch (e) {
@@ -74,6 +97,12 @@ const AppBarraLateral = () => {
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
         <div className="container text-center">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           <div className="col">
             <div className="col">
               <img src={usuario.foto} width={100} height={100} style={{margin: 10, borderRadius: '50%'}}/>
@@ -89,7 +118,7 @@ const AppBarraLateral = () => {
                     usuário
                   </strong>
                 }
-                </p>
+              </p>
             </div>
           </div>
         </div>

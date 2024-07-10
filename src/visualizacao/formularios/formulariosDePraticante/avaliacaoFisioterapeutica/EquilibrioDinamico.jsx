@@ -20,7 +20,6 @@ const EquilibrioDinamico = () => {
 
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idEquilibrioDinamico: '',
     engatinhar: '',
     comentariosEngatinhar: '',
     marchaVoluntaria: '',

@@ -8,14 +8,20 @@ var login = JSON.parse(localStorage.getItem('login'));
 var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
 
 const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
+  console.log(error)
   if (error.response.data.titulo) {
     apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
   } else if (error.response.data.mensagem) {
-    apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-    setTimeout(() => {
-      window.location = "/#/login"
-    }, 5000)
-  } else {
+    if (error.response.data.redirecionar) {
+      window.location = error.response.data.redirecionar
+    }else{
+      apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+    }
+  }
+  else if(error.response.data.urlRedirecionamento){
+    window.location = error.response.data.urlRedirecionamento
+  }
+  else {
     apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
   }
 }
@@ -33,7 +39,7 @@ const mensagemParaListaDeErros = (error, setDisplayModal, setTituloModal, setCon
   }
 }
 
-const salvarDadosPessoais = async (formularioDeDados,setDesabilitar) => {
+const salvarDadosPessoais = async (formularioDeDados, setDesabilitar) => {
   if (camposPreenchidos(formularioDeDados)) {
     try {
       const response = await axios.post(
@@ -48,7 +54,7 @@ const salvarDadosPessoais = async (formularioDeDados,setDesabilitar) => {
       );
       if (response.status === HttpStatusCode.Created) {
         localStorage.setItem('idPraticanteSalvo', response.data.praticante.idPraticante);
-        localStorage.setItem("dadosPessoaisCadastrado",CADASTRADO)
+        localStorage.setItem("dadosPessoaisCadastrado", CADASTRADO)
         setDesabilitar("disabled")
         alert('Dados salvos com sucesso');
       } else {
@@ -63,11 +69,11 @@ const salvarDadosPessoais = async (formularioDeDados,setDesabilitar) => {
   }
 };
 
-const salvar = async (formularioDeDados, endpoint,chaveLocalStorage,setDesabilitar) => {
+const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabilitar) => {
   if (idPraticanteSalvo) {
     if (camposPreenchidos(formularioDeDados)) {
       try {
-        const response = await axios.post(
+        await axios.post(
           endpoint,
           JSON.stringify({...formularioDeDados}),
           {
@@ -77,26 +83,34 @@ const salvar = async (formularioDeDados, endpoint,chaveLocalStorage,setDesabilit
             },
           }
         );
-        localStorage.setItem(chaveLocalStorage,CADASTRADO)
+        localStorage.setItem(chaveLocalStorage, CADASTRADO)
         setDesabilitar("disabled")
         alert('Dados salvos com sucesso');
       } catch (error) {
+        console.log(error)
         const resposta = error.response
-        if(resposta.data !== undefined){
-          if(resposta.data.lista !== undefined){
+        if (resposta.data !== undefined) {
+          if (resposta.data.lista !== undefined) {
             var lista = ""
-            resposta.data.lista.map((item)=>{
+            resposta.data.lista.map((item) => {
               lista += item.mensagem + "\n"
             })
             alert(lista)
-          }else if(resposta.data.mensagem !== undefined){
-            alert(resposta.data.mensagem)
-          }else if(resposta.data.titulo !== undefined){
+          } else if (resposta.data.mensagem !== undefined) {
+            if (resposta.data.redirect) {
+              alert(resposta.data.mensagem)
+              setTimeout(() => {
+                window.location = resposta.data.redirect
+              }, 5000)
+            } else {
+              alert(resposta.data.mensagem)
+            }
+          } else if (resposta.data.titulo !== undefined) {
             alert(resposta.data.titulo)
-          }else{
+          } else {
             alert("Erro interno do sistema!")
           }
-        }else{
+        } else {
           alert("Erro interno do sistema!")
         }
       }

@@ -19,7 +19,6 @@ import {
 const AvaliacaoFisioterapeutica = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idAvaliacaoFisioterapeutica: '',
     diagnosticoFisioterapeutico: '',
     historicoGravidez: '',
     tonusMuscular: '',
