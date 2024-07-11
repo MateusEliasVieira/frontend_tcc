@@ -42,7 +42,7 @@ const Login = () => {
     if(expirado === 'true'){
       apresentarModal("Aviso", "Sessão expirada! Para continuar faça o login novamente!", setDisplayModal, setTituloModal, setConteudoModal)
     }
-    localStorage.setItem('login', JSON.stringify({idUsuario: "", nomeUsuario: "", token: "", role: ""}));
+    localStorage.setItem('login', JSON.stringify({idUsuario: "", nomeUsuario: "", token: "", validadeToken:"", role: ""}));
   }, []);
 
   const logar = () => {
