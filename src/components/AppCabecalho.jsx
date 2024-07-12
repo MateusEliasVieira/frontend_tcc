@@ -64,8 +64,7 @@ const AppCabecalho = () => {
         const minutos = Math.floor(tempoRestante / 60);
         const segundosRestantes = Math.floor(tempoRestante % 60);
 
-       // temporizador(minutos, segundosRestantes);
-        temporizador(1, 0);
+       temporizador(minutos, segundosRestantes);
       }
     }
   }, []);

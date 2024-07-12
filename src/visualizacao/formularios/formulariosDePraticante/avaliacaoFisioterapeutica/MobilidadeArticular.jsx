@@ -18,7 +18,6 @@ import {
 const MobilidadeArticular = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idMobilidadeArticular: '',
     flexaoAtivaOmbro: '',
     flexaoPassivaOmbro: '',
     abducaoAtivaOmbro: '',

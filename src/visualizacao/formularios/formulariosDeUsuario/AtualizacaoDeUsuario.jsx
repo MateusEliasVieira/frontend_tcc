@@ -161,27 +161,6 @@ const AtualizacaoDeUsuario = () => {
                     />
                   </CCol>
                 </CRow>
-
-                <CRow>
-                  <CCol>
-                    <Campo
-                      legenda="Nome de usuário"
-                      id="nomeUsuario"
-                      tipo="text"
-                      valor={formularioDeDados.nomeUsuario}
-                      setar={(e) => setFormularioDeDados({...formularioDeDados, nomeUsuario: e.target.value})}
-                    />
-                  </CCol>
-                  <CCol>
-                    <Campo
-                      legenda="Senha"
-                      id="senha"
-                      tipo="password"
-                      valor={formularioDeDados.senha}
-                      setar={(e) => setFormularioDeDados({...formularioDeDados, senha: e.target.value})}
-                    />
-                  </CCol>
-                </CRow>
                 <CRow>
                   <CCol md="auto">
                     <Campo

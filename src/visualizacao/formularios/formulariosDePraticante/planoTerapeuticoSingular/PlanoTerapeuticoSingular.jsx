@@ -12,14 +12,13 @@ import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {CADASTRADO} from "../../../../constantes/Constantes";
 import {
-  SALVAR_PLANO_TERAPÊUTICO_SINGULAR_DO_PRATICANTE_POST
+  SALVAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/planoTerapeuticoSingular/Endpoints";
 import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
 
 const PlanoTerapeuticoSingular = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idPlanoTerapeuticoSingular: '',
     dataPlanejamento: '',
     responsavelTerapeutico: '',
     problema: '',
@@ -185,23 +184,22 @@ const PlanoTerapeuticoSingular = () => {
                     tipo="file"
                     id="fisioterapeutaImagemDaAssinaturaOuCarimbo"
                     valor={formularioDeDados.fisioterapeutaImagemDaAssinaturaOuCarimbo}
-                    setar={(e) =>
-                      converterImagemEmBase64(e.target.value).then((imagemBase64)=>{
-                        setFormularioDeDados({
-                          ...formularioDeDados,
-                          fisioterapeutaImagemDaAssinaturaOuCarimbo: imagemBase64,
+                    setar={(e) => {
+                      converterImagemEmBase64(e.target.files[0])
+                        .then((resolve) => {
+                          setFormularioDeDados({...formularioDeDados, fisioterapeutaImagemDaAssinaturaOuCarimbo: resolve});
                         })
-                      }).catch((erro)=>{
-                        console.log(erro)
-                      })
-                    }
+                        .catch((reject) => {
+                          console.log(reject);
+                        });
+                    }}
                     legenda={"Imagem do carimbo/assinatura do fisioterapeuta"}
                     disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_PLANO_TERAPÊUTICO_SINGULAR_DO_PRATICANTE_POST, "planoTerapeuticoSingular", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POST, "planoTerapeuticoSingular", setDesabilitar)
               }}>
                 Salvar
               </CButton>

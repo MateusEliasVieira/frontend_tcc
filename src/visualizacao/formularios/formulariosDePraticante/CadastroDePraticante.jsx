@@ -33,15 +33,17 @@ import GruposMusculares from "./avaliacaoFisioterapeutica/GruposMusculares";
 import HabilidadesMotorasAVD from "./avaliacaoFisioterapeutica/HabilidadesMotorasAVD";
 import MobilidadeArticular from "./avaliacaoFisioterapeutica/MobilidadeArticular";
 import QuadroAtual from "./avaliacaoFisioterapeutica/QuadroAtual";
-import SaudeGeralDosPraticantes from "./avaliacaoFisioterapeutica/SaudeGeralDosPraticantes";
+import SaudeGeralDoPraticante from "./avaliacaoFisioterapeutica/SaudeGeralDoPraticante";
 import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeuticoSingular";
 
 import "./CadastroDePraticante.css"
+import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeLocalStorage";
 
 const CadastroDePraticante = () => {
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
   useEffect(() => {
+    verificarSeEstaFinalizado()
     const login = JSON.parse(localStorage.getItem("login"));
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
@@ -127,7 +129,7 @@ const CadastroDePraticante = () => {
       case "quadroAtual":
         return <QuadroAtual/>;
       case "saudeGeralDosPraticantes":
-        return <SaudeGeralDosPraticantes/>;
+        return <SaudeGeralDoPraticante/>;
       case "planoTerapeuticoSingular":
         return <PlanoTerapeuticoSingular/>;
       default:

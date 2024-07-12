@@ -19,7 +19,6 @@ import {
 const HabilidadesMotorasAVD = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idHabilidadesMotorasAVD: '',
     alcancarObjetos: '',
     consideracoesAlcancarObjetos: '',
     usoBimanual: '',
@@ -85,7 +84,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="alcancarObjetos"
                     valor={formularioDeDados.alcancarObjetos}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, alcancarObjetos: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, alcancarObjetos: e.target.value})}
                     legenda="Alcançar Objetos"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -111,7 +110,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="usoBimanual"
                     valor={formularioDeDados.usoBimanual}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, usoBimanual: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, usoBimanual: e.target.value})}
                     legenda="Uso Bimanual"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -139,7 +138,7 @@ const HabilidadesMotorasAVD = () => {
                     valor={formularioDeDados.alimentacaoIndependente}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      alimentacaoIndependente: e.target.checked
+                      alimentacaoIndependente: e.target.value
                     })}
                     legenda="Alimentação Independente"
                     disabled={desabilitar}
@@ -166,7 +165,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="vestirIndependente"
                     valor={formularioDeDados.vestirIndependente}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, vestirIndependente: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, vestirIndependente: e.target.value})}
                     legenda="Vestir Independente"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -192,7 +191,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="pegarObjetos"
                     valor={formularioDeDados.pegarObjetos}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, pegarObjetos: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, pegarObjetos: e.target.value})}
                     legenda="Pegar Objetos"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -218,7 +217,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="negligenciaMembro"
                     valor={formularioDeDados.negligenciaMembro}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, negligenciaMembro: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, negligenciaMembro: e.target.value})}
                     legenda="Negligência de Membro"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -244,7 +243,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="higienePessoal"
                     valor={formularioDeDados.higienePessoal}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, higienePessoal: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, higienePessoal: e.target.value})}
                     legenda="Higiene Pessoal"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -270,7 +269,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="andar"
                     valor={formularioDeDados.andar}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, andar: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, andar: e.target.value})}
                     legenda="Andar"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -293,7 +292,7 @@ const HabilidadesMotorasAVD = () => {
                     tipo="select"
                     id="escritaManual"
                     valor={formularioDeDados.escritaManual}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, escritaManual: e.target.checked})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, escritaManual: e.target.value})}
                     legenda="Escrita Manual"
                     disabled={desabilitar}
                     opcoes={simOuNao}

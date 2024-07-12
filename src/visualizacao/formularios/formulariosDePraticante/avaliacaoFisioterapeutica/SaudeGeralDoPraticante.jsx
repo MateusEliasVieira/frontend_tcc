@@ -15,10 +15,9 @@ import {
   SALVAR_SAUDE_GERAL_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
-const SaudeGeralDosPraticantes = () => {
+const SaudeGeralDoPraticante = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idSaudeGeralDosPacientes: '',
     convulsoesAnteriores: false,
     consideracoesConvulsoesAnteriores: '',
     convulsoesAtuais: false,
@@ -68,9 +67,16 @@ const SaudeGeralDosPraticantes = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Saúde Geral dos Praticantes</strong>
-          </CCardHeader>
+          {
+            desabilitar === "disabled" ?
+              <CCardHeader style={{backgroundColor: "#1c323f"}}>
+                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              </CCardHeader>
+              :
+              <CCardHeader>
+                <strong>Saúde Geral dos Praticantes</strong>
+              </CCardHeader>
+          }
           <CCardBody>
             <CContainer>
               <CRow>
@@ -78,8 +84,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="convulsoesAnteriores"
-                    checked={formularioDeDados.convulsoesAnteriores}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAnteriores: e.target.checked})}
+                    value={formularioDeDados.convulsoesAnteriores}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAnteriores: e.target.value})}
                     legenda="Convulsões Anteriores"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -104,8 +110,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="convulsoesAtuais"
-                    checked={formularioDeDados.convulsoesAtuais}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAtuais: e.target.checked})}
+                    value={formularioDeDados.convulsoesAtuais}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAtuais: e.target.value})}
                     legenda="Convulsões Atuais"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -143,8 +149,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="medicamentos"
-                    checked={formularioDeDados.medicamentos}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, medicamentos: e.target.checked})}
+                    value={formularioDeDados.medicamentos}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, medicamentos: e.target.value})}
                     legenda="Medicamentos"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -169,8 +175,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="constipacao"
-                    checked={formularioDeDados.constipacao}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, constipacao: e.target.checked})}
+                    value={formularioDeDados.constipacao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, constipacao: e.target.value})}
                     legenda="Constipação"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -195,8 +201,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="sono"
-                    checked={formularioDeDados.sono}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, sono: e.target.checked})}
+                    value={formularioDeDados.sono}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, sono: e.target.value})}
                     legenda="Sono"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -218,8 +224,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="audicao"
-                    checked={formularioDeDados.audicao}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, audicao: e.target.checked})}
+                    value={formularioDeDados.audicao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, audicao: e.target.value})}
                     legenda="Audição"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -241,8 +247,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="visao"
-                    checked={formularioDeDados.visao}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, visao: e.target.checked})}
+                    value={formularioDeDados.visao}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, visao: e.target.value})}
                     legenda="Visão"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -264,10 +270,10 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="refluxoGastroesofagico"
-                    checked={formularioDeDados.refluxoGastroesofagico}
+                    value={formularioDeDados.refluxoGastroesofagico}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      refluxoGastroesofagico: e.target.checked
+                      refluxoGastroesofagico: e.target.value
                     })}
                     legenda="Refluxo Gastroesofágico"
                     disabled={desabilitar}
@@ -293,10 +299,10 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="intervencoesCirurgicas"
-                    checked={formularioDeDados.intervencoesCirurgicas}
+                    value={formularioDeDados.intervencoesCirurgicas}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      intervencoesCirurgicas: e.target.checked
+                      intervencoesCirurgicas: e.target.value
                     })}
                     legenda="Intervenções Cirúrgicas"
                     disabled={desabilitar}
@@ -322,8 +328,8 @@ const SaudeGeralDosPraticantes = () => {
                   <Campo
                     tipo="select"
                     id="alergias"
-                    checked={formularioDeDados.alergias}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, alergias: e.target.checked})}
+                    value={formularioDeDados.alergias}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, alergias: e.target.value})}
                     legenda="Alergias"
                     disabled={desabilitar}
                     opcoes={simOuNao}
@@ -354,4 +360,4 @@ const SaudeGeralDosPraticantes = () => {
     ;
 };
 
-export default SaudeGeralDosPraticantes;
+export default SaudeGeralDoPraticante;

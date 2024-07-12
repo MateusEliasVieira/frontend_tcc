@@ -19,7 +19,6 @@ const GruposMusculares = () => {
 
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idGruposMusculares: '',
     flexoresOmbroDireito: '-',
     flexoresOmbroEsquerdo: '-',
     extensoresOmbroDireito: '-',

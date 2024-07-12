@@ -2,44 +2,13 @@ import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import axios, {HttpStatusCode} from "axios";
 import {SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST} from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
-import {apresentarModal} from "../utilidades/ManipuladorDeModal";
+import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeLocalStorage";
 
-var login = JSON.parse(localStorage.getItem('login'));
-var idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-
-const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
-  console.log(error)
-  if (error.response.data.titulo) {
-    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-  } else if (error.response.data.mensagem) {
-    if (error.response.data.redirecionar) {
-      window.location = error.response.data.redirecionar
-    }else{
-      apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-    }
-  }
-  else if(error.response.data.urlRedirecionamento){
-    window.location = error.response.data.urlRedirecionamento
-  }
-  else {
-    apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
-  }
-}
-
-const mensagemParaListaDeErros = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
-  if (error.response.data.titulo !== undefined) {
-    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-  }
-  if (error.response.data.lista !== undefined) {
-    let lista = "";
-    error.response.data.lista.forEach((item) => {
-      lista += `<strong>*</strong> ${item.titulo}` + "<br/>";
-    });
-    apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
-  }
-}
+const login = JSON.parse(localStorage.getItem('login'));
+const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
 
 const salvarDadosPessoais = async (formularioDeDados, setDesabilitar) => {
+  limparLocalStorage()
   if (camposPreenchidos(formularioDeDados)) {
     try {
       const response = await axios.post(
@@ -86,6 +55,7 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
         localStorage.setItem(chaveLocalStorage, CADASTRADO)
         setDesabilitar("disabled")
         alert('Dados salvos com sucesso');
+        verificarSeEstaFinalizado()
       } catch (error) {
         console.log(error)
         const resposta = error.response

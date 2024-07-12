@@ -18,7 +18,6 @@ import {
 const QuadroAtual = () => {
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idQuadroAtual: '',
     locomocaoAtual: '',
     restricoes: '',
     deformidades: '',
