@@ -13,8 +13,8 @@ const ATUALIZAR_EDUCACAO_DO_PRATICANTE_PUT = URL+'praticante/educacao-praticante
 
 // RESPONSÁVEL DO PRATICANTE
 const SALVAR_RESPONSAVEL_DO_PRATICANTE_POST = URL+'praticante/responsavel-pelo-praticante/salvar-responsavel-do-praticante'
-const BUSCAR_RESPONSAVEL_DO_PRATICANTE_POR_ID_GET = URL+'praticante/educacao-praticante/buscar-educacao-praticante-por-id'
-const ATUALIZAR_RESPONSAVEL_DO_PRATICANTE_PUT = URL+'praticante/educacao-praticante/atualizar-educacao-praticante'
+const BUSCAR_RESPONSAVEL_DO_PRATICANTE_POR_ID_GET = URL+'praticante/responsavel-pelo-praticante/buscar-responsavel-do-praticante-por-id'
+const ATUALIZAR_RESPONSAVEL_DO_PRATICANTE_PUT = URL+'praticante/responsavel-pelo-praticante/atualizar-responsavel-do-praticante-praticante'
 
 // OUTRAS ATIVIDADES MANHA
 const SALVAR_OUTRAS_ATIVIDADE_MANHA_DO_PRATICANTE_POST = URL + 'praticante/outras-atividades-manha/salvar-outras-atividades-manha-do-praticante'
@@ -24,7 +24,7 @@ const BUSCAR_OUTRAS_ATIVIDADE_MANHA_DO_PRATICANTE_POR_ID_GET = URL + 'praticante
 // OUTRAS ATIVIDADES TARDE
 const SALVAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POST = URL + 'praticante/outras-atividades-tarde/salvar-outras-atividades-tarde-do-praticante'
 const ATUALIZAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_PUT = URL + 'praticante/outras-atividades-tarde/atualizar-outras-atividades-tarde-do-praticante'
-const BUSCAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/outras-atividades-tarde/buscar-outras-atividade-tarde-do-praticante-por-id'
+const BUSCAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/outras-atividades-tarde/buscar-outras-atividades-tarde-do-praticante-por-id'
 
 
 // COMPLETUDE MATRICULA

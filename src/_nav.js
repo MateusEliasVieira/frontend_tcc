@@ -36,7 +36,7 @@ const _nav_administrador = [
       {
         component: CNavItem,
         name: 'Gerar Relatórios',
-        to: '/relatorio-praticantes',
+        to: '/relatorio/gerar-relatorio-de-praticante',
         icon: <CIcon icon={cilClipboard} customClassName="nav-icon"/>,
       },
       {

@@ -1,6 +1,8 @@
 import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import axios, {HttpStatusCode} from "axios";
-import {SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST} from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {
+  SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
+} from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
 import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeLocalStorage";
 
@@ -92,4 +94,22 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
   }
 };
 
-export {salvarDadosPessoais, salvar}
+const buscarDadosPraticante = async (endpoint,setDados,idPraticante) => {
+  axios.get(endpoint,{
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    },
+    params:{
+        id:idPraticante
+    }
+  })
+    .then((response)=>{
+      setDados(response.data)
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+}
+
+export {salvarDadosPessoais, salvar, buscarDadosPraticante}
