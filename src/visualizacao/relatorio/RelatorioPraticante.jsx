@@ -1,13 +1,16 @@
 import {CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CHeader, CRow} from "@coreui/react";
 import './RelatorioPraticante.css'
 import DadosPessoaisRelatorio from "./fichaCadastroAdmissional/DadosPessoaisRelatorio";
-import Campo from "../../components/campos/Campo";
 import {useRef, useState} from "react";
 import {useReactToPrint} from "react-to-print";
 import EducacaoRelatorio from "./fichaCadastroAdmissional/EducacaoRelatorio";
 import ResponsavelPeloPraticanteRelatorio from "./fichaCadastroAdmissional/ResponsavelPeloPraticanteRelatorio";
 import {OutrasAtividadesRelatorio} from "./fichaCadastroAdmissional/OutrasAtividadesRelatorio";
 import EmergenciaRelatorio from "./fichaCadastroAdmissional/EmergenciaRelatorio";
+import SobreACriancaRelatorio from "./avaliacaoPsicologica/SobreACriancaRelatorio";
+import SaudeRelatorio from "./avaliacaoPsicologica/SaudeRelatorio";
+import RotinaRelatorio from "./avaliacaoPsicologica/RotinaRelatorio";
+import {CuidadosPessoaisRelatorio} from "./avaliacaoPsicologica/CuidadosPessoaisRelatorio";
 
 const RelatorioPraticante = () => {
 
@@ -20,22 +23,12 @@ const RelatorioPraticante = () => {
 
   return (
     <CContainer>
-
       <CCard>
         <CHeader>
-          <strong>Filtro de Busca</strong>
+          <strong>Filtro de Pesquisa</strong>
         </CHeader>
         <CCardBody>
           <CRow>
-            <CCol>
-              <Campo
-                tipo="text"
-                valor={cpf}
-                setar={(e) => setCpf(e.target.value)}
-                legenda="CPF"
-              />
-              <CButton>Pesquisar</CButton>
-            </CCol>
           </CRow>
         </CCardBody>
       </CCard>
@@ -60,6 +53,11 @@ const RelatorioPraticante = () => {
           <ResponsavelPeloPraticanteRelatorio idUsuario={1}/><br/><br/><br/><br/>
           <OutrasAtividadesRelatorio idUsuario={1}/><br/>
           <EmergenciaRelatorio idUsuario={1}/><br/>
+          <strong className="titulos-relatorio-praticante">Avaliação dos Aspectos Psicológicos</strong>
+          <SobreACriancaRelatorio idUsuario={1}/><br/><br/><br/>
+          <SaudeRelatorio idUsuario={1}/><br/>
+          <RotinaRelatorio idUsuario={1}/><br/>
+          <CuidadosPessoaisRelatorio idUsuario={1}/><br/>
         </CContainer>
       </CContainer>
 

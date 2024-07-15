@@ -39,6 +39,7 @@ const Campo = (props) => {
             value={props.valor}
             onChange={props.setar}
             disabled={props.disabled}
+            placeholder={props.descricao}
           />
         );
       case 'file':
@@ -46,15 +47,6 @@ const Campo = (props) => {
           <CFormInput
             id={props.id}
             type="file"
-            onChange={props.setar}
-            disabled={props.disabled}
-          />
-        );
-      case 'checkbox':
-        return (
-          <CFormCheck
-            id={props.id}
-            type="checkbox"
             onChange={props.setar}
             disabled={props.disabled}
           />
@@ -67,6 +59,7 @@ const Campo = (props) => {
             value={props.valor}
             onChange={props.setar}
             disabled={props.disabled}
+            placeholder={props.descricao}
           />
         );
     }
