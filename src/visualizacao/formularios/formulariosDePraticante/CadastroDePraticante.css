@@ -2,7 +2,7 @@
 #box-tabs{
   font-size: 12px;
   font-weight: bold;
-  background-color: #1c323f;
+  background-color: #15171a;
   border-radius: 5px 5px 0px 0px;
 }
 .nav-tabs {
@@ -13,7 +13,7 @@
   list-style-type: none;
 }
 .nav .nav-tabs{
-  background-color: #1c323f;
+  background-color: #231402;
 }
 .nav-item {
   flex: 1 0 180px; /* Define um tamanho mínimo e flexível para cada item */
@@ -25,20 +25,21 @@
   width: 100%;
   text-align: center;
   padding: 10px 15px;
-  color: #0ecf8f;
-  background-color: #284657;
-  border: none;
+  color: white;
+  background-color: #1d1f24;
   border-radius: 5px 5px 0px 0px;
   cursor: pointer;
   height: 40px; /* Altura fixa para todos os botões */
   overflow: hidden; /* Evita que conteúdos maiores alterem a altura */
 }
 .nav-link:hover {
-  color: #1c323f;
-  background-color: #0ecf8f;
+  color: white;
+  border: 1px solid #1d1f24 !important;
+  background-color: #1d1f24 !important;
   transition: 0.6s;
 }
 .nav-link.active {
-  color: #ffffff;
-  background-color: #0ecf8f;
+  color: white !important;
+  border: 1px solid #1d1f24 !important;
+  background-color: #1d1f24 !important;
 }

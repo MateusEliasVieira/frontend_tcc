@@ -22,6 +22,12 @@ const esconderModalDeOpcoes = (setDisplayModalOpcoes, setTituloModalOpcoes, setC
   setConteudoModalOpcoes("");
 };
 
+const apresentarModalDeCarregamento = (titulo, conteudo, setDisplayModal, setTituloModal, setConteudoModal) => {
+  setDisplayModal("block");
+  setTituloModal(titulo);
+  setConteudoModal(conteudo);
+};
+
 const confirmar = (idParaDeletar, deletar, esconderModalDeOpcoes,setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes) => {
   if (idParaDeletar !== null) {
     deletar(idParaDeletar);
@@ -32,5 +38,5 @@ const confirmar = (idParaDeletar, deletar, esconderModalDeOpcoes,setDisplayModal
 export {
   apresentarModal, esconderModal,
   apresentarModalDeOpcoes, esconderModalDeOpcoes,
-  confirmar
+  confirmar, apresentarModalDeCarregamento
 };

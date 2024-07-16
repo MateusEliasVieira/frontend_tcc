@@ -38,7 +38,7 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
           <CTableHeaderCell>Formação</CTableHeaderCell>
           <CTableHeaderCell>Nível</CTableHeaderCell>
           <CTableHeaderCell>Vínculo</CTableHeaderCell>
-          <CTableHeaderCell></CTableHeaderCell>
+          <CTableHeaderCell>Ações</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
       <CTableBody>
@@ -52,7 +52,7 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.possuiFormacao ? 'Sim' : 'Não'}</CTableDataCell>
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", fontWeight:"bold", color: item.role === 'ROLE_USER' ? 'dodgerblue':'#0ecf8f' }}>{item.role === 'ROLE_USER' ? 'Usuário' : 'Administrador'}</CTableDataCell>
               <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{formatarVinculo(item.vinculo)}</CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "50px", maxWidth:"150px" }}>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>
                 <div className="container text-center">
                   <div className="row">
                     <div className="col">
