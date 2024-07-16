@@ -12,3 +12,17 @@
 .celula-header-tabela{
   text-align: center;
 }
+#button-pdf{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: none;
+  align-items: center;
+  z-index: 100;
+  transition: 0.4s;
+  cursor: pointer;
+}
+#button-pdf:hover{
+  transition: 0.3s;
+  transform: scale(1.1);
+}

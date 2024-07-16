@@ -23,26 +23,26 @@ const _nav_administrador = [
     items: [
       {
         component: CNavItem,
-        name: 'Novo Praticante',
+        name: 'Novo',
         to: '/formulario/cadastrar-praticante',
         icon:<CIcon icon={cilUserPlus} customClassName={"nav-icon"} />
       },
       {
         component: CNavItem,
-        name: 'Visualizar Praticantes',
+        name: 'Pesquisa',
         to: '/formulario/pesquisar-praticante',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
       {
         component: CNavItem,
-        name: 'Gerar Relatórios',
+        name: 'Relatórios',
         to: '/relatorio/gerar-relatorio-de-praticante',
         icon: <CIcon icon={cilClipboard} customClassName="nav-icon"/>,
       },
       {
         component: CNavItem,
-        name: 'Estatística',
-        to: '/graficos-praticantes',
+        name: 'Evolução',
+        to: '/evolucao-praticantes',
         icon: <CIcon icon={cilChartPie} customClassName="nav-icon"/>,
       },
     ],
@@ -55,13 +55,13 @@ const _nav_administrador = [
     items: [
       {
         component: CNavItem,
-        name: 'Novo Usuário',
+        name: 'Novo',
         to: '/formulario/cadastrar-usuario',
         icon:<CIcon icon={cilUserPlus} customClassName={"nav-icon"}/>
       },
       {
         component: CNavItem,
-        name: 'Visualizar Usuários',
+        name: 'Pesquisa',
         to: '/formulario/pesquisar-usuario',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },

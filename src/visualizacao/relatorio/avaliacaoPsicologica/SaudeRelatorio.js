@@ -33,32 +33,32 @@ const SaudeRelatorio = ({ idUsuario }) => {
       <CCardBody>
         <CRow>
           <CCol md="auto">
-            <p><strong>Alergias:</strong> {dados.alergias}</p>
+            <p><strong>Alergias:</strong> <p>{dados.alergias}</p></p>
           </CCol>
           <CCol md="auto">
-            <p><strong>Convulsões:</strong> {dados.convulsoes}</p>
+            <p><strong>Convulsões:</strong> <p>{dados.convulsoes}</p></p>
           </CCol>
           <CCol md="auto">
-            <p><strong>Doenças significativas/traumas:</strong> {dados.doencas}</p>
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol md="auto">
-            <p><strong>Digestão:</strong> {dados.digestao}</p>
-          </CCol>
-          <CCol md="auto">
-            <p><strong>Transtorno alimentar:</strong> {dados.transtornoAlimentar}</p>
+            <p><strong>Doenças significativas/traumas:</strong> <p>{dados.doencas}</p></p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Respiração:</strong> {dados.respiracao}</p>
+            <p><strong>Digestão:</strong> <p>{dados.digestao}</p></p>
           </CCol>
           <CCol md="auto">
-            <p><strong>Sono:</strong> {dados.sono}</p>
+            <p><strong>Transtorno alimentar:</strong> <p>{dados.transtornoAlimentar}</p></p>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol md="auto">
+            <p><strong>Respiração:</strong> <p>{dados.respiracao}</p></p>
           </CCol>
           <CCol md="auto">
-            <p><strong>Déficit cognitivo:</strong> {dados.deficitCognitivo}</p>
+            <p><strong>Sono:</strong> <p>{dados.sono}</p></p>
+          </CCol>
+          <CCol md="auto">
+            <p><strong>Déficit cognitivo:</strong> <p>{dados.deficitCognitivo}</p></p>
           </CCol>
         </CRow>
       </CCardBody>

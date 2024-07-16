@@ -32,20 +32,20 @@ const EducacaoRelatorio = ({idUsuario}) => {
       <CCardBody>
         <CRow>
           <CCol md="auto">
-            <p><strong>Ano/Série Escolar:</strong> {dados.serieEscolar}</p>
+            <p><strong>Ano/Série escolar:</strong> {dados.serieEscolar}</p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Classe de Escola:</strong> {colocarApenasPrimeiraLetraMaiuscula(dados.classeDeEscola)}</p>
+            <p><strong>Classe de escola:</strong> {colocarApenasPrimeiraLetraMaiuscula(dados.classeDeEscola)}</p>
           </CCol>
           <CCol md="auto">
-            <p><strong>Instituição de Ensino:</strong> {dados.instituicaoEducacional}</p>
+            <p><strong>Instituição de ensino:</strong> {dados.instituicaoEducacional}</p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Tipo de Instituição de Ensino:</strong> {colocarApenasPrimeiraLetraMaiuscula(dados.tipoDeInstituicaoEducacional)}</p>
+            <p><strong>Tipo de instituição de ensino:</strong> {colocarApenasPrimeiraLetraMaiuscula(dados.tipoDeInstituicaoEducacional)}</p>
           </CCol>
           <CCol md="auto">
             <p><strong>Período:</strong> {colocarApenasPrimeiraLetraMaiuscula(dados.periodo)}</p>

@@ -29,22 +29,22 @@ const RotinaRelatorio = ({ idUsuario }) => {
       <CCardBody>
         <CRow>
           <CCol md="auto">
-            <p><strong>Brincadeiras (onde, como, com quem?):</strong> {dados.brincadeiras}</p>
+            <p><strong>Brincadeiras (onde, como, com quem?):</strong> <p>{dados.brincadeiras}</p></p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Preferências e aversões:</strong> {dados.preferenciasPorBrincadeiras}</p>
+            <p><strong>Preferências e aversões:</strong> <p>{dados.preferenciasPorBrincadeiras}</p></p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Aceita mudanças na sua rotina:</strong> {dados.aceitaMudancasNaRotina === "true" ? "Sim" : "Não"}</p>
+            <p><strong>Aceita mudanças na sua rotina?</strong> {dados.aceitaMudancasNaRotina === "true" ? "Sim" : "Não"}</p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Considerações sobre rotina:</strong> {dados.consideracoesSobreRotina}</p>
+            <p><strong>Considerações sobre rotina:</strong> <p>{dados.consideracoesSobreRotina}</p></p>
           </CCol>
         </CRow>
       </CCardBody>

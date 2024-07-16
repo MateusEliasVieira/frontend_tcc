@@ -48,12 +48,12 @@ const DadosPessoaisRelatorio = ({idUsuario}) => {
       <CCardBody>
         <CRow>
           <CCol md="auto">
-            <p><strong>Nome Completo:</strong> {dados.nomeCompleto}</p>
+            <p><strong>Nome completo:</strong> {dados.nomeCompleto}</p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Diagnóstico Clínico:</strong> {dados.diagnosticoClinico}</p>
+            <p><strong>Diagnóstico clínico:</strong> {dados.diagnosticoClinico}</p>
           </CCol>
           <CCol md="auto">
             <p><strong>CID:</strong> {dados.cid}</p>
@@ -61,7 +61,7 @@ const DadosPessoaisRelatorio = ({idUsuario}) => {
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Data de Nascimento:</strong> {formatarDataParaDiaMesAno(dados.dataNascimento)}</p>
+            <p><strong>Data de nascimento:</strong> {formatarDataParaDiaMesAno(dados.dataNascimento)}</p>
           </CCol>
           <CCol md="auto">
             <p><strong>Idade:</strong> {calcularIdade(dados.dataNascimento)}</p>
@@ -72,7 +72,7 @@ const DadosPessoaisRelatorio = ({idUsuario}) => {
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Tipo Sanguíneo:</strong> {formatarTipoSanguineo(dados.tipoSanguineo)}</p>
+            <p><strong>Tipo sanguíneo:</strong> {formatarTipoSanguineo(dados.tipoSanguineo)}</p>
           </CCol>
           <CCol md="auto">
             <p><strong>Fator RH</strong> {dados.fatorRH}</p>
@@ -97,12 +97,12 @@ const DadosPessoaisRelatorio = ({idUsuario}) => {
             <p><strong>CPF:</strong> {dados.cpf}</p>
           </CCol>
           <CCol md="auto">
-            <p><strong>Nº Cartão do SUS:</strong> {dados.cartaoSUS}</p>
+            <p><strong>Nº cartão do SUS:</strong> {dados.cartaoSUS}</p>
           </CCol>
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Endereço Residencial:</strong> {dados.enderecoResidencial}</p>
+            <p><strong>Endereço residencial:</strong> {dados.enderecoResidencial}</p>
           </CCol>
         </CRow>
         <CRow>

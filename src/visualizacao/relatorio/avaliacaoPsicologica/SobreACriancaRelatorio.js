@@ -81,7 +81,7 @@ const SobreACriancaRelatorio = ({ idUsuario }) => {
         </CRow>
         <CRow>
           <CCol>
-            <p><strong>Observação:</strong> {dados.observacao}</p>
+            <p><strong>Observação:</strong> <p>{dados.observacao}</p></p>
           </CCol>
         </CRow>
       </CCardBody>

@@ -30,7 +30,6 @@ const CuidadosPessoaisRelatorio = ({ idUsuario }) => {
       await buscarDadosPraticante(BUSCAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, setDados, idUsuario);
     };
     buscarDados();
-    console.log(dados)
   }, [idUsuario]);
 
   return (

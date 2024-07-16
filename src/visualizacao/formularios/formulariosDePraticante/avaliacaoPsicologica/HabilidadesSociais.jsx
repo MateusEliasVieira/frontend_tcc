@@ -6,7 +6,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CForm, CContainer,
+  CContainer,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
 import {CADASTRADO, preencherLegenda} from '../../../../constantes/Constantes';

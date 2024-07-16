@@ -8,13 +8,10 @@ import {
   CForm,
   CRow
 } from '@coreui/react';
-import axios from 'axios';
-import {DELETAR_USUARIO_DELETE, PESQUISAR_USUARIO_GET} from "../../../endpoints/usuario/Endpoints";
+
 import Modal from "../../../components/modal/Modal";
 import ModalComOpcoes from "../../../components/modal/ModalComOpcoes";
 import {
-  apresentarModal,
-  apresentarModalDeOpcoes,
   esconderModal,
   esconderModalDeOpcoes
 } from "../../../utilidades/ManipuladorDeModal";

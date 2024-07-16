@@ -20,11 +20,11 @@ const Grafico = React.lazy(() => import('./visualizacao/graficos/Grafico'))
 const rotas = [
   { path: '/', exact: true, name: 'Início' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/graficos-praticantes', name: 'Estatística', element: Grafico },
-  { path: '/relatorio/gerar-relatorio-de-praticante', name: 'Relatório de Praticante', element: RelatorioPraticante },
-  { path: '/formulario/cadastrar-praticante', name: 'Novo Praticante', element: CadastroPraticante },
-  { path: '/formulario/cadastrar-usuario', name: 'Novo Usuário', element: CadastroDeUsuario },
-  { path: '/formulario/pesquisar-usuario', name: 'Visualizar Usuários', element: PesquisaDeUsuario },
-  { path: '/formulario/atualizar-usuario/*', name: 'Atualizar Usuário', element:  AtualizacaoDeUsuario},
+  { path: '/evolucao-praticantes', name: 'Evolução', element: Grafico },
+  { path: '/relatorio/gerar-relatorio-de-praticante', name: 'Relatório', element: RelatorioPraticante },
+  { path: '/formulario/cadastrar-praticante', name: 'Novo', element: CadastroPraticante },
+  { path: '/formulario/cadastrar-usuario', name: 'Novo', element: CadastroDeUsuario },
+  { path: '/formulario/pesquisar-usuario', name: 'Usuários', element: PesquisaDeUsuario },
+  { path: '/formulario/atualizar-usuario/*', name: 'Atualizar', element:  AtualizacaoDeUsuario},
 ]
 export default rotas
