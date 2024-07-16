@@ -125,14 +125,14 @@ const RelatorioPraticante = () => {
           <SaudeMentalRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
           <SocializacaoRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/></> : <br/>}
           <ComportamentoRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
-          <HabilidadesSociaisRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
+          <HabilidadesSociaisRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></> : <br/>}
           <AfetividadeRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
-          <RelacaoDaFamiliaComOExaminadoRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/></> : <br/>}
+          <RelacaoDaFamiliaComOExaminadoRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/><br/><br/></> : <br/>}
           <AvaliacaoPsicologicaRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
           <strong className="titulos-relatorio-praticante">Avaliação Fisioterapêutica</strong>
-          <AvaliacaoFisioterapeuticaRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
+          <AvaliacaoFisioterapeuticaRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/><br/></> : <br/>}
           <SaudeGeralDoPraticanteRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
-          <FormaDeComunicacaoRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
+          <FormaDeComunicacaoRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/></> : <br/>}
           <QuadroAtualRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
           <MobilidadeArticularRelatorio idUsuario={1}/>
         </CContainer>
