@@ -38,6 +38,10 @@ import { apresentarModalDeCarregamento, esconderModal } from "../../utilidades/M
 import ModalDeCarregamento from "../../components/modal/ModalDeCarregamento";
 import MobilidadeArticularRelatorio from "./AvaliacaoFisioterapeutica/MobilidadeArticularRelatorio";
 import GruposMuscularesRelatorio from "./AvaliacaoFisioterapeutica/GruposMuscularesRelatorio";
+import EquilibrioEstaticoRelatorio from "./AvaliacaoFisioterapeutica/EquilibrioEstaticoRelatorio";
+import EquilibrioDinamicoRelatorio from "./AvaliacaoFisioterapeutica/EquilibrioDinamicoRelatorio";
+import HabilidadesMotorasAVDRelatorio from "./AvaliacaoFisioterapeutica/HabilidadesMotorasAVDRelatorio";
+import CoordenacaoMotoraRelatorio from "./AvaliacaoFisioterapeutica/CoordenacaoMotoraRelatorio";
 
 const RelatorioPraticante = () => {
   const [displayModal, setDisplayModal] = useState("none");
@@ -136,7 +140,11 @@ const RelatorioPraticante = () => {
           <FormaDeComunicacaoRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/></> : <br/>}
           <QuadroAtualRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
           <MobilidadeArticularRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/></> : <br/>}
-          <GruposMuscularesRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
+          <GruposMuscularesRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></> : <br/>}
+          <EquilibrioEstaticoRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></> : <br/>}
+          <EquilibrioDinamicoRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
+          <HabilidadesMotorasAVDRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/></> : <br/>}
+          <CoordenacaoMotoraRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
         </CContainer>
       </CContainer>
     </CContainer>

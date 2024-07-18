@@ -6,9 +6,14 @@ const ATUALIZAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_PUT = URL + 'praticante
 const BUSCAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/avaliacao-fisioterapeutica/buscar-avaliacao-fisioterapeutica-do-praticante-por-id';
 
 // Coordenacao Motora
-const SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST = URL + 'praticante/coordenacao-motora/salvar-coordenacao-motora-do-praticante';
-const ATUALIZAR_COORDENACAO_MOTORA_DO_PRATICANTE_PUT = URL + 'praticante/coordenacao-motora/atualizar-coordenacao-motora-do-praticante';
-const BUSCAR_COORDENACAO_MOTORA_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/coordenacao-motora/buscar-coordenacao-motora-do-praticante-por-id';
+const SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST = URL + 'praticante/em-pe/salvar-em-pe-do-praticante';
+const ATUALIZAR_COORDENACAO_MOTORA_DO_PRATICANTE_PUT = URL + 'praticante/em-pe/atualizar-em-pe-do-praticante';
+const BUSCAR_COORDENACAO_MOTORA_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/em-pe/buscar-em-pe-do-praticante-por-id';
+
+// Em Pé
+const SALVAR_EM_PE_DO_PRATICANTE_POST = URL + 'praticante/coordenacao-motora/salvar-coordenacao-motora-do-praticante';
+const ATUALIZAR_EM_PE_DO_PRATICANTE_PUT = URL + 'praticante/coordenacao-motora/atualizar-coordenacao-motora-do-praticante';
+const BUSCAR_EM_PE_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/coordenacao-motora/buscar-coordenacao-motora-do-praticante-por-id';
 
 // Equilibrio Dinamico
 const SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST = URL + 'praticante/equilibrio-dinamico/salvar-equilibrio-dinamico-do-praticante';
@@ -58,6 +63,10 @@ export {
   SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST,
   ATUALIZAR_COORDENACAO_MOTORA_DO_PRATICANTE_PUT,
   BUSCAR_COORDENACAO_MOTORA_DO_PRATICANTE_POR_ID_GET,
+
+  SALVAR_EM_PE_DO_PRATICANTE_POST,
+  ATUALIZAR_EM_PE_DO_PRATICANTE_PUT,
+  BUSCAR_EM_PE_DO_PRATICANTE_POR_ID_GET,
 
   SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST,
   ATUALIZAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_PUT,

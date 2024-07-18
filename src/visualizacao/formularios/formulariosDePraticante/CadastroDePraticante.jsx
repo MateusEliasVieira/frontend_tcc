@@ -38,6 +38,7 @@ import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeutic
 
 import "./CadastroDePraticante.css"
 import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeLocalStorage";
+import EmPE from "./avaliacaoFisioterapeutica/EmPe";
 
 const CadastroDePraticante = () => {
   const [activeTab, setActiveTab] = useState("dadosPessoais");
@@ -114,6 +115,8 @@ const CadastroDePraticante = () => {
         return <AvaliacaoFisioterapeutica/>;
       case "coordenacaoMotora":
         return <CoordenacaoMotora/>;
+      case "emPe":
+        return <EmPE/>;
       case "equilibrioDinamico":
         return <EquilibrioDinamico/>;
       case "equilibrioEstatico":
@@ -323,6 +326,14 @@ const CadastroDePraticante = () => {
               onClick={() => setActiveTab("coordenacaoMotora")}
             >
               Coordenação Motora
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "emPe" ? "active" : ""}`}
+              onClick={() => setActiveTab("emPe")}
+            >
+              Em Pé
             </button>
           </li>
           <li className="nav-item">
