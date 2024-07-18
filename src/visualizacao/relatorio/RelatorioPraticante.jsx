@@ -37,6 +37,7 @@ import QuadroAtualRelatorio from "./AvaliacaoFisioterapeutica/QuadroAtualRelator
 import { apresentarModalDeCarregamento, esconderModal } from "../../utilidades/ManipuladorDeModal";
 import ModalDeCarregamento from "../../components/modal/ModalDeCarregamento";
 import MobilidadeArticularRelatorio from "./AvaliacaoFisioterapeutica/MobilidadeArticularRelatorio";
+import GruposMuscularesRelatorio from "./AvaliacaoFisioterapeutica/GruposMuscularesRelatorio";
 
 const RelatorioPraticante = () => {
   const [displayModal, setDisplayModal] = useState("none");
@@ -134,7 +135,8 @@ const RelatorioPraticante = () => {
           <SaudeGeralDoPraticanteRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
           <FormaDeComunicacaoRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/><br/></> : <br/>}
           <QuadroAtualRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
-          <MobilidadeArticularRelatorio idUsuario={1}/>
+          <MobilidadeArticularRelatorio idUsuario={1}/>{espacar ? <><br/><br/><br/><br/><br/></> : <br/>}
+          <GruposMuscularesRelatorio idUsuario={1}/>{espacar ? <br/> : <br/>}
         </CContainer>
       </CContainer>
     </CContainer>

@@ -119,6 +119,14 @@ const gruposMusculares = [
   { label: 'Articulação Afetada Rígida em Flexão ou Extensão', value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' }
 ];
 
+const gruposMuscularesPontuados = [
+  { label: 0, value: 'TONUS_NORMAL' },
+  { label: 1, value: 'DISCRETO_AUMENTO_DO_TONUS' },
+  { label: 2, value: 'AUMENTO_MAIS_PRONUNCIADO_DO_TONUS' },
+  { label: 3, value: 'AUMENTO_CONSIDERAVEL_TONUS' },
+  { label: 4, value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' }
+];
+
 const CADASTRADO = "true"
 const NAO_CADASTRADO = "false"
 
@@ -140,5 +148,6 @@ export {
   NAO_CADASTRADO,
   equilibrioEstatico,
   equilibrioDinamico,
-  gruposMusculares
+  gruposMusculares,
+  gruposMuscularesPontuados
 };
