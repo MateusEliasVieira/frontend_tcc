@@ -28,6 +28,7 @@ const EmPE = () => {
     posturaEquilibrio: '',
     consideracoesPosturaEquilibrio: '',
     seqMovRolaSenta: '',
+    consideracoesSeqMovRolaSenta: '',
     passaParaSentado: '',
     consideracoesPassaParaSentado: '',
     praticante: {
@@ -77,7 +78,7 @@ const EmPE = () => {
                     valor={formularioDeDados.sequenciaDeMovimentos}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      sequenciaDeMovimentos: e.target.value === 'true'
+                      sequenciaDeMovimentos: e.target.value
                     })}
                     legenda="Sequência de Movimentos"
                     disabled={desabilitar}
@@ -106,7 +107,7 @@ const EmPE = () => {
                     valor={formularioDeDados.entrarSairPosicaoSentadoChao}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      entrarSairPosicaoSentadoChao: e.target.value === 'true'
+                      entrarSairPosicaoSentadoChao: e.target.value
                     })}
                     legenda="Entrar/Sair da Posição Sentado no Chão"
                     disabled={desabilitar}
@@ -135,7 +136,7 @@ const EmPE = () => {
                     valor={formularioDeDados.sentadoCadeira}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      sentadoCadeira: e.target.value === 'true'
+                      sentadoCadeira: e.target.value
                     })}
                     legenda="Sentado na Cadeira"
                     disabled={desabilitar}
@@ -164,7 +165,7 @@ const EmPE = () => {
                     valor={formularioDeDados.posturaEquilibrio}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      posturaEquilibrio: e.target.value === 'true'
+                      posturaEquilibrio: e.target.value
                     })}
                     legenda="Postura e Equilíbrio"
                     disabled={desabilitar}
@@ -193,7 +194,7 @@ const EmPE = () => {
                     valor={formularioDeDados.seqMovRolaSenta}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      seqMovRolaSenta: e.target.value === 'true'
+                      seqMovRolaSenta: e.target.value
                     })}
                     legenda="Seq. de Mov. Rola-Senta"
                     disabled={desabilitar}
@@ -222,7 +223,7 @@ const EmPE = () => {
                     valor={formularioDeDados.passaParaSentado}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      passaParaSentado: e.target.value === 'true'
+                      passaParaSentado: e.target.value
                     })}
                     legenda="Passa para Sentado"
                     disabled={desabilitar}

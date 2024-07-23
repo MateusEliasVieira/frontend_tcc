@@ -1,7 +1,7 @@
 import {CADASTRADO, NAO_CADASTRADO} from "../constantes/Constantes";
 
 const variaveisDeCadastroLocalStorage = [
-  'avaliacaoFisioterapeutica', 'coordenacaoMotora','emPe', 'equilibrioDinamico', 'equilibrioEstatico', 'formaDeComunicacao',
+  'avaliacaoFisioterapeutica', 'coordenacaoMotora','emPE', 'equilibrioDinamico', 'equilibrioEstatico', 'formaDeComunicacao',
   'gruposMusculares', 'habilidadesMotorasAVD', 'mobilidadeArticular', 'quadroAtual', 'saudeGeralDosPraticantes',
   'afetividade', 'avaliacaoPsicologica', 'comportamento', 'compreensao', 'cuidadosPessoais', 'habilidadesSociais',
   'linguagem', 'relacaoDaFamiliaComOExaminado', 'rotina', 'saude', 'saudeMental', 'sobreACrianca', 'socializacao',
@@ -10,17 +10,22 @@ const variaveisDeCadastroLocalStorage = [
 ]
 const verificarSeEstaFinalizado = () => {
   let contador = 0;
+ // let lista = ""
   variaveisDeCadastroLocalStorage.map((variavel) => {
     if (localStorage.getItem(variavel) === CADASTRADO) {
       contador++
     }
+    // else{
+    //   lista += variavel + "\n"
+    // }
   })
   if (contador === variaveisDeCadastroLocalStorage.length) {
     alert("Finalizado cadastro do praticante!")
     limparLocalStorage()
-  }else{
-    alert("Não finalizado cadastro do praticante!")
   }
+  // else{
+  //   alert("Não finalizado cadastro do praticante! Falta "+contador+" cadastros. "+lista)
+  // }
 }
 
 const limparLocalStorage = () => {

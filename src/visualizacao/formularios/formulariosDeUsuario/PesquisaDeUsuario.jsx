@@ -82,7 +82,7 @@ const PesquisaDeUsuario = () => {
                           pesquisar(formData, setList, setDisplayModal, setTituloModal, setConteudoModal)
                         }
                       }}
-                      legenda="Digite o nome"
+                      legenda="Pesquisa por Nome"
                     />
                   </div>
                 </div>

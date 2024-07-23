@@ -37,7 +37,7 @@ const FormaDeComunicacaoRelatorio = ({idUsuario}) => {
   return (
     <CCard>
       <CCardHeader>
-        <strong>Saúde Geral do Praticante</strong>
+        <strong>Forma de Comunicação</strong>
       </CCardHeader>
       <CCardBody>
         <CTable>

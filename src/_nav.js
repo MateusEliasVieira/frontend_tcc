@@ -3,16 +3,14 @@ import CIcon from '@coreui/icons-react'
 import {
   cilAccountLogout,
   cilChartPie,
-  cilClipboard, cilContact,
-  cilDescription,
-  cilMagnifyingGlass, cilSpeedometer, cilTrash,
+  cilClipboard,
+  cilMagnifyingGlass,
   cilUser,
-  cilUserFollow,
   cilUserPlus
 } from '@coreui/icons'
 import {CNavGroup, CNavItem} from '@coreui/react'
 
-const login = JSON.parse(localStorage.getItem("login"))
+const login = JSON.parse(localStorage.getItem("login")) || {}; // Garante que login seja um objeto
 
 const _nav_administrador = [
   {
@@ -25,7 +23,7 @@ const _nav_administrador = [
         component: CNavItem,
         name: 'Novo',
         to: '/formulario/cadastrar-praticante',
-        icon:<CIcon icon={cilUserPlus} customClassName={"nav-icon"} />
+        icon: <CIcon icon={cilUserPlus} customClassName={"nav-icon"} />
       },
       {
         component: CNavItem,
@@ -116,4 +114,6 @@ const _nav_usuario = [
   },
 ]
 
-export default (login.role === "ROLE_ADMIN" ? _nav_administrador : _nav_usuario)
+
+// Acessando o login.role com encadeamento opcional para evitar erros se login for null
+export default (login?.role === "ROLE_ADMIN" ? _nav_administrador : _nav_usuario)

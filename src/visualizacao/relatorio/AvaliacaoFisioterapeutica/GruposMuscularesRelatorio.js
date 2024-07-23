@@ -71,6 +71,7 @@ const GruposMuscularesRelatorio = ({idUsuario}) => {
       await buscarDadosPraticante(BUSCAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POR_ID_GET, setDados, idUsuario);
     };
     buscarDados();
+    alert(dados.extensoresOmbroDireito)
   }, [idUsuario]);
 
   return (

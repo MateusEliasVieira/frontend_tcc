@@ -35,7 +35,7 @@ const CompreensaoRelatorio = ({idUsuario}) => {
   return (
     <CCard>
       <CCardHeader>
-        <strong>Compreensao</strong>
+        <strong>Compreensão</strong>
       </CCardHeader>
       <CCardBody>
         <CTable>

@@ -5,7 +5,7 @@ import {
   BUSCAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POR_ID_GET
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
-const EducacaoRelatorio = ({idUsuario}) => {
+const AvaliacaoFisioterapeuticaRelatorio = ({idUsuario}) => {
 
   const [dados, setDados] = useState({
     diagnosticoFisioterapeutico: '',
@@ -55,4 +55,4 @@ const EducacaoRelatorio = ({idUsuario}) => {
   );
 };
 
-export default EducacaoRelatorio;
+export default AvaliacaoFisioterapeuticaRelatorio;

@@ -95,8 +95,8 @@ const DadosPessoais = (props) => {
                       id="cpf"
                       valor={formularioDeDados.cpf}
                       setar={(e) => {
-                        const maskedValue = aplicaMascaraDeCPF(e.target.value);
-                        setFormularioDeDados({...formularioDeDados, cpf: maskedValue});
+                        //const maskedValue = aplicaMascaraDeCPF(e.target.value);
+                        setFormularioDeDados({...formularioDeDados, cpf: e.target.value});
                       }}
                       legenda="CPF"
                       disabled={desabilitar}
@@ -274,7 +274,7 @@ const DadosPessoais = (props) => {
                   </CCol>
                 </CRow>
                 <CButton color="primary" disabled={desabilitar} onClick={() => {
-                  salvarDadosPessoais(formularioDeDados,setDesabilitar())
+                  salvarDadosPessoais(formularioDeDados,setDesabilitar)
                 }
                 }>
                   Salvar
