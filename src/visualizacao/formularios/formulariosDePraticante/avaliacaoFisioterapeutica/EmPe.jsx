@@ -31,6 +31,7 @@ const EmPE = () => {
     consideracoesSeqMovRolaSenta: '',
     passaParaSentado: '',
     consideracoesPassaParaSentado: '',
+    observacoes: '',
     praticante: {
       idPraticante: '',
     },
@@ -243,6 +244,21 @@ const EmPE = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+                <CRow>
+                  <CCol>
+                    <Campo
+                      tipo="textarea"
+                      id="observacoesEmPe"
+                      valor={formularioDeDados.observacoes}
+                      setar={(e) => setFormularioDeDados({
+                        ...formularioDeDados,
+                        observacoes: e.target.value
+                      })}
+                      legenda="Observações"
+                      disabled={desabilitar}
+                    />
+                  </CCol>
+                </CRow>
               </CRow>
               <CButton color="primary" disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_EM_PE_DO_PRATICANTE_POST, "emPE", setDesabilitar)

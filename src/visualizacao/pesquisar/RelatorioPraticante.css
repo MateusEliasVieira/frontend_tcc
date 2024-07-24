@@ -1,0 +1,29 @@
+.titulos-relatorio-praticante{
+  margin: 20px auto;
+  display: block;
+  font-size: 20px;
+  padding: 10px;
+  border: 1px solid black;
+  text-align: center;
+}
+.h3-tabela{
+  text-align: center;
+  font-size: 20px;
+}
+.celula-header-tabela{
+  text-align: center;
+}
+#button-pdf{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: none;
+  align-items: center;
+  z-index: 100;
+  transition: 0.4s;
+  cursor: pointer;
+}
+#button-pdf:hover{
+  transition: 0.3s;
+  transform: scale(1.1);
+}

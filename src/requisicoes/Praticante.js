@@ -1,4 +1,3 @@
-import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import axios, {HttpStatusCode} from "axios";
 import {
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
@@ -11,7 +10,6 @@ const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
 
 const salvarDadosPessoais = async (formularioDeDados, setDesabilitar) => {
   limparLocalStorage()
-  if (camposPreenchidos(formularioDeDados)) {
     try {
       const response = await axios.post(
         SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST,
@@ -35,14 +33,10 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar) => {
       // mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
       // mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
     }
-  } else {
-    alert('Preencha todos os campos vazios!');
-  }
 };
 
 const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabilitar) => {
   if (idPraticanteSalvo) {
-    if (camposPreenchidos(formularioDeDados)) {
       try {
         await axios.post(
           endpoint,
@@ -86,9 +80,7 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
           alert("Erro interno do sistema!")
         }
       }
-    } else {
-      alert("Preencha todos os campos vazios!");
-    }
+
   } else {
     alert("Cadastre os Dados Pessoais do Praticante primeiro!");
   }

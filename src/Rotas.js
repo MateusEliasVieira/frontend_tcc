@@ -8,6 +8,7 @@ const CadastroPraticante = React.lazy(() => import('./visualizacao/formularios/f
 
 // Relatório de Praticante
 const RelatorioPraticante = React.lazy(() => import('./visualizacao/relatorio/RelatorioPraticante'))
+const PesquisarPraticante = React.lazy(() => import('./visualizacao/pesquisar/Pesquisar'))
 
 //Formulários Funcionário
 const CadastroDeUsuario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/CadastroDeUsuario'))
@@ -21,7 +22,8 @@ const rotas = [
   { path: '/', exact: true, name: 'Início' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/evolucao-praticantes', name: 'Evolução', element: Grafico },
-  { path: '/relatorio/gerar-relatorio-de-praticante', name: 'Relatório', element: RelatorioPraticante },
+  { path: '/relatorio/gerar-relatorio-de-praticante/*', name: 'Relatório', element: RelatorioPraticante },
+  { path: '/formulario/pesquisar-praticante', name: 'Pesquisar', element:PesquisarPraticante },
   { path: '/formulario/cadastrar-praticante', name: 'Novo', element: CadastroPraticante },
   { path: '/formulario/cadastrar-usuario', name: 'Novo', element: CadastroDeUsuario },
   { path: '/formulario/pesquisar-usuario', name: 'Usuários', element: PesquisaDeUsuario },
