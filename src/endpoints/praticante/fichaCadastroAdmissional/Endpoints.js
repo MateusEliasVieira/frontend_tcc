@@ -4,6 +4,8 @@ const URL = 'http://localhost:8080/'
 
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET = URL+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-id'
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_CPF_GET = URL+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-cpf'
+const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET = URL+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-nome'
+
 const BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET = URL+'praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes'
 const SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST = URL+'praticante/dados-pessoais/salvar-dados-pessoais-do-praticante'
 const ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT = URL+'praticante/dados-pessoais/atualizar-dados-pessoais-do-praticante'
@@ -42,6 +44,7 @@ const BUSCAR_EMERGENCIA_DO_PRATICANTE_POR_ID_GET = URL+'praticante/emergencia/bu
 export{
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_CPF_GET,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,
   BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET,
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST,
   ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,

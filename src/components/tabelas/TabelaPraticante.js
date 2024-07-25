@@ -1,7 +1,11 @@
 import {CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
 import React from "react";
+import CIcon from "@coreui/icons-react";
+import TimelineIcon from '@mui/icons-material/Timeline';
+import ModalComEvolucao from "../modal/ModalComEvolucao";
 
 const TabelaPraticante = (props) => {
+
   return (
     <CTable>
       <CTableHead>
@@ -9,6 +13,7 @@ const TabelaPraticante = (props) => {
           <CTableHeaderCell>Código</CTableHeaderCell>
           <CTableHeaderCell>Nome completo</CTableHeaderCell>
           <CTableHeaderCell>Diagnóstico clínico</CTableHeaderCell>
+          <CTableHeaderCell>Evolução</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
       <CTableBody>
@@ -24,6 +29,7 @@ const TabelaPraticante = (props) => {
                   <strong>{item.nomeCompleto}</strong>
                 </CTableDataCell>
                 <CTableDataCell>{item.diagnosticoClinico}</CTableDataCell>
+                <CTableDataCell><ModalComEvolucao nomeCompleto={item.nomeCompleto}/></CTableDataCell>
               </CTableRow>
             )
           )}

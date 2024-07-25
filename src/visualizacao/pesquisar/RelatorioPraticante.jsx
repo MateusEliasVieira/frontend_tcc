@@ -126,10 +126,10 @@ const RelatorioPraticante = () => {
       {idPraticante !== "" ?
 
       <CContainer style={{
-        width: 'idPraticante00%',
-        height: 'idPraticante00%',
+        width: '100%',
+        height: '100%',
         padding: '20px',
-        boxShadow: '4px 4px idPraticante0px 0px rgba(0, 0, 0, 0.3)',
+        boxShadow: '4px 4px 0px 0px rgba(0, 0, 0, 0.3)',
         backgroundColor: 'white',
         margin: '20px auto'
       }}>
