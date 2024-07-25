@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import Grafico from "../graficos/Grafico";
+import Grafico from "../evolucao/Grafico";
 const Dashboard = () => {
   return (
     <>
