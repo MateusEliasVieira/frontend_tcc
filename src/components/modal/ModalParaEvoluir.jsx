@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CButton, CCard, CCardBody, CCardHeader} from "@coreui/react";
 
 import Campo from "../campos/Campo";
@@ -42,12 +42,10 @@ const ModalParaEvoluir = (props) => {
         .then((response) => {
           if (response.status === HttpStatusCode.Created) {
             alert("Praticante evoluido com sucesso!")
-          } else {
-            alert("Erro ao evoluir praticante!")
           }
         })
-        .catch(() => {
-          alert("Erro ao evoluir praticante!")
+        .catch((erro) => {
+          alert(erro.response.data.titulo)
         })
     } else {
       alert("Erro ao evoluir praticante!")
@@ -56,11 +54,10 @@ const ModalParaEvoluir = (props) => {
 
 
   return (
-
     <div>
       <div>
         <button
-          title={`Gerar gráfico de linhas para ${props.nomeCompleto}`}
+          title={`Evoluir praticante ${props.nomeCompleto}`}
           type="button"
           style={{border: "none", background: "none"}}
           data-toggle="modal"
@@ -98,6 +95,14 @@ const ModalParaEvoluir = (props) => {
               </CCardHeader>
               <CCardBody>
                 <Campo
+                  legenda="Presente?"
+                  id="observacoes"
+                  tipo="select"
+                  opcoes={simOuNao}
+                  valor={dados.estavaPresente}
+                  setar={(e) => setDados({...dados, estavaPresente: e.target.value})}
+                />
+                <Campo
                   id="dataEvolucao"
                   legenda="Data"
                   tipo="date"
@@ -112,14 +117,6 @@ const ModalParaEvoluir = (props) => {
                   tipo="textarea"
                   valor={dados.observacao}
                   setar={(e) => setDados({...dados, observacao: e.target.value})}
-                />
-                <Campo
-                  legenda="Presente?"
-                  id="observacoes"
-                  tipo="select"
-                  opcoes={simOuNao}
-                  valor={dados.estavaPresente}
-                  setar={(e) => setDados({...dados, estavaPresente: e.target.value})}
                 />
                 <CButton color="danger" style={{color:"white"}} onClick={() => {
                   salvarEvolucao()

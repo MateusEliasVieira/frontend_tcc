@@ -32,11 +32,11 @@ const TabelaPraticante = (props) => {
                 <CTableDataCell>{item.diagnosticoClinico}</CTableDataCell>
 
                 <CTableDataCell style={{verticalAlign: "middle"}}>
-                  <ModalComEvolucaoGraficoDeLinhas nomeCompleto={item.nomeCompleto}/>
+                  <ModalComEvolucaoGraficoDeLinhas nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
 
                 <CTableDataCell style={{verticalAlign: "middle"}}>
-                  <ModalComEvolucaoGraficoDeBarras nomeCompleto={item.nomeCompleto}/>
+                  <ModalComEvolucaoGraficoDeBarras nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
 
                 <CTableDataCell>
@@ -54,7 +54,7 @@ const TabelaPraticante = (props) => {
                 </CTableDataCell>
 
                 <CTableDataCell>
-                  <ModalParaEvoluir nomeCompleto={item.nomeCompleto} idPraticante={item.idPraticante}/>
+                  <ModalParaEvoluir nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
 
               </CTableRow>

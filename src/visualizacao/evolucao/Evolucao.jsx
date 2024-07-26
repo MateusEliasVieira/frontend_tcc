@@ -18,8 +18,6 @@ const Evolucao = () => {
   const login = JSON.parse(localStorage.getItem('login'));
   const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
 
-  const [id, setId] = useState('')
-
   const [dados, setDados] = useState({
     data: '',
     observacao: '',
@@ -47,6 +45,14 @@ const Evolucao = () => {
       </CCardHeader>
       <CCardBody>
         <Campo
+          legenda="Presente?"
+          id="presente"
+          tipo="select"
+          opcoes={simOuNao}
+          valor={dados.estavaPresente}
+          setar={(e) => setDados({...dados, estavaPresente: e.target.value})}
+        />
+        <Campo
           id="dataEvolucao"
           legenda="Data"
           tipo="date"
@@ -61,14 +67,6 @@ const Evolucao = () => {
           tipo="textarea"
           valor={dados.observacao}
           setar={(e) => setDados({...dados, observacao: e.target.value})}
-        />
-        <Campo
-          legenda="Presente?"
-          id="observacoes"
-          tipo="select"
-          opcoes={simOuNao}
-          valor={dados.estavaPresente}
-          setar={(e) => setDados({...dados, estavaPresente: e.target.value})}
         />
         <CButton onClick={() => {
           if (dados.praticante.idPraticante) {
