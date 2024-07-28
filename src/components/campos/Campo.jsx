@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  CFormCheck,
   CFormInput,
   CFormLabel,
   CFormSelect,

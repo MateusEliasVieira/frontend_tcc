@@ -131,7 +131,8 @@ const Login = () => {
                     <CRow>
                       <CCol xs={6}>
                         <CButton
-                          color="dark"
+                          color="danger"
+                          style={{color:"white"}}
                           className="px-4"
                           onClick={() => {
                             logar()

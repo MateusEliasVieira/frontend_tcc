@@ -7,6 +7,7 @@ import {
   BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
 } from "../../endpoints/praticante/evolucao/Endpoint";
 import Campo from "../campos/Campo";
+import {formatarDataParaDiaMesAno} from "../../utilidades/ManipuladorDeDatas";
 
 const ModalComEvolucaoGraficoDeLinhas = (props) => {
 
@@ -29,18 +30,6 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
     content: () => conteudoDocumento.current,
   });
 
-  const manipularFrequencia = () => {
-
-  }
-
-  const manipularFaltasa = () => {
-
-  }
-
-  const manipularMeses = () => {
-
-  }
-
   const buscar = () => {
     axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
       JSON.stringify({...formularioDados}),
@@ -52,13 +41,17 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
       })
       .then((response) => {
         if (response.status === HttpStatusCode.Ok) {
+          console.log(response.data)
           setDadosFrequencia(response.data.frequencia)
           setDadosFaltas(response.data.faltas)
           setMeses(response.data.meses)
+        }else{
+          console.log("Erro then = "+erro)
+
         }
       })
       .catch((erro) => {
-        alert(erro.response.data.titulo)
+        console.log("Erro = "+erro)
       })
   }
 
@@ -99,7 +92,7 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <CCard ref={conteudoDocumento}>
-              <CCardHeader>Evolução / {props.nomeCompleto}</CCardHeader>
+              <CCardHeader>Evolução: {props.nomeCompleto} - Período: De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>
               <CCardBody>
                 <CChartLine
                   data={{
@@ -107,9 +100,9 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
                     datasets: [
                       {
                         label: "Frequência",
-                        backgroundColor: "rgba(151, 187, 205, 0.2)",
-                        borderColor: "rgba(151, 187, 205, 1)",
-                        pointBackgroundColor: "rgba(151, 187, 205, 1)",
+                        backgroundColor: "#0ecf8f",
+                        borderColor: "#0ecf8f",
+                        pointBackgroundColor: "#0ecf8f",
                         pointBorderColor: "#fff",
                         data: dadosFrequencia,
                       },
@@ -124,78 +117,87 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
                     ],
                   }}
                 />
-                <CContainer>
-
-                  <CRow>
-                    <CCol md="auto">
-                      <Campo
-                        id="dataInicial"
-                        legenda="Data inicial"
-                        tipo="date"
-                        setar={(e) => {
-                          setFormularioDados({...formularioDados, dataInicial: e.target.value})
-                        }}
-                      />
-                    </CCol>
-                    <CCol md="auto">
-                      <Campo
-                        id="dataFinal"
-                        legenda="Data final"
-                        tipo="date"
-                        setar={(e) => {
-                          setFormularioDados({...formularioDados, dataFinal: e.target.value})
-                        }}
-                      />
-                    </CCol>
-                  </CRow>
-                  <CRow>
-                    <CCol md="auto">
-                      <CButton
-                        color="danger"
-                        title="Realizar consulta"
-                        style={{color: "white", width: "100px"}}
-                        onClick={() => {
-                          buscar()
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                             className="bi bi-search" viewBox="0 0 16 16">
-                          <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                        </svg>
-                      </CButton>
-                    </CCol>
-                  </CRow>
-                </CContainer>
               </CCardBody>
             </CCard>
-            <CButton
-              color="danger"
-              title="Download do gráfico"
-              style={{color: "white", margin: "10px 30px", width: "100px"}}
-              onClick={() => {
-                manipuladorDeImpressao();
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                fill="currentColor"
-                className="bi bi-download"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                <path
-                  d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
-              </svg>
-            </CButton>
+            <CContainer style={{padding: "10px"}}>
+              <CRow className="justify-content-center align-items-center" style={{minHeight: "100vh"}}>
+                <CCol
+                  xs="auto"
+                  className="d-flex justify-content-center align-items-center"
+                  style={{gap: "10px"}} // Espaço entre os elementos
+                >
+                  <Campo
+                    id="dataInicial"
+                    legenda="Data inicial"
+                    tipo="date"
+                    setar={(e) => {
+                      setFormularioDados({
+                        ...formularioDados,
+                        dataInicial: e.target.value,
+                      });
+                    }}
+                  />
+                  <Campo
+                    id="dataFinal"
+                    legenda="Data final"
+                    tipo="date"
+                    setar={(e) => {
+                      setFormularioDados({
+                        ...formularioDados,
+                        dataFinal: e.target.value,
+                      });
+                    }}
+                  />
+                  <CButton
+                    color="danger"
+                    title="Realizar consulta"
+                    style={{color: "white", marginTop: "15px", width: "100px"}}
+                    onClick={() => {
+                      buscar();
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="currentColor"
+                      className="bi bi-search"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                  </CButton>
+                  <CButton
+                    color="danger"
+                    title="Download do gráfico"
+                    style={{color: "white", marginTop: "15px", width: "100px"}}
+                    onClick={() => {
+                      manipuladorDeImpressao();
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="currentColor"
+                      className="bi bi-download"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                      <path
+                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                    </svg>
+                  </CButton>
+                </CCol>
+              </CRow>
+            </CContainer>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default ModalComEvolucaoGraficoDeLinhas;

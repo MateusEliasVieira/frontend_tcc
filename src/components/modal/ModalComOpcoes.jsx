@@ -13,8 +13,8 @@ const ModalComOpcoes = (props) => {
             {props.conteudo}
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-primary" onClick={props.confirmar}>Confirmar</button>
-            <button type="button" className="btn btn-secondary" onClick={props.esconderModalDeOpcoes}>Fechar</button>
+            <button type="button" className="btn btn-danger" style={{color:"white"}} onClick={props.confirmar}>Confirmar</button>
+            <button type="button" className="btn btn-danger" style={{color:"white"}} onClick={props.esconderModalDeOpcoes}>Fechar</button>
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ const Modal = (props) => {
             {props.conteudo}
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={props.esconderModal}>Fechar</button>
+            <button type="button" className="btn btn-danger" style={{color:"white"}} onClick={props.esconderModal}>Fechar</button>
           </div>
         </div>
       </div>

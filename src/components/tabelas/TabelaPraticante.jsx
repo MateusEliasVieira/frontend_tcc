@@ -24,21 +24,16 @@ const TabelaPraticante = (props) => {
           props.lista.map((item) => (
               <CTableRow>
                 <CTableDataCell>{item.praticante.idPraticante}</CTableDataCell>
-
                 <CTableDataCell>
                   {item.nomeCompleto}
                 </CTableDataCell>
-
                 <CTableDataCell>{item.diagnosticoClinico}</CTableDataCell>
-
                 <CTableDataCell style={{verticalAlign: "middle"}}>
                   <ModalComEvolucaoGraficoDeLinhas nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
-
                 <CTableDataCell style={{verticalAlign: "middle"}}>
                   <ModalComEvolucaoGraficoDeBarras nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
-
                 <CTableDataCell>
                   <CButton color="" title={"Gerar relatório para " + item.nomeCompleto} style={{background: "none"}} onClick={
                     () => {
@@ -52,11 +47,9 @@ const TabelaPraticante = (props) => {
                     </svg>
                   </CButton>
                 </CTableDataCell>
-
                 <CTableDataCell>
                   <ModalParaEvoluir nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
-
               </CTableRow>
             )
           )}
@@ -64,5 +57,4 @@ const TabelaPraticante = (props) => {
     </CTable>
   )
 }
-
 export default TabelaPraticante
