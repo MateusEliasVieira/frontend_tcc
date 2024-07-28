@@ -3,6 +3,7 @@ import React from "react";
 import ModalComEvolucaoGraficoDeLinhas from "../modal/ModalComEvolucaoGraficoDeLinhas";
 import ModalComEvolucaoGraficoDeBarras from "../modal/ModalComEvolucaoGraficoDeBarras";
 import ModalParaEvoluir from "../modal/ModalParaEvoluir";
+import ModalComEvolucaoGraficoDeTorta from "../modal/ModalComEvolucaoGraficoDeTorta";
 
 const TabelaPraticante = (props) => {
 
@@ -10,12 +11,12 @@ const TabelaPraticante = (props) => {
     <CTable>
       <CTableHead>
         <CTableRow>
-          <CTableHeaderCell>Código</CTableHeaderCell>
-          <CTableHeaderCell>Nome completo</CTableHeaderCell>
-          <CTableHeaderCell>Diagnóstico clínico</CTableHeaderCell>
-          <CTableHeaderCell colSpan="2" style={{width: "75px"}}>Frequência</CTableHeaderCell>
-          <CTableHeaderCell>Relatório</CTableHeaderCell>
-          <CTableHeaderCell>Evoluir</CTableHeaderCell>
+          <CTableHeaderCell style={{width: "20px",textAlign:"center"}}>Código</CTableHeaderCell>
+          <CTableHeaderCell style={{width: "300px",textAlign:"center"}}>Nome completo</CTableHeaderCell>
+          <CTableHeaderCell style={{width: "600px",textAlign:"center"}}>Diagnóstico clínico</CTableHeaderCell>
+          <CTableHeaderCell colSpan="3" style={{width: "25px",textAlign:"center"}}>Frequência</CTableHeaderCell>
+          <CTableHeaderCell style={{width: "50px",textAlign:"center"}}>Relatório</CTableHeaderCell>
+          <CTableHeaderCell style={{width: "80px",textAlign:"center"}}>Evoluir</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
 
@@ -23,18 +24,21 @@ const TabelaPraticante = (props) => {
         {
           props.lista.map((item) => (
               <CTableRow>
-                <CTableDataCell>{item.praticante.idPraticante}</CTableDataCell>
-                <CTableDataCell>
+                <CTableDataCell style={{textAlign:"center"}}>{item.praticante.idPraticante}</CTableDataCell>
+                <CTableDataCell style={{textAlign:"center"}}>
                   {item.nomeCompleto}
                 </CTableDataCell>
-                <CTableDataCell>{item.diagnosticoClinico}</CTableDataCell>
-                <CTableDataCell style={{verticalAlign: "middle"}}>
+                <CTableDataCell style={{textAlign:"center"}}>{item.diagnosticoClinico}</CTableDataCell>
+                <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
                   <ModalComEvolucaoGraficoDeLinhas nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
-                <CTableDataCell style={{verticalAlign: "middle"}}>
+                <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
                   <ModalComEvolucaoGraficoDeBarras nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
-                <CTableDataCell>
+                <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
+                  <ModalComEvolucaoGraficoDeTorta nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
+                </CTableDataCell>
+                <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
                   <CButton color="" title={"Gerar relatório para " + item.nomeCompleto} style={{background: "none"}} onClick={
                     () => {
                       window.location.href = `/#/relatorio/gerar-relatorio-de-praticante?id=${item.praticante.idPraticante}`
@@ -47,7 +51,7 @@ const TabelaPraticante = (props) => {
                     </svg>
                   </CButton>
                 </CTableDataCell>
-                <CTableDataCell>
+                <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
                   <ModalParaEvoluir nomeCompleto={item.nomeCompleto} idPraticante={item.praticante.idPraticante}/>
                 </CTableDataCell>
               </CTableRow>

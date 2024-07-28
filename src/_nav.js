@@ -3,7 +3,7 @@ import CIcon from '@coreui/icons-react'
 import {
   cilAccountLogout,
   cilChartPie,
-  cilClipboard,
+  cilClipboard, cilHome,
   cilMagnifyingGlass,
   cilUser,
   cilUserPlus
@@ -13,6 +13,12 @@ import {CNavGroup, CNavItem} from '@coreui/react'
 const login = JSON.parse(localStorage.getItem("login")) || {}; // Garante que login seja um objeto
 
 const _nav_administrador = [
+  {
+    component: CNavItem,
+    name: 'Início',
+    href: '/#/dashboard',
+    icon: <CIcon icon={cilHome} customClassName="nav-icon"/>,
+  },
   {
     component: CNavGroup,
     name: 'Praticantes',
@@ -31,12 +37,12 @@ const _nav_administrador = [
         to: '/formulario/pesquisar-praticante',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
-      {
-        component: CNavItem,
-        name: 'Evolução',
-        to: '/evolucao-praticantes',
-        icon: <CIcon icon={cilChartPie} customClassName="nav-icon"/>,
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Início'
+      //   to: '/evolucao-praticantes',
+      //   icon: <CIcon icon={cilChartPie} customClassName="nav-icon"/>,
+      // },
     ],
   },
   {

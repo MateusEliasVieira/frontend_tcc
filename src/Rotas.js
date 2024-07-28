@@ -7,7 +7,7 @@ const Dashboard = React.lazy(() => import('./visualizacao/dashboard/Dashboard'))
 const CadastroPraticante = React.lazy(() => import('./visualizacao/formularios/formulariosDePraticante/CadastroDePraticante'))
 
 // Relatório de Praticante
-const RelatorioPraticante = React.lazy(() => import('./visualizacao/relatorio/RelatorioPraticante'))
+const RelatorioPraticante = React.lazy(() => import('./visualizacao/pesquisar/RelatorioPraticante'))
 const PesquisarPraticante = React.lazy(() => import('./visualizacao/pesquisar/Pesquisar'))
 
 //Formulários Funcionário

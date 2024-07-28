@@ -22,7 +22,7 @@ const esconderModalDeOpcoes = (setDisplayModalOpcoes, setTituloModalOpcoes, setC
   setConteudoModalOpcoes("");
 };
 
-const apresentarModalDeCarregamento = (titulo, conteudo, setDisplayModal, setTituloModal, setConteudoModal) => {
+const apresentarModalDeCarregamento = (titulo, conteudo, setDisplayModal, setTituloModal, setConteudoModal, setEspacar) => {
   setDisplayModal("block");
   setTituloModal(titulo);
   setConteudoModal(conteudo);
