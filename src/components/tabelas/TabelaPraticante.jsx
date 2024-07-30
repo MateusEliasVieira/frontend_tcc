@@ -41,7 +41,7 @@ const TabelaPraticante = (props) => {
                 <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
                   <CButton color="" title={"Gerar relatório para " + item.nomeCompleto} style={{background: "none"}} onClick={
                     () => {
-                      window.location.href = `/#/relatorio/gerar-relatorio-de-praticante?id=${item.praticante.idPraticante}`
+                      window.location.href = `/#/gerar-relatorio-de-praticante?id=${item.praticante.idPraticante}`
                     }
                   }>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"

@@ -60,7 +60,7 @@ const Login = () => {
             localStorage.setItem('login', JSON.stringify(response.data));
             window.location.href = "/"
           } else {
-            console.log("Login inválido " + response)
+            console.log("NovaSenha inválido " + response)
           }
         })
         .catch((error) => {
@@ -100,9 +100,7 @@ const Login = () => {
                 <CCardBody>
                   <div>
                     <h2>Bem Vindo!</h2>
-                    <p className="text-medium-emphasis">Entre com sua conta! <a href=""
-                                                                                style={{textDecoration: "none"}}>Esqueceu
-                      a senha?</a></p>
+                    <p className="text-medium-emphasis">Entre com sua conta! <a href="/#/esqueci-minha-senha" style={{textDecoration: "none"}}>Esqueceu a senha?</a></p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser}/>

@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {estados, tipoSanguineo, corOuRaca, sexo, CADASTRADO} from '../../../../constantes/Constantes';
 import {
   aplicaMascaraDeCartaoDoSUS,
-  aplicaMascaraDeCEP,
-  aplicaMascaraDeCPF
+  aplicaMascaraDeCEP
 } from '../../../../utilidades/ValidadorDeCampos';
 import {
   CButton,
@@ -15,12 +14,16 @@ import {
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
 import {salvarDadosPessoais} from "../../../../requisicoes/Praticante";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const DadosPessoais = (props) => {
 
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
   const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
-
     nomeCompleto: '',
     diagnosticoClinico: '',
     queixaPrincipal: '',
@@ -65,6 +68,12 @@ const DadosPessoais = (props) => {
                 </CCardHeader>
             }
             <CCardBody>
+              <Modal
+                dsp={displayModal}
+                titulo={tituloModal}
+                conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+                esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+              />
               <CContainer>
                 <CRow>
                   <CCol md="auto">
@@ -273,8 +282,8 @@ const DadosPessoais = (props) => {
                     />
                   </CCol>
                 </CRow>
-                <CButton color="primary" disabled={desabilitar} onClick={() => {
-                  salvarDadosPessoais(formularioDeDados,setDesabilitar)
+                <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
+                  salvarDadosPessoais(formularioDeDados,setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
                 }
                 }>
                   Salvar

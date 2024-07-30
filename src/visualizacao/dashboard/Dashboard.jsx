@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
-import Grafico from "../evolucao/Grafico";
+import CadastroDePraticante from "../formularios/formulariosDePraticante/CadastroDePraticante";
 const Dashboard = () => {
   return (
     <>
-      <Grafico />
+      <CadastroDePraticante />
     </>
   )
 }

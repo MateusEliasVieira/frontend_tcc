@@ -5,10 +5,15 @@ import Campo from "../campos/Campo";
 import {simOuNao} from "../../constantes/Constantes";
 import axios, {HttpStatusCode} from "axios";
 import {SALVAR_EVOLUCAO_DO_PRATICANTE_POST} from "../../endpoints/praticante/evolucao/Endpoint";
+import Modal from "./Modal";
+import {apresentarModal, esconderModal} from "../../utilidades/ManipuladorDeModal";
 
 const ModalParaEvoluir = (props) => {
 
   const login = JSON.parse(localStorage.getItem('login'));
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
 
   const [dados, setDados] = useState({
     data: '',
@@ -41,14 +46,14 @@ const ModalParaEvoluir = (props) => {
         })
         .then((response) => {
           if (response.status === HttpStatusCode.Created) {
-            alert("Praticante evoluido com sucesso!")
+            apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
           }
         })
         .catch((erro) => {
-          alert(erro.response.data.titulo)
+          apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
         })
     } else {
-      alert("Erro ao evoluir praticante!")
+      apresentarModal("Aviso","Erro ao evoluir praticante!", setDisplayModal, setTituloModal, setConteudoModal);
     }
   }
 
@@ -80,6 +85,12 @@ const ModalParaEvoluir = (props) => {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <CCard>
+              <Modal
+                dsp={displayModal}
+                titulo={tituloModal}
+                conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+                esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+              />
               <CCardHeader>
                 <strong>Evoluir Praticante / {props.nomeCompleto}</strong>
               </CCardHeader>

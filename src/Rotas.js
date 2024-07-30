@@ -15,19 +15,18 @@ const CadastroDeUsuario = React.lazy(() => import('./visualizacao/formularios/fo
 const PesquisaDeUsuario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/PesquisaDeUsuario'))
 const AtualizacaoDeUsuario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/AtualizacaoDeUsuario'))
 
-// Gráfico
-const Grafico = React.lazy(() => import('./visualizacao/evolucao/Grafico'))
+// Evolução
 const Evolucao = React.lazy(() => import('./visualizacao/evolucao/Evolucao'))
 
 const rotas = [
   { path: '/', exact: true, name: 'Início' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/evolucao-praticantes', name: 'Evolução', element: Evolucao },
-  { path: '/relatorio/gerar-relatorio-de-praticante/*', name: 'Relatório', element: RelatorioPraticante },
-  { path: '/formulario/pesquisar-praticante', name: 'Pesquisar', element:PesquisarPraticante },
-  { path: '/formulario/cadastrar-praticante', name: 'Novo', element: CadastroPraticante },
-  { path: '/formulario/cadastrar-usuario', name: 'Novo', element: CadastroDeUsuario },
-  { path: '/formulario/pesquisar-usuario', name: 'Usuários', element: PesquisaDeUsuario },
-  { path: '/formulario/atualizar-usuario/*', name: 'Atualizar', element:  AtualizacaoDeUsuario},
+  { path: '/gerar-relatorio-de-praticante/*', name: 'Relatório', element: RelatorioPraticante },
+  { path: '/pesquisar-praticante', name: 'Pesquisar', element:PesquisarPraticante },
+  { path: '/cadastrar-praticante', name: 'Novo', element: CadastroPraticante },
+  { path: '/cadastrar-usuario', name: 'Novo', element: CadastroDeUsuario },
+  { path: '/pesquisar-usuario', name: 'Usuários', element: PesquisaDeUsuario },
+  { path: '/atualizar-usuario/*', name: 'Atualizar', element:  AtualizacaoDeUsuario},
 ]
 export default rotas

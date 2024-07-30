@@ -250,7 +250,7 @@ const AtualizacaoDeUsuario = () => {
                     (<></>)
                 }
 
-                <CButton color="primary" onClick={() => {
+                <CButton color="danger" style={{color:"white"}} onClick={() => {
                   atualizarDadosDoUsuario(formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal)
                 }
                 }>

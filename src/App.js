@@ -16,6 +16,8 @@ const DefaultLayout = React.lazy(() => import('./layout/LayoutPadrao'))
 const Login = React.lazy(() => import('./visualizacao/paginas/login/Login'))
 const Pagina404 = React.lazy(() => import('./visualizacao/paginas/pagina404/Pagina404'))
 const Pagina500 = React.lazy(() => import('./visualizacao/paginas/pagina500/Pagina500'))
+const Recuperacao = React.lazy(() => import('./visualizacao/paginas/recuperacao/Recuperacao'))
+const NovaSenha = React.lazy(() => import('./visualizacao/paginas/novaSenha/NovaSenha'))
 
 class App extends Component {
   render() {
@@ -24,6 +26,8 @@ class App extends Component {
         <Suspense fallback={loading}>
           <Routes>
             <Route exact path="/login" name="Pagina de Login" element={<Login />} />
+            <Route exact path="/esqueci-minha-senha" name="Página de Recuperação de conta" element={<Recuperacao />} />
+            <Route exact path="/nova-senha" name="Nova Senha" element={<NovaSenha />} />
             <Route exact path="/404" name="Pagina 404" element={<Pagina404 />} />
             <Route exact path="/500" name="Pagina 500" element={<Pagina500 />} />
             <Route path="*" name="Inicio" element={<LayoutPadrao />} />

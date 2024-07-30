@@ -238,7 +238,7 @@ const CadastroDeUsuario = () => {
                   (<></>)
               }
 
-              <CButton color="primary" onClick={() => {
+              <CButton color="danger" style={{color:"white"}} onClick={() => {
                 salvar(formularioDeDados, SALVAR_NOVO_USUARIO_POST, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar

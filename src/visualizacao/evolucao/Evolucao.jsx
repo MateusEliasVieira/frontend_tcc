@@ -12,11 +12,16 @@ import Campo from "../../components/campos/Campo";
 import {simOuNao} from "../../constantes/Constantes";
 import {SALVAR_EVOLUCAO_DO_PRATICANTE_POST} from "../../endpoints/praticante/evolucao/Endpoint";
 import axios, {HttpStatusCode} from "axios";
+import Modal from "../../components/modal/Modal";
+import {esconderModal} from "../../utilidades/ManipuladorDeModal";
 
 const Evolucao = () => {
 
   const login = JSON.parse(localStorage.getItem('login'));
   const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
 
   const [dados, setDados] = useState({
     data: '',
@@ -93,6 +98,12 @@ const Evolucao = () => {
           }
         }}>Evoluir</CButton>
       </CCardBody>
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
     </CCard>
   )
 }

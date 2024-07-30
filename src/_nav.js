@@ -13,12 +13,12 @@ import {CNavGroup, CNavItem} from '@coreui/react'
 const login = JSON.parse(localStorage.getItem("login")) || {}; // Garante que login seja um objeto
 
 const _nav_administrador = [
-  {
-    component: CNavItem,
-    name: 'Início',
-    href: '/#/dashboard',
-    icon: <CIcon icon={cilHome} customClassName="nav-icon"/>,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Início',
+  //   href: '/#/dashboard',
+  //   icon: <CIcon icon={cilHome} customClassName="nav-icon"/>,
+  // },
   {
     component: CNavGroup,
     name: 'Praticantes',
@@ -28,21 +28,15 @@ const _nav_administrador = [
       {
         component: CNavItem,
         name: 'Novo',
-        to: '/formulario/cadastrar-praticante',
+        to: '/cadastrar-praticante',
         icon: <CIcon icon={cilUserPlus} customClassName={"nav-icon"} />
       },
       {
         component: CNavItem,
         name: 'Pesquisa',
-        to: '/formulario/pesquisar-praticante',
+        to: '/pesquisar-praticante',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
-      // {
-      //   component: CNavItem,
-      //   name: 'Início'
-      //   to: '/evolucao-praticantes',
-      //   icon: <CIcon icon={cilChartPie} customClassName="nav-icon"/>,
-      // },
     ],
   },
   {
@@ -54,13 +48,13 @@ const _nav_administrador = [
       {
         component: CNavItem,
         name: 'Novo',
-        to: '/formulario/cadastrar-usuario',
+        to: '/cadastrar-usuario',
         icon:<CIcon icon={cilUserPlus} customClassName={"nav-icon"}/>
       },
       {
         component: CNavItem,
         name: 'Pesquisa',
-        to: '/formulario/pesquisar-usuario',
+        to: '/pesquisar-usuario',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
     ],
@@ -83,20 +77,14 @@ const _nav_usuario = [
       {
         component: CNavItem,
         name: 'Novo',
-        to: '/formulario/cadastrar-praticante',
+        to: '/cadastrar-praticante',
         icon: <CIcon icon={cilUserPlus} customClassName={"nav-icon"} />
       },
       {
         component: CNavItem,
         name: 'Pesquisa',
-        to: '/formulario/pesquisar-praticante',
+        to: '/pesquisar-praticante',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
-      },
-      {
-        component: CNavItem,
-        name: 'Evolução',
-        to: '/evolucao-praticantes',
-        icon: <CIcon icon={cilChartPie} customClassName="nav-icon"/>,
       },
     ],
   },

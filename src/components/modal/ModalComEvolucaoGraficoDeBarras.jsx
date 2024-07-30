@@ -5,6 +5,7 @@ import {useReactToPrint} from "react-to-print";
 import axios, {HttpStatusCode} from "axios";
 import {BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST} from "../../endpoints/praticante/evolucao/Endpoint";
 import Campo from "../campos/Campo";
+import {formatarDataParaDiaMesAno} from "../../utilidades/ManipuladorDeDatas";
 
 const ModalComEvolucaoGraficoDeBarras = (props) => {
 
@@ -84,7 +85,7 @@ const ModalComEvolucaoGraficoDeBarras = (props) => {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <CCard ref={conteudoDocumento}>
-              <CCardHeader>Evolução / {props.nomeCompleto}</CCardHeader>
+              <CCardHeader>Evolução: {props.nomeCompleto} - Período: De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>
               <CCardBody>
                 <CChartBar
                   data={{
