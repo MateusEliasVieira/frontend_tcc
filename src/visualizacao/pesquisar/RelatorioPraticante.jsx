@@ -37,9 +37,10 @@ import EquilibrioDinamicoRelatorio from "./AvaliacaoFisioterapeutica/EquilibrioD
 import ModalDeCarregamento from "../../components/modal/ModalDeCarregamento";
 import {useEffect, useRef, useState} from "react";
 import {useReactToPrint} from "react-to-print";
-
-import ImagePDF from '../../assets/icones/pdf.png'
-
+import CoordenacaoDinamicaRelatorio from "./AvaliacaoFisioterapeutica/CoordenacaoDinamicaRelatorio";
+import EmPeRelatorio from "./AvaliacaoFisioterapeutica/EmPeRelatorio";
+import ImagemPDF from '../../assets/icones/pdf.png'
+import {apresentarModalDeCarregamento, esconderModal} from "../../utilidades/ManipuladorDeModal";
 
 const RelatorioPraticante = () => {
 
@@ -126,7 +127,8 @@ const RelatorioPraticante = () => {
             <EquilibrioDinamicoRelatorio idUsuario={idPraticante}/><br/>
             <HabilidadesMotorasAVDRelatorio idUsuario={idPraticante}/><br/>
             <CoordenacaoMotoraRelatorio idUsuario={idPraticante}/><br/>
-            <EmPERelatorio idUsuario={idPraticante}/><br/>
+            <CoordenacaoDinamicaRelatorio idUsuario={idPraticante}/><br/>
+            <EmPeRelatorio idUsuario={idPraticante}/><br/>
             <strong className="titulos-relatorio-praticante">Plano Terapêutico Singular - PTS</strong>
             <PlanoTerapeuticoSingularRelatorio idUsuario={idPraticante}/><br/>
           </CContainer>

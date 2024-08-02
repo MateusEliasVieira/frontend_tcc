@@ -83,8 +83,8 @@ const GruposMusculares = () => {
           />
           {
             desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#1c323f"}}>
-                <strong style={{color: "#0ecf8f"}}>Cadastrado com sucesso!</strong>
+              <CCardHeader style={{backgroundColor: "#e55353"}}>
+                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
               </CCardHeader>
               :
               <CCardHeader>
