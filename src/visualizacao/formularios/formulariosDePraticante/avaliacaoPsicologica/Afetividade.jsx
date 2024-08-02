@@ -127,7 +127,7 @@ const Afetividade = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_AFETIVIDADE_DO_PRATICANTE_POST, "afetividade", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_AFETIVIDADE_DO_PRATICANTE_POST, "afetividade", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
                 Salvar

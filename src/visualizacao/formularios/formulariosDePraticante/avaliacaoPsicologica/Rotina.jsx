@@ -107,7 +107,7 @@ const Rotina = () => {
                 disabled={desabilitar}
               />
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_ROTINA_DO_PRATICANTE_POST, "rotina", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_ROTINA_DO_PRATICANTE_POST, "rotina", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
                 Salvar

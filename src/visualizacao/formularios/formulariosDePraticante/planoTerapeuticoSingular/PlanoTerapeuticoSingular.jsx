@@ -212,7 +212,7 @@ const PlanoTerapeuticoSingular = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POST, "planoTerapeuticoSingular", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POST, "planoTerapeuticoSingular", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

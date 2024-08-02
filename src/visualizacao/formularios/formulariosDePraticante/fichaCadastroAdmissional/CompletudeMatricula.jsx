@@ -104,7 +104,7 @@ const CompletudeMatricula = () => {
               </CRow>
 
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST, "completudeMatricula", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST, "completudeMatricula", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
                 Salvar

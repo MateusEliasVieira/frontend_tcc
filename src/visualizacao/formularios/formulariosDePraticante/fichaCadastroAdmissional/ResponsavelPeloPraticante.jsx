@@ -168,7 +168,7 @@ const ResponsavelPeloPraticante = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color:"white"}}  disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_RESPONSAVEL_DO_PRATICANTE_POST,"responsavelPeloPraticante",setDesabilitar)
+                salvar(formularioDeDados, SALVAR_RESPONSAVEL_DO_PRATICANTE_POST,"responsavelPeloPraticante",setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

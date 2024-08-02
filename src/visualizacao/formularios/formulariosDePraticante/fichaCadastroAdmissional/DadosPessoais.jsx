@@ -289,7 +289,7 @@ const DadosPessoais = (props) => {
                   </CCol>
                 </CRow>
                 <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                  salvarDadosPessoais(formularioDeDados,setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+                  salvarDadosPessoais(formularioDeDados,setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal,setDisplayModal, setTituloModal, setConteudoModal)
                 }
                 }>
                   Salvar

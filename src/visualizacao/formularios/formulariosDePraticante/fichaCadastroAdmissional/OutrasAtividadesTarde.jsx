@@ -156,7 +156,7 @@ const OutrasAtividadesTarde = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POST,"outrasAtividadesTarde",setDesabilitar)
+                salvar(formularioDeDados, SALVAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POST,"outrasAtividadesTarde",setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

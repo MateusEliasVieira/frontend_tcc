@@ -138,7 +138,7 @@ const Educacao = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EDUCACAO_DO_PRATICANTE_POST, "educacao", setDesabilitar);
+                salvar(formularioDeDados, SALVAR_EDUCACAO_DO_PRATICANTE_POST, "educacao", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal);
               }}>
                 Salvar
               </CButton>

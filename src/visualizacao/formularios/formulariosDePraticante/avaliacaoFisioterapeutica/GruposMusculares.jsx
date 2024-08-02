@@ -385,7 +385,7 @@ const GruposMusculares = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POST, "gruposMusculares", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POST, "gruposMusculares", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

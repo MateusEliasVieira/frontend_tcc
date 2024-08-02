@@ -152,7 +152,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_RELACAO_FAMILIAR_DO_PRATICANTE_POST, "relacaoDaFamiliaComOExaminado", setDesabilitar)
+                salvar(formularioDeDados, SALVAR_RELACAO_FAMILIAR_DO_PRATICANTE_POST, "relacaoDaFamiliaComOExaminado", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
                 Salvar

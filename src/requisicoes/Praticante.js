@@ -5,6 +5,7 @@ import {
 import {CADASTRADO} from "../constantes/Constantes";
 import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeLocalStorage";
 import {mensagemParaErro, mensagemParaListaDeErros} from "../utilidades/ManipuladorDeRespostasDasRequisicoes";
+import {apresentarModal} from "../utilidades/ManipuladorDeModal";
 
 const login = JSON.parse(localStorage.getItem('login'));
 const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
@@ -26,9 +27,9 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
       localStorage.setItem('idPraticanteSalvo', response.data.praticante.idPraticante);
       localStorage.setItem("dadosPessoaisCadastrado", CADASTRADO)
       setDesabilitar("disabled")
-      alert('Dados salvos com sucesso');
+     apresentarModal("Aviso",response.data.mensagem,setDisplayModal, setTituloModal, setConteudoModal);
     } else {
-      alert('Não foi possível cadastrar os dados do praticante!');
+     apresentarModal("Aviso",'Não foi possível cadastrar os dados do praticante!',setDisplayModal, setTituloModal, setConteudoModal);
     }
   } catch (error) {
     console.log(error)
@@ -42,7 +43,7 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
         mensagemParaListaDeErros(lista, setDisplayModal, setTituloModal, setConteudoModal)
       } else if (resposta.data.mensagem !== undefined) {
         if (resposta.data.redirect) {
-          alert(resposta.data.mensagem)
+         apresentarModal("Aviso",resposta.data.mensagem,setDisplayModal, setTituloModal, setConteudoModal)
           setTimeout(() => {
             window.location = resposta.data.redirect
           }, 5000)
@@ -60,10 +61,10 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
   }
 };
 
-const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabilitar) => {
+const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal) => {
   if (idPraticanteSalvo) {
     try {
-      await axios.post(
+      const resposta= await axios.post(
         endpoint,
         JSON.stringify({...formularioDeDados}),
         {
@@ -75,10 +76,9 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
       );
       localStorage.setItem(chaveLocalStorage, CADASTRADO)
       setDesabilitar("disabled")
-      alert('Dados salvos com sucesso');
+     apresentarModal("Aviso",resposta.data.mensagem,setDisplayModal, setTituloModal, setConteudoModal);
       verificarSeEstaFinalizado()
     } catch (error) {
-      console.log(error)
       const resposta = error.response
       if (resposta.data !== undefined) {
         if (resposta.data.lista !== undefined) {
@@ -86,28 +86,28 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
           resposta.data.lista.map((item) => {
             lista += item.mensagem + "\n"
           })
-          alert(lista)
+         apresentarModal("Aviso",lista)
         } else if (resposta.data.mensagem !== undefined) {
           if (resposta.data.redirect) {
-            alert(resposta.data.mensagem)
+           apresentarModal("Aviso",resposta.data.mensagem,setDisplayModal, setTituloModal, setConteudoModal)
             setTimeout(() => {
               window.location = resposta.data.redirect
             }, 5000)
           } else {
-            alert(resposta.data.mensagem)
+           apresentarModal("Aviso",resposta.data.mensagem,setDisplayModal, setTituloModal, setConteudoModal)
           }
         } else if (resposta.data.titulo !== undefined) {
-          alert(resposta.data.titulo)
+         mensagemParaErro(resposta.data.titulo,setDisplayModal, setTituloModal, setConteudoModal)
         } else {
-          alert("Erro interno do sistema!")
+          mensagemParaErro("Erro interno do sistema!",setDisplayModal, setTituloModal, setConteudoModal)
         }
       } else {
-        alert("Erro interno do sistema!")
+       mensagemParaErro("Erro interno do sistema!",setDisplayModal, setTituloModal, setConteudoModal)
       }
     }
 
   } else {
-    alert("Cadastre os Dados Pessoais do Praticante primeiro!");
+    apresentarModal("Aviso","Cadastre os Dados Pessoais do Praticante primeiro!",setDisplayModal, setTituloModal, setConteudoModal);
   }
 };
 
