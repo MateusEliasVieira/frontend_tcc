@@ -18,6 +18,11 @@ import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const FormaDeComunicacao = () => {
+
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
+
   const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
     fala: '',
@@ -32,10 +37,6 @@ const FormaDeComunicacao = () => {
   });
 
   useEffect(() => {
-
-    const [displayModal, setDisplayModal] = useState("none");
-    const [tituloModal, setTituloModal] = useState("");
-    const [conteudoModal, setConteudoModal] = useState("");
 
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     const formaDeComunicacao = localStorage.getItem("formaDeComunicacao")

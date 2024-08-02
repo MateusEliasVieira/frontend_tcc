@@ -7,7 +7,6 @@ import {
   CCol, CContainer,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
 import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
 import {CADASTRADO, simOuNao} from '../../../../constantes/Constantes';
 import {salvar} from "../../../../requisicoes/Praticante";
@@ -18,6 +17,10 @@ import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal"; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
+
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
 
   const [desabilitar, setDesabilitar] = useState("")
   const [possuiPlanoDeSaude, setPossuiPlanoDeSaude] = useState('')
@@ -32,11 +35,6 @@ const Emergencia = () => {
   });
 
   useEffect(() => {
-
-    const [displayModal, setDisplayModal] = useState("none");
-    const [tituloModal, setTituloModal] = useState("");
-    const [conteudoModal, setConteudoModal] = useState("");
-
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     const emergencia = localStorage.getItem("emergencia")
     if (idPraticanteSalvo) {

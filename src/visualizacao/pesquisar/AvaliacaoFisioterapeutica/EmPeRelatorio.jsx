@@ -15,7 +15,7 @@ import {
  BUSCAR_EM_PE_DO_PRATICANTE_POR_ID_GET
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 
-const EmPERelatorio = ({idUsuario}) => {
+const EmPeRelatorio = ({idUsuario}) => {
 
   const [dados, setDados] = useState({
     sequenciaDeMovimentos: '',
@@ -107,4 +107,4 @@ const EmPERelatorio = ({idUsuario}) => {
   );
 };
 
-export default EmPERelatorio;
+export default EmPeRelatorio;

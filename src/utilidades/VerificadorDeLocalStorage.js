@@ -1,4 +1,5 @@
 import {CADASTRADO, NAO_CADASTRADO} from "../constantes/Constantes";
+import {apresentarModal} from "./ManipuladorDeModal";
 
 const variaveisDeCadastroLocalStorage = [
   'avaliacaoFisioterapeutica', 'coordenacaoMotora','emPE', 'equilibrioDinamico', 'equilibrioEstatico', 'formaDeComunicacao',
@@ -8,24 +9,17 @@ const variaveisDeCadastroLocalStorage = [
   'tracoDePersonalidade', 'completudeMatricula', 'dadosPessoaisCadastrado', 'educacao', 'emergencia', 'outrasAtividadesManha',
   'outrasAtividadesTarde', 'responsavelPeloPraticante', 'planoTerapeuticoSingular'
 ]
-const verificarSeEstaFinalizado = () => {
+const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoModal) => {
   let contador = 0;
- // let lista = ""
   variaveisDeCadastroLocalStorage.map((variavel) => {
     if (localStorage.getItem(variavel) === CADASTRADO) {
       contador++
     }
-    // else{
-    //   lista += variavel + "\n"
-    // }
   })
   if (contador === variaveisDeCadastroLocalStorage.length) {
-    alert("Finalizado cadastro do praticante!")
+    apresentarModal("Aviso","Finalizado cadastro do praticante!",setDisplayModal, setTituloModal, setConteudoModal)
     limparLocalStorage()
   }
-  // else{
-  //   alert("Não finalizado cadastro do praticante! Falta "+contador+" cadastros. "+lista)
-  // }
 }
 
 const limparLocalStorage = () => {
