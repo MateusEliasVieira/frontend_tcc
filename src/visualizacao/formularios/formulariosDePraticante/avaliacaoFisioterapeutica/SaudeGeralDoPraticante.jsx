@@ -346,7 +346,7 @@ const SaudeGeralDoPraticante = () => {
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_SAUDE_GERAL_DO_PRATICANTE_POST, "saudeGeralDosPraticantes", setDesabilitar)
               }}>
                 Salvar

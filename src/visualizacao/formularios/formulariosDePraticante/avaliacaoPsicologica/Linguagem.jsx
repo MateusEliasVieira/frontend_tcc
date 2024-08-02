@@ -144,7 +144,7 @@ const Linguagem = () => {
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_LINGUAGEM_DO_PRATICANTE_POST, "linguagem", setDesabilitar)
               }
               }>

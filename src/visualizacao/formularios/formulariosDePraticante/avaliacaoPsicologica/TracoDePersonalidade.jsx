@@ -159,7 +159,7 @@ const TracoDePersonalidade = () => {
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_TRACOS_PERSONALIDADE_DO_PRATICANTE_POST, "tracoDePersonalidade", setDesabilitar)
               }
               }>

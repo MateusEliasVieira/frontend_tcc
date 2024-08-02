@@ -143,7 +143,7 @@ const OutrasAtividadesTarde = () => {
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POST,"outrasAtividadesTarde",setDesabilitar)
               }}>
                 Salvar

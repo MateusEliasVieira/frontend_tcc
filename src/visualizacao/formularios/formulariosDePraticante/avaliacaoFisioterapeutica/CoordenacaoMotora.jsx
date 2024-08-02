@@ -213,7 +213,7 @@ const CoordenacaoMotora = () => {
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST, "coordenacaoMotora", setDesabilitar)
               }}>
                 Salvar

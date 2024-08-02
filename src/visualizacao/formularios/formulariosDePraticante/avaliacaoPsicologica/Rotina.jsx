@@ -94,7 +94,7 @@ const Rotina = () => {
                 legenda="Considerações sobre rotina"
                 disabled={desabilitar}
               />
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_ROTINA_DO_PRATICANTE_POST, "rotina", setDesabilitar)
               }
               }>

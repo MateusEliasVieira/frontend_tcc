@@ -125,7 +125,7 @@ const Educacao = () => {
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_EDUCACAO_DO_PRATICANTE_POST, "educacao", setDesabilitar);
               }}>
                 Salvar

@@ -260,7 +260,7 @@ const EmPE = () => {
                   </CCol>
                 </CRow>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_EM_PE_DO_PRATICANTE_POST, "emPE", setDesabilitar)
               }}>
                 Salvar

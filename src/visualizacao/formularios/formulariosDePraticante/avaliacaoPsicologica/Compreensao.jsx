@@ -97,7 +97,7 @@ const Compreensao = () => {
                   />
                 </CCol>
               </CRow>
-              <CButton color="primary" disabled={desabilitar} onClick={() => {
+              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_COMPREENSAO_DO_PRATICANTE_POST, "compreensao", setDesabilitar)
               }
               }>
