@@ -110,11 +110,11 @@ const AppBarraLateral = () => {
             <div className="col">
               <p>{usuario?.nome} <br/>
                 {usuario?.role === "ROLE_ADMIN" ?
-                  <strong style={{color: "#0ecf8f"}}>
+                  <strong style={{color: "#e55353"}}>
                     Administrador
                   </strong>
                   :
-                  <strong style={{color: "dodgerblue"}}>
+                  <strong style={{color: "#e55353"}}>
                     Usuário
                   </strong>
                 }

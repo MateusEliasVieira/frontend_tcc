@@ -39,8 +39,15 @@ import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeutic
 import "./CadastroDePraticante.css"
 import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeLocalStorage";
 import EmPE from "./avaliacaoFisioterapeutica/EmPe";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import Modal from "../../../components/modal/Modal";
 
 const CadastroDePraticante = () => {
+
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
+
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
   useEffect(() => {
@@ -60,7 +67,7 @@ const CadastroDePraticante = () => {
         })
         .then((response) => {
           console.log(response);
-          alert("Ainda não foi concluído o cadastro do praticante " + response.data.nomeCompleto);
+          apresentarModal("Aviso","Finalize o cadastro pendente de <strong>" + response.data.nomeCompleto + "</strong>!",setDisplayModal,setTituloModal,setConteudoModal);
         })
         .catch((erro) => {
         });
@@ -142,6 +149,12 @@ const CadastroDePraticante = () => {
 
   return (
     <div>
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
       <div id="box-tabs">
         <ul className="nav nav-tabs">
           <li className="nav-item">
