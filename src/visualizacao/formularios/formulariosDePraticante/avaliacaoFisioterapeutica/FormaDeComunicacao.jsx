@@ -33,6 +33,10 @@ const FormaDeComunicacao = () => {
 
   useEffect(() => {
 
+    const [displayModal, setDisplayModal] = useState("none");
+    const [tituloModal, setTituloModal] = useState("");
+    const [conteudoModal, setConteudoModal] = useState("");
+
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     const formaDeComunicacao = localStorage.getItem("formaDeComunicacao")
     if (idPraticanteSalvo) {

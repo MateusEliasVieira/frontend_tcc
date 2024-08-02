@@ -32,6 +32,11 @@ const Emergencia = () => {
   });
 
   useEffect(() => {
+
+    const [displayModal, setDisplayModal] = useState("none");
+    const [tituloModal, setTituloModal] = useState("");
+    const [conteudoModal, setConteudoModal] = useState("");
+
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     const emergencia = localStorage.getItem("emergencia")
     if (idPraticanteSalvo) {

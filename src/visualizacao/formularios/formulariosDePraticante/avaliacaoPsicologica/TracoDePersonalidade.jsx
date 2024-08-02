@@ -19,6 +19,10 @@ import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const TracoDePersonalidade = () => {
 
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
+
   const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     extroversao: '',
