@@ -13,7 +13,9 @@ import {
   SALVAR_OUTRAS_ATIVIDADE_MANHA_DO_PRATICANTE_POST,
   SALVAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
-import {CADASTRADO} from "../../../../constantes/Constantes"; // Importando o componente Campo
+import {CADASTRADO} from "../../../../constantes/Constantes";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal"; // Importando o componente Campo
 
 const OutrasAtividadesTarde = () => {
 
@@ -54,6 +56,12 @@ const OutrasAtividadesTarde = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>

@@ -57,6 +57,12 @@ const DadosPessoais = (props) => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
             {
               desabilitar === "disabled" ?
                 <CCardHeader style={{backgroundColor: "#1c323f"}}>

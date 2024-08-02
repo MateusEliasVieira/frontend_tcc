@@ -15,6 +15,8 @@ import {CADASTRADO, simOuNao} from "../../../../constantes/Constantes";
 import {
   SALVAR_HABILIDADES_MOTORAS_AVD_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const HabilidadesMotorasAVD = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -66,6 +68,12 @@ const HabilidadesMotorasAVD = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>

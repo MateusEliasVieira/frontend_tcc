@@ -13,6 +13,8 @@ import {
   SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const AvaliacaoPsicologica = () => {
 
@@ -47,6 +49,12 @@ const AvaliacaoPsicologica = () => {
 
   return (
     <CCard className="mb-4">
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
       {
         desabilitar === "disabled" ?
           <CCardHeader style={{backgroundColor: "#1c323f"}}>

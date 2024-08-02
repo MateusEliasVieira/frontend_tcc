@@ -14,6 +14,8 @@ import {CADASTRADO} from "../../../../constantes/Constantes";
 import {
   SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const QuadroAtual = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -49,6 +51,12 @@ const QuadroAtual = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>

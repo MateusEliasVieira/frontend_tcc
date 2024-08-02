@@ -13,7 +13,9 @@ import {
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
-import {CADASTRADO} from "../../../../constantes/Constantes"; // Importando o componente Campo
+import {CADASTRADO} from "../../../../constantes/Constantes";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal"; // Importando o componente Campo
 
 const ResponsavelPeloPraticante = () => {
 
@@ -55,6 +57,12 @@ const ResponsavelPeloPraticante = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>

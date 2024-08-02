@@ -13,7 +13,9 @@ import {CADASTRADO, simOuNao} from '../../../../constantes/Constantes';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {
   SALVAR_EMERGENCIA_DO_PRATICANTE_POST
-} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints"; // Ajuste o caminho conforme a estrutura do seu projeto
+} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal"; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
 
@@ -52,6 +54,12 @@ const Emergencia = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>

@@ -14,8 +14,14 @@ import {
   SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../../../../constantes/Constantes";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const CompletudeMatricula = () => {
+
+  const [displayModal, setDisplayModal] = useState("none");
+  const [tituloModal, setTituloModal] = useState("");
+  const [conteudoModal, setConteudoModal] = useState("");
 
   const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
@@ -49,6 +55,12 @@ const CompletudeMatricula = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>

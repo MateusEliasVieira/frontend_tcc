@@ -11,6 +11,8 @@ import Campo from '../../../../components/campos/Campo';
 import {CADASTRADO, preencherLegenda} from "../../../../constantes/Constantes";
 import {SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import {salvar} from "../../../../requisicoes/Praticante";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const Comportamento = () => {
 
@@ -47,6 +49,12 @@ const Comportamento = () => {
 
   return (
     <CCard className="mb-4">
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
       {
         desabilitar === "disabled" ?
           <CCardHeader style={{backgroundColor: "#1c323f"}}>

@@ -11,6 +11,8 @@ import Campo from '../../../../components/campos/Campo';
 import {CADASTRADO} from "../../../../constantes/Constantes";
 import {salvar} from "../../../../requisicoes/Praticante";
 import {SALVAR_SAUDE_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const Saude = () => {
 
@@ -52,6 +54,12 @@ const Saude = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>

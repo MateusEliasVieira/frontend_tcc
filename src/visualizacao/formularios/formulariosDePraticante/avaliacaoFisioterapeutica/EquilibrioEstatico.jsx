@@ -14,6 +14,8 @@ import {CADASTRADO, equilibrioEstatico} from "../../../../constantes/Constantes"
 import {
   SALVAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
+import Modal from "../../../../components/modal/Modal";
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 
 const EquilibrioEstatico = () => {
   const [desabilitar, setDesabilitar] = useState("");
@@ -62,6 +64,12 @@ const EquilibrioEstatico = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <Modal
+            dsp={displayModal}
+            titulo={tituloModal}
+            conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+            esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+          />
           {
             desabilitar === "disabled" ?
               <CCardHeader style={{backgroundColor: "#1c323f"}}>
