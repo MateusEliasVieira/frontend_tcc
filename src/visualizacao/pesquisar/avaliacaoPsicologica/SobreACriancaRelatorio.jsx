@@ -49,28 +49,28 @@ const SobreACriancaRelatorio = ({ idUsuario }) => {
           <CTableBody>
             <CTableRow>
               <CTableDataCell><strong>Já fez equoterapia antes?</strong></CTableDataCell>
-              <CTableDataCell>{dados.fezTerapiaEquina ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
-              <CTableDataCell>{dados.fezTerapiaEquina ? '' : <h3 className="h3-tabela">X</h3>}</CTableDataCell>
+              <CTableDataCell>{dados.fezTerapiaEquina === "SIM" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
+              <CTableDataCell>{dados.fezTerapiaEquina === "NAO" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>A criança foi planejada?</strong></CTableDataCell>
-              <CTableDataCell>{dados.criancaPlanejada ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
-              <CTableDataCell>{dados.criancaPlanejada ? '' : <h3 className="h3-tabela">X</h3>}</CTableDataCell>
+              <CTableDataCell>{dados.criancaPlanejada === "SIM" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
+              <CTableDataCell>{dados.criancaPlanejada === "NAO" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Teve acompanhamento pré-natal?</strong></CTableDataCell>
-              <CTableDataCell>{dados.cuidadosPreNatais ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
-              <CTableDataCell>{dados.cuidadosPreNatais ? '' : <h3 className="h3-tabela">X</h3>}</CTableDataCell>
+              <CTableDataCell>{dados.cuidadosPreNatais === "SIM" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
+              <CTableDataCell>{dados.cuidadosPreNatais === "NAO" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Chorou ao nascer?</strong></CTableDataCell>
-              <CTableDataCell>{dados.chorouNoNascimento ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
-              <CTableDataCell>{dados.chorouNoNascimento ? '' : <h3 className="h3-tabela">X</h3>}</CTableDataCell>
+              <CTableDataCell>{dados.chorouNoNascimento === "SIM" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
+              <CTableDataCell>{dados.chorouNoNascimento === "NAO" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Teve acompanhamento pré-natal?</strong></CTableDataCell>
-              <CTableDataCell>{dados.cuidadosPreNatais ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
-              <CTableDataCell>{dados.cuidadosPreNatais ? '' : <h3 className="h3-tabela">X</h3>}</CTableDataCell>
+              <CTableDataCell>{dados.cuidadosPreNatais === "SIM" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
+              <CTableDataCell>{dados.cuidadosPreNatais === "NAO" ? <h3 className="h3-tabela">X</h3> : ''}</CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>

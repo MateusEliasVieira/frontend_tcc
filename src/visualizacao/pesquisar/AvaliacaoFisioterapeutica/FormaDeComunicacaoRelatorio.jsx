@@ -52,20 +52,20 @@ const FormaDeComunicacaoRelatorio = ({idUsuario}) => {
           <CTableBody>
             <CTableRow>
               <CTableDataCell><strong>Fala?</strong></CTableDataCell>
-              <CTableDataCell>{dados.fala ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.fala ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.fala === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.fala === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesFala}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Gestos?</strong></CTableDataCell>
-              <CTableDataCell>{dados.gestos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.gestos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.gestos === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.gestos === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesGestos}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Uso dos olhos?</strong></CTableDataCell>
-              <CTableDataCell>{dados.usoDosOlhos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.usoDosOlhos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.usoDosOlhos === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.usoDosOlhos === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesUsoDosOlhos}</CTableDataCell>
             </CTableRow>
           </CTableBody>

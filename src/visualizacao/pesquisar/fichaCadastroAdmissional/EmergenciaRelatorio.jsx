@@ -40,10 +40,10 @@ const EmergenciaRelatorio = ({ idUsuario }) => {
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Possui plano de saúde?</strong> {dados.possuiPlanoDeSaude ? 'Sim' : 'Não'}</p>
+            <p><strong>Possui plano de saúde?</strong> {dados.possuiPlanoDeSaude === "SIM" ? 'Sim' : dados.possuiPlanoDeSaude === "NAO" ? "Não" : ""}</p>
           </CCol>
         </CRow>
-        {dados.possuiPlanoDeSaude === 'true' &&
+        {dados.possuiPlanoDeSaude === 'SIM' &&
           <CRow>
             <CCol md="auto">
               <p><strong>Qual é o plano?</strong> {dados.plano}</p>

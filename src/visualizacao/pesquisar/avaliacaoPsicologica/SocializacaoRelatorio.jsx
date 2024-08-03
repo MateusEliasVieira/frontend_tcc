@@ -93,4 +93,4 @@ const SocializacaoRelatorio = ({idUsuario}) => {
   )
 }
 
-export {SocializacaoRelatorio}
+export default SocializacaoRelatorio;

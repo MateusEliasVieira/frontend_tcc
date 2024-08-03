@@ -39,7 +39,7 @@ const RotinaRelatorio = ({ idUsuario }) => {
         </CRow>
         <CRow>
           <CCol md="auto">
-            <p><strong>Aceita mudanças na sua rotina?</strong> {dados.aceitaMudancasNaRotina === "true" ? "Sim" : "Não"}</p>
+            <p><strong>Aceita mudanças na sua rotina?</strong> {dados.aceitaMudancasNaRotina === "SIM" ? 'Sim' : dados.aceitaMudancasNaRotina === "NAO" ? "Não" : ""}</p>
           </CCol>
         </CRow>
         <CRow>

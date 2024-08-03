@@ -77,4 +77,4 @@ const CuidadosPessoaisRelatorio = ({ idUsuario }) => {
   );
 };
 
-export { CuidadosPessoaisRelatorio };
+export default CuidadosPessoaisRelatorio;

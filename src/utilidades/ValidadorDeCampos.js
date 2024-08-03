@@ -46,7 +46,7 @@ const aplicarValorParaCampoVazioCasoExista = (formularioDeDados) => {
   Object.keys(formularioDeDados).forEach((chave) => {
     if (chave.includes("data") || chave.includes("renda")) {
       formularioDeDados[chave] = null;
-    }else{
+    } else {
       if (formularioDeDados[chave] === '' || formularioDeDados[chave] === null || formularioDeDados[chave] === undefined) {
         formularioDeDados[chave] = valorDefault;
       }
@@ -56,6 +56,27 @@ const aplicarValorParaCampoVazioCasoExista = (formularioDeDados) => {
   return formularioDeDados;
 };
 
+const aplicarValorParaCamposDaAPI_NAO_INFORMADO = (formularioDeDados) => {
+
+  const valorDefault = '';
+
+  // Itera sobre as chaves do objeto
+  Object.keys(formularioDeDados).forEach((chave) => {
+    if (chave.includes("data") || chave.includes("renda")) {
+
+      formularioDeDados[chave] = formularioDeDados[chave] !== null && formularioDeDados[chave] !== "" ? formularioDeDados[chave] : null;
+
+    } else {
+      if (formularioDeDados[chave] === 'NAO_INFORMADO') {
+        formularioDeDados[chave] = '';
+      }
+    }
+  });
+
+  return formularioDeDados;
+
+}
+
 
 export {
   aplicaMascaraDeCPF,
@@ -64,5 +85,6 @@ export {
   aplicaMascaraDeTelefone,
   aplicaMascaraDeAltura,
   aplicaMascaraDePeso,
-  aplicarValorParaCampoVazioCasoExista
+  aplicarValorParaCampoVazioCasoExista,
+  aplicarValorParaCamposDaAPI_NAO_INFORMADO
 }

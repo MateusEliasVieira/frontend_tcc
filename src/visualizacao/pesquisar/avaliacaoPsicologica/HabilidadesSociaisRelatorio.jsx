@@ -85,4 +85,4 @@ const HabilidadesSociaisRelatorio = ({idUsuario}) => {
   )
 }
 
-export {HabilidadesSociaisRelatorio}
+export default HabilidadesSociaisRelatorio;

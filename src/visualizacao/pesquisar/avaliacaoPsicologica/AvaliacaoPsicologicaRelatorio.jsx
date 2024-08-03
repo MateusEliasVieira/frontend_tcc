@@ -44,7 +44,7 @@ const AvaliacaoPsicologicaRelatorio = ({ idUsuario }) => {
             <p><strong>Imagem da assinatura ou CRP e carimbo:</strong></p> <CImage width="350" height="200px" src={dados.imagemAssinaturaOuCRPECarimbo}/>
           </CCol>
         </CRow>
-        {dados.possuiPlanoDeSaude === 'true' &&
+        {dados.possuiPlanoDeSaude === 'SIM' &&
           <CRow>
             <CCol md="auto">
               <p><strong>Qual é o plano?</strong> {dados.plano}</p>

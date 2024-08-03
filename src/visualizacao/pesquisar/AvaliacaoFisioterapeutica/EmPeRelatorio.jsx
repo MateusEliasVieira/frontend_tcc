@@ -61,38 +61,38 @@ const EmPeRelatorio = ({idUsuario}) => {
           <CTableBody>
             <CTableRow>
               <CTableDataCell><strong>Sequência de movimentos?</strong></CTableDataCell>
-              <CTableDataCell>{dados.sequenciaDeMovimentos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.sequenciaDeMovimentos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.sequenciaDeMovimentos === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.sequenciaDeMovimentos === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesSequenciaDeMovimentos}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Entrar e sair da posição de sentado no chão?</strong></CTableDataCell>
-              <CTableDataCell>{dados.entrarSairPosicaoSentadoChao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.entrarSairPosicaoSentadoChao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.entrarSairPosicaoSentadoChao === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.entrarSairPosicaoSentadoChao === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesEntrarSairPosicaoSentadoChao}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Sentado na cadeira?</strong></CTableDataCell>
-              <CTableDataCell>{dados.sentadoCadeira ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.sentadoCadeira ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.sentadoCadeira === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.sentadoCadeira === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesSentadoCadeira}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Postura e equilíbrio?</strong></CTableDataCell>
-              <CTableDataCell>{dados.posturaEquilibrio ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.posturaEquilibrio ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.posturaEquilibrio === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.posturaEquilibrio === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesPosturaEquilibrio}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Sequência de movimentação rola, senta?</strong></CTableDataCell>
-              <CTableDataCell>{dados.seqMovRolaSenta ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.seqMovRolaSenta ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.seqMovRolaSenta === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.seqMovRolaSenta === "NAO" ?  <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesSeqMovRolaSenta}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Passa para sentado?</strong></CTableDataCell>
-              <CTableDataCell>{dados.passaParaSentado ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.passaParaSentado ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.passaParaSentado === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.passaParaSentado === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesPassaParaSentado}</CTableDataCell>
             </CTableRow>
           </CTableBody>

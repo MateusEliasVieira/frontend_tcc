@@ -7,7 +7,10 @@ import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/Verif
 import {mensagemParaErro, mensagemParaListaDeErros} from "../utilidades/ManipuladorDeRespostasDasRequisicoes";
 import {apresentarModal} from "../utilidades/ManipuladorDeModal";
 import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
-import {aplicarValorParaCampoVazioCasoExista} from "../utilidades/ValidadorDeCampos";
+import {
+  aplicarValorParaCamposDaAPI_NAO_INFORMADO,
+  aplicarValorParaCampoVazioCasoExista
+} from "../utilidades/ValidadorDeCampos";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
@@ -130,7 +133,7 @@ const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDispla
       }
     });
 
-    setDados(response.data);
+    setDados(aplicarValorParaCamposDaAPI_NAO_INFORMADO(response.data));
   } catch (error) {
     console.error(error);
   }

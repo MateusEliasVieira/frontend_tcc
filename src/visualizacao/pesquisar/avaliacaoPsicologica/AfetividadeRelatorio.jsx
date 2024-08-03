@@ -86,4 +86,4 @@ const AfetividadeRelatorio = ({idUsuario}) => {
   )
 }
 
-export {AfetividadeRelatorio}
+export default AfetividadeRelatorio;

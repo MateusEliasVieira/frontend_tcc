@@ -64,56 +64,56 @@ const HabilidadesMotorasAVDRelatorio = ({idUsuario}) => {
           <CTableBody>
             <CTableRow>
               <CTableDataCell><strong>Alcance de objetos?</strong></CTableDataCell>
-              <CTableDataCell>{dados.alcancarObjetos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.alcancarObjetos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.alcancarObjetos === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.alcancarObjetos === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesAlcancarObjetos}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Uso bimanual?</strong></CTableDataCell>
-              <CTableDataCell>{dados.usoBimanual ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.usoBimanual ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.usoBimanual === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.usoBimanual === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesUsoBimanual}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Alimenta-se?</strong></CTableDataCell>
-              <CTableDataCell>{dados.alimentacaoIndependente ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.alimentacaoIndependente ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.alimentacaoIndependente === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.alimentacaoIndependente === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesAlimentacaoIndependente}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Veste-se?</strong></CTableDataCell>
-              <CTableDataCell>{dados.vestirIndependente ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.vestirIndependente ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.vestirIndependente === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.vestirIndependente === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesVestirIndependente}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Preensão de objetos?</strong></CTableDataCell>
-              <CTableDataCell>{dados.pegarObjetos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.pegarObjetos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.pegarObjetos === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.pegarObjetos === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesPegarObjetos}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Negligência de membro?</strong></CTableDataCell>
-              <CTableDataCell>{dados.negligenciaMembro ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.negligenciaMembro ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.negligenciaMembro === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.negligenciaMembro === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesNegligenciaMembro}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableDataCell><strong>Higieniza-se??</strong></CTableDataCell>
-              <CTableDataCell>{dados.higienePessoal ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.higienePessoal ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell><strong>Higieniza-se?</strong></CTableDataCell>
+              <CTableDataCell>{dados.higienePessoal === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.higienePessoal === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesHigienePessoal}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Caminhar?</strong></CTableDataCell>
-              <CTableDataCell>{dados.andar ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.andar ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.andar === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.andar === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesAndar}</CTableDataCell>
             </CTableRow>
             <CTableRow>
             <CTableDataCell><strong>Escrita manual?</strong></CTableDataCell>
-            <CTableDataCell>{dados.escritaManual ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-            <CTableDataCell>{!dados.escritaManual ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+            <CTableDataCell>{dados.escritaManual === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+            <CTableDataCell>{dados.escritaManual === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
             <CTableDataCell className="celula-header-tabela">{dados.consideracoesEscritaManual}</CTableDataCell>
           </CTableRow>
           </CTableBody>

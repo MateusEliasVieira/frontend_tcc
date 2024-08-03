@@ -77,4 +77,4 @@ const CompreensaoRelatorio = ({idUsuario}) => {
   )
 }
 
-export {CompreensaoRelatorio}
+export default CompreensaoRelatorio;

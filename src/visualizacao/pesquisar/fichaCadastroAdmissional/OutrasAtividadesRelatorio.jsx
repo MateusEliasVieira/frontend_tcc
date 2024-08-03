@@ -100,4 +100,4 @@ const OutrasAtividadesRelatorio = ({idUsuario}) => {
   )
 }
 
-export {OutrasAtividadesRelatorio}
+export default OutrasAtividadesRelatorio;

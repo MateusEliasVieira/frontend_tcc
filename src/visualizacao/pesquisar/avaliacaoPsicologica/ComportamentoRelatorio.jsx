@@ -93,4 +93,4 @@ const ComportamentoRelatorio = ({idUsuario}) => {
   )
 }
 
-export {ComportamentoRelatorio}
+export default ComportamentoRelatorio;

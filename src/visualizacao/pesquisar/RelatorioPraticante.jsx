@@ -3,28 +3,30 @@ import {
   CContainer,
   CImage,
 } from "@coreui/react";
+
 import './RelatorioPraticante.css'
+
 import PlanoTerapeuticoSingularRelatorio from "./planoTerapeuticoSingular/PlanoTerapeuticoSingularRelatorio";
 import CoordenacaoMotoraRelatorio from "./AvaliacaoFisioterapeutica/CoordenacaoMotoraRelatorio";
 import HabilidadesMotorasAVDRelatorio from "./AvaliacaoFisioterapeutica/HabilidadesMotorasAVDRelatorio";
 import DadosPessoaisRelatorio from "./fichaCadastroAdmissional/DadosPessoaisRelatorio";
 import EducacaoRelatorio from "./fichaCadastroAdmissional/EducacaoRelatorio";
 import ResponsavelPeloPraticanteRelatorio from "./fichaCadastroAdmissional/ResponsavelPeloPraticanteRelatorio";
-import {OutrasAtividadesRelatorio} from "./fichaCadastroAdmissional/OutrasAtividadesRelatorio";
+import OutrasAtividadesRelatorio from "./fichaCadastroAdmissional/OutrasAtividadesRelatorio";
 import EmergenciaRelatorio from "./fichaCadastroAdmissional/EmergenciaRelatorio";
 import SobreACriancaRelatorio from "./avaliacaoPsicologica/SobreACriancaRelatorio";
 import SaudeRelatorio from "./avaliacaoPsicologica/SaudeRelatorio";
 import RotinaRelatorio from "./avaliacaoPsicologica/RotinaRelatorio";
-import {CuidadosPessoaisRelatorio} from "./avaliacaoPsicologica/CuidadosPessoaisRelatorio";
-import {TracoDePersonalidadeRelatorio} from "./avaliacaoPsicologica/TracoDePersonalidadeRelatorio";
-import {LinguagemRelatorio} from "./avaliacaoPsicologica/LinguagemRelatorio";
-import {CompreensaoRelatorio} from "./avaliacaoPsicologica/CompreensaoRelatorio";
-import {SaudeMentalRelatorio} from "./avaliacaoPsicologica/SaudeMentalRelatorio";
-import {SocializacaoRelatorio} from "./avaliacaoPsicologica/SocializacaoRelatorio";
-import {ComportamentoRelatorio} from "./avaliacaoPsicologica/ComportamentoRelatorio";
-import {HabilidadesSociaisRelatorio} from "./avaliacaoPsicologica/HabilidadesSociaisRelatorio";
-import {AfetividadeRelatorio} from "./avaliacaoPsicologica/AfetividadeRelatorio";
-import {RelacaoDaFamiliaComOExaminadoRelatorio} from "./avaliacaoPsicologica/RelacaoDaFamiliaComOExaminadoRelatorio";
+import CuidadosPessoaisRelatorio from "./avaliacaoPsicologica/CuidadosPessoaisRelatorio";
+import TracoDePersonalidadeRelatorio from "./avaliacaoPsicologica/TracoDePersonalidadeRelatorio";
+import LinguagemRelatorio from "./avaliacaoPsicologica/LinguagemRelatorio";
+import CompreensaoRelatorio from "./avaliacaoPsicologica/CompreensaoRelatorio";
+import SaudeMentalRelatorio from "./avaliacaoPsicologica/SaudeMentalRelatorio";
+import SocializacaoRelatorio from "./avaliacaoPsicologica/SocializacaoRelatorio";
+import ComportamentoRelatorio from "./avaliacaoPsicologica/ComportamentoRelatorio";
+import HabilidadesSociaisRelatorio from "./avaliacaoPsicologica/HabilidadesSociaisRelatorio";
+import AfetividadeRelatorio from "./avaliacaoPsicologica/AfetividadeRelatorio";
+import RelacaoDaFamiliaComOExaminadoRelatorio from "./avaliacaoPsicologica/RelacaoDaFamiliaComOExaminadoRelatorio";
 import AvaliacaoPsicologicaRelatorio from "./avaliacaoPsicologica/AvaliacaoPsicologicaRelatorio";
 import AvaliacaoFisioterapeuticaRelatorio from "./AvaliacaoFisioterapeutica/AvaliacaoFisioterapeuticaRelatorio";
 import SaudeGeralDoPraticanteRelatorio from "./AvaliacaoFisioterapeutica/EquilibrioDinamicoRelatorio";
@@ -35,12 +37,13 @@ import GruposMuscularesRelatorio from "./AvaliacaoFisioterapeutica/GruposMuscula
 import EquilibrioEstaticoRelatorio from "./AvaliacaoFisioterapeutica/EquilibrioEstaticoRelatorio";
 import EquilibrioDinamicoRelatorio from "./AvaliacaoFisioterapeutica/EquilibrioDinamicoRelatorio";
 import ModalDeCarregamento from "../../components/modal/ModalDeCarregamento";
+import EmPeRelatorio from "./AvaliacaoFisioterapeutica/EmPeRelatorio";
+
 import {useEffect, useRef, useState} from "react";
 import {useReactToPrint} from "react-to-print";
-import CoordenacaoDinamicaRelatorio from "./AvaliacaoFisioterapeutica/CoordenacaoDinamicaRelatorio";
-import EmPeRelatorio from "./AvaliacaoFisioterapeutica/EmPeRelatorio";
 import ImagemPDF from '../../assets/icones/pdf.png'
 import {apresentarModalDeCarregamento, esconderModal} from "../../utilidades/ManipuladorDeModal";
+import CompletudeMatriculaRelatorio from "./fichaCadastroAdmissional/CompletudeMatriculaRelatorio";
 
 const RelatorioPraticante = () => {
 
@@ -101,6 +104,7 @@ const RelatorioPraticante = () => {
             <ResponsavelPeloPraticanteRelatorio idUsuario={idPraticante}/><br/>
             <OutrasAtividadesRelatorio idUsuario={idPraticante}/><br/>
             <EmergenciaRelatorio idUsuario={idPraticante}/><br/>
+            <CompletudeMatriculaRelatorio idUsuario={idPraticante}/>
             <strong className="titulos-relatorio-praticante">Avaliação dos Aspectos Psicológicos</strong>
             <SobreACriancaRelatorio idUsuario={idPraticante}/><br/>
             <SaudeRelatorio idUsuario={idPraticante}/><br/>
@@ -127,7 +131,6 @@ const RelatorioPraticante = () => {
             <EquilibrioDinamicoRelatorio idUsuario={idPraticante}/><br/>
             <HabilidadesMotorasAVDRelatorio idUsuario={idPraticante}/><br/>
             <CoordenacaoMotoraRelatorio idUsuario={idPraticante}/><br/>
-            <CoordenacaoDinamicaRelatorio idUsuario={idPraticante}/><br/>
             <EmPeRelatorio idUsuario={idPraticante}/><br/>
             <strong className="titulos-relatorio-praticante">Plano Terapêutico Singular - PTS</strong>
             <PlanoTerapeuticoSingularRelatorio idUsuario={idPraticante}/><br/>

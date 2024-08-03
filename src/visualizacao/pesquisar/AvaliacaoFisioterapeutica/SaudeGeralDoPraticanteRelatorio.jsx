@@ -67,62 +67,62 @@ const SaudeGeralDoPraticanteRelatorio = ({idUsuario}) => {
           <CTableBody>
             <CTableRow>
               <CTableDataCell><strong>Convulsões anteriores?</strong></CTableDataCell>
-              <CTableDataCell>{dados.convulsoesAnteriores ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.convulsoesAnteriores ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.convulsoesAnteriores === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.convulsoesAnteriores === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesConvulsoesAnteriores}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Convulsões atuais?</strong></CTableDataCell>
-              <CTableDataCell>{dados.convulsoesAtuais ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.convulsoesAtuais ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.convulsoesAtuais === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.convulsoesAtuais === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesConvulsoesAtuais}<br/><strong>Frequência:</strong> {dados.frequenciaConvulsoesAtuais}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Medicamentos?</strong></CTableDataCell>
-              <CTableDataCell>{dados.medicamentos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.medicamentos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.medicamentos === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.medicamentos === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesMedicamentos}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Constipação?</strong></CTableDataCell>
-              <CTableDataCell>{dados.constipacao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.constipacao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.constipacao === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.constipacao === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesConstipacao}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Sono?</strong></CTableDataCell>
-              <CTableDataCell>{dados.sono ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.sono ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.sono === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.sono === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesSono}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Audição?</strong></CTableDataCell>
-              <CTableDataCell>{dados.audicao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.audicao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.audicao === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.audicao === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesAudicao}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Visão?</strong></CTableDataCell>
-              <CTableDataCell>{dados.visao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.visao ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.visao === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.visao === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesVisao}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Refluxo Gastroesofágico?</strong></CTableDataCell>
-              <CTableDataCell>{dados.refluxoGastroesofagico ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.refluxoGastroesofagico ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.refluxoGastroesofagico === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.refluxoGastroesofagico === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesRefluxoGastroesofagico}</CTableDataCell>
             </CTableRow>
             <CTableRow>
             <CTableDataCell><strong>Intervenções cirúrgicas?</strong></CTableDataCell>
-            <CTableDataCell>{dados.intervencoesCirurgicas ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-            <CTableDataCell>{!dados.intervencoesCirurgicas ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+            <CTableDataCell>{dados.intervencoesCirurgicas === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+            <CTableDataCell>{dados.intervencoesCirurgicas === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
             <CTableDataCell className="celula-header-tabela">{dados.consideracoesIntervencoesCirurgicas}</CTableDataCell>
           </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Alergias?</strong></CTableDataCell>
-              <CTableDataCell>{dados.alergias ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.alergias ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.alergias === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.alergias === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesAlergias}</CTableDataCell>
             </CTableRow>
           </CTableBody>

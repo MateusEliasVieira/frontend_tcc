@@ -16,7 +16,11 @@ const colocarApenasPrimeiraLetraMaiuscula = (palavra) => {
 };
 
 const formatarDinheiro = (valor) => {
-  return `R$${valor}`
+  if (valor === null) {
+    return '';
+  } else {
+    return `R$${valor}`
+  }
 }
 
 export {

@@ -118,4 +118,4 @@ const TracoDePersonalidadeRelatorio = ({idUsuario}) => {
   )
 }
 
-export {TracoDePersonalidadeRelatorio}
+export default TracoDePersonalidadeRelatorio;

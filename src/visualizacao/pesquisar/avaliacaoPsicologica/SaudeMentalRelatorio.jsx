@@ -77,4 +77,4 @@ const SaudeMentalRelatorio = ({idUsuario}) => {
   )
 }
 
-export {SaudeMentalRelatorio}
+export default SaudeMentalRelatorio;

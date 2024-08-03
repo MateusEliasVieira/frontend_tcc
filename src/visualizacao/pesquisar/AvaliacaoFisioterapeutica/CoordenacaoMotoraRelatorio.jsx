@@ -55,33 +55,33 @@ const CoordenacaoMotoraRelatorio = ({idUsuario}) => {
           </CTableHead>
           <CTableBody>
             <CTableRow>
-              <CTableDataCell><strong>Prova mão - objetos?</strong></CTableDataCell>
-              <CTableDataCell>{dados.testeMaoObjeto ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.testeMaoObjeto ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell><strong>Teste mão objetos?</strong></CTableDataCell>
+              <CTableDataCell>{dados.testeMaoObjeto === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.testeMaoObjeto === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesTesteMaoObjeto}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableDataCell><strong>Index - nariz unilateral?</strong></CTableDataCell>
-              <CTableDataCell>{dados.indiceNarizUnilateral ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.indiceNarizUnilateral ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell><strong>Índice nariz unilateral?</strong></CTableDataCell>
+              <CTableDataCell>{dados.indiceNarizUnilateral === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.indiceNarizUnilateral === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesIndiceNarizUnilateral}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableDataCell><strong>Index - index?</strong></CTableDataCell>
-              <CTableDataCell>{dados.testeIndiceIndice ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.testeIndiceIndice ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell><strong>Teste Índice-Índice?</strong></CTableDataCell>
+              <CTableDataCell>{dados.testeIndiceIndice === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.testeIndiceIndice === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesTesteIndiceIndice}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell><strong>Movimentos alternados?</strong></CTableDataCell>
-              <CTableDataCell>{dados.movimentosAlternados ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.movimentosAlternados ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.movimentosAlternados === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.movimentosAlternados === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesMovimentosAlternados}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableDataCell><strong>Prova do rechaço?</strong></CTableDataCell>
-              <CTableDataCell>{dados.pegarObjetos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
-              <CTableDataCell>{!dados.pegarObjetos ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell><strong>Teste alcance pegar?</strong></CTableDataCell>
+              <CTableDataCell>{dados.pegarObjetos === "SIM" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
+              <CTableDataCell>{dados.pegarObjetos === "NAO" ? <h3 className="h3-tabela">X</h3> : ""}</CTableDataCell>
               <CTableDataCell className="celula-header-tabela">{dados.consideracoesPegarObjetos}</CTableDataCell>
             </CTableRow>
           </CTableBody>

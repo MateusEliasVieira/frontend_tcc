@@ -108,4 +108,4 @@ const LinguagemRelatorio = ({idUsuario}) => {
   )
 }
 
-export {LinguagemRelatorio}
+export default LinguagemRelatorio;

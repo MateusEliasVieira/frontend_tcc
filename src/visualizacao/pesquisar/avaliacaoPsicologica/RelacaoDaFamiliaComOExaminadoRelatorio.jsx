@@ -108,4 +108,4 @@ const RelacaoDaFamiliaComOExaminadoRelatorio = ({idUsuario}) => {
   )
 }
 
-export {RelacaoDaFamiliaComOExaminadoRelatorio}
+export default RelacaoDaFamiliaComOExaminadoRelatorio;
