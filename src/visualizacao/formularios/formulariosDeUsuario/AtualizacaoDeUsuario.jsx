@@ -5,20 +5,13 @@ import {
   CCardBody,
   CCardHeader,
   CCol, CContainer,
-  CForm, CImage,
+  CImage,
   CRow,
 } from '@coreui/react';
-import axios from 'axios';
 import {estadoCivil, role, simOuNao, vinculo} from '../../../constantes/Constantes';
-import {
-  ATUALIZAR_USUARIO_PUT,
-  PESQUISAR_USUARIO_POR_ID_GET, SALVAR_NOVO_USUARIO_POST,
-} from '../../../endpoints/usuario/Endpoints';
 import Modal from '../../../components/modal/Modal';
 import {converterImagemEmBase64} from '../../../utilidades/ConversorDeImagem';
-import {apresentarModal, esconderModal} from '../../../utilidades/ManipuladorDeModal';
-import {formatarDataPadraoAnoMesDia} from '../../../utilidades/ManipuladorDeDatas';
-import {camposPreenchidos} from '../../../utilidades/VerificadorDeCampos';
+import {esconderModal} from '../../../utilidades/ManipuladorDeModal';
 import Campo from "../../../components/campos/Campo";
 import {atualizarDadosDoUsuario, buscarUsuarioPorId, salvar} from "../../../requisicoes/Usuario"; // Certifique-se de que o caminho está correto para o seu projeto
 

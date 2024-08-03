@@ -32,6 +32,7 @@ const preencherLegenda = [
   { label: 'Não', value: 'NAO'},
   {label: 'Não Observado', value: 'NAO_OBSERVADO'},
   {label: 'Parcialmente', value: 'PARCIALMENTE'},]
+
 const tipoSanguineo = [
   {label: 'A +', value: 'A_POSITIVO'},
   {label: 'A -', value: 'A_NEGATIVO'},
@@ -57,8 +58,6 @@ const estadoCivil = [
   {label: 'Solteiro', value: 'SOLTEIRO'},
   {label: 'Casado', value: 'CASADO'},
   {label: 'Divorciado', value: 'DIVORCIADO'},
-  {label: 'Viuvo', value: 'VIUVO'},
-  // outros estados civis aqui
 ];
 
 const role = [
@@ -92,8 +91,8 @@ const alimentacao = [
   {label: 'Mamadeira', value: 'MAMADEIRA'}
 ];
 const simOuNao = [
-  {label: 'Sim', value: 'true'},
-  {label: 'Não', value: 'false'}
+  {label: 'Sim', value: 'SIM'},
+  {label: 'Não', value: 'NAO'}
 ];
 const sexo = [
   {label: 'Masculino', value: 'MASCULINO'},

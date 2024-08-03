@@ -5,16 +5,17 @@ import {
   CCardBody,
   CCardHeader,
   CCol, CContainer,
-  CForm, CImage,
+  CImage,
   CRow,
 } from '@coreui/react';
 import {estadoCivil, role, simOuNao, vinculo} from "../../../constantes/Constantes";
 import {SALVAR_NOVO_USUARIO_POST} from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
-import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {salvar} from "../../../requisicoes/Usuario";
 import Campo from "../../../components/campos/Campo";
+import {aplicaMascaraDeCPF, aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos";
 
 const CadastroDeUsuario = () => {
 
@@ -61,14 +62,14 @@ const CadastroDeUsuario = () => {
                     id="foto"
                     legenda="Foto (Tamanho máximo: 8MB)"
                     tipo="file"
-                    setar={(e) => {
-                      converterImagemEmBase64(e.target.files[0])
+                    setar={ async (e) => {
+                      await converterImagemEmBase64(e.target.files[0])
                         .then((resolve) => {
                           setFormularioDeDados({...formularioDeDados, foto: resolve});
                           setFotoAtual(resolve);
                         })
                         .catch((reject) => {
-                          console.log(reject);
+                          console.log(reject)
                         });
                     }}
                   />
@@ -97,7 +98,7 @@ const CadastroDeUsuario = () => {
                     id="cpf"
                     tipo="text"
                     valor={formularioDeDados.cpf}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, cpf: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, cpf: aplicaMascaraDeCPF(e.target.value)})}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -118,7 +119,7 @@ const CadastroDeUsuario = () => {
                     id="telefone"
                     tipo="tel"
                     valor={formularioDeDados.telefone}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: aplicaMascaraDeTelefone(e.target.value)})}
                   />
                 </CCol>
                 <CCol>

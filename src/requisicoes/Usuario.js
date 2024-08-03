@@ -1,5 +1,5 @@
 import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
-import axios from "axios";
+import axios, {HttpStatusCode} from "axios";
 import {apresentarModal, esconderModalDeOpcoes} from "../utilidades/ManipuladorDeModal";
 import {
   ATUALIZAR_USUARIO_PUT,
@@ -8,6 +8,7 @@ import {
   PESQUISAR_USUARIO_POR_ID_GET
 } from "../endpoints/usuario/Endpoints";
 import {resolve} from "chart.js/helpers";
+import {useTimeout} from "primereact/hooks";
 
 var login = JSON.parse(localStorage.getItem("login"));
 const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
@@ -17,14 +18,12 @@ const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoMod
   } else if (error.response.data.mensagem) {
     if (error.response.data.redirecionar) {
       window.location = error.response.data.redirecionar
-    }else{
+    } else {
       apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
     }
-  }
-  else if(error.response.data.urlRedirecionamento){
+  } else if (error.response.data.urlRedirecionamento) {
     window.location = error.response.data.urlRedirecionamento
-  }
-  else {
+  } else {
     apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
   }
 }
@@ -51,9 +50,13 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloMod
           'Authorization': `Bearer ${login.token}`
         },
       });
-      apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+      if (response.status === HttpStatusCode.Created) {
+        apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+      }else{
+        apresentarModal("Aviso", "Houve um erro ao salvar o novo usuário!", setDisplayModal, setTituloModal, setConteudoModal);
+      }
     } catch (error) {
-      console.log("Erro = "+error.response.data.mensagem)
+      console.log("Erro = " + error.response.data.mensagem)
       mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
       mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
     }

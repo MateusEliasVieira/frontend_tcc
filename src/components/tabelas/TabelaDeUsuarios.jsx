@@ -58,7 +58,7 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
                   <div className="row">
                     <div className="col">
                       <CButton color="" title={`Será redirecionado para atualizar os dados de ${item.nome}`} onClick={() => {
-                        window.location.href = `/#/formulario/atualizar-usuario/atualizar?id=${item.idUsuario}`
+                        window.location.href = `/#/atualizar-usuario/atualizar?id=${item.idUsuario}`
                       }}><CIcon icon={cilSettings}/></CButton>
                     </div>
                     <div className="col">

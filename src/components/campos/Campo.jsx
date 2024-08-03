@@ -35,7 +35,7 @@ const Campo = (props) => {
         return (
           <CFormTextarea
             id={props.id}
-            value={props.valor}
+            value={props.valor === "NAO_INFORMADO" ? "" : props.valor}
             onChange={props.setar}
             disabled={props.disabled}
             placeholder={props.descricao}
@@ -55,7 +55,7 @@ const Campo = (props) => {
           <CFormInput
             id={props.id}
             type={props.tipo}
-            value={props.valor}
+            value={props.valor === "NAO_INFORMADO" ? "" : props.valor}
             onChange={props.setar}
             disabled={props.disabled}
             placeholder={props.descricao}

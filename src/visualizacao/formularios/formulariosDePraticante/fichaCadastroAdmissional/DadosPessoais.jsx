@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {estados, tipoSanguineo, corOuRaca, sexo, CADASTRADO} from '../../../../constantes/Constantes';
 import {
+  aplicaMascaraDeAltura,
   aplicaMascaraDeCartaoDoSUS,
-  aplicaMascaraDeCEP
+  aplicaMascaraDeCEP, aplicaMascaraDeCPF, aplicaMascaraDePeso
 } from '../../../../utilidades/ValidadorDeCampos';
 import {
   CButton,
@@ -110,8 +111,7 @@ const DadosPessoais = (props) => {
                       id="cpf"
                       valor={formularioDeDados.cpf}
                       setar={(e) => {
-                        //const maskedValue = aplicaMascaraDeCPF(e.target.value);
-                        setFormularioDeDados({...formularioDeDados, cpf: e.target.value});
+                        setFormularioDeDados({...formularioDeDados, cpf: aplicaMascaraDeCPF(e.target.value)});
                       }}
                       legenda="CPF"
                       disabled={desabilitar}
@@ -134,7 +134,7 @@ const DadosPessoais = (props) => {
                       tipo="number"
                       id="altura"
                       valor={formularioDeDados.altura}
-                      setar={(e) => setFormularioDeDados({...formularioDeDados, altura: e.target.value})}
+                      setar={(e) => setFormularioDeDados({...formularioDeDados, altura: aplicaMascaraDeAltura(e.target.value)})}
                       legenda="Altura(cm) Exemplo: 180"
                       disabled={desabilitar}
                     />
@@ -144,7 +144,7 @@ const DadosPessoais = (props) => {
                       tipo="number"
                       id="peso"
                       valor={formularioDeDados.peso}
-                      setar={(e) => setFormularioDeDados({...formularioDeDados, peso: e.target.value})}
+                      setar={(e) => setFormularioDeDados({...formularioDeDados, peso: aplicaMascaraDePeso(e.target.value)})}
                       legenda="Peso"
                       disabled={desabilitar}
                     />
@@ -224,8 +224,7 @@ const DadosPessoais = (props) => {
                       id="cartaoSUS"
                       valor={formularioDeDados.cartaoSUS}
                       setar={(e) => {
-                        const maskedValue = aplicaMascaraDeCartaoDoSUS(e.target.value);
-                        setFormularioDeDados({...formularioDeDados, cartaoSUS: maskedValue});
+                        setFormularioDeDados({...formularioDeDados, cartaoSUS: aplicaMascaraDeCartaoDoSUS(e.target.value)});
                       }}
                       legenda="Nº Cartão do SUS"
                       disabled={desabilitar}
@@ -280,8 +279,7 @@ const DadosPessoais = (props) => {
                       id="cep"
                       valor={formularioDeDados.cep}
                       setar={(e) => {
-                        const maskedValue = aplicaMascaraDeCEP(e.target.value);
-                        setFormularioDeDados({...formularioDeDados, cep: maskedValue});
+                        setFormularioDeDados({...formularioDeDados, cep: aplicaMascaraDeCEP(e.target.value)});
                       }}
                       legenda="CEP"
                       disabled={desabilitar}

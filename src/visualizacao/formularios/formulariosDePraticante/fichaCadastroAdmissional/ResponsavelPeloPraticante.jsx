@@ -15,7 +15,8 @@ import Campo from '../../../../components/campos/Campo';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {CADASTRADO} from "../../../../constantes/Constantes";
 import Modal from "../../../../components/modal/Modal";
-import {esconderModal} from "../../../../utilidades/ManipuladorDeModal"; // Importando o componente Campo
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
+import {aplicaMascaraDeTelefone} from "../../../../utilidades/ValidadorDeCampos"; // Importando o componente Campo
 
 const ResponsavelPeloPraticante = () => {
 
@@ -129,7 +130,7 @@ const ResponsavelPeloPraticante = () => {
                     tipo="text"
                     id="telefone"
                     valor={formularioDeDados.telefone}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: aplicaMascaraDeTelefone(e.target.value)})}
                     legenda="Telefone pessoal"
                     disabled={desabilitar}
                   />
@@ -139,7 +140,7 @@ const ResponsavelPeloPraticante = () => {
                     tipo="text"
                     id="telefoneTrabalho"
                     valor={formularioDeDados.telefoneTrabalho}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefoneTrabalho: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefoneTrabalho: aplicaMascaraDeTelefone(e.target.value)})}
                     legenda="Telefone do trabalho"
                     disabled={desabilitar}
                   />

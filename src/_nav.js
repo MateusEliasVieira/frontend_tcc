@@ -2,8 +2,6 @@ import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
   cilAccountLogout,
-  cilChartPie,
-  cilClipboard, cilHome,
   cilMagnifyingGlass,
   cilUser,
   cilUserPlus
@@ -13,12 +11,6 @@ import {CNavGroup, CNavItem} from '@coreui/react'
 const login = JSON.parse(localStorage.getItem("login")) || {}; // Garante que login seja um objeto
 
 const _nav_administrador = [
-  // {
-  //   component: CNavItem,
-  //   name: 'Início',
-  //   href: '/#/dashboard',
-  //   icon: <CIcon icon={cilHome} customClassName="nav-icon"/>,
-  // },
   {
     component: CNavGroup,
     name: 'Praticantes',

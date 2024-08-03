@@ -18,7 +18,51 @@ const aplicaMascaraDeCEP = (value) => {
     .slice(0, 8) // Limita a 8 caracteres (incluindo o hífen)
     .replace(/(\d{5})(\d{1,3})$/, '$1-$2'); // Insere o hífen após os primeiros 5 dígitos
 };
+const aplicaMascaraDeTelefone = (value) => {
+  return value
+    .replace(/\D/g, '') // Remove caracteres não numéricos
+    .slice(0, 11) // Limita a 11 caracteres (DDD + 9 dígitos)
+    .replace(/(\d{2})(\d)/, '($1) $2') // Insere parênteses em torno dos dois primeiros dígitos
+    .replace(/(\d{5})(\d{4})$/, '$1-$2'); // Adiciona hífen após os cinco primeiros dígitos do número
+};
+
+const aplicaMascaraDeAltura = (value) => {
+  return value
+    .replace(/\D/g, '') // Remove caracteres não numéricos
+    .slice(0, 3) // Limita a 3 caracteres (sem contar o ponto)
+    .replace(/(\d)(\d{2})$/, '$1.$2'); // Insere o ponto após o primeiro dígito
+};
+const aplicaMascaraDePeso = (value) => {
+  return value
+    .replace(/\D/g, '') // Remove caracteres não numéricos
+    .slice(0, 3); // Limita a 3 caracteres
+};
+
+const aplicarValorParaCampoVazioCasoExista = (formularioDeDados) => {
+  // Valor padrão para campos vazios
+  const valorDefault = 'NAO_INFORMADO';
+
+  // Itera sobre as chaves do objeto
+  Object.keys(formularioDeDados).forEach((chave) => {
+    if (chave.includes("data") || chave.includes("renda")) {
+      formularioDeDados[chave] = null;
+    }else{
+      if (formularioDeDados[chave] === '' || formularioDeDados[chave] === null || formularioDeDados[chave] === undefined) {
+        formularioDeDados[chave] = valorDefault;
+      }
+    }
+  });
+
+  return formularioDeDados;
+};
+
 
 export {
-  aplicaMascaraDeCPF, aplicaMascaraDeCartaoDoSUS, aplicaMascaraDeCEP
+  aplicaMascaraDeCPF,
+  aplicaMascaraDeCartaoDoSUS,
+  aplicaMascaraDeCEP,
+  aplicaMascaraDeTelefone,
+  aplicaMascaraDeAltura,
+  aplicaMascaraDePeso,
+  aplicarValorParaCampoVazioCasoExista
 }

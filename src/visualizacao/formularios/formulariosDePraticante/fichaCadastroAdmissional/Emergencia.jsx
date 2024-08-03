@@ -14,7 +14,8 @@ import {
   SALVAR_EMERGENCIA_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Modal from "../../../../components/modal/Modal";
-import {esconderModal} from "../../../../utilidades/ManipuladorDeModal"; // Ajuste o caminho conforme a estrutura do seu projeto
+import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
+import {aplicaMascaraDeTelefone} from "../../../../utilidades/ValidadorDeCampos"; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
 
@@ -81,7 +82,7 @@ const Emergencia = () => {
                     tipo="text"
                     id="ligarPara"
                     valor={formularioDeDados.ligarPara}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, ligarPara: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, ligarPara: aplicaMascaraDeTelefone(e.target.value)})}
                     legenda="Ligar para"
                     disabled={desabilitar}
                   />
@@ -91,7 +92,7 @@ const Emergencia = () => {
                     tipo="text"
                     id="telefone"
                     valor={formularioDeDados.telefone}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone:  aplicaMascaraDeTelefone(e.target.value)})}
                     legenda="Telefone"
                     disabled={desabilitar}
                   />
