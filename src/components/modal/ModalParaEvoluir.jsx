@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {CButton, CCard, CCardBody, CCardHeader} from "@coreui/react";
 
 import Campo from "../campos/Campo";
-import {simOuNao} from "../../constantes/Constantes";
+import {presente} from "../../constantes/Constantes";
 import axios, {HttpStatusCode} from "axios";
 import {SALVAR_EVOLUCAO_DO_PRATICANTE_POST} from "../../endpoints/praticante/evolucao/Endpoint";
 import Modal from "./Modal";
@@ -99,7 +99,7 @@ const ModalParaEvoluir = (props) => {
                   legenda="Presente?"
                   id="observacoes"
                   tipo="select"
-                  opcoes={simOuNao}
+                  opcoes={presente}
                   valor={dados.estavaPresente}
                   setar={(e) => setDados({...dados, estavaPresente: e.target.value})}
                 />

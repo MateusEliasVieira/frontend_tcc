@@ -94,6 +94,7 @@ const simOuNao = [
   {label: 'Sim', value: 'SIM'},
   {label: 'Não', value: 'NAO'}
 ];
+
 const sexo = [
   {label: 'Masculino', value: 'MASCULINO'},
   {label: 'Feminino', value: 'FEMININO'}
@@ -125,6 +126,12 @@ const gruposMuscularesPontuados = [
   { label: 3, value: 'AUMENTO_CONSIDERAVEL_TONUS' },
   { label: 4, value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' }
 ];
+const presente = [
+  {label: 'Sim', value: true},
+  {label: 'Não', value: false}
+];
+
+
 
 const CADASTRADO = "true"
 const NAO_CADASTRADO = "false"
@@ -148,5 +155,6 @@ export {
   equilibrioEstatico,
   equilibrioDinamico,
   gruposMusculares,
-  gruposMuscularesPontuados
+  gruposMuscularesPontuados,
+  presente
 };
