@@ -88,7 +88,7 @@ const CoordenacaoMotora = () => {
                     valor={formularioDeDados.testeMaoObjeto}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      testeMaoObjeto: e.target.value === 'true'
+                      testeMaoObjeto: e.target.value
                     })}
                     legenda="Teste Mão-Objeto"
                     disabled={desabilitar}
@@ -117,7 +117,7 @@ const CoordenacaoMotora = () => {
                     valor={formularioDeDados.indiceNarizUnilateral}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      indiceNarizUnilateral: e.target.value === 'true'
+                      indiceNarizUnilateral: e.target.value
                     })}
                     legenda="Índice Nariz Unilateral"
                     disabled={desabilitar}
@@ -146,7 +146,7 @@ const CoordenacaoMotora = () => {
                     valor={formularioDeDados.testeIndiceIndice}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      testeIndiceIndice: e.target.value === 'true'
+                      testeIndiceIndice: e.target.value
                     })}
                     legenda="Teste Índice-Índice"
                     disabled={desabilitar}
@@ -175,7 +175,7 @@ const CoordenacaoMotora = () => {
                     valor={formularioDeDados.movimentosAlternados}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      movimentosAlternados: e.target.value === 'true'
+                      movimentosAlternados: e.target.value
                     })}
                     legenda="Movimentos Alternados"
                     disabled={desabilitar}
@@ -204,7 +204,7 @@ const CoordenacaoMotora = () => {
                     valor={formularioDeDados.testeAlcancePegar}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
-                      testeAlcancePegar: e.target.value === 'true'
+                      testeAlcancePegar: e.target.value
                     })}
                     legenda="Teste Alcance Pegar"
                     disabled={desabilitar}

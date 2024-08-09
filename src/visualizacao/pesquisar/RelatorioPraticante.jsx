@@ -91,21 +91,21 @@ const RelatorioPraticante = () => {
           <CCardHeader>
             <CImage id="button-pdf" color="" onClick={
               () => {
-                setEspacar(false);
+                setEspacar(true);
                 setConteudoModal(true);
                 apresentarModalDeCarregamento("Carregando...", true, setDisplayModal, setTituloModal, setConteudoModal);
               }} src={ImagemPDF}
                     style={{width: "50px", height: "55px"}} title="Gerar documento PDF"/>
           </CCardHeader>
           <CContainer ref={conteudoDocumento}>
-            <strong className="titulos-relatorio-praticante">Ficha Cadastral - Admissional CE</strong>
+            <strong className="titulos-relatorio-praticante">Ficha Cadastral - Admissional CE</strong><br/>
             <DadosPessoaisRelatorio idUsuario={idPraticante}/><br/>
             <EducacaoRelatorio idUsuario={idPraticante}/><br/>
             <ResponsavelPeloPraticanteRelatorio idUsuario={idPraticante}/><br/>
             <OutrasAtividadesRelatorio idUsuario={idPraticante}/><br/>
             <EmergenciaRelatorio idUsuario={idPraticante}/><br/>
-            <CompletudeMatriculaRelatorio idUsuario={idPraticante}/>
-            <strong className="titulos-relatorio-praticante">Avaliação dos Aspectos Psicológicos</strong>
+            <CompletudeMatriculaRelatorio idUsuario={idPraticante}/><br/>
+            <strong className="titulos-relatorio-praticante">Avaliação dos Aspectos Psicológicos</strong><br/>
             <SobreACriancaRelatorio idUsuario={idPraticante}/><br/>
             <SaudeRelatorio idUsuario={idPraticante}/><br/>
             <RotinaRelatorio idUsuario={idPraticante}/><br/>
@@ -120,7 +120,7 @@ const RelatorioPraticante = () => {
             <AfetividadeRelatorio idUsuario={idPraticante}/><br/>
             <RelacaoDaFamiliaComOExaminadoRelatorio idUsuario={idPraticante}/><br/>
             <AvaliacaoPsicologicaRelatorio idUsuario={idPraticante}/><br/>
-            <strong className="titulos-relatorio-praticante">Avaliação Fisioterapêutica</strong>
+            <strong className="titulos-relatorio-praticante">Avaliação Fisioterapêutica</strong><br/>
             <AvaliacaoFisioterapeuticaRelatorio idUsuario={idPraticante}/><br/>
             <SaudeGeralDoPraticanteRelatorio idUsuario={idPraticante}/><br/>
             <FormaDeComunicacaoRelatorio idUsuario={idPraticante}/><br/>
@@ -128,11 +128,11 @@ const RelatorioPraticante = () => {
             <MobilidadeArticularRelatorio idUsuario={idPraticante}/><br/>
             <GruposMuscularesRelatorio idUsuario={idPraticante}/><br/>
             <EquilibrioEstaticoRelatorio idUsuario={idPraticante}/><br/>
-            <EquilibrioDinamicoRelatorio idUsuario={idPraticante}/><br/>
+            <EquilibrioDinamicoRelatorio idUsuario={idPraticante}/>
             <HabilidadesMotorasAVDRelatorio idUsuario={idPraticante}/><br/>
             <CoordenacaoMotoraRelatorio idUsuario={idPraticante}/><br/>
             <EmPeRelatorio idUsuario={idPraticante}/><br/>
-            <strong className="titulos-relatorio-praticante">Plano Terapêutico Singular - PTS</strong>
+            <strong className="titulos-relatorio-praticante">Plano Terapêutico Singular - PTS</strong><br/>
             <PlanoTerapeuticoSingularRelatorio idUsuario={idPraticante}/><br/>
           </CContainer>
         </CContainer>

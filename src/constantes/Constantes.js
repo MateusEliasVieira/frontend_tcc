@@ -92,7 +92,8 @@ const alimentacao = [
 ];
 const simOuNao = [
   {label: 'Sim', value: 'SIM'},
-  {label: 'Não', value: 'NAO'}
+  {label: 'Não', value: 'NAO'},
+  {label: 'Não informado', value: 'NAO_INFORMADO'},
 ];
 
 const sexo = [
