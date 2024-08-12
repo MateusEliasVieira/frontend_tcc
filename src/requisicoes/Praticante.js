@@ -4,7 +4,6 @@ import {
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
 import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeLocalStorage";
-import {mensagemParaErro, mensagemParaListaDeErros} from "../utilidades/ManipuladorDeRespostasDasRequisicoes";
 import {apresentarModal} from "../utilidades/ManipuladorDeModal";
 import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import {
@@ -67,58 +66,61 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
 };
 
 const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal) => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    if (idPraticanteSalvo) {
-      formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados)
-      try {
-        const resposta = await axios.post(
-          endpoint,
-          JSON.stringify({...formularioDeDados}),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${login.token}`
-            },
-          }
-        );
 
-        if (resposta.status === HttpStatusCode.Created) {
-          localStorage.setItem(chaveLocalStorage, CADASTRADO)
-          setDesabilitar("disabled")
-          verificarSeEstaFinalizado(setDisplayModal, setTituloModal, setConteudoModal)
+  const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+
+  if (idPraticanteSalvo) {
+
+    formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados);
+
+    await axios.post(
+      endpoint,
+      JSON.stringify({...formularioDeDados}),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+      }
+    )
+      .then((response) => {
+        if (response.status === HttpStatusCode.Created) {
+          localStorage.setItem(chaveLocalStorage, CADASTRADO);
+          setDesabilitar("disabled");
+          verificarSeEstaFinalizado(setDisplayModal, setTituloModal, setConteudoModal);
         }
-
-      } catch (error) {
-        const resposta = error.response;
-
-        // Verifique se error.response e error.response.data existem
-        if (resposta && resposta.data) {
-          if (resposta.data.lista) {
-            const lista = resposta.data.lista.map((item) => item.titulo).join("\n");
-            mensagemParaErro(lista, setDisplayModal, setTituloModal, setConteudoModal);
-          } else if (resposta.data.titulo) {
-            if (resposta.data.redirect) {
-              mensagemParaErro(resposta.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-              setTimeout(() => {
-                window.location = resposta.data.redirect;
-              }, 5000);
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.data) {
+            if (error.response.data.lista) {
+              const lista = error.response.data.lista.map((item) => item.titulo).join("\n");
+              apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
+            } else if (error.response.data.titulo) {
+              if (error.response.data.redirect) {
+                apresentarModal("Aviso",error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+                setTimeout(() => {
+                  window.location = error.response.data.redirect;
+                }, 5000);
+              } else {
+                apresentarModal("Aviso",error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+              }
             } else {
-              mensagemParaErro(resposta.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+              apresentarModal("Aviso","Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
             }
-          } else if (resposta.data.titulo) {
-            mensagemParaErro(resposta.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
           } else {
-            mensagemParaErro("Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+            apresentarModal("Aviso","Erro interno do sistema! Resposta sem dados.", setDisplayModal, setTituloModal, setConteudoModal);
           }
         } else {
-          mensagemParaErro("Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+          apresentarModal("Aviso","Erro interno do sistema! Nenhuma resposta recebida.", setDisplayModal, setTituloModal, setConteudoModal);
         }
-      }
-    } else {
-      apresentarModal("Aviso", "Cadastre os Dados Pessoais do Praticante primeiro!", setDisplayModal, setTituloModal, setConteudoModal);
-    }
+      })
+
+  } else {
+    apresentarModal("Aviso", "Cadastre os Dados Pessoais do Praticante primeiro!", setDisplayModal, setTituloModal, setConteudoModal);
   }
-;
+};
+
 
 const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDisplayModal, setTituloModal, setConteudoModal) => {
   try {

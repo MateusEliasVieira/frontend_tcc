@@ -10,6 +10,7 @@ import {buscarDadosPraticante} from "../../../requisicoes/Praticante";
 import {
   BUSCAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {formatarDataParaDiaMesAno} from "../../../utilidades/ManipuladorDeDatas";
 
 const CompletudeMatriculaRelatorio = ({idUsuario}) => {
 
@@ -39,7 +40,7 @@ const CompletudeMatriculaRelatorio = ({idUsuario}) => {
             <CContainer>
               <CRow>
                 <CCol>
-                  <p><strong>Data: {dados.dataCompletudeMatricula}</strong></p>
+                  <p><strong>Data: {formatarDataParaDiaMesAno(dados.dataCompletudeMatricula)}</strong></p>
                 </CCol>
                 <CCol>
                   <p><strong>Assinatura do responsável do praticante:</strong></p> <CImage width="350" height="200px" src={dados.imagemAssinaturaResponsavel}/>

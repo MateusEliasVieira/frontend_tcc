@@ -36,24 +36,24 @@ const Recuperacao = () => {
   }, [])
 
 
-  const recuperar = () => {
+  const recuperar = async ()  => {
     setTituloForm("Enviando email...")
     setEnviado(true)
-    axios.get(`http://localhost:8080/recuperacao-de-conta/enviar-email/${emailEnviar}`)
-      .then((resposta)=>{
-        if(resposta.status === HttpStatusCode.Ok){
-          setTituloForm(<strong id="rec-sucesso">{resposta.data.mensagem}</strong>)
+    await axios.get(`http://localhost:8080/recuperacao-de-conta/enviar-email/${emailEnviar}`)
+      .then((response)=>{
+        if(response.status === HttpStatusCode.Ok){
+          setTituloForm(<strong id="rec-sucesso">{response.data.mensagem}</strong>)
           setEnviado(false)
           setTimeout(()=>{
             window.location.href="/#/login"
           },5000)
         }else{
-          setTituloForm(<strong id="rec-falha">{resposta.data.titulo}</strong>)
+          setTituloForm(<strong id="rec-falha">{response.data.titulo}</strong>)
           setEnviado(false)
         }
       })
       .catch((erro)=>{
-        setTituloForm(<strong id="rec-falha">{erro.resposta.data.titulo}</strong>)
+        setTituloForm(<strong id="rec-falha">{erro.response.data.titulo}</strong>)
         setEnviado(false)
       })
   }

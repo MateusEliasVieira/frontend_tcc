@@ -39,13 +39,14 @@ const aplicaMascaraDePeso = (value) => {
 };
 
 const aplicarValorParaCampoVazioCasoExista = (formularioDeDados) => {
-  // Valor padrão para campos vazios
   const valorDefault = 'NAO_INFORMADO';
 
-  // Itera sobre as chaves do objeto
   Object.keys(formularioDeDados).forEach((chave) => {
     if (chave.includes("data") || chave.includes("renda")) {
-      formularioDeDados[chave] = null;
+      // Só seta como null se o campo estiver vazio ou indefinido
+      if (formularioDeDados[chave] === '' || formularioDeDados[chave] === undefined) {
+        formularioDeDados[chave] = null;
+      }
     } else {
       if (formularioDeDados[chave] === '' || formularioDeDados[chave] === null || formularioDeDados[chave] === undefined) {
         formularioDeDados[chave] = valorDefault;
@@ -55,6 +56,7 @@ const aplicarValorParaCampoVazioCasoExista = (formularioDeDados) => {
 
   return formularioDeDados;
 };
+
 
 const aplicarValorParaCamposDaAPI_NAO_INFORMADO = (formularioDeDados) => {
 

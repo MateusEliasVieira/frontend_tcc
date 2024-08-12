@@ -25,13 +25,16 @@ const estados = [
   {label: 'Santa Catarina', value: 'SC'},
   {label: 'São Paulo', value: 'SP'},
   {label: 'Sergipe', value: 'SE'},
-  {label: 'Tocantins', value: 'TO'}
+  {label: 'Tocantins', value: 'TO'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 const preencherLegenda = [
   {label: 'Sim', value: 'SIM'},
   { label: 'Não', value: 'NAO'},
+  {label: 'Parcialmente', value: 'PARCIALMENTE'},
   {label: 'Não Observado', value: 'NAO_OBSERVADO'},
-  {label: 'Parcialmente', value: 'PARCIALMENTE'},]
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
+]
 
 const tipoSanguineo = [
   {label: 'A +', value: 'A_POSITIVO'},
@@ -41,8 +44,8 @@ const tipoSanguineo = [
   {label: 'AB +', value: 'AB_POSITIVO'},
   {label: 'AB -', value: 'AB_NEGATIVO'},
   {label: 'O +', value: 'O_POSITIVO'},
-  {label: 'O -', value: 'O_NEGATIVO'}
-  // outros tipos sanguíneos aqui
+  {label: 'O -', value: 'O_NEGATIVO'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 
 const corOuRaca = [
@@ -50,14 +53,15 @@ const corOuRaca = [
   {label: 'Pardo', value: 'PARDO'},
   {label: 'Negro', value: 'NEGRO'},
   {label: 'Amarelo', value: 'AMARELO'},
-  {label: 'Indigena', value: 'INDIGENA'}
-  // outras cores ou raças aqui
+  {label: 'Indigena', value: 'INDIGENA'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 
 const estadoCivil = [
   {label: 'Solteiro', value: 'SOLTEIRO'},
   {label: 'Casado', value: 'CASADO'},
   {label: 'Divorciado', value: 'DIVORCIADO'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 
 const role = [
@@ -74,50 +78,58 @@ const vinculo = [
 const classeDeEscola = [
   {label: 'Especial', value: 'ESPECIAL'},
   {label: 'Inclusão', value: 'INCLUSAO'},
-  {label: 'Regular', value: 'REGULAR'}
+  {label: 'Regular', value: 'REGULAR'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 
 const tipoInstituicaoEducacional = [
   {label: 'Pública', value: 'PUBLICA'},
-  {label: 'Privada', value: 'PRIVADA'}
+  {label: 'Privada', value: 'PRIVADA'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 
 const periodo = [
   {label: 'Matutino', value: 'MATUTINO'},
-  {label: 'Vespertino', value: 'VESPERTINO'}
+  {label: 'Vespertino', value: 'VESPERTINO'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 const alimentacao = [
   {label: 'Seio', value: 'SEIO'},
-  {label: 'Mamadeira', value: 'MAMADEIRA'}
+  {label: 'Mamadeira', value: 'MAMADEIRA'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 const simOuNao = [
   {label: 'Sim', value: 'SIM'},
   {label: 'Não', value: 'NAO'},
-  {label: 'Não informado', value: 'NAO_INFORMADO'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 
 const sexo = [
   {label: 'Masculino', value: 'MASCULINO'},
-  {label: 'Feminino', value: 'FEMININO'}
+  {label: 'Feminino', value: 'FEMININO'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 const equilibrioEstatico = [
   {label: 'Nenhuma Dificuldade', value: 'NENHUMA_DIFICULDADE'},
   {label: 'Alguma Dificuldade', value: 'ALGUMA_DIFICULDADE'},
   {label: 'Bastante Dificuldade', value: 'BASTANTE_DIFICULDADE'},
-  {label: 'Não Realiza', value: 'NAO_REALIZA'}
+  {label: 'Não Realiza', value: 'NAO_REALIZA'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ]
 const equilibrioDinamico = [
   {label: 'Engatinha', value: 'ENGATINHA'},
   {label: 'Marcha Voluntária', value: 'MARCHA_VOLUNTARIA'},
   {label: 'Saltar com os Dois Pés Juntos', value: 'SALTAR_COM_OS_DOIS_PES_JUNTOS'},
-  {label: 'Correr Desviando de Obstáculos', value: 'CORRER_DESVIANDO_OBSTACULOS'}
+  {label: 'Correr Desviando de Obstáculos', value: 'CORRER_DESVIANDO_OBSTACULOS'},
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ]
 const gruposMusculares = [
   { label: 'Tônus Normal', value: 'TONUS_NORMAL' },
   { label: 'Discreto Aumento do Tônus', value: 'DISCRETO_AUMENTO_DO_TONUS' },
   { label: 'Aumento Mais Pronunciado do Tônus', value: 'AUMENTO_MAIS_PRONUNCIADO_DO_TONUS' },
   { label: 'Aumento Considerável do Tônus', value: 'AUMENTO_CONSIDERAVEL_TONUS' },
-  { label: 'Articulação Afetada Rígida em Flexão ou Extensão', value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' }
+  { label: 'Articulação Afetada Rígida em Flexão ou Extensão', value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' },
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 
 const gruposMuscularesPontuados = [
@@ -125,13 +137,13 @@ const gruposMuscularesPontuados = [
   { label: 1, value: 'DISCRETO_AUMENTO_DO_TONUS' },
   { label: 2, value: 'AUMENTO_MAIS_PRONUNCIADO_DO_TONUS' },
   { label: 3, value: 'AUMENTO_CONSIDERAVEL_TONUS' },
-  { label: 4, value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' }
+  { label: 4, value: 'ARTICULACAO_AFETADA_RIGIDA_EM_FLEXAO_OU_EXTENSAO' },
+  {label: 'Não Informado', value: 'NAO_INFORMADO'},
 ];
 const presente = [
   {label: 'Sim', value: true},
   {label: 'Não', value: false}
 ];
-
 
 
 const CADASTRADO = "true"
