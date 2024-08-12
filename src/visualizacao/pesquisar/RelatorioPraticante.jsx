@@ -39,11 +39,13 @@ import EquilibrioDinamicoRelatorio from "./AvaliacaoFisioterapeutica/EquilibrioD
 import ModalDeCarregamento from "../../components/modal/ModalDeCarregamento";
 import EmPeRelatorio from "./AvaliacaoFisioterapeutica/EmPeRelatorio";
 
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useReactToPrint} from "react-to-print";
 import ImagemPDF from '../../assets/icones/pdf.png'
 import {apresentarModalDeCarregamento, esconderModal} from "../../utilidades/ManipuladorDeModal";
 import CompletudeMatriculaRelatorio from "./fichaCadastroAdmissional/CompletudeMatriculaRelatorio";
+import ModalComEvolucaoGraficoDeLinhas from "../../components/modal/ModalComEvolucaoGraficoDeLinhas";
+import GraficoDeLinha from "./Graficos/GraficoDeLinha";
 
 const RelatorioPraticante = () => {
 
@@ -97,7 +99,7 @@ const RelatorioPraticante = () => {
               }} src={ImagemPDF}
                     style={{width: "50px", height: "55px"}} title="Gerar documento PDF"/>
           </CCardHeader>
-          <CContainer ref={conteudoDocumento}>
+          <CContainer ref={conteudoDocumento} style={{overflowX:'auto'}}>
             <strong className="titulos-relatorio-praticante">Ficha Cadastral - Admissional CE</strong><br/>
             <DadosPessoaisRelatorio idUsuario={idPraticante}/><br/>
             <EducacaoRelatorio idUsuario={idPraticante}/><br/>
@@ -134,6 +136,7 @@ const RelatorioPraticante = () => {
             <EmPeRelatorio idUsuario={idPraticante}/><br/>
             <strong className="titulos-relatorio-praticante">Plano Terapêutico Singular - PTS</strong><br/>
             <PlanoTerapeuticoSingularRelatorio idUsuario={idPraticante}/><br/>
+            <GraficoDeLinha idPraticante={idPraticante}/>
           </CContainer>
         </CContainer>
         : <></>}

@@ -42,9 +42,9 @@ const aplicarValorParaCampoVazioCasoExista = (formularioDeDados) => {
   const valorDefault = 'NAO_INFORMADO';
 
   Object.keys(formularioDeDados).forEach((chave) => {
-    if (chave.includes("data") || chave.includes("renda")) {
+    if (chave.includes("data") || chave.includes("renda") || chave.includes("telefone") || chave.includes("email") || chave.includes("ligarPara")) {
       // Só seta como null se o campo estiver vazio ou indefinido
-      if (formularioDeDados[chave] === '' || formularioDeDados[chave] === undefined) {
+      if (formularioDeDados[chave] === '' || formularioDeDados[chave] === undefined || formularioDeDados[chave] === valorDefault) {
         formularioDeDados[chave] = null;
       }
     } else {
@@ -64,7 +64,7 @@ const aplicarValorParaCamposDaAPI_NAO_INFORMADO = (formularioDeDados) => {
 
   // Itera sobre as chaves do objeto
   Object.keys(formularioDeDados).forEach((chave) => {
-    if (chave.includes("data") || chave.includes("renda")) {
+    if (chave.includes("data") || chave.includes("renda") || chave.includes("telefone") || chave.includes("email") || chave.includes("ligarPara")) {
 
       formularioDeDados[chave] = formularioDeDados[chave] !== null && formularioDeDados[chave] !== "" ? formularioDeDados[chave] : null;
 

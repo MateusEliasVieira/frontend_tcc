@@ -30,7 +30,7 @@ const Pesquisar = () => {
   }, []);
 
   return (
-    <CCard>
+    <CCard style={{overflowX:'auto'}}>
       <CCardHeader>
         <strong>Pesquisar</strong>
       </CCardHeader>

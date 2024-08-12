@@ -81,7 +81,6 @@ const CompletudeMatricula = () => {
                     valor={formularioDeDados.dataCompletudeMatricula}
                     setar={(e) => {
                       setFormularioDeDados({...formularioDeDados, dataCompletudeMatricula: e.target.value})
-                      alert(formularioDeDados.dataCompletudeMatricula)
                     }
                   }
                     legenda="Data da matrícula"

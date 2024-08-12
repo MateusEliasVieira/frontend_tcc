@@ -119,7 +119,7 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
                 />
               </CCardBody>
             </CCard>
-            <CContainer style={{padding: "10px"}}>
+            <CContainer style={{padding: "10px"}} style={{overflowX:'scroll'}}>
               <CRow className="justify-content-center align-items-center" style={{minHeight: "100vh"}}>
                 <CCol
                   xs="auto"

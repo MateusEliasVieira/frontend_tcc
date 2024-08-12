@@ -29,7 +29,7 @@ const Emergencia = () => {
     ligarPara: '',
     telefone: '',
     possuiPlanoDeSaude: '',
-    plano: 'Sem Plano',
+    plano: '',
     praticante: {
       idPraticante: ''
     }
@@ -104,14 +104,16 @@ const Emergencia = () => {
                     valor={formularioDeDados.possuiPlanoDeSaude}
                     setar={(e) => {
                       setFormularioDeDados({...formularioDeDados, possuiPlanoDeSaude: e.target.value})
-                      setPossuiPlanoDeSaude(e.target.value)
+                      if(formularioDeDados.possuiPlanoDeSaude === 'NAO'){
+                        setFormularioDeDados({...formularioDeDados, plano: ''})
+                      }
                     }}
                     legenda="Possui plano de saúde?"
                     opcoes={simOuNao}
                     disabled={desabilitar}
                   />
                 </CCol>
-                {possuiPlanoDeSaude === 'true' ?
+                {formularioDeDados.possuiPlanoDeSaude === 'SIM' ?
                   (<CCol md="auto">
                       <Campo
                         tipo="text"
