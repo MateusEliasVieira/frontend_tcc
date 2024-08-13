@@ -1,5 +1,6 @@
 import axios, {HttpStatusCode} from "axios";
 import {
+  ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
@@ -31,6 +32,55 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
         localStorage.setItem('idPraticanteSalvo', response.data.praticante.idPraticante);
         localStorage.setItem("dadosPessoaisCadastrado", CADASTRADO)
         setDesabilitar("disabled")
+      } else {
+        apresentarModal("Aviso", 'Não foi possível cadastrar os dados do praticante!', setDisplayModal, setTituloModal, setConteudoModal);
+      }
+    } catch (error) {
+      // Verifique se error.response e error.response.data existem
+      const resposta = error.response;
+
+      if (resposta && resposta.data) {
+        if (resposta.data.lista) {
+          const lista = resposta.data.lista.map((item) => item.mensagem).join("\n");
+          apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
+        } else if (resposta.data.mensagem) {
+          if (resposta.data.redirect) {
+            apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+            setTimeout(() => {
+              window.location = resposta.data.redirect;
+            }, 5000);
+          } else {
+            apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+          }
+        } else if (resposta.data.titulo) {
+          apresentarModal("Aviso", resposta.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+        } else {
+          apresentarModal("Aviso", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+        }
+      } else {
+        apresentarModal("Aviso", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+      }
+    }
+  } else {
+    apresentarModal("Aviso", "Informe os dados pessoais do praticante!", setDisplayModal, setTituloModal, setConteudoModal);
+  }
+};
+
+const atualizarDadosPessoais = async (formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (camposPreenchidos(formularioDeDados)) {
+    try {
+      const response = await axios.put(
+        ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
+        JSON.stringify({...formularioDeDados}),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${login.token}`
+          }
+        }
+      );
+      if (response.status === HttpStatusCode.Created) {
+        apresentarModal("Aviso", "Atualizado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
       } else {
         apresentarModal("Aviso", 'Não foi possível cadastrar os dados do praticante!', setDisplayModal, setTituloModal, setConteudoModal);
       }
@@ -140,4 +190,4 @@ const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDispla
   }
 }
 
-export {salvarDadosPessoais, salvar, buscarDadosPraticante}
+export {salvarDadosPessoais, salvar, buscarDadosPraticante, atualizarDadosPessoais}

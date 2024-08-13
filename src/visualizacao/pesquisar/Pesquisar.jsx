@@ -18,7 +18,7 @@ const Pesquisar = () => {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${login.token}`
-      },
+      }
     })
       .then((response) => {
         setDados(response.data)

@@ -1,6 +1,7 @@
 const camposPreenchidos = (jsonObject) => {
   for (let key in jsonObject) {
     if (jsonObject[key] === null || jsonObject[key] === undefined || jsonObject[key] === '') {
+      console.log(`Campo vazio ou não definido: ${key}`);
       return false;
     }
     // Verifica se o valor é um objeto e realiza a checagem recursivamente

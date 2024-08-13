@@ -26,7 +26,7 @@ const TabelaPraticante = (props) => {
               <CTableRow>
                 <CTableDataCell style={{textAlign:"center"}}>{item.praticante.idPraticante}</CTableDataCell>
                 <CTableDataCell style={{textAlign:"center"}}>
-                  {item.nomeCompleto}
+                  <a href={"/#/atualizar-praticante/?id="+item.praticante.idPraticante} style={{textDecoration:"none"}} title={"Atualizar cadastro do(a) praticante "+item.nomeCompleto}>{item.nomeCompleto}</a>
                 </CTableDataCell>
                 <CTableDataCell style={{textAlign:"center"}}>{item.diagnosticoClinico}</CTableDataCell>
                 <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>

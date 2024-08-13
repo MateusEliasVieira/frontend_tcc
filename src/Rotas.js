@@ -5,6 +5,7 @@ const Dashboard = React.lazy(() => import('./visualizacao/dashboard/Dashboard'))
 
 //Formulários Praticante
 const CadastroPraticante = React.lazy(() => import('./visualizacao/formularios/formulariosDePraticante/CadastroDePraticante'))
+const AtualizaPraticante = React.lazy(() => import('./visualizacao/atualizar/AtualizacaoDePraticante'))
 
 // Relatório de Praticante
 const RelatorioPraticante = React.lazy(() => import('./visualizacao/pesquisar/RelatorioPraticante'))
@@ -21,8 +22,9 @@ const rotas = [
   { path: '/gerar-relatorio-de-praticante/*', name: 'Relatório', element: RelatorioPraticante },
   { path: '/pesquisar-praticante', name: 'Pesquisar', element:PesquisarPraticante },
   { path: '/cadastrar-praticante', name: 'Novo', element: CadastroPraticante },
+  { path: '/atualizar-praticante/*', name: 'Atualizar', element: AtualizaPraticante },
   { path: '/cadastrar-usuario', name: 'Novo', element: CadastroDeUsuario },
-  { path: '/pesquisar-usuario', name: 'Usuários', element: PesquisaDeUsuario },
+  { path: '/pesquisar-usuario', name: 'Pesquisar', element: PesquisaDeUsuario },
   { path: '/atualizar-usuario/*', name: 'Atualizar', element:  AtualizacaoDeUsuario},
 ]
 export default rotas
