@@ -8,20 +8,25 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO, preencherLegenda} from "../../../constantes/Constantes";
-import {SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
-import {salvar} from "../../../requisicoes/Praticante";
+import {preencherLegenda} from "../../../constantes/Constantes";
+import {
+  ATUALIZAR_COMPORTAMENTO_DO_PRATICANTE_PUT,
+  BUSCAR_COMPORTAMENTO_DO_PRATICANTE_POR_ID_GET,
+} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {atualizar} from "../../../requisicoes/Praticante";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const Comportamento = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar,setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idComportamento:'',
     agitacao: '',
     toleranciaFrustracao: '',
     respeitaLimitesRegras: '',
@@ -33,23 +38,34 @@ const Comportamento = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const comportamento = localStorage.getItem("comportamento")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (comportamento === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_COMPORTAMENTO_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CCard className="mb-4">
@@ -59,16 +75,9 @@ const Comportamento = () => {
         conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
         esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
       />
-      {
-        desabilitar === "disabled" ?
-          <CCardHeader style={{backgroundColor: "#e55353"}}>
-            <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-          </CCardHeader>
-          :
-          <CCardHeader>
-            <strong>Comportamento</strong>
-          </CCardHeader>
-      }
+      <CCardHeader>
+        <strong>Comportamento</strong>
+      </CCardHeader>
       <CCardBody>
         <CContainer>
           <CRow>
@@ -80,7 +89,6 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, agitacao: e.target.value})}
                 legenda="Tem comportamento agitado?"
                 opcoes={preencherLegenda}
-                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -91,7 +99,6 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, toleranciaFrustracao: e.target.value})}
                 legenda="Tem tolerância à frustração?"
                 opcoes={preencherLegenda}
-                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -102,7 +109,6 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, respeitaLimitesRegras: e.target.value})}
                 legenda="Respeita limites e regras?"
                 opcoes={preencherLegenda}
-                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -113,7 +119,6 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, oposicao: e.target.value})}
                 legenda="Oposição?"
                 opcoes={preencherLegenda}
-                disabled={desabilitar}
               />
             </CCol>
             <CCol md="auto">
@@ -124,15 +129,14 @@ const Comportamento = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, atencaoConcentracao: e.target.value})}
                 legenda="Possui atenção e concentração?"
                 opcoes={preencherLegenda}
-                disabled={desabilitar}
               />
             </CCol>
           </CRow>
-          <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-            salvar(formularioDeDados, SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST,"comportamento", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+          <CButton color="danger" style={{color: "white"}} onClick={() => {
+            atualizar(formularioDeDados, ATUALIZAR_COMPORTAMENTO_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
           }
           }>
-            Salvar
+            Atualizar
           </CButton>
         </CContainer>
       </CCardBody>

@@ -3,27 +3,29 @@ import {
   CButton,
   CCard,
   CCardBody,
-  CCardHeader,
-  CContainer,
+  CCardHeader, CCol,
+  CContainer, CImage, CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO} from "../../../constantes/Constantes";
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar} from "../../../requisicoes/Praticante";
 import {
-  SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST
+  ATUALIZAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_PUT,
+  BUSCAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const AvaliacaoPsicologica = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idAvaliacaoPsicologica: '',
     expectativasFamiliaresTerapiaEquina: '',
     resumoCasoObservacoesComplementares: '',
     imagemAssinaturaOuCRPECarimbo: '',
@@ -33,23 +35,34 @@ const AvaliacaoPsicologica = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoPsicologica = localStorage.getItem("avaliacaoPsicologica")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (avaliacaoPsicologica === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CCard className="mb-4">
@@ -59,16 +72,9 @@ const AvaliacaoPsicologica = () => {
         conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
         esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
       />
-      {
-        desabilitar === "disabled" ?
-          <CCardHeader style={{backgroundColor: "#e55353"}}>
-            <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-          </CCardHeader>
-          :
-          <CCardHeader>
-            <strong>Avaliação Psicológica</strong>
-          </CCardHeader>
-      }
+      <CCardHeader>
+        <strong>Avaliação Psicológica</strong>
+      </CCardHeader>
       <CCardBody>
         <CContainer>
           <Campo
@@ -79,7 +85,6 @@ const AvaliacaoPsicologica = () => {
               setFormularioDeDados({...formularioDeDados, expectativasFamiliaresTerapiaEquina: e.target.value})
             }
             legenda="Qual a expectativa da família quanto à equoterapia?"
-            disabled={desabilitar}
           />
           <Campo
             tipo="textarea"
@@ -89,7 +94,6 @@ const AvaliacaoPsicologica = () => {
               setFormularioDeDados({...formularioDeDados, resumoCasoObservacoesComplementares: e.target.value})
             }
             legenda="Síntese do caso e observações complementares"
-            disabled={desabilitar}
           />
           <Campo
             tipo="file"
@@ -99,18 +103,25 @@ const AvaliacaoPsicologica = () => {
                 .then((imagemBase64) => {
                   setFormularioDeDados({...formularioDeDados, imagemAssinaturaOuCRPECarimbo: imagemBase64})
                 })
-                .catch(()=>{
+                .catch(() => {
                   alert("Falha ao selecionar imagem!")
                 })
             }
             legenda="Imagem da assinatura ou CRP e carimbo"
-            disabled={desabilitar}
           />
-          <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-            salvar(formularioDeDados, SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST, "avaliacaoPsicologica", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+            {formularioDeDados.imagemAssinaturaOuCRPECarimbo !== '' ?
+              <div>
+                <CImage src={formularioDeDados.imagemAssinaturaOuCRPECarimbo} width={600} height={300}
+                        style={{margin: "20px auto"}}/>
+              </div>
+              :
+              <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
+            }
+          <CButton color="danger" style={{color: "white"}} onClick={() => {
+            atualizar(formularioDeDados, ATUALIZAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
           }
           }>
-            Salvar
+            Atualizar
           </CButton>
         </CContainer>
       </CCardBody>

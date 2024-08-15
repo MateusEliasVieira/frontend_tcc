@@ -9,22 +9,25 @@ import {
   CForm, CContainer,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO, preencherLegenda} from '../../../constantes/Constantes';
-import {salvar} from "../../../requisicoes/Praticante";
+import {preencherLegenda} from '../../../constantes/Constantes';
+import {atualizar} from "../../../requisicoes/Praticante";
 import {
-  SALVAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POST
+  ATUALIZAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_PUT,
+  BUSCAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const CuidadosPessoais = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idCuidadosPessoais: '',
     higienePessoalSozinho: '',
     vesteRoupasCalcadosSozinho: '',
     seAlimentaSozinho: '',
@@ -34,23 +37,34 @@ const CuidadosPessoais = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const cuidadosPessoais = localStorage.getItem("cuidadosPessoais")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (cuidadosPessoais === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -62,16 +76,9 @@ const CuidadosPessoais = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Cuidados Pessoais</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Cuidados Pessoais</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -83,7 +90,6 @@ const CuidadosPessoais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, higienePessoalSozinho: e.target.value})}
                     legenda="Executa higiene pessoal sozinho(a)?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -97,7 +103,6 @@ const CuidadosPessoais = () => {
                     })}
                     legenda="Veste as roupas/sapatos sozinho(a)?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -108,15 +113,14 @@ const CuidadosPessoais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, seAlimentaSozinho: e.target.value})}
                     legenda="Se alimenta sozinho(a)?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_POST, "cuidadosPessoais", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_CUIDADOS_PESSOAIS_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

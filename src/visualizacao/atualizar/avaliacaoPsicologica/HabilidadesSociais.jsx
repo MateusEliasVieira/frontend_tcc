@@ -9,22 +9,26 @@ import {
   CContainer,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO, preencherLegenda} from '../../../constantes/Constantes';
-import {salvar} from "../../../requisicoes/Praticante";
+import {preencherLegenda} from '../../../constantes/Constantes';
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
 import {
+  ATUALIZAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_PUT,
+  BUSCAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_POR_ID_GET,
   SALVAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_POST
 } from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const HabilidadesSociais = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idHabilidadesSociais: '',
     passividade: '',
     autoagressao: '',
     heteroagressividade: '',
@@ -35,23 +39,34 @@ const HabilidadesSociais = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const habilidadesSociais = localStorage.getItem("habilidadesSociais")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (habilidadesSociais === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -63,16 +78,9 @@ const HabilidadesSociais = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Habilidades Sociais</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Habilidades Sociais</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -84,7 +92,6 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, passividade: e.target.value})}
                     legenda="Passividade?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   /></CCol>
                 <CCol md="auto">
                   <Campo
@@ -94,7 +101,6 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, autoagressao: e.target.value})}
                     legenda="Autoagressividade?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -105,7 +111,6 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, heteroagressividade: e.target.value})}
                     legenda="Heteroagressividade?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -116,15 +121,14 @@ const HabilidadesSociais = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, assertividade: e.target.value})}
                     legenda="Assertividade?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_POST, "habilidadesSociais", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_HABILIDADES_SOCIAIS_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

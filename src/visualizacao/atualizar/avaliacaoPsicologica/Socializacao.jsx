@@ -8,20 +8,25 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO, preencherLegenda} from "../../../constantes/Constantes";
-import {salvar} from "../../../requisicoes/Praticante";
-import {SALVAR_SOCIALIZACAO_DO_PRATICANTE_POST} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {preencherLegenda} from "../../../constantes/Constantes";
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
+import {
+  ATUALIZAR_SOCIALIZACAO_DO_PRATICANTE_PUT,
+  BUSCAR_SOCIALIZACAO_DO_PRATICANTE_POR_ID_GET
+} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const Socializacao = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idSocializacao: '',
     interageBemComOutrasCriancas: '',
     interageBemComAdultos: '',
     buscaContatoSocial: '',
@@ -33,23 +38,34 @@ const Socializacao = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const socializacao = localStorage.getItem("socializacao")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (socializacao === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_SOCIALIZACAO_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -61,16 +77,9 @@ const Socializacao = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Socialização</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Socialização</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -79,10 +88,12 @@ const Socializacao = () => {
                     id="interageBemComOutrasCriancas"
                     tipo="select"
                     valor={formularioDeDados.interageBemComOutrasCriancas}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, interageBemComOutrasCriancas: e.target.value})}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      interageBemComOutrasCriancas: e.target.value
+                    })}
                     legenda="Interage bem com outras crianças?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -93,7 +104,6 @@ const Socializacao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, interageBemComAdultos: e.target.value})}
                     legenda="Interage bem com adultos?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -104,7 +114,6 @@ const Socializacao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, buscaContatoSocial: e.target.value})}
                     legenda="Busca contato social?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -115,7 +124,6 @@ const Socializacao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, temOportunidadeContato: e.target.value})}
                     legenda="Tem oportunidade de contato social?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -126,15 +134,14 @@ const Socializacao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, fazContatoVisual: e.target.value})}
                     legenda="Faz contato visual?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_SOCIALIZACAO_DO_PRATICANTE_POST, "socializacao", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_SOCIALIZACAO_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

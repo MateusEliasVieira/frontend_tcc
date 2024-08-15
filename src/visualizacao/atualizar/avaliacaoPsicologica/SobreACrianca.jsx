@@ -10,21 +10,25 @@ import {
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
 import {simOuNao, alimentacao, CADASTRADO} from "../../../constantes/Constantes";
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
 import {
+  ATUALIZAR_SOBRE_A_CRIANCA_DO_PRATICANTE_PUT,
+  BUSCAR_SOBRE_A_CRIANCA_DO_PRATICANTE_POR_ID_GET,
   SALVAR_SOBRE_A_CRIANCA_DO_PRATICANTE_POST
 } from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const SobreACrianca = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idSobreACrianca: '',
     fezTerapiaEquina: '',
     criancaPlanejada: '',
     cuidadosPreNatais: '',
@@ -37,23 +41,34 @@ const SobreACrianca = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const sobreACrianca = localStorage.getItem("sobreACrianca")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (sobreACrianca === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_SOBRE_A_CRIANCA_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -65,16 +80,9 @@ const SobreACrianca = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Sobre o Praticante</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Sobre o Praticante</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -83,10 +91,9 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="fezTerapiaEquina"
                     valor={formularioDeDados.fezTerapiaEquina}
-                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, fezTerapiaEquina: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, fezTerapiaEquina: e.target.value})}
                     legenda="Já fez equoterapia antes?"
                     opcoes={simOuNao}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -94,10 +101,9 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="criancaPlanejada"
                     valor={formularioDeDados.criancaPlanejada}
-                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, criancaPlanejada: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, criancaPlanejada: e.target.value})}
                     legenda="A criança foi planejada?"
                     opcoes={simOuNao}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -105,10 +111,9 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="cuidadosPreNatais"
                     valor={formularioDeDados.cuidadosPreNatais}
-                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, cuidadosPreNatais: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, cuidadosPreNatais: e.target.value})}
                     legenda="Teve acompanhamento pré-natal?"
                     opcoes={simOuNao}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -116,10 +121,9 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="chorouNoNascimento"
                     valor={formularioDeDados.chorouNoNascimento}
-                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, chorouNoNascimento: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, chorouNoNascimento: e.target.value})}
                     legenda="Chorou ao nascer?"
                     opcoes={simOuNao}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -127,10 +131,9 @@ const SobreACrianca = () => {
                     tipo="select"
                     id="alimentacao"
                     valor={formularioDeDados.alimentacao}
-                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, alimentacao: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, alimentacao: e.target.value})}
                     legenda="Qual foi a alimentação?"
                     opcoes={alimentacao}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -140,18 +143,17 @@ const SobreACrianca = () => {
                     tipo="textarea"
                     id="observacao"
                     valor={formularioDeDados.observacao}
-                    setar={(e) =>  setFormularioDeDados({...formularioDeDados, observacao: e.target.value})}
+                    setar={(e) => setFormularioDeDados({...formularioDeDados, observacao: e.target.value})}
                     legenda="Observação"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
 
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_SOBRE_A_CRIANCA_DO_PRATICANTE_POST, "sobreACrianca", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_SOBRE_A_CRIANCA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

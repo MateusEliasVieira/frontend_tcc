@@ -9,20 +9,25 @@ import {
   CContainer,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO, preencherLegenda} from '../../../constantes/Constantes';
-import {salvar} from "../../../requisicoes/Praticante";
-import {SALVAR_LINGUAGEM_DO_PRATICANTE_POST} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {preencherLegenda} from '../../../constantes/Constantes';
+import {atualizar} from "../../../requisicoes/Praticante";
+import {
+  ATUALIZAR_LINGUAGEM_DO_PRATICANTE_PUT,
+  BUSCAR_LINGUAGEM_DO_PRATICANTE_POR_ID_GET,
+} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const Linguagem = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idLinguagem: '',
     compreensaoVerbal: '',
     gesto: '',
     gritos: '',
@@ -34,24 +39,37 @@ const Linguagem = () => {
       idPraticante: '',
     },
   });
+
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const linguagem = localStorage.getItem("linguagem")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (linguagem === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_LINGUAGEM_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
 
   return (
     <CRow>
@@ -63,16 +81,9 @@ const Linguagem = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Linguagem</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Linguagem</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -84,7 +95,6 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, compreensaoVerbal: e.target.value})}
                     legenda="Tem linguagem verbal compreensiva?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -95,7 +105,6 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, gesto: e.target.value})}
                     legenda="Gestual?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -106,7 +115,6 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, gritos: e.target.value})}
                     legenda="Gritos?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -117,7 +125,6 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, mimicaFacial: e.target.value})}
                     legenda="Mímica facial?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -128,7 +135,6 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, monossilabos: e.target.value})}
                     legenda="Monossílabos?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -141,7 +147,6 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, frasesCurtas: e.target.value})}
                     legenda="Fala frases curtas?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -152,15 +157,14 @@ const Linguagem = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, frasesCompletas: e.target.value})}
                     legenda="Fala frases completas?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_LINGUAGEM_DO_PRATICANTE_POST, "linguagem", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_LINGUAGEM_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

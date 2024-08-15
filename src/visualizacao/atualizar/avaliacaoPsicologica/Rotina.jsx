@@ -9,47 +9,63 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO, simOuNao} from "../../../constantes/Constantes";
-import {salvar} from "../../../requisicoes/Praticante";
-import {SALVAR_ROTINA_DO_PRATICANTE_POST} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {simOuNao} from "../../../constantes/Constantes";
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
+import {
+  ATUALIZAR_ROTINA_DO_PRATICANTE_PUT,
+  BUSCAR_ROTINA_DO_PRATICANTE_POR_ID_GET,
+} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const Rotina = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idRotina:'',
     brincadeiras: '',
     preferenciasPorBrincadeiras: '',
     aceitaMudancasNaRotina: '',
     consideracoesSobreRotina: '',
     praticante: {
-      idPraticante: '',
-    },
+      idPraticante: ''
+    }
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const rotina = localStorage.getItem("rotina")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (rotina === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_ROTINA_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -61,16 +77,9 @@ const Rotina = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Rotina</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Rotina</strong>
+          </CCardHeader>
           <CCardBody>
             <CForm>
               <Campo
@@ -79,7 +88,6 @@ const Rotina = () => {
                 valor={formularioDeDados.brincadeiras}
                 setar={(e) => setFormularioDeDados({...formularioDeDados, brincadeiras: e.target.value})}
                 legenda="Brincadeiras (onde, como, com quem?)"
-                disabled={desabilitar}
               />
               <Campo
                 tipo="textarea"
@@ -87,7 +95,6 @@ const Rotina = () => {
                 valor={formularioDeDados.preferenciasPorBrincadeiras}
                 setar={(e) => setFormularioDeDados({...formularioDeDados, preferenciasPorBrincadeiras: e.target.value})}
                 legenda="Preferências e aversões"
-                disabled={desabilitar}
               />
               <Campo
                 tipo="select"
@@ -96,7 +103,6 @@ const Rotina = () => {
                 setar={(e) => setFormularioDeDados({...formularioDeDados, aceitaMudancasNaRotina: e.target.value})}
                 legenda="Aceita mudanças na sua rotina?"
                 opcoes={simOuNao}
-                disabled={desabilitar}
               />
               <Campo
                 tipo="textarea"
@@ -104,13 +110,12 @@ const Rotina = () => {
                 valor={formularioDeDados.consideracoesSobreRotina}
                 setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesSobreRotina: e.target.value})}
                 legenda="Considerações sobre rotina"
-                disabled={desabilitar}
               />
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_ROTINA_DO_PRATICANTE_POST, "rotina", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_ROTINA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+               Atualizar
               </CButton>
             </CForm>
           </CCardBody>

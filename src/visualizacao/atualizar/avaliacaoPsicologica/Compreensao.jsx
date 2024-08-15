@@ -8,20 +8,25 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {CADASTRADO, preencherLegenda} from '../../../constantes/Constantes';
-import {salvar} from "../../../requisicoes/Praticante";
-import {SALVAR_COMPREENSAO_DO_PRATICANTE_POST} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {preencherLegenda} from '../../../constantes/Constantes';
+import {atualizar} from "../../../requisicoes/Praticante";
+import {
+  ATUALIZAR_COMPREENSAO_DO_PRATICANTE_PUT,
+  BUSCAR_COMPREENSAO_DO_PRATICANTE_POR_ID_GET,
+} from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const Compreensao = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idCompreensao: '',
     compreendeOrdens: '',
     executaOrdensVerbaisSimples: '',
     executaOrdensComplexas: '',
@@ -31,23 +36,34 @@ const Compreensao = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const compreensao = localStorage.getItem("compreensao")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (compreensao === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_COMPREENSAO_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -59,16 +75,9 @@ const Compreensao = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Compreensão</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Compreensão</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -80,7 +89,6 @@ const Compreensao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, compreendeOrdens: e.target.value})}
                     legenda="Compreende ordens ?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -94,7 +102,6 @@ const Compreensao = () => {
                     })}
                     legenda="Executa ordens verbais simples?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -105,15 +112,14 @@ const Compreensao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, executaOrdensComplexas: e.target.value})}
                     legenda="Executa ordens complexas?"
                     opcoes={preencherLegenda}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_COMPREENSAO_DO_PRATICANTE_POST, "compreensao", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_COMPREENSAO_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>
