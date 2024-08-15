@@ -4,27 +4,30 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CCol, CContainer,
+  CCol, CContainer, CImage,
   CRow,
 } from '@coreui/react';
 import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar} from "../../../requisicoes/Praticante";
 import {
-  SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST
+  ATUALIZAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_PUT, BUSCAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../../../constantes/Constantes";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
+import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
 
 const CompletudeMatricula = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idCompletudeMatricula: '',
     dataCompletudeMatricula: '',
     imagemAssinaturaResponsavel: '',
     praticante: {
@@ -33,23 +36,34 @@ const CompletudeMatricula = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const completudeMatricula = localStorage.getItem("completudeMatricula")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (completudeMatricula === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -61,16 +75,9 @@ const CompletudeMatricula = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Data de efetivação da matrícula</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Data de efetivação da matrícula</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -78,13 +85,12 @@ const CompletudeMatricula = () => {
                   <Campo
                     tipo="date"
                     id="dataCompletudeMatricula"
-                    valor={formularioDeDados.dataCompletudeMatricula}
+                    valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataCompletudeMatricula)}
                     setar={(e) => {
                       setFormularioDeDados({...formularioDeDados, dataCompletudeMatricula: e.target.value})
                     }
-                  }
+                    }
                     legenda="Data da matrícula"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -101,16 +107,25 @@ const CompletudeMatricula = () => {
                         });
                     }}
                     legenda="Imagem da assinatura do responsável"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
+              <CRow>
+                {formularioDeDados.imagemAssinaturaResponsavel !== '' ?
+                  <CCol>
+                    <CImage src={formularioDeDados.imagemAssinaturaResponsavel} width={600} height={300}
+                            style={{margin: "20px auto"}}/>
+                  </CCol>
+                  :
+                  <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
+                }
+              </CRow>
 
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST, "completudeMatricula", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }
               }>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

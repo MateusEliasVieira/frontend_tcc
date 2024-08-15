@@ -26,6 +26,7 @@ const Educacao = () => {
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idEducacao:'',
     serieEscolar: '',
     classeDeEscola: '',
     instituicaoEducacional: '',
