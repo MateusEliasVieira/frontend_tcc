@@ -9,23 +9,25 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
 
-import {CADASTRADO, equilibrioDinamico} from "../../../constantes/Constantes";
+import {equilibrioDinamico} from "../../../constantes/Constantes";
 import {
-  SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST
+  ATUALIZAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_PUT,
+  BUSCAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
-
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 const EquilibrioDinamico = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idEquilibrioDinamixo:'',
     engatinhar: '',
     comentariosEngatinhar: '',
     marchaVoluntaria: '',
@@ -40,23 +42,35 @@ const EquilibrioDinamico = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const equilibrioDinamico = localStorage.getItem("equilibrioDinamico")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (equilibrioDinamico === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -67,16 +81,9 @@ const EquilibrioDinamico = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Equilíbrio Dinâmico</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Equilíbrio Dinâmico</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -87,7 +94,6 @@ const EquilibrioDinamico = () => {
                     valor={formularioDeDados.engatinhar}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, engatinhar: e.target.value})}
                     legenda="Engatinhar"
-                    disabled={desabilitar}
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
@@ -98,7 +104,6 @@ const EquilibrioDinamico = () => {
                     valor={formularioDeDados.comentariosEngatinhar}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, comentariosEngatinhar: e.target.value})}
                     legenda="Comentários Engatinhar"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -110,7 +115,6 @@ const EquilibrioDinamico = () => {
                     valor={formularioDeDados.marchaVoluntaria}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, marchaVoluntaria: e.target.value})}
                     legenda="Marcha Voluntária"
-                    disabled={desabilitar}
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
@@ -124,7 +128,6 @@ const EquilibrioDinamico = () => {
                       comentariosMarchaVoluntaria: e.target.value
                     })}
                     legenda="Comentários Marcha Voluntária"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -136,7 +139,6 @@ const EquilibrioDinamico = () => {
                     valor={formularioDeDados.saltarPesJuntos}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, saltarPesJuntos: e.target.value})}
                     legenda="Saltar com os Pés Juntos"
-                    disabled={desabilitar}
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
@@ -150,7 +152,6 @@ const EquilibrioDinamico = () => {
                       comentariosSaltarPesJuntos: e.target.value
                     })}
                     legenda="Comentários Saltar com os Pés Juntos"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -165,7 +166,6 @@ const EquilibrioDinamico = () => {
                       correrDesviandoObstaculos: e.target.value
                     })}
                     legenda="Correr Desviando Obstáculos"
-                    disabled={desabilitar}
                     opcoes={equilibrioDinamico}
                   />
                 </CCol>
@@ -179,14 +179,13 @@ const EquilibrioDinamico = () => {
                       comentariosCorrerDesviandoObstaculos: e.target.value
                     })}
                     legenda="Comentários Correr Desviando Obstáculos"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST, "equilibrioDinamico", setDesabilitar)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

@@ -58,6 +58,7 @@ const CoordenacaoMotora = () => {
       }
     }
   }, []);
+  
   return (
     <CRow>
       <CCol xs={12}>

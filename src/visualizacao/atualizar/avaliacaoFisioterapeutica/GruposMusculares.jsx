@@ -9,22 +9,26 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
 import {CADASTRADO, gruposMusculares} from "../../../constantes/Constantes";
 import {
+  ATUALIZAR_GRUPOS_MUSCULARES_DO_PRATICANTE_PUT,
+  BUSCAR_FORMA_COMUNICACAO_DO_PRATICANTE_POR_ID_GET, BUSCAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POR_ID_GET,
   SALVAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POST
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const GruposMusculares = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idGruposMusculares: '',
     flexoresOmbroDireito: '-',
     flexoresOmbroEsquerdo: '-',
     extensoresOmbroDireito: '-',
@@ -53,23 +57,34 @@ const GruposMusculares = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const gruposMusculares = localStorage.getItem("gruposMusculares")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (gruposMusculares === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -81,16 +96,9 @@ const GruposMusculares = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Grupos Musculares e Escala de Ashworth Modificada</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Grupos Musculares e Escala de Ashworth Modificada</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -101,7 +109,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresOmbroDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresOmbroDireito: e.target.value})}
                     legenda="Flexores do Ombro Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -112,7 +119,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresOmbroEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresOmbroEsquerdo: e.target.value})}
                     legenda="Flexores do Ombro Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -125,7 +131,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.extensoresOmbroDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresOmbroDireito: e.target.value})}
                     legenda="Extensores do Ombro Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -136,7 +141,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.extensoresOmbroEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresOmbroEsquerdo: e.target.value})}
                     legenda="Extensores do Ombro Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -149,7 +153,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresCotoveloDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresCotoveloDireito: e.target.value})}
                     legenda="Flexores do Cotovelo Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -163,7 +166,6 @@ const GruposMusculares = () => {
                       flexoresCotoveloEsquerdo: e.target.value
                     })}
                     legenda="Flexores do Cotovelo Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -179,7 +181,6 @@ const GruposMusculares = () => {
                       extensoresCotoveloDireito: e.target.value
                     })}
                     legenda="Extensores do Cotovelo Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -193,7 +194,6 @@ const GruposMusculares = () => {
                       extensoresCotoveloEsquerdo: e.target.value
                     })}
                     legenda="Extensores do Cotovelo Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -206,7 +206,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresPulsoDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresPulsoDireito: e.target.value})}
                     legenda="Flexores do Pulso Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -217,7 +216,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresPulsoEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresPulsoEsquerdo: e.target.value})}
                     legenda="Flexores do Pulso Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -230,7 +228,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.extensoresPulsoDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresPulsoDireito: e.target.value})}
                     legenda="Extensores do Pulso Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -241,7 +238,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.extensoresPulsoEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensoresPulsoEsquerdo: e.target.value})}
                     legenda="Extensores do Pulso Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -254,7 +250,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresQuadrilDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresQuadrilDireito: e.target.value})}
                     legenda="Flexores do Quadril Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -265,7 +260,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresQuadrilEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresQuadrilEsquerdo: e.target.value})}
                     legenda="Flexores do Quadril Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -281,7 +275,6 @@ const GruposMusculares = () => {
                       extensoresQuadrilDireito: e.target.value
                     })}
                     legenda="Extensores do Quadril Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -295,7 +288,6 @@ const GruposMusculares = () => {
                       extensoresQuadrilEsquerdo: e.target.value
                     })}
                     legenda="Extensores do Quadril Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -308,7 +300,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresJoelhoDireito}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresJoelhoDireito: e.target.value})}
                     legenda="Flexores do Joelho Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -319,7 +310,6 @@ const GruposMusculares = () => {
                     valor={formularioDeDados.flexoresJoelhoEsquerdo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexoresJoelhoEsquerdo: e.target.value})}
                     legenda="Flexores do Joelho Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -335,7 +325,6 @@ const GruposMusculares = () => {
                       dorsiflexoresTornozeloDireito: e.target.value
                     })}
                     legenda="Dorsiflexores do Tornozelo Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -349,7 +338,6 @@ const GruposMusculares = () => {
                       dorsiflexoresTornozeloEsquerdo: e.target.value
                     })}
                     legenda="Dorsiflexores do Tornozelo Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -365,7 +353,6 @@ const GruposMusculares = () => {
                       plantiflexoresTornozeloDireito: e.target.value
                     })}
                     legenda="Plantiflexores do Tornozelo Direito"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
@@ -379,15 +366,14 @@ const GruposMusculares = () => {
                       plantiflexoresTornozeloEsquerdo: e.target.value
                     })}
                     legenda="Plantiflexores do Tornozelo Esquerdo"
-                    disabled={desabilitar}
                     opcoes={gruposMusculares}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_GRUPOS_MUSCULARES_DO_PRATICANTE_POST, "gruposMusculares", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_GRUPOS_MUSCULARES_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

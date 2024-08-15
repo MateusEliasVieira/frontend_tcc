@@ -9,22 +9,25 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
-import {CADASTRADO, equilibrioEstatico} from "../../../constantes/Constantes";
+import {atualizar} from "../../../requisicoes/Praticante";
+import {equilibrioEstatico} from "../../../constantes/Constantes";
 import {
-  SALVAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POST
+  ATUALIZAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_PUT,
+  BUSCAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const EquilibrioEstatico = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idEquilibrioEstatico: '',
     apoioCabeca: '',
     comentariosApoioCabeca: '',
     sentarSemApoio: '',
@@ -47,24 +50,38 @@ const EquilibrioEstatico = () => {
       idPraticante: '',
     },
   });
+
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const equilibrioEstatico = localStorage.getItem("equilibrioEstatico")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (equilibrioEstatico === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -75,16 +92,9 @@ const EquilibrioEstatico = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Equilíbrio Estático</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Equilíbrio Estático</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -95,7 +105,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.apoioCabeca}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, apoioCabeca: e.target.value})}
                     legenda="Apoio da Cabeça"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -106,7 +115,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.comentariosApoioCabeca}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, comentariosApoioCabeca: e.target.value})}
                     legenda="Comentários Apoio da Cabeça"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -118,7 +126,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.sentarSemApoio}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, sentarSemApoio: e.target.value})}
                     legenda="Sentar Sem Apoio"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -132,7 +139,6 @@ const EquilibrioEstatico = () => {
                       comentariosSentarSemApoio: e.target.value
                     })}
                     legenda="Comentários Sentar Sem Apoio"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -144,7 +150,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.sentarComApoio}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, sentarComApoio: e.target.value})}
                     legenda="Sentar Com Apoio"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -158,7 +163,6 @@ const EquilibrioEstatico = () => {
                       comentariosSentarComApoio: e.target.value
                     })}
                     legenda="Comentários Sentar Com Apoio"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -170,7 +174,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.emPeSemApoio}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, emPeSemApoio: e.target.value})}
                     legenda="Em Pé Sem Apoio"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -181,7 +184,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.comentariosEmPeSemApoio}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, comentariosEmPeSemApoio: e.target.value})}
                     legenda="Comentários Em Pé Sem Apoio"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -193,7 +195,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.emPeComApoio}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, emPeComApoio: e.target.value})}
                     legenda="Em Pé Com Apoio"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -204,7 +205,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.comentariosEmPeComApoio}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, comentariosEmPeComApoio: e.target.value})}
                     legenda="Comentários Em Pé Com Apoio"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -219,7 +219,6 @@ const EquilibrioEstatico = () => {
                       posicaoDeSentinelaOlhosAbertos: e.target.value
                     })}
                     legenda="Posição de Sentinela Olhos Abertos"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -233,7 +232,6 @@ const EquilibrioEstatico = () => {
                       comentariosPosicaoDeSentinelaOlhosAbertos: e.target.value
                     })}
                     legenda="Comentários Posição de Sentinela Olhos Abertos"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -248,7 +246,6 @@ const EquilibrioEstatico = () => {
                       posicaoDeSentinelaOlhosFechados: e.target.value
                     })}
                     legenda="Posição de Sentinela Olhos Fechados"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -262,7 +259,6 @@ const EquilibrioEstatico = () => {
                       comentariosPosicaoDeSentinelaOlhosFechados: e.target.value
                     })}
                     legenda="Comentários Posição de Sentinela Olhos Fechados"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -274,7 +270,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.umPeOlhosAbertos}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, umPeOlhosAbertos: e.target.value})}
                     legenda="Um Pé Olhos Abertos"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -288,7 +283,6 @@ const EquilibrioEstatico = () => {
                       comentariosUmPeOlhosAbertos: e.target.value
                     })}
                     legenda="Comentários Um Pé Olhos Abertos"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -300,7 +294,6 @@ const EquilibrioEstatico = () => {
                     valor={formularioDeDados.umPeOlhosFechados}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, umPeOlhosFechados: e.target.value})}
                     legenda="Um Pé Olhos Fechados"
-                    disabled={desabilitar}
                     opcoes={equilibrioEstatico}
                   />
                 </CCol>
@@ -314,14 +307,13 @@ const EquilibrioEstatico = () => {
                       comentariosUmPeOlhosFechados: e.target.value
                     })}
                     legenda="Comentários Um Pé Olhos Fechados"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POST, "equilibrioEstatico", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

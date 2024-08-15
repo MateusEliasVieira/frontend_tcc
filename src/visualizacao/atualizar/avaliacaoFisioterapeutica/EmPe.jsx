@@ -9,22 +9,26 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
 import {CADASTRADO, simOuNao} from "../../../constantes/Constantes";
 import {
+  ATUALIZAR_EM_PE_DO_PRATICANTE_PUT,
+  BUSCAR_COORDENACAO_MOTORA_DO_PRATICANTE_POR_ID_GET, BUSCAR_EM_PE_DO_PRATICANTE_POR_ID_GET,
   SALVAR_EM_PE_DO_PRATICANTE_POST
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const EmPE = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idEmPe: '',
     sequenciaDeMovimentos: '',
     consideracoesSequenciaDeMovimentos: '',
     entrarSairPosicaoSentadoChao: '',
@@ -44,23 +48,35 @@ const EmPE = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const emPE = localStorage.getItem("emPE")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (emPE === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_EM_PE_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -71,16 +87,9 @@ const EmPE = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Em Pé</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Em Pé</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -94,7 +103,6 @@ const EmPE = () => {
                       sequenciaDeMovimentos: e.target.value
                     })}
                     legenda="Sequência de Movimentos"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -108,7 +116,6 @@ const EmPE = () => {
                       consideracoesSequenciaDeMovimentos: e.target.value
                     })}
                     legenda="Considerações Sequência de Movimentos"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -123,7 +130,6 @@ const EmPE = () => {
                       entrarSairPosicaoSentadoChao: e.target.value
                     })}
                     legenda="Entrar/Sair da Posição Sentado no Chão"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -137,7 +143,6 @@ const EmPE = () => {
                       consideracoesEntrarSairPosicaoSentadoChao: e.target.value
                     })}
                     legenda="Considerações Entrar/Sair da Posição Sentado no Chão"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -152,7 +157,6 @@ const EmPE = () => {
                       sentadoCadeira: e.target.value
                     })}
                     legenda="Sentado na Cadeira"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -166,7 +170,6 @@ const EmPE = () => {
                       consideracoesSentadoCadeira: e.target.value
                     })}
                     legenda="Considerações Sentado na Cadeira"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -181,7 +184,6 @@ const EmPE = () => {
                       posturaEquilibrio: e.target.value
                     })}
                     legenda="Postura e Equilíbrio"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -195,7 +197,6 @@ const EmPE = () => {
                       consideracoesPosturaEquilibrio: e.target.value
                     })}
                     legenda="Considerações Postura e Equilíbrio"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -210,7 +211,6 @@ const EmPE = () => {
                       seqMovRolaSenta: e.target.value
                     })}
                     legenda="Seq. de Mov. Rola-Senta"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -224,7 +224,6 @@ const EmPE = () => {
                       consideracoesSeqMovRolaSenta: e.target.value
                     })}
                     legenda="Considerações Seq. de Mov. Rola-Senta"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -239,7 +238,6 @@ const EmPE = () => {
                       passaParaSentado: e.target.value
                     })}
                     legenda="Passa para Sentado"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -253,7 +251,6 @@ const EmPE = () => {
                       consideracoesPassaParaSentado: e.target.value
                     })}
                     legenda="Considerações Passa para Sentado"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CRow>
@@ -267,15 +264,14 @@ const EmPE = () => {
                         observacoes: e.target.value
                       })}
                       legenda="Observações"
-                      disabled={desabilitar}
-                    />
+                      />
                   </CCol>
                 </CRow>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EM_PE_DO_PRATICANTE_POST, "emPE", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_EM_PE_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

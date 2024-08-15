@@ -43,8 +43,6 @@ const AtualizacaoDePraticante = () => {
 
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
-
-
   const renderComponent = () => {
     switch (activeTab) {
       case "dadosPessoais":

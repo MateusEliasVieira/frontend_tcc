@@ -8,23 +8,25 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import {Modal} from "@mui/material";
-import {CADASTRADO, simOuNao} from "../../../constantes/Constantes";
+import {simOuNao} from "../../../constantes/Constantes";
 import Campo from "../../../components/campos/Campo";
-import {salvar} from "../../../requisicoes/Usuario";
 import {
-  SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST
+  ATUALIZAR_COORDENACAO_MOTORA_DO_PRATICANTE_PUT, BUSCAR_COORDENACAO_MOTORA_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
-
+import {atualizar} from "../../../requisicoes/Praticante";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
+import Modal from "../../../components/modal/Modal";
+import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 
 const CoordenacaoMotora = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idCoordenacaMotora: '',
     testeMaoObjeto: '',
     consideracoesTesteMaoObjeto: '',
     indiceNarizUnilateral: '',
@@ -41,23 +43,35 @@ const CoordenacaoMotora = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const coordenacaoMotora = localStorage.getItem("coordenacaoMotora")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (coordenacaoMotora === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_COORDENACAO_MOTORA_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -68,16 +82,9 @@ const CoordenacaoMotora = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Coordenação Motora</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Coordenação Motora</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -91,7 +98,6 @@ const CoordenacaoMotora = () => {
                       testeMaoObjeto: e.target.value
                     })}
                     legenda="Teste Mão-Objeto"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -105,7 +111,6 @@ const CoordenacaoMotora = () => {
                       consideracoesTesteMaoObjeto: e.target.value
                     })}
                     legenda="Considerações Teste Mão-Objeto"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -120,7 +125,6 @@ const CoordenacaoMotora = () => {
                       indiceNarizUnilateral: e.target.value
                     })}
                     legenda="Índice Nariz Unilateral"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -134,7 +138,6 @@ const CoordenacaoMotora = () => {
                       consideracoesIndiceNarizUnilateral: e.target.value
                     })}
                     legenda="Considerações Índice Nariz Unilateral"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -149,7 +152,6 @@ const CoordenacaoMotora = () => {
                       testeIndiceIndice: e.target.value
                     })}
                     legenda="Teste Índice-Índice"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -163,7 +165,6 @@ const CoordenacaoMotora = () => {
                       consideracoesTesteIndiceIndice: e.target.value
                     })}
                     legenda="Considerações Teste Índice-Índice"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -178,7 +179,6 @@ const CoordenacaoMotora = () => {
                       movimentosAlternados: e.target.value
                     })}
                     legenda="Movimentos Alternados"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -192,7 +192,6 @@ const CoordenacaoMotora = () => {
                       consideracoesMovimentosAlternados: e.target.value
                     })}
                     legenda="Considerações Movimentos Alternados"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -207,7 +206,6 @@ const CoordenacaoMotora = () => {
                       testeAlcancePegar: e.target.value
                     })}
                     legenda="Teste Alcance Pegar"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -221,14 +219,13 @@ const CoordenacaoMotora = () => {
                       consideracoesTesteAlcancePegar: e.target.value
                     })}
                     legenda="Considerações Teste Alcance Pegar"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_COORDENACAO_MOTORA_DO_PRATICANTE_POST, "coordenacaoMotora", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_COORDENACAO_MOTORA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

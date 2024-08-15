@@ -8,50 +8,65 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react';
-import {Modal} from "@mui/material";
-import {CADASTRADO} from "../../../constantes/Constantes";
 import Campo from "../../../components/campos/Campo";
 import {
-  SALVAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POST
+  ATUALIZAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_PUT,
+  BUSCAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
-import {salvar} from "../../../requisicoes/Usuario";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
+import {atualizar} from "../../../requisicoes/Praticante";
+import Modal from "../../../components/modal/Modal";
+import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 
 
 const AvaliacaoFisioterapeutica = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idAvaliacaoFisioterapeutica: '',
     diagnosticoFisioterapeutico: '',
     historicoGravidez: '',
     tonusMuscular: '',
     conclusaoIndicacaoEquoterapia: '',
     praticante: {
-      idPraticante: '',
-    },
+      idPraticante: ''
+    }
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const avaliacaoFisioterapeutica = localStorage.getItem("avaliacaoFisioterapeutica")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (avaliacaoFisioterapeutica === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -62,16 +77,9 @@ const AvaliacaoFisioterapeutica = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Avaliação Fisioterapêutica</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Avaliação Fisioterapêutica</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -85,7 +93,6 @@ const AvaliacaoFisioterapeutica = () => {
                       diagnosticoFisioterapeutico: e.target.value
                     })}
                     legenda="Diagnóstico Fisioterapêutico"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -97,7 +104,6 @@ const AvaliacaoFisioterapeutica = () => {
                     valor={formularioDeDados.historicoGravidez}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, historicoGravidez: e.target.value})}
                     legenda="Histórico de Gravidez"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -109,7 +115,6 @@ const AvaliacaoFisioterapeutica = () => {
                     valor={formularioDeDados.tonusMuscular}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, tonusMuscular: e.target.value})}
                     legenda="Tônus Muscular"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -124,14 +129,13 @@ const AvaliacaoFisioterapeutica = () => {
                       conclusaoIndicacaoEquoterapia: e.target.value
                     })}
                     legenda="Conclusão/Indicação para Equoterapia"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POST, "avaliacaoFisioterapeutica", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

@@ -5,26 +5,30 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CContainer,
+  CContainer, CImage,
   CRow
 } from '@coreui/react';
-import {CADASTRADO} from "../../../constantes/Constantes";
 import Modal from "../../../components/modal/Modal";
 import Campo from "../../../components/campos/Campo";
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar} from "../../../requisicoes/Praticante";
 import {
-  SALVAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POST
+  ATUALIZAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_PUT,
+  BUSCAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/planoTerapeuticoSingular/Endpoints";
-
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
+import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
+import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
 
 const PlanoTerapeuticoSingular = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idPlanoTerapeuticoSingular: '',
     dataPlanejamento: '',
     responsavelTerapeutico: '',
     problema: '',
@@ -41,23 +45,34 @@ const PlanoTerapeuticoSingular = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const planoTerapeuticoSingular = localStorage.getItem("planoTerapeuticoSingular")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (planoTerapeuticoSingular === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -69,16 +84,9 @@ const PlanoTerapeuticoSingular = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Plano Terapêutico Singular (PTS)</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Plano Terapêutico Singular (PTS)</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -86,10 +94,9 @@ const PlanoTerapeuticoSingular = () => {
                   <Campo
                     tipo="date"
                     id="dataPlanejamento"
-                    valor={formularioDeDados.dataPlanejamento}
+                    valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataPlanejamento)}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, dataPlanejamento: e.target.value})}
                     legenda="Data do planejamento"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -99,7 +106,6 @@ const PlanoTerapeuticoSingular = () => {
                     valor={formularioDeDados.responsavelTerapeutico}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, responsavelTerapeutico: e.target.value})}
                     legenda="Responsável terapêutico"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -111,7 +117,6 @@ const PlanoTerapeuticoSingular = () => {
                     valor={formularioDeDados.problema}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, problema: e.target.value})}
                     legenda="Problema (O que acontece?)"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -126,7 +131,6 @@ const PlanoTerapeuticoSingular = () => {
                       justificativaHipotesesBiologicasSociaisEmocionais: e.target.value
                     })}
                     legenda="Hipóteses que justificativa o problema biológico, social e emocional: (Por que isso acontece?)"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -138,7 +142,6 @@ const PlanoTerapeuticoSingular = () => {
                     valor={formularioDeDados.objetivoTerapeutico}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, objetivoTerapeutico: e.target.value})}
                     legenda="Meta terapêutica"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -150,7 +153,6 @@ const PlanoTerapeuticoSingular = () => {
                     valor={formularioDeDados.medida}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, medida: e.target.value})}
                     legenda="Mensuração (Como vou medir?) (Tempo, escalas, repetições etc.)"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -162,7 +164,6 @@ const PlanoTerapeuticoSingular = () => {
                     valor={formularioDeDados.estrategiasIntervencao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, estrategiasIntervencao: e.target.value})}
                     legenda="Estratégias de intervenção (Plano de ação - o que fazer? Como treinar?)"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -174,7 +175,6 @@ const PlanoTerapeuticoSingular = () => {
                     valor={formularioDeDados.selasMediadorasAnimais}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, selasMediadorasAnimais: e.target.value})}
                     legenda="Mediadores/Animal/Encilhamento"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -186,7 +186,6 @@ const PlanoTerapeuticoSingular = () => {
                     valor={formularioDeDados.evolucao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, evolucao: e.target.value})}
                     legenda="Como está evoluindo? (Devolutiva)"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -199,21 +198,33 @@ const PlanoTerapeuticoSingular = () => {
                     setar={(e) => {
                       converterImagemEmBase64(e.target.files[0])
                         .then((resolve) => {
-                          setFormularioDeDados({...formularioDeDados, fisioterapeutaImagemDaAssinaturaOuCarimbo: resolve});
+                          setFormularioDeDados({
+                            ...formularioDeDados,
+                            fisioterapeutaImagemDaAssinaturaOuCarimbo: resolve
+                          });
                         })
                         .catch((reject) => {
                           console.log(reject);
                         });
                     }}
                     legenda={"Imagem do carimbo/assinatura do fisioterapeuta"}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POST, "planoTerapeuticoSingular", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CRow>
+                {formularioDeDados.fisioterapeutaImagemDaAssinaturaOuCarimbo !== '' ?
+                  <CCol>
+                    <CImage src={formularioDeDados.fisioterapeutaImagemDaAssinaturaOuCarimbo} width={600} height={300}
+                            style={{margin: "20px auto"}}/>
+                  </CCol>
+                  :
+                  <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
+                }
+              </CRow>
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>
