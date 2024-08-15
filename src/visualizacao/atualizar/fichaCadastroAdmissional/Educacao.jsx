@@ -9,19 +9,22 @@ import {
   CContainer
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo'; // Importando o componente Campo
-import {classeDeEscola, tipoInstituicaoEducacional, periodo, CADASTRADO} from '../../../constantes/Constantes';
-import {salvar} from "../../../requisicoes/Praticante";
-import {SALVAR_EDUCACAO_DO_PRATICANTE_POST} from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {classeDeEscola, tipoInstituicaoEducacional, periodo} from '../../../constantes/Constantes';
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
+import {
+  ATUALIZAR_EDUCACAO_DO_PRATICANTE_PUT,BUSCAR_EDUCACAO_DO_PRATICANTE_POR_ID_GET
+} from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Modal from "../../../components/modal/Modal";
-import {esconderModal} from "../../../utilidades/ManipuladorDeModal"; // Importando as constantes corretamente
+import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import axios from "axios";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL"; // Importando as constantes corretamente
 
 const Educacao = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     serieEscolar: '',
     classeDeEscola: '',
@@ -34,23 +37,35 @@ const Educacao = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const educacao = localStorage.getItem("educacao")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (educacao === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_EDUCACAO_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
 
   return (
     <CRow>
@@ -62,16 +77,9 @@ const Educacao = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Escolaridade do Praticante</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Escolaridade do Praticante</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -82,7 +90,6 @@ const Educacao = () => {
                     valor={formularioDeDados.serieEscolar}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, serieEscolar: e.target.value})}
                     legenda="Ano/Série Escolar"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -93,7 +100,6 @@ const Educacao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, classeDeEscola: e.target.value})}
                     legenda="Classe de escola"
                     opcoes={classeDeEscola}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -106,7 +112,6 @@ const Educacao = () => {
                       instituicaoEducacional: e.target.value
                     })}
                     legenda="Instituição de Ensino"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -122,7 +127,6 @@ const Educacao = () => {
                     })}
                     legenda="Tipo de Instituição de Ensino"
                     opcoes={tipoInstituicaoEducacional}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -133,14 +137,13 @@ const Educacao = () => {
                     setar={(e) => setFormularioDeDados({...formularioDeDados, periodo: e.target.value})}
                     legenda="Período"
                     opcoes={periodo}
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EDUCACAO_DO_PRATICANTE_POST, "educacao", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal);
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_EDUCACAO_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal);
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

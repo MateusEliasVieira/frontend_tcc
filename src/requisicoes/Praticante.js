@@ -80,9 +80,9 @@ const atualizarDadosPessoais = async (formularioDeDados, setDisplayModal, setTit
         }
       );
       if (response.status === HttpStatusCode.Created) {
-        apresentarModal("Aviso", "Atualizado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
+        apresentarModal("Aviso", "Dados do praticante atualizados com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
       } else {
-        apresentarModal("Aviso", 'Não foi possível cadastrar os dados do praticante!', setDisplayModal, setTituloModal, setConteudoModal);
+        apresentarModal("Aviso", 'Não foi possível atualizar os dados do praticante!', setDisplayModal, setTituloModal, setConteudoModal);
       }
     } catch (error) {
       // Verifique se error.response e error.response.data existem
@@ -148,21 +148,21 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
               apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
             } else if (error.response.data.titulo) {
               if (error.response.data.redirect) {
-                apresentarModal("Aviso",error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+                apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
                 setTimeout(() => {
                   window.location = error.response.data.redirect;
                 }, 5000);
               } else {
-                apresentarModal("Aviso",error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+                apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
               }
             } else {
-              apresentarModal("Aviso","Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+              apresentarModal("Aviso", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
             }
           } else {
-            apresentarModal("Aviso","Erro interno do sistema! Resposta sem dados.", setDisplayModal, setTituloModal, setConteudoModal);
+            apresentarModal("Aviso", "Erro interno do sistema! Resposta sem dados.", setDisplayModal, setTituloModal, setConteudoModal);
           }
         } else {
-          apresentarModal("Aviso","Erro interno do sistema! Nenhuma resposta recebida.", setDisplayModal, setTituloModal, setConteudoModal);
+          apresentarModal("Aviso", "Erro interno do sistema! Nenhuma resposta recebida.", setDisplayModal, setTituloModal, setConteudoModal);
         }
       })
 
@@ -170,24 +170,105 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
     apresentarModal("Aviso", "Cadastre os Dados Pessoais do Praticante primeiro!", setDisplayModal, setTituloModal, setConteudoModal);
   }
 };
+const atualizar = async (formularioDeDados, endpoint, setDisplayModal, setTituloModal, setConteudoModal) => {
 
+  formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados);
 
-const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDisplayModal, setTituloModal, setConteudoModal) => {
-  try {
-    const response = await axios.get(endpoint, {
+  console.log("Form de envio para atualizar: " + formularioDeDados)
+
+  await axios.put(
+    endpoint,
+    JSON.stringify({...formularioDeDados}),
+    {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${login.token}`
       },
-      params: {
-        id: idPraticante
+    }
+  )
+    .then((response) => {
+      if (response.status === HttpStatusCode.Created) {
+        apresentarModal("Aviso", "Dados do praticante atualizados com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
+      } else {
+        apresentarModal("Aviso", 'Não foi possível atualizar os dados do praticante!', setDisplayModal, setTituloModal, setConteudoModal);
       }
-    });
+    })
+    .catch((error) => {
+      console.log(error)
+      if (error.response) {
+        if (error.response.data) {
+          if (error.response.data.lista) {
+            const lista = error.response.data.lista.map((item) => item.titulo).join("\n");
+            apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
+          } else if (error.response.data.titulo) {
+            if (error.response.data.redirect) {
+              apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+              setTimeout(() => {
+                window.location = error.response.data.redirect;
+              }, 5000);
+            } else {
+              apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+            }
+          } else {
+            apresentarModal("Aviso", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+          }
+        } else {
+          apresentarModal("Aviso", "Erro interno do sistema! Resposta sem dados.", setDisplayModal, setTituloModal, setConteudoModal);
+        }
+      } else {
+        apresentarModal("Aviso", "Erro interno do sistema! Nenhuma resposta recebida.", setDisplayModal, setTituloModal, setConteudoModal);
+      }
+    })
 
-    setDados(aplicarValorParaCamposDaAPI_NAO_INFORMADO(response.data));
-  } catch (error) {
-    console.error(error);
-  }
+};
+
+
+const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDisplayModal, setTituloModal, setConteudoModal) => {
+
+  await axios.get(endpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    },
+    params: {
+      id: idPraticante
+    }
+  })
+    .then((response) => {
+      setDados(aplicarValorParaCamposDaAPI_NAO_INFORMADO(response.data));
+    })
+    .catch((error) => {
+      if (error.response) {
+        if (error.response.data) {
+          if (error.response.data.lista) {
+            const lista = error.response.data.lista.map((item) => item.titulo).join("\n");
+            apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
+          } else if (error.response.data.titulo) {
+            if (error.response.data.urlRedirecionamento) {
+              apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+              setTimeout(() => {
+                window.location = error.response.data.redirect;
+              }, 5000);
+            } else {
+              apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+            }
+          } else {
+            apresentarModal("Aviso", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+          }
+        } else {
+          apresentarModal("Aviso", "Erro interno do sistema! Resposta sem dados.", setDisplayModal, setTituloModal, setConteudoModal);
+        }
+      } else {
+        apresentarModal("Aviso", "Erro interno do sistema! Nenhuma resposta recebida.", setDisplayModal, setTituloModal, setConteudoModal);
+      }
+    })
+
 }
 
-export {salvarDadosPessoais, salvar, buscarDadosPraticante, atualizarDadosPessoais}
+export {
+  salvar,
+  atualizar,
+  salvarDadosPessoais,
+  buscarDadosPraticante,
+  atualizarDadosPessoais
+}

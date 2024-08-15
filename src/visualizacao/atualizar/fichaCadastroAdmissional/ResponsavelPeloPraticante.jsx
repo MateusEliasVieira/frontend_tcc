@@ -9,22 +9,22 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 import {
-  SALVAR_RESPONSAVEL_DO_PRATICANTE_POST
+  ATUALIZAR_RESPONSAVEL_DO_PRATICANTE_PUT, BUSCAR_RESPONSAVEL_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
-import {CADASTRADO} from "../../../constantes/Constantes";
+import {atualizar} from "../../../requisicoes/Praticante";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
-import {aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos"; // Importando o componente Campo
+import {aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas"; // Importando o componente Campo
 
 const ResponsavelPeloPraticante = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     nomeResponsavel: '',
     grauParentesco: '',
@@ -40,23 +40,35 @@ const ResponsavelPeloPraticante = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const responsavelPeloPraticante = localStorage.getItem("responsavelPeloPraticante")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (responsavelPeloPraticante === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_RESPONSAVEL_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
 
   return (
     <CRow>
@@ -68,16 +80,11 @@ const ResponsavelPeloPraticante = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Responsável pelo Praticante</strong>
-              </CCardHeader>
-          }
+
+          <CCardHeader>
+            <strong>Responsável pelo Praticante</strong>
+          </CCardHeader>
+
           <CCardBody>
             <CContainer>
               <CRow>
@@ -88,7 +95,6 @@ const ResponsavelPeloPraticante = () => {
                     valor={formularioDeDados.nomeResponsavel}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, nomeResponsavel: e.target.value})}
                     legenda="Nome do responsável"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -98,7 +104,6 @@ const ResponsavelPeloPraticante = () => {
                     valor={formularioDeDados.grauParentesco}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, grauParentesco: e.target.value})}
                     legenda="Grau de parentesco"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -107,10 +112,9 @@ const ResponsavelPeloPraticante = () => {
                   <Campo
                     tipo="date"
                     id="dataNascimento"
-                    valor={formularioDeDados.dataNascimento}
+                    valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataNascimento)}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, dataNascimento: e.target.value})}
                     legenda="Data de nascimento"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -120,7 +124,6 @@ const ResponsavelPeloPraticante = () => {
                     valor={formularioDeDados.profissao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, profissao: e.target.value})}
                     legenda="Profissão"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -130,9 +133,11 @@ const ResponsavelPeloPraticante = () => {
                     tipo="text"
                     id="telefone"
                     valor={formularioDeDados.telefone}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: aplicaMascaraDeTelefone(e.target.value)})}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      telefone: aplicaMascaraDeTelefone(e.target.value)
+                    })}
                     legenda="Telefone pessoal"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -140,9 +145,11 @@ const ResponsavelPeloPraticante = () => {
                     tipo="text"
                     id="telefoneTrabalho"
                     valor={formularioDeDados.telefoneTrabalho}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefoneTrabalho: aplicaMascaraDeTelefone(e.target.value)})}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      telefoneTrabalho: aplicaMascaraDeTelefone(e.target.value)
+                    })}
                     legenda="Telefone do trabalho"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -152,7 +159,6 @@ const ResponsavelPeloPraticante = () => {
                     valor={formularioDeDados.email}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, email: e.target.value})}
                     legenda="Email"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -164,14 +170,13 @@ const ResponsavelPeloPraticante = () => {
                     valor={formularioDeDados.rendaFamiliar}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, rendaFamiliar: e.target.value})}
                     legenda="Renda familiar"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}}  disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_RESPONSAVEL_DO_PRATICANTE_POST,"responsavelPeloPraticante",setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_RESPONSAVEL_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

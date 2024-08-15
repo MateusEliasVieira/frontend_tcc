@@ -16,7 +16,7 @@ import {
 import Campo from '../../../components/campos/Campo';
 import {atualizarDadosPessoais} from "../../../requisicoes/Praticante";
 import Modal from "../../../components/modal/Modal";
-import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
@@ -25,6 +25,7 @@ import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeData
 
 const DadosPessoais = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
@@ -47,22 +48,22 @@ const DadosPessoais = () => {
     enderecoResidencial: '',
     bairro: '',
     cidade: '',
-    cep: ''
+    cep: '',
+    praticante:{
+      idPraticante: ''
+    }
   });
 
-  const [idPraticante, setIdPraticante] = useState(null);
 
   useEffect(() => {
-    const id = Number(window.location.href.split("?id=")[1]);
 
+    const id = Number(window.location.href.split("?id=")[1]);
     if (id) {
       setIdPraticante(id);
     } else {
       window.location.href = "/#/formulario/pesquisar-praticante";
     }
-  }, []);
 
-  useEffect(() => {
     if (idPraticante) {
       const login = JSON.parse(localStorage.getItem('login'));
 
@@ -76,10 +77,12 @@ const DadosPessoais = () => {
         }
       })
         .then((response) => {
-          delete response.data.praticante // remove o campo de praticante do json
           setFormularioDeDados(response.data);
         })
         .catch((error) => {
+          if(error.response.data.urlRedirecionamento){
+            window.location.href=error.response.data.urlRedirecionamento
+          }
           console.log("Error", error);
         });
     }

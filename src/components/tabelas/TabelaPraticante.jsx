@@ -1,11 +1,14 @@
 import {CButton, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
-import React from "react";
+import React, {useEffect} from "react";
 import ModalComEvolucaoGraficoDeLinhas from "../modal/ModalComEvolucaoGraficoDeLinhas";
 import ModalComEvolucaoGraficoDeBarras from "../modal/ModalComEvolucaoGraficoDeBarras";
 import ModalParaEvoluir from "../modal/ModalParaEvoluir";
 import ModalComEvolucaoGraficoDeTorta from "../modal/ModalComEvolucaoGraficoDeTorta";
+import {ATUALIZAR_PRATICANTE, GERAR_RELATORIO_PRATICANTE} from "../../URL/URL";
 
 const TabelaPraticante = (props) => {
+
+
 
   return (
     <CTable>
@@ -26,7 +29,7 @@ const TabelaPraticante = (props) => {
               <CTableRow>
                 <CTableDataCell style={{textAlign:"center"}}>{item.praticante.idPraticante}</CTableDataCell>
                 <CTableDataCell style={{textAlign:"center"}}>
-                  <a href={"/#/atualizar-praticante/?id="+item.praticante.idPraticante} style={{textDecoration:"none"}} title={"Atualizar cadastro do(a) praticante "+item.nomeCompleto}>{item.nomeCompleto}</a>
+                  <a href={`${ATUALIZAR_PRATICANTE}?id=${item.praticante.idPraticante}`} style={{textDecoration:"none"}} title={"Atualizar cadastro do(a) praticante "+item.nomeCompleto}>{item.nomeCompleto}</a>
                 </CTableDataCell>
                 <CTableDataCell style={{textAlign:"center"}}>{item.diagnosticoClinico}</CTableDataCell>
                 <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
@@ -41,7 +44,7 @@ const TabelaPraticante = (props) => {
                 <CTableDataCell style={{verticalAlign: "middle",textAlign:"center"}}>
                   <CButton color="" title={"Gerar relatório para " + item.nomeCompleto} style={{background: "none"}} onClick={
                     () => {
-                      window.location.href = `/#/gerar-relatorio-de-praticante?id=${item.praticante.idPraticante}`
+                      window.location.href = `${GERAR_RELATORIO_PRATICANTE}?id=${item.praticante.idPraticante}`
                     }
                   }>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-file-pdf-fill" viewBox="0 0 16 16">
