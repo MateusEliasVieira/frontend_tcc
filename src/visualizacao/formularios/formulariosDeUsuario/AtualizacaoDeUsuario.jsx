@@ -13,7 +13,8 @@ import Modal from '../../../components/modal/Modal';
 import {converterImagemEmBase64} from '../../../utilidades/ConversorDeImagem';
 import {esconderModal} from '../../../utilidades/ManipuladorDeModal';
 import Campo from "../../../components/campos/Campo";
-import {atualizarDadosDoUsuario, buscarUsuarioPorId, salvar} from "../../../requisicoes/Usuario"; // Certifique-se de que o caminho está correto para o seu projeto
+import {atualizarDadosDoUsuario, buscarUsuarioPorId, salvar} from "../../../requisicoes/Usuario";
+import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas"; // Certifique-se de que o caminho está correto para o seu projeto
 
 const AtualizacaoDeUsuario = () => {
   const [displayModal, setDisplayModal] = useState("none");
@@ -110,7 +111,7 @@ const AtualizacaoDeUsuario = () => {
                       legenda="Data de nascimento"
                       id="dataNascimento"
                       tipo="date"
-                      valor={formularioDeDados.dataNascimento}
+                      valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataNascimento)}
                       setar={(e) => setFormularioDeDados({...formularioDeDados, dataNascimento: e.target.value})}
                     />
                   </CCol>

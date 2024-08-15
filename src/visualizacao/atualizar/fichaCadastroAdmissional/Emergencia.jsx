@@ -8,24 +8,26 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo'; // Importando o componente Campo
-import {CADASTRADO, simOuNao} from '../../../constantes/Constantes';
-import {salvar} from "../../../requisicoes/Praticante";
+import {simOuNao} from '../../../constantes/Constantes';
+import {atualizar} from "../../../requisicoes/Praticante";
 import {
-  SALVAR_EMERGENCIA_DO_PRATICANTE_POST
+  ATUALIZAR_EMERGENCIA_DO_PRATICANTE_PUT,
+  BUSCAR_EMERGENCIA_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
-import {aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos"; // Ajuste o caminho conforme a estrutura do seu projeto
+import {aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios"; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("")
-  const [possuiPlanoDeSaude, setPossuiPlanoDeSaude] = useState('')
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idEmergencia:'',
     ligarPara: '',
     telefone: '',
     possuiPlanoDeSaude: '',
@@ -36,23 +38,34 @@ const Emergencia = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const emergencia = localStorage.getItem("emergencia")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (emergencia === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_EMERGENCIA_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -64,16 +77,9 @@ const Emergencia = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Em caso de emergência</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Em caso de emergência</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -82,9 +88,11 @@ const Emergencia = () => {
                     tipo="text"
                     id="ligarPara"
                     valor={formularioDeDados.ligarPara}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, ligarPara: aplicaMascaraDeTelefone(e.target.value)})}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      ligarPara: aplicaMascaraDeTelefone(e.target.value)
+                    })}
                     legenda="Ligar para"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -92,9 +100,11 @@ const Emergencia = () => {
                     tipo="text"
                     id="telefone"
                     valor={formularioDeDados.telefone}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone:  aplicaMascaraDeTelefone(e.target.value)})}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      telefone: aplicaMascaraDeTelefone(e.target.value)
+                    })}
                     legenda="Telefone"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol md="auto">
@@ -104,13 +114,12 @@ const Emergencia = () => {
                     valor={formularioDeDados.possuiPlanoDeSaude}
                     setar={(e) => {
                       setFormularioDeDados({...formularioDeDados, possuiPlanoDeSaude: e.target.value})
-                      if(formularioDeDados.possuiPlanoDeSaude === 'NAO'){
+                      if (formularioDeDados.possuiPlanoDeSaude === 'NAO') {
                         setFormularioDeDados({...formularioDeDados, plano: ''})
                       }
                     }}
                     legenda="Possui plano de saúde?"
                     opcoes={simOuNao}
-                    disabled={desabilitar}
                   />
                 </CCol>
                 {formularioDeDados.possuiPlanoDeSaude === 'SIM' ?
@@ -123,7 +132,6 @@ const Emergencia = () => {
                           setFormularioDeDados({...formularioDeDados, plano: e.target.value})
                         }}
                         legenda="Qual é o plano?"
-                        disabled={desabilitar}
                       />
                     </CCol>
                   )
@@ -131,10 +139,10 @@ const Emergencia = () => {
                   (<></>)
                 }
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EMERGENCIA_DO_PRATICANTE_POST, "emergencia", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_EMERGENCIA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>
