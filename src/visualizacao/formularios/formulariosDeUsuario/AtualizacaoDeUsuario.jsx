@@ -20,7 +20,6 @@ const AtualizacaoDeUsuario = () => {
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-  const [possuiFormacao, setPossuiFormacao] = useState("");
   const [usuarioExiste, setUsuarioExiste] = useState(true);
   const [fotoAtual, setFotoAtual] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
@@ -32,7 +31,7 @@ const AtualizacaoDeUsuario = () => {
     estadoCivil: '',
     telefone: '',
     email: '',
-    detalhesFormacao: 'Sem Formação',
+    detalhesFormacao: '',
     cidade: '',
     bairro: '',
     logradouro: '',
@@ -215,7 +214,6 @@ const AtualizacaoDeUsuario = () => {
                       valor={formularioDeDados.possuiFormacao}
                       setar={(e) => {
                         setFormularioDeDados({...formularioDeDados, possuiFormacao: e.target.value});
-                        setPossuiFormacao(e.target.value);
                       }}
                       opcoes={simOuNao}
                     />
@@ -223,7 +221,7 @@ const AtualizacaoDeUsuario = () => {
                 </CRow>
 
                 {
-                  possuiFormacao === 'SIM' ?
+                  formularioDeDados.possuiFormacao === 'SIM' ?
                     (
                       <CRow>
                         <CCol>
