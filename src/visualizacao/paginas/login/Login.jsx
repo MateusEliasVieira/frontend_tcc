@@ -60,6 +60,7 @@ const Login = () => {
           if (response.status === 202) {
             localStorage.setItem('login', JSON.stringify(response.data));
             window.location.href = "/dashboard"
+            console.log("Dados login = "+response.data)
           }
         })
         .catch((error) => {
