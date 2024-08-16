@@ -35,7 +35,7 @@ const Pesquisar = () => {
         <strong>Pesquisar</strong>
       </CCardHeader>
       <CCardBody>
-        {dados !== '' && dados !== null ? <>
+        {dados !== '' && dados !== null && dados !== undefined && dados.length !== 0? <>
             <Campo
               id="campoPesquisaNome"
               tipo="text"
