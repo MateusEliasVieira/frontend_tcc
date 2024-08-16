@@ -11,6 +11,7 @@ import {
 import {apresentarModalDeOpcoes} from "../../utilidades/ManipuladorDeModal";
 import CIcon from "@coreui/icons-react";
 import {cilSettings, cilTrash} from "@coreui/icons";
+import {ATUALIZAR_USUARIO} from "../../URL/URL";
 
 const formatDate = (date) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -58,7 +59,7 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
                   <div className="row">
                     <div className="col">
                       <CButton color="" title={`Será redirecionado para atualizar os dados de ${item.nome}`} onClick={() => {
-                        window.location.href = `/#/atualizar-usuario/atualizar?id=${item.idUsuario}`
+                        window.location.href = `${ATUALIZAR_USUARIO}?id=${item.idUsuario}`
                       }}><CIcon icon={cilSettings}/></CButton>
                     </div>
                     <div className="col">

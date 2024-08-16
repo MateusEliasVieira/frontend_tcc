@@ -6,6 +6,7 @@ import Campo from "../../components/campos/Campo";
 import {
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET
 } from "../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {DOMINIO} from "../../URL/URL";
 
 const Pesquisar = () => {
 
@@ -14,7 +15,7 @@ const Pesquisar = () => {
 
   useEffect(() => {
     const login = JSON.parse(localStorage.getItem('login'));
-    axios.get("http://localhost:8080/praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes", {
+    axios.get(`${DOMINIO}praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${login.token}`

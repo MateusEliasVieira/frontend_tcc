@@ -45,10 +45,7 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
           apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
         } else if (resposta.data.mensagem) {
           if (resposta.data.redirect) {
-            apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-            setTimeout(() => {
               window.location = resposta.data.redirect;
-            }, 5000);
           } else {
             apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
           }
@@ -94,10 +91,7 @@ const atualizarDadosPessoais = async (formularioDeDados, setDisplayModal, setTit
           apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
         } else if (resposta.data.mensagem) {
           if (resposta.data.redirect) {
-            apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-            setTimeout(() => {
               window.location = resposta.data.redirect;
-            }, 5000);
           } else {
             apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
           }
@@ -148,10 +142,7 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
               apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
             } else if (error.response.data.titulo) {
               if (error.response.data.redirect) {
-                apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-                setTimeout(() => {
                   window.location = error.response.data.redirect;
-                }, 5000);
               } else {
                 apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
               }
@@ -199,10 +190,7 @@ const atualizar = async (formularioDeDados, endpoint, setDisplayModal, setTitulo
             apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
           } else if (error.response.data.titulo) {
             if (error.response.data.redirect) {
-              apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-              setTimeout(() => {
                 window.location = error.response.data.redirect;
-              }, 5000);
             } else {
               apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
             }
@@ -242,10 +230,7 @@ const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDispla
             apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
           } else if (error.response.data.titulo) {
             if (error.response.data.urlRedirecionamento) {
-              apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-              setTimeout(() => {
                 window.location = error.response.data.redirect;
-              }, 5000);
             } else {
               apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
             }

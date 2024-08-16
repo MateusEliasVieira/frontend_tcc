@@ -18,6 +18,7 @@ import {LOGIN_POST} from "../../../endpoints/usuario/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import "./Login.css"
 import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {ESQUECI_MINHA_SENHA} from "../../../URL/URL";
 
 const Login = () => {
 
@@ -42,6 +43,8 @@ const Login = () => {
     if(expirado === 'true'){
       apresentarModal("Aviso", "Sessão expirada! Para continuar faça o login novamente!", setDisplayModal, setTituloModal, setConteudoModal)
     }
+    localStorage.setItem("segundos", '')
+    localStorage.setItem("minutos", '')
     localStorage.setItem('login', JSON.stringify({idUsuario: "", nomeUsuario: "", token: "", validadeToken:"", role: ""}));
   }, []);
 
@@ -100,7 +103,7 @@ const Login = () => {
                 <CCardBody>
                   <div>
                     <h2>Bem Vindo!</h2>
-                    <p className="text-medium-emphasis">Entre com sua conta! <a href="/#/esqueci-minha-senha" style={{textDecoration: "none"}}>Esqueceu a senha?</a></p>
+                    <p className="text-medium-emphasis">Entre com sua conta! <a href={`${ESQUECI_MINHA_SENHA}`} style={{textDecoration: "none"}}>Esqueceu a senha?</a></p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser}/>

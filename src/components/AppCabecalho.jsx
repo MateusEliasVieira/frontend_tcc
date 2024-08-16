@@ -12,6 +12,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import {cilMenu} from '@coreui/icons';
 import {AppBreadcrumb} from './index';
+import {LOGIN} from "../URL/URL";
 
 const AppCabecalho = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const AppCabecalho = () => {
           setMin(minutos)
         } else {
           clearInterval(interval)
-          window.location.href = '/#/login?expirado=true';
+          window.location.href = `${LOGIN}?expirado=true`;
         }
       }
     }, 1000);
@@ -59,16 +60,15 @@ const AppCabecalho = () => {
       const tempoRestante = (dataExpiracao.getTime() - horarioAtual.getTime()) / 1000; // tempo restante em segundos
 
       if ((tempoRestante / 60) > 60) {
-        window.location.href = '/#/login?expirado=true';
+        window.location.href = `${LOGIN}?expirado=true`;
       } else {
         const minutos = Math.floor(tempoRestante / 60);
         const segundosRestantes = Math.floor(tempoRestante % 60);
 
-       temporizador(minutos, segundosRestantes);
+        temporizador(minutos, segundosRestantes);
       }
     }
   }, []);
-
 
   return (
     <CHeader position="sticky" className="mb-4">

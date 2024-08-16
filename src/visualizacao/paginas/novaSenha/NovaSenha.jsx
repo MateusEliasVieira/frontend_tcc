@@ -17,6 +17,7 @@ import Modal from "../../../components/modal/Modal";
 import "./NovaSenha.css"
 import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import axios from "axios";
+import {DOMINIO} from "../../../URL/URL";
 
 const NovaSenha = () => {
 
@@ -38,7 +39,7 @@ const NovaSenha = () => {
     if (novaSenha !== "" && confirmaNovaSenha !== "") {
       if (novaSenha === confirmaNovaSenha) {
         // salvar
-        axios.post("http://localhost:8080/recuperacao-de-conta/nova-senha", {
+        axios.post(`${DOMINIO}recuperacao-de-conta/nova-senha`, {
           token: url,
           novaSenha: novaSenha
         })

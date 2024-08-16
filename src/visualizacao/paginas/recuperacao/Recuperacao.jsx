@@ -17,6 +17,7 @@ import Modal from "../../../components/modal/Modal";
 import "./Recuperacao.css"
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
+import {DOMINIO} from "../../../URL/URL";
 
 const Recuperacao = () => {
 
@@ -39,7 +40,7 @@ const Recuperacao = () => {
   const recuperar = async ()  => {
     setTituloForm("Enviando email...")
     setEnviado(true)
-    await axios.get(`http://localhost:8080/recuperacao-de-conta/enviar-email/${emailEnviar}`)
+    await axios.get(`${DOMINIO}recuperacao-de-conta/enviar-email/${emailEnviar}`)
       .then((response)=>{
         if(response.status === HttpStatusCode.Ok){
           setTituloForm(<strong id="rec-sucesso">{response.data.mensagem}</strong>)

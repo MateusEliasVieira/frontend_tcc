@@ -1,10 +1,10 @@
-const URL = 'http://localhost:8080/';
+import {DOMINIO} from '../../../URL/URL'
 
 // Avaliação Fisioterapeutica
-const SALVAR_EVOLUCAO_DO_PRATICANTE_POST = URL + 'praticante/evolucao/salvar-evolucao-do-praticante';
-const ATUALIZAR_EVOLUCAO_DO_PRATICANTE_PUT = URL + 'praticante/evolucao/atualizar-evolucao-do-praticante';
-const BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_ID_GET = URL + 'praticante/evolucao/buscar-evolucoes-do-praticante-por-id';
-const BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST = URL + 'praticante/evolucao/buscar-evolucao-do-praticante-por-intervalo-de-datas';
+const SALVAR_EVOLUCAO_DO_PRATICANTE_POST = DOMINIO + 'praticante/evolucao/salvar-evolucao-do-praticante';
+const ATUALIZAR_EVOLUCAO_DO_PRATICANTE_PUT = DOMINIO + 'praticante/evolucao/atualizar-evolucao-do-praticante';
+const BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_ID_GET = DOMINIO + 'praticante/evolucao/buscar-evolucoes-do-praticante-por-id';
+const BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST = DOMINIO + 'praticante/evolucao/buscar-evolucao-do-praticante-por-intervalo-de-datas';
 
 
 
