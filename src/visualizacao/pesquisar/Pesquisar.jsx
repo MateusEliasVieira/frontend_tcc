@@ -23,7 +23,6 @@ const Pesquisar = () => {
     })
       .then((response) => {
         setDados(response.data)
-        console.log(response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -31,38 +30,43 @@ const Pesquisar = () => {
   }, []);
 
   return (
-    <CCard style={{overflowX:'auto'}}>
+    <CCard style={{overflowX: 'auto'}}>
       <CCardHeader>
         <strong>Pesquisar</strong>
       </CCardHeader>
       <CCardBody>
-        <Campo
-          id="campoPesquisaNome"
-          tipo="text"
-          legenda="Pesquisa por nome"
-          valor={nome}
-          setar={(e)=>{
-            setNome(e.target.value)
-            const login = JSON.parse(localStorage.getItem('login'));
-            axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,{
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${login.token}`
-              },
-              params:{
-                nome:nome
-              }
-            })
-              .then((response)=>{
-                console.log(response.data)
-                setDados(response.data)
-              })
-              .catch((erro)=>{
-                console.log("Erro ao buscar praticante por nome!")
-              })
-          }}
-        />
-        <TabelaPraticante lista={dados}/>
+        {dados !== '' && dados !== null ? <>
+            <Campo
+              id="campoPesquisaNome"
+              tipo="text"
+              legenda="Pesquisa por nome"
+              valor={nome}
+              setar={(e) => {
+                setNome(e.target.value)
+                const login = JSON.parse(localStorage.getItem('login'));
+                axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET, {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${login.token}`
+                  },
+                  params: {
+                    nome: nome
+                  }
+                })
+                  .then((response) => {
+                    console.log(response.data)
+                    setDados(response.data)
+                  })
+                  .catch((erro) => {
+                    console.log("Erro ao buscar praticante por nome!")
+                  })
+              }}
+            />
+            <TabelaPraticante lista={dados}/>
+          </>
+          :
+          <strong>Não há praticantes cadastrados no momento.</strong>
+        }
       </CCardBody>
     </CCard>
   )

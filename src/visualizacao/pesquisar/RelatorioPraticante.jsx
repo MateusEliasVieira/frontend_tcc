@@ -66,7 +66,7 @@ const RelatorioPraticante = () => {
     if (id) {
       setIdPraticante(id)
     }else{
-      window.location.href="/#/formulario/pesquisar-praticante"
+      window.location.href="/formulario/pesquisar-praticante"
     }
   }, []);
 
