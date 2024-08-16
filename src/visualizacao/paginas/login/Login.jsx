@@ -59,7 +59,7 @@ const Login = () => {
         .then((response) => {
           if (response.status === 202) {
             localStorage.setItem('login', JSON.stringify(response.data));
-            window.location.href = "/"
+            window.location.href = "/dashboard"
           }
         })
         .catch((error) => {
