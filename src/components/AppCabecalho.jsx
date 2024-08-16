@@ -59,7 +59,7 @@ const AppCabecalho = () => {
       const horarioAtual = new Date();
       const tempoRestante = (dataExpiracao.getTime() - horarioAtual.getTime()) / 1000; // tempo restante em segundos
 
-      if ((tempoRestante / 60) > 60) {
+      if ((tempoRestante / 60) <= 0) {
         window.location.href = `${LOGIN}?expirado=true`;
       } else {
         const minutos = Math.floor(tempoRestante / 60);
