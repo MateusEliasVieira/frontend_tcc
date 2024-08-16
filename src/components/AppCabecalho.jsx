@@ -62,9 +62,9 @@ const AppCabecalho = () => {
       if ((tempoRestante / 60) <= 0) {
         window.location.href = `${LOGIN}?expirado=true`;
       } else {
-        const minutos = Math.floor(tempoRestante / 60);
+        const minutos = Math.floor((tempoRestante / 60));
         const segundosRestantes = Math.floor(tempoRestante % 60);
-
+        alert("Minutos = "+minutos+", segundos = "+segundosRestantes)
         temporizador(minutos, segundosRestantes);
       }
     }
