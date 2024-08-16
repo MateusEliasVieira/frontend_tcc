@@ -54,7 +54,7 @@ const _nav_administrador = [
   {
     component: CNavItem,
     name: 'Sair',
-    href: '/login',
+    href: '/',
     icon: <CIcon icon={cilAccountLogout} customClassName="nav-icon"/>,
   },
 ];
@@ -84,7 +84,7 @@ const _nav_usuario = [
   {
     component: CNavItem,
     name: 'Sair',
-    href: '/login',
+    href: '/',
     icon: <CIcon icon={cilAccountLogout} customClassName="nav-icon"/>,
   },
 ]

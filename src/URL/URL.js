@@ -2,7 +2,7 @@ const PESQUISAR_PRATICANTE = "/pesquisar-praticante"
 const ATUALIZAR_PRATICANTE = "/atualizar-praticante"
 const ATUALIZAR_USUARIO = "/atualizar-usuario/atualizar"
 const GERAR_RELATORIO_PRATICANTE = "/gerar-relatorio-de-praticante"
-const LOGIN = "/login"
+const LOGIN = "/"
 const ESQUECI_MINHA_SENHA = "/esqueci-minha-senha"
 const DOMINIO = "https://equoterapia.up.railway.app/"
 

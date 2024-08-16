@@ -1,5 +1,8 @@
 import React from 'react'
 
+// Página de Login
+const Login = React.lazy(() => import('./visualizacao/paginas/login/Login'))
+
 //Container do Dashboard
 const Dashboard = React.lazy(() => import('./visualizacao/dashboard/Dashboard'))
 
@@ -17,7 +20,7 @@ const PesquisaDeUsuario = React.lazy(() => import('./visualizacao/formularios/fo
 const AtualizacaoDeUsuario = React.lazy(() => import('./visualizacao/formularios/formulariosDeUsuario/AtualizacaoDeUsuario'))
 
 const rotas = [
-  { path: '/', exact: true, name: 'Início' },
+  { path: '/', exact: true, name: 'Início', element: Login},
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/gerar-relatorio-de-praticante/*', name: 'Relatório', element: RelatorioPraticante },
   { path: '/pesquisar-praticante', name: 'Pesquisar', element: PesquisarPraticante },

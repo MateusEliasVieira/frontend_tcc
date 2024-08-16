@@ -46,7 +46,7 @@ const Recuperacao = () => {
           setTituloForm(<strong id="rec-sucesso">{response.data.mensagem}</strong>)
           setEnviado(false)
           setTimeout(()=>{
-            window.location.href="/login"
+            window.location.href="/" // login
           },5000)
         }else{
           setTituloForm(<strong id="rec-falha">{response.data.titulo}</strong>)
