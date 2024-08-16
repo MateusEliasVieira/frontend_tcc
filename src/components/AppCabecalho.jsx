@@ -59,14 +59,23 @@ const AppCabecalho = () => {
       const horarioAtual = new Date();
       const tempoRestante = (dataExpiracao.getTime() - horarioAtual.getTime()) / 1000; // tempo restante em segundos
 
-      if ((tempoRestante / 60) <= 0) {
+
+      if (tempoRestante <= 0) {
         window.location.href = `${LOGIN}?expirado=true`;
       } else {
         const minutos = Math.floor((tempoRestante / 60));
         const segundosRestantes = Math.floor(tempoRestante % 60);
-        alert("Minutos = "+minutos+", segundos = "+segundosRestantes)
         temporizador(minutos, segundosRestantes);
       }
+
+      console.log("Horario expiração horas: "+horarioExpiracaoHoras)
+      console.log("Horario expiração minutos: "+horarioExpiracaoMinutos)
+      console.log("Horario expiração segundos: "+horarioExpiracaoSegundos)
+      console.log("Data expiração: "+dataExpiracao)
+      console.log("Horario atual: "+horarioAtual)
+      console.log("Tempo restante: "+tempoRestante)
+      console.log("Minutos = "+minutos+", segundos = "+segundosRestantes)
+
     }
   }, []);
 
