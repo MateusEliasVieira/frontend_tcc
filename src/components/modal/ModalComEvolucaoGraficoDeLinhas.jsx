@@ -30,6 +30,7 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
     content: () => conteudoDocumento.current,
   });
 
+
   const buscar = () => {
     axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
       JSON.stringify({...formularioDados}),
@@ -45,13 +46,10 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
           setDadosFrequencia(response.data.frequencia)
           setDadosFaltas(response.data.faltas)
           setMeses(response.data.meses)
-        }else{
-          console.log("Erro then = "+erro)
-
         }
       })
       .catch((erro) => {
-        console.log("Erro = "+erro)
+        console.log(erro)
       })
   }
 

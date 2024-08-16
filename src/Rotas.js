@@ -20,11 +20,12 @@ const rotas = [
   { path: '/', exact: true, name: 'Início' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/gerar-relatorio-de-praticante/*', name: 'Relatório', element: RelatorioPraticante },
-  { path: '/pesquisar-praticante', name: 'Pesquisar', element:PesquisarPraticante },
+  { path: '/pesquisar-praticante', name: 'Pesquisar', element: PesquisarPraticante },
   { path: '/cadastrar-praticante', name: 'Novo', element: CadastroPraticante },
   { path: '/atualizar-praticante/*', name: 'Atualizar', element: AtualizaPraticante },
   { path: '/cadastrar-usuario', name: 'Novo', element: CadastroDeUsuario },
   { path: '/pesquisar-usuario', name: 'Pesquisar', element: PesquisaDeUsuario },
-  { path: '/atualizar-usuario/*', name: 'Atualizar', element:  AtualizacaoDeUsuario},
-]
-export default rotas
+  { path: '/atualizar-usuario/*', name: 'Atualizar', element: AtualizacaoDeUsuario },
+];
+export default rotas;
+

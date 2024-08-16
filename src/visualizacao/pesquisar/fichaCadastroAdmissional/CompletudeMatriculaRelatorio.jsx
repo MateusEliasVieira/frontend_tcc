@@ -42,8 +42,10 @@ const CompletudeMatriculaRelatorio = ({idUsuario}) => {
                 <CCol>
                   <p><strong>Data: {formatarDataParaDiaMesAno(dados.dataCompletudeMatricula)}</strong></p>
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol>
-                  <p><strong>Assinatura do responsável do praticante:</strong></p> <CImage width="350" height="200px" src={dados.imagemAssinaturaResponsavel}/>
+                  <p><strong>Assinatura do responsável do praticante:</strong></p> <CImage width="350" height="200" src={dados.imagemAssinaturaResponsavel}/>
                 </CCol>
               </CRow>
             </CContainer>

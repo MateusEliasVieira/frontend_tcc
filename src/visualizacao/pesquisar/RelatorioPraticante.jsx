@@ -44,7 +44,6 @@ import {useReactToPrint} from "react-to-print";
 import ImagemPDF from '../../assets/icones/pdf.png'
 import {apresentarModalDeCarregamento, esconderModal} from "../../utilidades/ManipuladorDeModal";
 import CompletudeMatriculaRelatorio from "./fichaCadastroAdmissional/CompletudeMatriculaRelatorio";
-import ModalComEvolucaoGraficoDeLinhas from "../../components/modal/ModalComEvolucaoGraficoDeLinhas";
 import GraficoDeLinha from "./Graficos/GraficoDeLinha";
 
 const RelatorioPraticante = () => {

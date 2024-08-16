@@ -43,8 +43,6 @@ const Login = () => {
     if(expirado === 'true'){
       apresentarModal("Aviso", "Sessão expirada! Para continuar faça o login novamente!", setDisplayModal, setTituloModal, setConteudoModal)
     }
-    localStorage.setItem("segundos", '')
-    localStorage.setItem("minutos", '')
     localStorage.setItem('login', JSON.stringify({idUsuario: "", nomeUsuario: "", token: "", validadeToken:"", role: ""}));
   }, []);
 
@@ -62,8 +60,6 @@ const Login = () => {
           if (response.status === 202) {
             localStorage.setItem('login', JSON.stringify(response.data));
             window.location.href = "/"
-          } else {
-            console.log("NovaSenha inválido " + response)
           }
         })
         .catch((error) => {

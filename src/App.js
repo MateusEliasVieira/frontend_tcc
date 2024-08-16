@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import LayoutPadrao from "./layout/LayoutPadrao";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -19,23 +19,24 @@ const Pagina500 = React.lazy(() => import('./visualizacao/paginas/pagina500/Pagi
 const Recuperacao = React.lazy(() => import('./visualizacao/paginas/recuperacao/Recuperacao'))
 const NovaSenha = React.lazy(() => import('./visualizacao/paginas/novaSenha/NovaSenha'))
 
+
 class App extends Component {
   render() {
     return (
-      <HashRouter>
+      <BrowserRouter>
         <Suspense fallback={loading}>
           <Routes>
-            <Route exact path="/login" name="Pagina de Login" element={<Login />} />
-            <Route exact path="/esqueci-minha-senha" name="Página de Recuperação de conta" element={<Recuperacao />} />
-            <Route exact path="/nova-senha" name="Nova Senha" element={<NovaSenha />} />
-            <Route exact path="/404" name="Pagina 404" element={<Pagina404 />} />
-            <Route exact path="/500" name="Pagina 500" element={<Pagina500 />} />
-            <Route path="*" name="Inicio" element={<LayoutPadrao />} />
+            <Route exact path="/equoterapia/ifgoiano/urt/login" name="Pagina de Login" element={<Login />} />
+            <Route exact path="/equoterapia/ifgoiano/urt/esqueci-minha-senha" name="Página de Recuperação de conta" element={<Recuperacao />} />
+            <Route exact path="/equoterapia/ifgoiano/urt/nova-senha" name="Nova Senha" element={<NovaSenha />} />
+            <Route exact path="/equoterapia/ifgoiano/urt/404" name="Pagina 404" element={<Pagina404 />} />
+            <Route exact path="/equoterapia/ifgoiano/urt/500" name="Pagina 500" element={<Pagina500 />} />
+            <Route path="/equoterapia/ifgoiano/urt/*" name="Inicio" element={<LayoutPadrao />} />
           </Routes>
         </Suspense>
-      </HashRouter>
-    )
+      </BrowserRouter>
+    );
   }
 }
 
-export default App
+export default App;
