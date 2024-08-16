@@ -9,22 +9,24 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
-import {CADASTRADO} from "../../../constantes/Constantes";
+import {atualizar} from "../../../requisicoes/Praticante";
 import {
-  SALVAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POST
+  ATUALIZAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_PUT,
+  BUSCAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const MobilidadeArticular = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idMobilidadeArticular:'',
     flexaoAtivaOmbro: '',
     flexaoPassivaOmbro: '',
     abducaoAtivaOmbro: '',
@@ -61,23 +63,34 @@ const MobilidadeArticular = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const mobilidadeArticular = localStorage.getItem("mobilidadeArticular")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (mobilidadeArticular === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
 
   return (
     <CRow>
@@ -89,16 +102,9 @@ const MobilidadeArticular = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Mobilidade Articular</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Mobilidade Articular</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -109,7 +115,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoAtivaOmbro}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoAtivaOmbro: e.target.value})}
                     legenda="Flexão Ativa Ombro"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -119,7 +124,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoPassivaOmbro}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoPassivaOmbro: e.target.value})}
                     legenda="Flexão Passiva Ombro"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -131,7 +135,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.abducaoAtivaOmbro}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, abducaoAtivaOmbro: e.target.value})}
                     legenda="Abdução Ativa Ombro"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -141,7 +144,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.abducaoPassivaOmbro}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, abducaoPassivaOmbro: e.target.value})}
                     legenda="Abdução Passiva Ombro"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -153,7 +155,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.aducaoAtivaOmbro}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, aducaoAtivaOmbro: e.target.value})}
                     legenda="Adução Ativa Ombro"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -163,7 +164,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.aducaoPassivaOmbro}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, aducaoPassivaOmbro: e.target.value})}
                     legenda="Adução Passiva Ombro"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -175,7 +175,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoAtivaCotovelo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoAtivaCotovelo: e.target.value})}
                     legenda="Flexão Ativa Cotovelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -185,7 +184,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoPassivaCotovelo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoPassivaCotovelo: e.target.value})}
                     legenda="Flexão Passiva Cotovelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -197,7 +195,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.extensaoAtivaCotovelo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensaoAtivaCotovelo: e.target.value})}
                     legenda="Extensão Ativa Cotovelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -207,7 +204,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.extensaoPassivaCotovelo}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensaoPassivaCotovelo: e.target.value})}
                     legenda="Extensão Passiva Cotovelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -219,7 +215,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoAtivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoAtivaQuadril: e.target.value})}
                     legenda="Flexão Ativa Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -229,7 +224,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoPassivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoPassivaQuadril: e.target.value})}
                     legenda="Flexão Passiva Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -241,7 +235,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.extensaoAtivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensaoAtivaQuadril: e.target.value})}
                     legenda="Extensão Ativa Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -251,7 +244,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.extensaoPassivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensaoPassivaQuadril: e.target.value})}
                     legenda="Extensão Passiva Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -263,7 +255,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.aducaoAtivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, aducaoAtivaQuadril: e.target.value})}
                     legenda="Adução Ativa Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -273,7 +264,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.aducaoPassivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, aducaoPassivaQuadril: e.target.value})}
                     legenda="Adução Passiva Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -285,7 +275,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.abducaoAtivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, abducaoAtivaQuadril: e.target.value})}
                     legenda="Abdução Ativa Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -295,7 +284,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.abducaoPassivaQuadril}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, abducaoPassivaQuadril: e.target.value})}
                     legenda="Abdução Passiva Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -310,7 +298,6 @@ const MobilidadeArticular = () => {
                       rotacaoInternaAtivaQuadril: e.target.value
                     })}
                     legenda="Rotação Interna Ativa Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -323,7 +310,6 @@ const MobilidadeArticular = () => {
                       rotacaoInternaPassivaQuadril: e.target.value
                     })}
                     legenda="Rotação Interna Passiva Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -338,7 +324,6 @@ const MobilidadeArticular = () => {
                       rotacaoExternaAtivaQuadril: e.target.value
                     })}
                     legenda="Rotação Externa Ativa Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -351,7 +336,6 @@ const MobilidadeArticular = () => {
                       rotacaoExternaPassivaQuadril: e.target.value
                     })}
                     legenda="Rotação Externa Passiva Quadril"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -363,7 +347,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.extensaoAtivaJoelho}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensaoAtivaJoelho: e.target.value})}
                     legenda="Extensão Ativa Joelho"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -374,7 +357,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.extensaoPassivaJoelho}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, extensaoPassivaJoelho: e.target.value})}
                     legenda="Extensão Passiva Joelho"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -386,7 +368,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoAtivaJoelho}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoAtivaJoelho: e.target.value})}
                     legenda="Flexão Ativa Joelho"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -396,7 +377,6 @@ const MobilidadeArticular = () => {
                     valor={formularioDeDados.flexaoPassivaJoelho}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, flexaoPassivaJoelho: e.target.value})}
                     legenda="Flexão Passiva Joelho"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -412,7 +392,6 @@ const MobilidadeArticular = () => {
                       dorsiflexaoAtivaTornozelo: e.target.value
                     })}
                     legenda="Dorsiflexão Ativa Tornozelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -425,7 +404,6 @@ const MobilidadeArticular = () => {
                       dorsiflexaoPassivaTornozelo: e.target.value
                     })}
                     legenda="Dorsiflexão Passiva Tornozelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -442,7 +420,6 @@ const MobilidadeArticular = () => {
                       flexaoPlantarAtivaTornozelo: e.target.value
                     })}
                     legenda="Flexão Plantar Ativa Tornozelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -456,15 +433,14 @@ const MobilidadeArticular = () => {
                       flexaoPlantarPassivaTornozelo: e.target.value
                     })}
                     legenda="Flexão Plantar Passiva Tornozelo"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
 
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POST, "mobilidadeArticular", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

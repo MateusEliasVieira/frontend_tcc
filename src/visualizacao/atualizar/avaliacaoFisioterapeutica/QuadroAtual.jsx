@@ -9,22 +9,26 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
+import {atualizar, salvar} from "../../../requisicoes/Praticante";
 import {CADASTRADO} from "../../../constantes/Constantes";
 import {
+  ATUALIZAR_QUADRO_ATUAL_DO_PRATICANTE_PUT,
+  BUSCAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POR_ID_GET, BUSCAR_QUADRO_ATUAL_DO_PRATICANTE_POR_ID_GET,
   SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const QuadroAtual = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idQuadroAtual:'',
     locomocaoAtual: '',
     restricoes: '',
     deformidades: '',
@@ -34,23 +38,35 @@ const QuadroAtual = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const quadroAtual = localStorage.getItem("quadroAtual")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (quadroAtual === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
+
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
     }
-  }, []);
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_QUADRO_ATUAL_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
+
 
   return (
     <CRow>
@@ -62,16 +78,9 @@ const QuadroAtual = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Quadro Atual</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Quadro Atual</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -82,7 +91,6 @@ const QuadroAtual = () => {
                     valor={formularioDeDados.locomocaoAtual}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, locomocaoAtual: e.target.value})}
                     legenda="Locomoção Atual"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -94,7 +102,6 @@ const QuadroAtual = () => {
                     valor={formularioDeDados.restricoes}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, restricoes: e.target.value})}
                     legenda="Restrições"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -106,14 +113,13 @@ const QuadroAtual = () => {
                     valor={formularioDeDados.deformidades}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, deformidades: e.target.value})}
                     legenda="Deformidades"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST, "quadroAtual", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_QUADRO_ATUAL_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>

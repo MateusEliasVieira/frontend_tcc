@@ -25,8 +25,8 @@ const TabelaPraticante = (props) => {
 
       <CTableBody>
         {
-          props.lista.map((item) => (
-              <CTableRow>
+          props.lista.map((item,key) => (
+              <CTableRow key={key}>
                 <CTableDataCell style={{textAlign:"center"}}>{item.praticante.idPraticante}</CTableDataCell>
                 <CTableDataCell style={{textAlign:"center"}}>
                   <a href={`${ATUALIZAR_PRATICANTE}?id=${item.praticante.idPraticante}`} style={{textDecoration:"none"}} title={"Atualizar cadastro do(a) praticante "+item.nomeCompleto}>{item.nomeCompleto}</a>

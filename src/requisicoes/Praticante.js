@@ -174,8 +174,6 @@ const atualizar = async (formularioDeDados, endpoint, setDisplayModal, setTitulo
 
   formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados);
 
-  console.log("Form de envio para atualizar: " + formularioDeDados)
-
   await axios.put(
     endpoint,
     JSON.stringify({...formularioDeDados}),
@@ -194,7 +192,6 @@ const atualizar = async (formularioDeDados, endpoint, setDisplayModal, setTitulo
       }
     })
     .catch((error) => {
-      console.log(error)
       if (error.response) {
         if (error.response.data) {
           if (error.response.data.lista) {

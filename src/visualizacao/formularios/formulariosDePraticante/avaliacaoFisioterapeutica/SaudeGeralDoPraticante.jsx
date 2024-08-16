@@ -97,7 +97,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="convulsoesAnteriores"
-                    value={formularioDeDados.convulsoesAnteriores}
+                    valor={formularioDeDados.convulsoesAnteriores}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAnteriores: e.target.value})}
                     legenda="Convulsões Anteriores"
                     disabled={desabilitar}
@@ -123,7 +123,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="convulsoesAtuais"
-                    value={formularioDeDados.convulsoesAtuais}
+                    valor={formularioDeDados.convulsoesAtuais}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAtuais: e.target.value})}
                     legenda="Convulsões Atuais"
                     disabled={desabilitar}
@@ -162,7 +162,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="medicamentos"
-                    value={formularioDeDados.medicamentos}
+                    valor={formularioDeDados.medicamentos}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, medicamentos: e.target.value})}
                     legenda="Medicamentos"
                     disabled={desabilitar}
@@ -188,7 +188,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="constipacao"
-                    value={formularioDeDados.constipacao}
+                    valor={formularioDeDados.constipacao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, constipacao: e.target.value})}
                     legenda="Constipação"
                     disabled={desabilitar}
@@ -214,7 +214,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="sono"
-                    value={formularioDeDados.sono}
+                    valor={formularioDeDados.sono}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, sono: e.target.value})}
                     legenda="Sono"
                     disabled={desabilitar}
@@ -237,7 +237,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="audicao"
-                    value={formularioDeDados.audicao}
+                    valor={formularioDeDados.audicao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, audicao: e.target.value})}
                     legenda="Audição"
                     disabled={desabilitar}
@@ -260,7 +260,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="visao"
-                    value={formularioDeDados.visao}
+                    valor={formularioDeDados.visao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, visao: e.target.value})}
                     legenda="Visão"
                     disabled={desabilitar}
@@ -283,7 +283,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="refluxoGastroesofagico"
-                    value={formularioDeDados.refluxoGastroesofagico}
+                    valor={formularioDeDados.refluxoGastroesofagico}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
                       refluxoGastroesofagico: e.target.value
@@ -312,7 +312,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="intervencoesCirurgicas"
-                    value={formularioDeDados.intervencoesCirurgicas}
+                    valor={formularioDeDados.intervencoesCirurgicas}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
                       intervencoesCirurgicas: e.target.value
@@ -341,7 +341,7 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="alergias"
-                    value={formularioDeDados.alergias}
+                    valor={formularioDeDados.alergias}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, alergias: e.target.value})}
                     legenda="Alergias"
                     disabled={desabilitar}

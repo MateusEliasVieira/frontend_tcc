@@ -5,26 +5,29 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CContainer,
+  CContainer, CFormSelect,
   CRow,
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {salvar} from "../../../requisicoes/Praticante";
-import {CADASTRADO, simOuNao} from "../../../constantes/Constantes";
+import {atualizar} from "../../../requisicoes/Praticante";
+import {simOuNao} from "../../../constantes/Constantes";
 import {
-  SALVAR_SAUDE_GERAL_DO_PRATICANTE_POST
+  ATUALIZAR_SAUDE_GERAL_DO_PRATICANTE_PUT,
+  BUSCAR_SAUDE_GERAL_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
+import axios from "axios";
 
 const SaudeGeralDoPraticante = () => {
 
+  const [idPraticante, setIdPraticante] = useState(null);
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const [desabilitar, setDesabilitar] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
+    idSaudeGeralDoPraticante: '',
     convulsoesAnteriores: '',
     consideracoesConvulsoesAnteriores: '',
     convulsoesAtuais: '',
@@ -52,24 +55,34 @@ const SaudeGeralDoPraticante = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const saudeGeralDosPraticantes = localStorage.getItem("saudeGeralDosPraticantes")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
-        }
-      }));
-      if (saudeGeralDosPraticantes === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
-      }
-    }
-  }, []);
 
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      setIdPraticante(id);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE;
+    }
+
+    if (idPraticante) {
+      const login = JSON.parse(localStorage.getItem('login'));
+
+      axios.get(BUSCAR_SAUDE_GERAL_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: idPraticante
+        }
+      })
+        .then((response) => {
+          setFormularioDeDados(response.data);
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
+  }, [idPraticante]);
   return (
     <CRow>
       <CCol xs={12}>
@@ -80,16 +93,9 @@ const SaudeGeralDoPraticante = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Saúde Geral dos Praticantes</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Saúde Geral dos Praticantes</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -97,10 +103,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="convulsoesAnteriores"
-                    value={formularioDeDados.convulsoesAnteriores}
+                    valor={formularioDeDados.convulsoesAnteriores}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAnteriores: e.target.value})}
                     legenda="Convulsões Anteriores"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -114,7 +119,6 @@ const SaudeGeralDoPraticante = () => {
                       consideracoesConvulsoesAnteriores: e.target.value
                     })}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -123,10 +127,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="convulsoesAtuais"
-                    value={formularioDeDados.convulsoesAtuais}
+                    valor={formularioDeDados.convulsoesAtuais}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, convulsoesAtuais: e.target.value})}
                     legenda="Convulsões Atuais"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -140,7 +143,6 @@ const SaudeGeralDoPraticante = () => {
                       frequenciaConvulsoesAtuais: e.target.value
                     })}
                     legenda="Frequência"
-                    disabled={desabilitar}
                   />
                 </CCol>
                 <CCol>
@@ -153,7 +155,6 @@ const SaudeGeralDoPraticante = () => {
                       consideracoesConvulsoesAtuais: e.target.value
                     })}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -162,10 +163,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="medicamentos"
-                    value={formularioDeDados.medicamentos}
+                    valor={formularioDeDados.medicamentos}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, medicamentos: e.target.value})}
                     legenda="Medicamentos"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -179,7 +179,6 @@ const SaudeGeralDoPraticante = () => {
                       consideracoesMedicamentos: e.target.value
                     })}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -188,10 +187,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="constipacao"
-                    value={formularioDeDados.constipacao}
+                    valor={formularioDeDados.constipacao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, constipacao: e.target.value})}
                     legenda="Constipação"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -205,7 +203,6 @@ const SaudeGeralDoPraticante = () => {
                       consideracoesConstipacao: e.target.value
                     })}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -214,10 +211,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="sono"
-                    value={formularioDeDados.sono}
+                    valor={formularioDeDados.sono}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, sono: e.target.value})}
                     legenda="Sono"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -228,7 +224,6 @@ const SaudeGeralDoPraticante = () => {
                     valor={formularioDeDados.consideracoesSono}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesSono: e.target.value})}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -237,10 +232,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="audicao"
-                    value={formularioDeDados.audicao}
+                    valor={formularioDeDados.audicao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, audicao: e.target.value})}
                     legenda="Audição"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -251,7 +245,6 @@ const SaudeGeralDoPraticante = () => {
                     valor={formularioDeDados.consideracoesAudicao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesAudicao: e.target.value})}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -260,10 +253,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="visao"
-                    value={formularioDeDados.visao}
+                    valor={formularioDeDados.visao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, visao: e.target.value})}
                     legenda="Visão"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -274,7 +266,6 @@ const SaudeGeralDoPraticante = () => {
                     valor={formularioDeDados.consideracoesVisao}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesVisao: e.target.value})}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -283,13 +274,12 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="refluxoGastroesofagico"
-                    value={formularioDeDados.refluxoGastroesofagico}
+                    valor={formularioDeDados.refluxoGastroesofagico}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
                       refluxoGastroesofagico: e.target.value
                     })}
                     legenda="Refluxo Gastroesofágico"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -303,7 +293,6 @@ const SaudeGeralDoPraticante = () => {
                       consideracoesRefluxoGastroesofagico: e.target.value
                     })}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -312,13 +301,12 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="intervencoesCirurgicas"
-                    value={formularioDeDados.intervencoesCirurgicas}
+                    valor={formularioDeDados.intervencoesCirurgicas}
                     setar={(e) => setFormularioDeDados({
                       ...formularioDeDados,
                       intervencoesCirurgicas: e.target.value
                     })}
                     legenda="Intervenções Cirúrgicas"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -332,7 +320,6 @@ const SaudeGeralDoPraticante = () => {
                       consideracoesIntervencoesCirurgicas: e.target.value
                     })}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
@@ -341,10 +328,9 @@ const SaudeGeralDoPraticante = () => {
                   <Campo
                     tipo="select"
                     id="alergias"
-                    value={formularioDeDados.alergias}
+                    valor={formularioDeDados.alergias}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, alergias: e.target.value})}
                     legenda="Alergias"
-                    disabled={desabilitar}
                     opcoes={simOuNao}
                   />
                 </CCol>
@@ -355,14 +341,13 @@ const SaudeGeralDoPraticante = () => {
                     valor={formularioDeDados.consideracoesAlergias}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, consideracoesAlergias: e.target.value})}
                     legenda="Considerações"
-                    disabled={desabilitar}
                   />
                 </CCol>
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_SAUDE_GERAL_DO_PRATICANTE_POST, "saudeGeralDosPraticantes", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
+                atualizar(formularioDeDados, ATUALIZAR_SAUDE_GERAL_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
-                Salvar
+                Atualizar
               </CButton>
             </CContainer>
           </CCardBody>
