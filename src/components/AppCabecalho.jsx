@@ -68,14 +68,6 @@ const AppCabecalho = () => {
         temporizador(minutos, segundosRestantes);
       }
 
-      console.log("Horario expiração horas: "+horarioExpiracaoHoras)
-      console.log("Horario expiração minutos: "+horarioExpiracaoMinutos)
-      console.log("Horario expiração segundos: "+horarioExpiracaoSegundos)
-      console.log("Data expiração: "+dataExpiracao)
-      console.log("Horario atual: "+horarioAtual)
-      console.log("Tempo restante: "+tempoRestante)
-      console.log("Minutos = "+minutos+", segundos = "+segundosRestantes)
-
     }
   }, []);
 
