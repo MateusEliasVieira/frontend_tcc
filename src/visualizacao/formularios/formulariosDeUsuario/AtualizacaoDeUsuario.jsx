@@ -223,7 +223,7 @@ const AtualizacaoDeUsuario = () => {
                 </CRow>
 
                 {
-                  possuiFormacao === 'true' ?
+                  possuiFormacao === 'SIM' ?
                     (
                       <CRow>
                         <CCol>
