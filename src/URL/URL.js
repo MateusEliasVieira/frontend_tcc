@@ -1,8 +1,8 @@
-const PESQUISAR_PRATICANTE = "/equoterapia/ifgoiano/urt/formulario/pesquisar-praticante"
-const ATUALIZAR_PRATICANTE = "/equoterapia/ifgoiano/urt/atualizar-praticante"
-const ATUALIZAR_USUARIO = "/equoterapia/ifgoiano/urt/atualizar-usuario/atualizar"
-const GERAR_RELATORIO_PRATICANTE = "/equoterapia/ifgoiano/urt/gerar-relatorio-de-praticante"
-const LOGIN = "/equoterapia/ifgoiano/urt/login"
+const PESQUISAR_PRATICANTE = "/pesquisar-praticante"
+const ATUALIZAR_PRATICANTE = "/atualizar-praticante"
+const ATUALIZAR_USUARIO = "/atualizar-usuario/atualizar"
+const GERAR_RELATORIO_PRATICANTE = "/gerar-relatorio-de-praticante"
+const LOGIN = "/login"
 const ESQUECI_MINHA_SENHA = "/esqueci-minha-senha"
 const DOMINIO = "https://equoterapia.up.railway.app/"
 

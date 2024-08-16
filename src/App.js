@@ -26,12 +26,12 @@ class App extends Component {
       <BrowserRouter>
         <Suspense fallback={loading}>
           <Routes>
-            <Route exact path="/equoterapia/ifgoiano/urt/login" name="Pagina de Login" element={<Login />} />
-            <Route exact path="/equoterapia/ifgoiano/urt/esqueci-minha-senha" name="Página de Recuperação de conta" element={<Recuperacao />} />
-            <Route exact path="/equoterapia/ifgoiano/urt/nova-senha" name="Nova Senha" element={<NovaSenha />} />
-            <Route exact path="/equoterapia/ifgoiano/urt/404" name="Pagina 404" element={<Pagina404 />} />
-            <Route exact path="/equoterapia/ifgoiano/urt/500" name="Pagina 500" element={<Pagina500 />} />
-            <Route path="/equoterapia/ifgoiano/urt/*" name="Inicio" element={<LayoutPadrao />} />
+            <Route exact path="/login" name="Pagina de Login" element={<Login />} />
+            <Route exact path="/esqueci-minha-senha" name="Página de Recuperação de conta" element={<Recuperacao />} />
+            <Route exact path="/nova-senha" name="Nova Senha" element={<NovaSenha />} />
+            <Route exact path="/404" name="Pagina 404" element={<Pagina404 />} />
+            <Route exact path="/500" name="Pagina 500" element={<Pagina500 />} />
+            <Route path="/*" name="Inicio" element={<LayoutPadrao />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

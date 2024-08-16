@@ -20,13 +20,13 @@ const _nav_administrador = [
       {
         component: CNavItem,
         name: 'Novo',
-        to: '/equoterapia/ifgoiano/urt/cadastrar-praticante',
+        to: '/cadastrar-praticante',
         icon: <CIcon icon={cilUserPlus} customClassName={"nav-icon"} />
       },
       {
         component: CNavItem,
         name: 'Pesquisa',
-        to: '/equoterapia/ifgoiano/urt/pesquisar-praticante',
+        to: '/pesquisar-praticante',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
     ],
@@ -40,13 +40,13 @@ const _nav_administrador = [
       {
         component: CNavItem,
         name: 'Novo',
-        to: '/equoterapia/ifgoiano/urt/cadastrar-usuario',
+        to: '/cadastrar-usuario',
         icon:<CIcon icon={cilUserPlus} customClassName={"nav-icon"}/>
       },
       {
         component: CNavItem,
         name: 'Pesquisa',
-        to: '/equoterapia/ifgoiano/urt/pesquisar-usuario',
+        to: '/pesquisar-usuario',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
     ],
@@ -54,7 +54,7 @@ const _nav_administrador = [
   {
     component: CNavItem,
     name: 'Sair',
-    href: '/equoterapia/ifgoiano/urt/login',
+    href: '/login',
     icon: <CIcon icon={cilAccountLogout} customClassName="nav-icon"/>,
   },
 ];
@@ -70,13 +70,13 @@ const _nav_usuario = [
       {
         component: CNavItem,
         name: 'Novo',
-        to: '/equoterapia/ifgoiano/urt/cadastrar-praticante',
+        to: '/cadastrar-praticante',
         icon: <CIcon icon={cilUserPlus} customClassName={"nav-icon"} />
       },
       {
         component: CNavItem,
         name: 'Pesquisa',
-        to: '/equoterapia/ifgoiano/urt/pesquisar-praticante',
+        to: '/pesquisar-praticante',
         icon: <CIcon icon={cilMagnifyingGlass} customClassName={"nav-icon"}/>
       },
     ],
@@ -84,7 +84,7 @@ const _nav_usuario = [
   {
     component: CNavItem,
     name: 'Sair',
-    href: '/equoterapia/ifgoiano/urt/login',
+    href: '/login',
     icon: <CIcon icon={cilAccountLogout} customClassName="nav-icon"/>,
   },
 ]
