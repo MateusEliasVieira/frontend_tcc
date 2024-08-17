@@ -3,6 +3,7 @@ import {DOMINIO} from '../../../URL/URL'
 // DADOS PESSOAIS
 
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-id'
+const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-id-do-praticante'
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_CPF_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-cpf'
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-nome'
 
@@ -43,6 +44,7 @@ const BUSCAR_EMERGENCIA_DO_PRATICANTE_POR_ID_GET = DOMINIO+'praticante/emergenci
 
 export{
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET,
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_CPF_GET,
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,
   BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET,
