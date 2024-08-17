@@ -22,6 +22,7 @@ import {
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import axios from "axios";
 import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
+import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
 
 const DadosPessoais = () => {
 
@@ -61,7 +62,7 @@ const DadosPessoais = () => {
     if (id) {
       setIdPraticante(id);
     } else {
-      window.location.href = "/#/formulario/pesquisar-praticante";
+      window.location.href = PESQUISAR_PRATICANTE;
     }
 
     if (idPraticante) {

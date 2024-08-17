@@ -38,6 +38,7 @@ const aplicaMascaraDePeso = (value) => {
     .slice(0, 3); // Limita a 3 caracteres
 };
 
+
 const aplicarValorParaCampoVazioCasoExista = (formularioDeDados) => {
   const valorDefault = 'NAO_INFORMADO';
 

@@ -11,7 +11,8 @@ import {
   BUSCAR_RESPONSAVEL_DO_PRATICANTE_POR_ID_GET
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {formatarDataParaDiaMesAno} from "../../../utilidades/ManipuladorDeDatas";
-import {formatarDinheiro} from "../../../utilidades/ManipuladorTexto"; // Importando o componente Campo
+import {formatarDinheiro} from "../../../utilidades/ManipuladorTexto";
+import {aplicarMascaraRenda} from "../../../utilidades/ValidadorDeCampos"; // Importando o componente Campo
 
 const ResponsavelPeloPraticanteRelatorio = ({idUsuario}) => {
 

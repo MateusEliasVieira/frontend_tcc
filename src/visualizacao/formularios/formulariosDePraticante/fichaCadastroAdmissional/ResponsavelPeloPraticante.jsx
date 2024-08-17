@@ -162,7 +162,9 @@ const ResponsavelPeloPraticante = () => {
                     tipo="number"
                     id="rendaFamiliar"
                     valor={formularioDeDados.rendaFamiliar}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, rendaFamiliar: e.target.value})}
+                    setar={(e) =>
+                      setFormularioDeDados({...formularioDeDados, rendaFamiliar: e.target.value})
+                  }
                     legenda="Renda familiar"
                     disabled={desabilitar}
                   />

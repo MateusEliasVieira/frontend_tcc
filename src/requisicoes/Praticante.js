@@ -1,6 +1,8 @@
 import axios, {HttpStatusCode} from "axios";
 import {
-  ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT, BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,
+  ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
@@ -269,6 +271,27 @@ const buscarPraticantePorNome = (nome, setDados, setAtivar) => {
     })
 }
 
+const buscarPraticantePorID = (id,setDados, setAtivo) => {
+  setAtivo(true)
+  axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    },
+    params: {
+      id: id
+    }
+  })
+    .then((response) => {
+      setDados(response.data)
+      setAtivo(false)
+    })
+    .catch((erro) => {
+      console.log("Erro ao buscar praticante por id!")
+      setAtivo(false)
+    })
+}
+
 const buscarDadosPessoaisDosPraticantes = (setDados, setAtivar) => {
   axios.get(`${DOMINIO}praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes`, {
     headers: {
@@ -293,5 +316,6 @@ export {
   buscarDadosPraticante,
   atualizarDadosPessoais,
   buscarPraticantePorNome,
+  buscarPraticantePorID,
   buscarDadosPessoaisDosPraticantes
 }

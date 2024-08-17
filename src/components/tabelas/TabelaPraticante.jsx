@@ -1,40 +1,16 @@
 import {CButton, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
-import React, {useEffect} from "react";
+import React from "react";
 import ModalComEvolucaoGraficoDeLinhas from "../modal/ModalComEvolucaoGraficoDeLinhas";
 import ModalComEvolucaoGraficoDeBarras from "../modal/ModalComEvolucaoGraficoDeBarras";
 import ModalParaEvoluir from "../modal/ModalParaEvoluir";
 import ModalComEvolucaoGraficoDeTorta from "../modal/ModalComEvolucaoGraficoDeTorta";
-import {ATUALIZAR_PRATICANTE, DOMINIO, GERAR_RELATORIO_PRATICANTE} from "../../URL/URL";
-import axios, {HttpStatusCode} from "axios";
-import {apresentarModal} from "../../utilidades/ManipuladorDeModal";
+import {ATUALIZAR_PRATICANTE, GERAR_RELATORIO_PRATICANTE} from "../../URL/URL";
 
 const TabelaPraticante = (props) => {
 
-  const login = JSON.parse(localStorage.getItem('login'));
-
-  const consultarStatusCadastro = async (idPraticante) => {
-    await axios.get(`${DOMINIO}/praticante/finalizado/verificar-status`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-        params: {
-          idPraticante: idPraticante
-        }
-      }
-    )
-      .then((response) => {
-        if (response.status === HttpStatusCode.OK)
-          return response.data === 'true' ? true : false;
-      })
-      .catch((error) => {
-        apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal)
-      })
-  }
 
   return (
-    <CTable>
+    <CTable hover>
       <CTableHead>
         <CTableRow>
           <CTableHeaderCell style={{width: "20px", textAlign: "center"}}>Código</CTableHeaderCell>
@@ -53,12 +29,12 @@ const TabelaPraticante = (props) => {
                 <CTableDataCell style={{textAlign: "center"}}>{item.praticante.idPraticante}</CTableDataCell>
                 <CTableDataCell style={{textAlign: "center"}}>
                   {
-                    consultarStatusCadastro(item.praticante.idPraticante) ?
+                    item.finalizado ?
                       <a href={`${ATUALIZAR_PRATICANTE}?id=${item.praticante.idPraticante}`}
-                         style={{textDecoration: "none"}}
-                         title={"Atualizar cadastro do(a) praticante " + item.nomeCompleto}><strong>{item.nomeCompleto} [Finalizado]</strong></a>
+                         style={{textDecoration: "none", color:"red"}}
+                         title={"Atualizar cadastro do(a) praticante " + item.nomeCompleto}>{item.nomeCompleto} <i>[Finalizado]</i></a>
                       :
-                      <p><i>{item.nomeCompleto} [Pendente]</i></p>
+                      <p>{item.nomeCompleto} <i>[Pendente]</i></p>
                   }
                 </CTableDataCell>
                 <CTableDataCell style={{textAlign: "center"}}>{item.diagnosticoClinico}</CTableDataCell>

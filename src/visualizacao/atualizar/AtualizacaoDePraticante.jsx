@@ -34,14 +34,29 @@ import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeutic
 import "./AtualizacaoDePraticante.css"
 import EmPE from "./avaliacaoFisioterapeutica/EmPe";
 import Modal from "../../components/modal/Modal";
+import {PESQUISAR_PRATICANTE} from "../../URL/URL";
+import {buscarPraticantePorID} from "../../requisicoes/Praticante";
 
 const AtualizacaoDePraticante = () => {
 
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
+  const [dados, setDados] = useState({})
+  const [ativo, setAtivo] = useState(null)
 
   const [activeTab, setActiveTab] = useState("dadosPessoais");
+
+
+  useEffect(() => {
+    const id = Number(window.location.href.split("?id=")[1]);
+    if (id) {
+      buscarPraticantePorID(id, setDados, setAtivo);
+    } else {
+      window.location.href = PESQUISAR_PRATICANTE
+    }
+  }, [])
+
 
   const renderComponent = () => {
     switch (activeTab) {
@@ -118,283 +133,299 @@ const AtualizacaoDePraticante = () => {
 
   return (
     <div>
-      <Modal
-        dsp={displayModal}
-        titulo={tituloModal}
-        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
-        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
-      />
-      <div id="box-tabs">
-        <ul className="nav nav-tabs">
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "dadosPessoais" ? "active" : ""}`}
-              onClick={() => setActiveTab("dadosPessoais")}
-            >
-              Dados Pessoais
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "educacao" ? "active" : ""}`}
-              onClick={() => setActiveTab("educacao")}
-            >
-              Educação
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "responsavelPeloPraticante" ? "active" : ""}`}
-              onClick={() => setActiveTab("responsavelPeloPraticante")}
-            >
-              Responsável
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "outrasAtividadesManha" ? "active" : ""}`}
-              onClick={() => setActiveTab("outrasAtividadesManha")}
-            >
-              Outras Atividades Manhã
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "outrasAtividadesTarde" ? "active" : ""}`}
-              onClick={() => setActiveTab("outrasAtividadesTarde")}
-            >
-              Outras Atividades Tarde
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "emergencia" ? "active" : ""}`}
-              onClick={() => setActiveTab("emergencia")}
-            >
-              Emergência
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "completudeMatricula" ? "active" : ""}`}
-              onClick={() => setActiveTab("completudeMatricula")}
-            >
-              Completude Matrícula
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "sobreACrianca" ? "active" : ""}`}
-              onClick={() => setActiveTab("sobreACrianca")}
-            >
-              Sobre a Criança
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "saude" ? "active" : ""}`}
-              onClick={() => setActiveTab("saude")}
-            >
-              Saúde
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "rotina" ? "active" : ""}`}
-              onClick={() => setActiveTab("rotina")}
-            >
-              Rotina
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "cuidadosPessoais" ? "active" : ""}`}
-              onClick={() => setActiveTab("cuidadosPessoais")}
-            >
-              Cuidados Pessoais
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "tracoDePersonalidade" ? "active" : ""}`}
-              onClick={() => setActiveTab("tracoDePersonalidade")}
-            >
-              Traço de Personalidade
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "linguagem" ? "active" : ""}`}
-              onClick={() => setActiveTab("linguagem")}
-            >
-              Linguagem
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "compreensao" ? "active" : ""}`}
-              onClick={() => setActiveTab("compreensao")}
-            >
-              Compreensão
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "saudeMental" ? "active" : ""}`}
-              onClick={() => setActiveTab("saudeMental")}
-            >
-              Saúde Mental
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "socializacao" ? "active" : ""}`}
-              onClick={() => setActiveTab("socializacao")}
-            >
-              Socialização
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "comportamento" ? "active" : ""}`}
-              onClick={() => setActiveTab("comportamento")}
-            >
-              Comportamento
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "habilidadesSociais" ? "active" : ""}`}
-              onClick={() => setActiveTab("habilidadesSociais")}
-            >
-              Habilidades Sociais
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "afetividade" ? "active" : ""}`}
-              onClick={() => setActiveTab("afetividade")}
-            >
-              Afetividade
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "relacaoDaFamiliaComOExaminado" ? "active" : ""}`}
-              onClick={() => setActiveTab("relacaoDaFamiliaComOExaminado")}
-            >
-              Relação da Família
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "avaliacaoPsicologica" ? "active" : ""}`}
-              onClick={() => setActiveTab("avaliacaoPsicologica")}
-            >
-              Avaliação Psicológica
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "avaliacaoFisioterapeutica" ? "active" : ""}`}
-              onClick={() => setActiveTab("avaliacaoFisioterapeutica")}
-            >
-              Avaliação Fisioterapêutica
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "coordenacaoMotora" ? "active" : ""}`}
-              onClick={() => setActiveTab("coordenacaoMotora")}
-            >
-              Coordenação Motora
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "emPe" ? "active" : ""}`}
-              onClick={() => setActiveTab("emPe")}
-            >
-              Em Pé
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "equilibrioDinamico" ? "active" : ""}`}
-              onClick={() => setActiveTab("equilibrioDinamico")}
-            >
-              Equilíbrio Dinâmico
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "equilibrioEstatico" ? "active" : ""}`}
-              onClick={() => setActiveTab("equilibrioEstatico")}
-            >
-              Equilíbrio Estático
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "formaDeComunicacao" ? "active" : ""}`}
-              onClick={() => setActiveTab("formaDeComunicacao")}
-            >
-              Forma de Comunicação
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "gruposMusculares" ? "active" : ""}`}
-              onClick={() => setActiveTab("gruposMusculares")}
-            >
-              Grupos Musculares
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "habilidadesMotorasAVD" ? "active" : ""}`}
-              onClick={() => setActiveTab("habilidadesMotorasAVD")}
-            >
-              Habilidades Motoras AVD
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "mobilidadeArticular" ? "active" : ""}`}
-              onClick={() => setActiveTab("mobilidadeArticular")}
-            >
-              Mobilidade Articular
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "quadroAtual" ? "active" : ""}`}
-              onClick={() => setActiveTab("quadroAtual")}
-            >
-              Quadro Atual
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "saudeGeralDosPraticantes" ? "active" : ""}`}
-              onClick={() => setActiveTab("saudeGeralDosPraticantes")}
-            >
-              Saúde Geral dos Praticantes
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === "planoTerapeuticoSingular" ? "active" : ""}`}
-              onClick={() => setActiveTab("planoTerapeuticoSingular")}
-            >
-              Plano Terapêutico Singular
-            </button>
-          </li>
-        </ul>
-      </div>
-      <div className="tab-content">
-        {renderComponent()}
-      </div>
+      {
+        ativo
+          ? <div className="spinner-border" role="status" style={{margin: '50px auto', display: 'block'}}>
+            <strong className="sr-only">Loading...</strong>
+          </div>
+          : dados.finalizado
+            ?
+
+
+            <>
+              <Modal
+                dsp={displayModal}
+                titulo={tituloModal}
+                conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+                esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+              />
+              <div id="box-tabs">
+                <ul className="nav nav-tabs">
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "dadosPessoais" ? "active" : ""}`}
+                      onClick={() => setActiveTab("dadosPessoais")}
+                    >
+                      Dados Pessoais
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "educacao" ? "active" : ""}`}
+                      onClick={() => setActiveTab("educacao")}
+                    >
+                      Educação
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "responsavelPeloPraticante" ? "active" : ""}`}
+                      onClick={() => setActiveTab("responsavelPeloPraticante")}
+                    >
+                      Responsável
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "outrasAtividadesManha" ? "active" : ""}`}
+                      onClick={() => setActiveTab("outrasAtividadesManha")}
+                    >
+                      Outras Atividades Manhã
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "outrasAtividadesTarde" ? "active" : ""}`}
+                      onClick={() => setActiveTab("outrasAtividadesTarde")}
+                    >
+                      Outras Atividades Tarde
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "emergencia" ? "active" : ""}`}
+                      onClick={() => setActiveTab("emergencia")}
+                    >
+                      Emergência
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "completudeMatricula" ? "active" : ""}`}
+                      onClick={() => setActiveTab("completudeMatricula")}
+                    >
+                      Completude Matrícula
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "sobreACrianca" ? "active" : ""}`}
+                      onClick={() => setActiveTab("sobreACrianca")}
+                    >
+                      Sobre a Criança
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "saude" ? "active" : ""}`}
+                      onClick={() => setActiveTab("saude")}
+                    >
+                      Saúde
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "rotina" ? "active" : ""}`}
+                      onClick={() => setActiveTab("rotina")}
+                    >
+                      Rotina
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "cuidadosPessoais" ? "active" : ""}`}
+                      onClick={() => setActiveTab("cuidadosPessoais")}
+                    >
+                      Cuidados Pessoais
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "tracoDePersonalidade" ? "active" : ""}`}
+                      onClick={() => setActiveTab("tracoDePersonalidade")}
+                    >
+                      Traço de Personalidade
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "linguagem" ? "active" : ""}`}
+                      onClick={() => setActiveTab("linguagem")}
+                    >
+                      Linguagem
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "compreensao" ? "active" : ""}`}
+                      onClick={() => setActiveTab("compreensao")}
+                    >
+                      Compreensão
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "saudeMental" ? "active" : ""}`}
+                      onClick={() => setActiveTab("saudeMental")}
+                    >
+                      Saúde Mental
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "socializacao" ? "active" : ""}`}
+                      onClick={() => setActiveTab("socializacao")}
+                    >
+                      Socialização
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "comportamento" ? "active" : ""}`}
+                      onClick={() => setActiveTab("comportamento")}
+                    >
+                      Comportamento
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "habilidadesSociais" ? "active" : ""}`}
+                      onClick={() => setActiveTab("habilidadesSociais")}
+                    >
+                      Habilidades Sociais
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "afetividade" ? "active" : ""}`}
+                      onClick={() => setActiveTab("afetividade")}
+                    >
+                      Afetividade
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "relacaoDaFamiliaComOExaminado" ? "active" : ""}`}
+                      onClick={() => setActiveTab("relacaoDaFamiliaComOExaminado")}
+                    >
+                      Relação da Família
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "avaliacaoPsicologica" ? "active" : ""}`}
+                      onClick={() => setActiveTab("avaliacaoPsicologica")}
+                    >
+                      Avaliação Psicológica
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "avaliacaoFisioterapeutica" ? "active" : ""}`}
+                      onClick={() => setActiveTab("avaliacaoFisioterapeutica")}
+                    >
+                      Avaliação Fisioterapêutica
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "coordenacaoMotora" ? "active" : ""}`}
+                      onClick={() => setActiveTab("coordenacaoMotora")}
+                    >
+                      Coordenação Motora
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "emPe" ? "active" : ""}`}
+                      onClick={() => setActiveTab("emPe")}
+                    >
+                      Em Pé
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "equilibrioDinamico" ? "active" : ""}`}
+                      onClick={() => setActiveTab("equilibrioDinamico")}
+                    >
+                      Equilíbrio Dinâmico
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "equilibrioEstatico" ? "active" : ""}`}
+                      onClick={() => setActiveTab("equilibrioEstatico")}
+                    >
+                      Equilíbrio Estático
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "formaDeComunicacao" ? "active" : ""}`}
+                      onClick={() => setActiveTab("formaDeComunicacao")}
+                    >
+                      Forma de Comunicação
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "gruposMusculares" ? "active" : ""}`}
+                      onClick={() => setActiveTab("gruposMusculares")}
+                    >
+                      Grupos Musculares
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "habilidadesMotorasAVD" ? "active" : ""}`}
+                      onClick={() => setActiveTab("habilidadesMotorasAVD")}
+                    >
+                      Habilidades Motoras AVD
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "mobilidadeArticular" ? "active" : ""}`}
+                      onClick={() => setActiveTab("mobilidadeArticular")}
+                    >
+                      Mobilidade Articular
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "quadroAtual" ? "active" : ""}`}
+                      onClick={() => setActiveTab("quadroAtual")}
+                    >
+                      Quadro Atual
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "saudeGeralDosPraticantes" ? "active" : ""}`}
+                      onClick={() => setActiveTab("saudeGeralDosPraticantes")}
+                    >
+                      Saúde Geral dos Praticantes
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${activeTab === "planoTerapeuticoSingular" ? "active" : ""}`}
+                      onClick={() => setActiveTab("planoTerapeuticoSingular")}
+                    >
+                      Plano Terapêutico Singular
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div className="tab-content">
+                {renderComponent()}
+              </div>
+            </>
+
+            :
+            <p style={{display:"block", margin:"50px auto", width:'100%', textAlign:'center'}}>Finalize o cadastro do praticante <strong>{dados.nomeCompleto}</strong> para liberar a funcionalidade de atualização.</p>
+      }
+
     </div>
   );
 };
