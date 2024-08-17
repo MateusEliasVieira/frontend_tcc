@@ -86,9 +86,11 @@ const NovaSenha = () => {
                     <strong id="rec-conta">Nova Senha</strong>
                     <VerSenha
                       setSenha={setNovaSenha}
+                      legenda={"Nova Senha"}
                     />
                     <VerSenha
                       setSenha={setConfirmaNovaSenha}
+                      legenda={"Confirmar Senha"}
                     />
                     <CRow>
                       <CCol>

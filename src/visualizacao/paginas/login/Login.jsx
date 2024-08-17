@@ -124,6 +124,7 @@ const Login = () => {
                     </CInputGroup>
                     <VerSenha
                       setSenha={setSenha}
+                      legenda={"Senha"}
                     />
                     <CRow>
                       <CCol xs={6}>

@@ -12,7 +12,7 @@ const VerSenha = (props) => {
         <input className="form-control"
                style={{fontSize: '20px', border:'none', background:'none', outline:'none'}}
                type={tipo}
-               placeholder="Confirme a Senha"
+               placeholder={props.legenda}
                autoComplete="current-password"
                onChange={(event) => {
                  props.setSenha(event.target.value)
