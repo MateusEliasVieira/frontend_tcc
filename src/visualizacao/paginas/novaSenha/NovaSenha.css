@@ -1,5 +1,6 @@
 .card-group {
   box-shadow: 0px 0px 40px #bdbaba;
+  height: 400px;
 }
 
 #card-body-imagem{
@@ -8,6 +9,7 @@
   height: 100%;
   background-size: cover;
   background-position: center;
+
 }
 
 @media (max-width: 768px) {
@@ -15,20 +17,10 @@
     display: none;
   }
 }
+
 #rec-conta{
   display: block;
   margin: 10px 0px;
   font-size: 25px;
 }
-#rec-sucesso{
-  display: block;
-  margin: 10px 0px;
-  font-size: 25px;
-  color: #0ecf8f;
-}
-#rec-falha{
-  display: block;
-  margin: 10px 0px;
-  font-size: 25px;
-  color: #ec3636;
-}
+

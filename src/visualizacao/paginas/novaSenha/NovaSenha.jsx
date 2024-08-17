@@ -6,25 +6,20 @@ import {
   CCardGroup,
   CCol,
   CContainer,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
   CRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import {cibFSecure} from '@coreui/icons'
 import Modal from "../../../components/modal/Modal";
 import "./NovaSenha.css"
 import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import axios from "axios";
 import {DOMINIO} from "../../../URL/URL";
+import VerSenha from "../../../components/campos/VerSenha";
 
 const NovaSenha = () => {
 
   const [displayModal, setDisplayModal] = useState("none")
   const [tituloModal, setTituloModal] = useState("")
   const [conteudoModal, setConteudoModal] = useState("")
-
   const [novaSenha, setNovaSenha] = useState("")
   const [confirmaNovaSenha, setConfirmaNovaSenha] = useState("")
 
@@ -45,9 +40,9 @@ const NovaSenha = () => {
         })
           .then((resposta) => {
             apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
-            setTimeout(()=>{
-              window.location.href="/#/login"
-            },5000)
+            setTimeout(() => {
+              window.location.href = "/#/login"
+            }, 5000)
           })
           .catch((erro) => {
             console.log("Erro = " + erro)
@@ -89,34 +84,14 @@ const NovaSenha = () => {
                 <CCardBody>
                   <div>
                     <strong id="rec-conta">Nova Senha</strong>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cibFSecure}/>
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Senha"
-                        autoComplete="senha"
-                        onChange={(event) => {
-                          setNovaSenha(event.target.value)
-                        }}
-                      />
-                    </CInputGroup>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cibFSecure}/>
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Confirme a senha"
-                        autoComplete="senha"
-                        onChange={(event) => {
-                          setConfirmaNovaSenha(event.target.value)
-                        }}
-                      />
-                    </CInputGroup>
+                    <VerSenha
+                      setSenha={setNovaSenha}
+                    />
+                    <VerSenha
+                      setSenha={setConfirmaNovaSenha}
+                    />
                     <CRow>
-                      <CCol xs={6}>
+                      <CCol>
                         <CButton
                           color="danger"
                           style={{color: "white"}}
@@ -125,9 +100,13 @@ const NovaSenha = () => {
                             salvarNovaSenha()
                           }}
                         >
-                          Salvar
+                          Alterar Senha
                         </CButton>
                       </CCol>
+                    </CRow>
+                    <CRow>
+                      <p style={{margin:'20px auto 0px auto', color:'red'}}>A senha deve conter pelo menos <strong>dois números, duas letras e dois caracteres especiais</strong>.</p>
+                      <p style={{margin:'0px auto 0px auto', color:'red'}}><i>Exemplo: xy01@@</i></p>
                     </CRow>
                   </div>
                 </CCardBody>
