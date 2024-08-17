@@ -52,7 +52,7 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloMod
       });
       if (response.status === HttpStatusCode.Created) {
         apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-      }else{
+      } else {
         apresentarModal("Aviso", "Houve um erro ao salvar o novo usuário!", setDisplayModal, setTituloModal, setConteudoModal);
       }
     } catch (error) {
@@ -109,20 +109,25 @@ const deletar = async (idParaDeletar, setList, setDisplayModal, setTituloModal, 
   }
 }
 
-const buscarTodosUsuarios = async (setList, setDisplayModal, setTituloModal, setConteudoModal) => {
-  try {
-    const response = await axios.get(PESQUISAR_USUARIO_GET, {
+const buscarTodosUsuarios = async (setList, setDisplayModal, setTituloModal, setConteudoModal, setAtivar) => {
+    setAtivar(true)
+    await axios.get(PESQUISAR_USUARIO_GET, {
       params: {nome: ""},
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${login.token}`
       },
-    });
-    setList(response.data);
-  } catch (error) {
-    mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
+    })
+      .then((response) => {
+        setList(response.data);
+        setAtivar(false)
+      })
+      .catch((error) => {
+        mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
+        setAtivar(false)
+      })
   }
-};
+;
 const buscarUsuarioPorId = async (getIdUrl, setUsuarioExiste, setFormularioDeDados, setFotoAtual) => {
   const idUrl = getIdUrl();
   if (idUrl !== null && idUrl !== "") {
@@ -150,20 +155,24 @@ const buscarUsuarioPorId = async (getIdUrl, setUsuarioExiste, setFormularioDeDad
     setUsuarioExiste(false);
   }
 }
-const pesquisar = async (formData, setList, setDisplayModal, setTituloModal, setConteudoModal) => {
-  try {
-    const response = await axios.get(PESQUISAR_USUARIO_GET, {
-      params: {nome: formData.nome},
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${login.token}`
-      },
-    });
-    setList(response.data);
-  } catch (error) {
-    mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
-  }
-};
+const pesquisar = async (formData, setList, setDisplayModal, setTituloModal, setConteudoModal, setAtivar) => {
+  setAtivar(true)
+  await axios.get(PESQUISAR_USUARIO_GET, {
+    params: {nome: formData.nome},
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    },
+  })
+    .then((response) => {
+      setList(response.data);
+      setAtivar(false)
+    })
+    .catch((error) => {
+      mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
+      setAtivar(false)
+    })
+}
 
 
 export {salvar, deletar, pesquisar, buscarTodosUsuarios, buscarUsuarioPorId, atualizarDadosDoUsuario};

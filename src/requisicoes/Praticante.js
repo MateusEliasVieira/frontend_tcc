@@ -1,6 +1,6 @@
 import axios, {HttpStatusCode} from "axios";
 import {
-  ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
+  ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT, BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
@@ -11,6 +11,7 @@ import {
   aplicarValorParaCamposDaAPI_NAO_INFORMADO,
   aplicarValorParaCampoVazioCasoExista
 } from "../utilidades/ValidadorDeCampos";
+import {DOMINIO} from "../URL/URL";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
@@ -45,7 +46,7 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
           apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
         } else if (resposta.data.mensagem) {
           if (resposta.data.redirect) {
-              window.location = resposta.data.redirect;
+            window.location = resposta.data.redirect;
           } else {
             apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
           }
@@ -91,7 +92,7 @@ const atualizarDadosPessoais = async (formularioDeDados, setDisplayModal, setTit
           apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
         } else if (resposta.data.mensagem) {
           if (resposta.data.redirect) {
-              window.location = resposta.data.redirect;
+            window.location = resposta.data.redirect;
           } else {
             apresentarModal("Aviso", resposta.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
           }
@@ -142,7 +143,7 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
               apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
             } else if (error.response.data.titulo) {
               if (error.response.data.redirect) {
-                  window.location = error.response.data.redirect;
+                window.location = error.response.data.redirect;
               } else {
                 apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
               }
@@ -190,7 +191,7 @@ const atualizar = async (formularioDeDados, endpoint, setDisplayModal, setTitulo
             apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
           } else if (error.response.data.titulo) {
             if (error.response.data.redirect) {
-                window.location = error.response.data.redirect;
+              window.location = error.response.data.redirect;
             } else {
               apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
             }
@@ -230,7 +231,7 @@ const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDispla
             apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
           } else if (error.response.data.titulo) {
             if (error.response.data.urlRedirecionamento) {
-                window.location = error.response.data.redirect;
+              window.location = error.response.data.redirect;
             } else {
               apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
             }
@@ -247,10 +248,50 @@ const buscarDadosPraticante = async (endpoint, setDados, idPraticante, setDispla
 
 }
 
+const buscarPraticantePorNome = (nome, setDados, setAtivar) => {
+  setAtivar(true)
+  axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    },
+    params: {
+      nome: nome
+    }
+  })
+    .then((response) => {
+      setDados(response.data)
+      setAtivar(false)
+    })
+    .catch((erro) => {
+      console.log("Erro ao buscar praticante por nome!")
+      setAtivar(false)
+    })
+}
+
+const buscarDadosPessoaisDosPraticantes = (setDados, setAtivar) => {
+  axios.get(`${DOMINIO}praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    }
+  })
+    .then((response) => {
+      setDados(response.data)
+      setAtivar(false)
+    })
+    .catch((error) => {
+      console.log(error)
+      setAtivar(false)
+    })
+}
+
 export {
   salvar,
   atualizar,
   salvarDadosPessoais,
   buscarDadosPraticante,
-  atualizarDadosPessoais
+  atualizarDadosPessoais,
+  buscarPraticantePorNome,
+  buscarDadosPessoaisDosPraticantes
 }

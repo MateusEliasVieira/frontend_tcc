@@ -23,6 +23,7 @@ const PesquisaDeUsuario = () => {
   const [displayModalOpcoes, setDisplayModalOpcoes] = useState("none");
   const [tituloModalOpcoes, setTituloModalOpcoes] = useState("");
   const [conteudoModalOpcoes, setConteudoModalOpcoes] = useState("");
+  const [ativar, setAtivar] = useState(true)
 
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
@@ -34,11 +35,15 @@ const PesquisaDeUsuario = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    buscarTodosUsuarios(setList,setDisplayModal, setTituloModal, setConteudoModal);
+    pesquisar(formData, setList, setDisplayModal, setTituloModal, setConteudoModal, setAtivar);
+  }, [formData]);
+
+  useEffect(() => {
+    buscarTodosUsuarios(setList, setDisplayModal, setTituloModal, setConteudoModal, setAtivar);
   }, []);
 
   const deletarUsuario = async () => {
-    await deletar(idParaDeletar, setList, setDisplayModal, setTituloModal, setConteudoModal).then(()=>{
+    await deletar(idParaDeletar, setList, setDisplayModal, setTituloModal, setConteudoModal).then(() => {
       esconderModalDeOpcoes(setDisplayModalOpcoes, setTituloModalOpcoes, setConteudoModalOpcoes)
     })
   };
@@ -76,11 +81,6 @@ const PesquisaDeUsuario = () => {
                       valor={formData.nome}
                       setar={(e) => {
                         setFormData({...formData, nome: e.target.value})
-                        if (e.target.value.trim() === "") {
-                          buscarTodosUsuarios(setList,setDisplayModal, setTituloModal, setConteudoModal)
-                        } else {
-                          pesquisar(formData, setList, setDisplayModal, setTituloModal, setConteudoModal)
-                        }
                       }}
                       legenda="Pesquisa por Nome"
                     />
@@ -88,39 +88,31 @@ const PesquisaDeUsuario = () => {
                 </div>
               </div>
             </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
+            <CCardBody>
 
-      {
-        list.length > 0 ? (
-            <CCol>
-              <CCard>
-                <CCardHeader>
-                  <strong>Resultado da Pesquisa</strong>
-                </CCardHeader>
-                <CCardBody>
+              {
+                ativar ?
+
+                  <div className="spinner-border" role="status" style={{margin: '50px auto', display: 'block'}}>
+                    <strong className="sr-only">Loading...</strong>
+                  </div>
+
+                  :
+
                   <div style={{maxHeight: '800px', overflow: 'auto'}}>
                     <TabelaDeUsuarios list={list} setDisplayModalOpcoes={setDisplayModalOpcoes}
                                       setTituloModalOpcoes={setTituloModalOpcoes}
                                       setConteudoModalOpcoes={setConteudoModalOpcoes}
                                       setIdParaDeletar={setIdParaDeletar}/>
+
                   </div>
-                </CCardBody>
-              </CCard>
-            </CCol>
-          ) :
-          <CCol>
-            <CCard>
-              <CCardHeader>
-                <strong>Ops</strong>
-              </CCardHeader>
-              <CCardBody>
-                <p>Nenhum resultado obtido para: {formData.nome}</p>
-              </CCardBody>
-            </CCard>
-          </CCol>
-      }
+              }
+            </CCardBody>
+          </CCardBody>
+        </CCard>
+      </CCol>
+
+
     </CRow>
   );
 };
