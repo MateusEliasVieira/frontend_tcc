@@ -131,7 +131,7 @@ const DadosPessoais = (props) => {
                   </CCol>
                   <CCol md="auto">
                     <Campo
-                      tipo="number"
+                      tipo="text"
                       id="altura"
                       valor={formularioDeDados.altura}
                       setar={(e) => setFormularioDeDados({...formularioDeDados, altura: aplicaMascaraDeAltura(e.target.value)})}
