@@ -22,6 +22,54 @@ const variaveisDeCadastroLocalStorage = [
 
 const [dados, setDados] = useState({})
 
+
+const atualizarDadosPessoaisDoPraticante = async () => {
+  await axios.put(`${DOMINIO}${ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT}`,
+    JSON.stringify({...dados}),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${login.token}`
+      }
+
+    }
+  )
+    .then((response) => {
+      if (response.status === HttpStatusCode.Created)
+        apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
+      limparLocalStorage()
+    })
+    .catch((error) => {
+      apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal)
+    })
+}
+
+const buscarDadosPessoisDoPraticante = async () => {
+  await axios.get(`${DOMINIO}${BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${login.token}`
+      }, params: {
+        id: idPraticanteSalvo
+      }
+
+    })
+    .then((response) => {
+        if (response.status === HttpStatusCode.Ok) {
+          setDados(response.data)
+          setDados({...dados, finalizado: true})
+          atualizarDadosPessoaisDoPraticante()
+        }
+
+      }
+    )
+    .catch((error) => {
+      console.log("error " + error.response.data)
+    })
+
+}
+
 const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoModal) => {
   let contador = 0;
   variaveisDeCadastroLocalStorage.map((variavel) => {
@@ -30,52 +78,7 @@ const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoM
     }
   })
   if (contador === variaveisDeCadastroLocalStorage.length) {
-
-
-    axios.get(`${DOMINIO}${BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        }, params: {
-          id: idPraticanteSalvo
-        }
-
-      })
-      .then((response) => {
-          if (response.status === HttpStatusCode.Ok) {
-
-            setDados(response.data)
-
-            setDados({...dados, finalizado: true})
-
-            axios.put(`${DOMINIO}${ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT}`,
-              JSON.stringify(...dados),
-              {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${login.token}`
-                }
-
-              }
-            )
-              .then((response) => {
-                if (response.status === HttpStatusCode.Created)
-                  apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
-                limparLocalStorage()
-              })
-              .catch((error) => {
-                apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal)
-              })
-          }
-
-        }
-      )
-      .catch((error) => {
-        console.log("error " + error.response.data)
-      })
-
-
+    buscarDadosPessoisDoPraticante()
   }
 }
 
