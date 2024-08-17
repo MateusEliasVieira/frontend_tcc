@@ -51,46 +51,43 @@ const Login = () => {
     }));
   }, []);
 
+  useEffect(() => {
+    setForm({...form, senha: senha})
+  }, [senha]);
+
   const logar = () => {
 
-    setForm({...form, senha: senha})
-
-    if (form.nomeUsuario !== '' && senha !== '') {
-
-      axios.post(LOGIN_POST,
-        JSON.stringify({...form}),
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
+    axios.post(LOGIN_POST,
+      JSON.stringify({...form}),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }
+    )
+      .then((response) => {
+        if (response.status === 202) {
+          localStorage.setItem('login', JSON.stringify(response.data));
+          window.location.href = "/dashboard"
+          console.log("Dados login = " + response.data)
         }
-      )
-        .then((response) => {
-          if (response.status === 202) {
-            localStorage.setItem('login', JSON.stringify(response.data));
-            window.location.href = "/dashboard"
-            console.log("Dados login = " + response.data)
-          }
-        })
-        .catch((error) => {
-          if (error.response.data !== undefined) {
-            if (error.response.data.lista !== undefined) {
-              // Tem lista de erro
-              let erros = ''
-              error.response.data.lista.forEach((item) => {
-                erros += `${item.mensagem} \n`
-              })
-              apresentarModal("Aviso", erros, setDisplayModal, setTituloModal, setConteudoModal)
-            } else {
-              apresentarModal("Aviso", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
-            }
+      })
+      .catch((error) => {
+        if (error.response.data !== undefined) {
+          if (error.response.data.lista !== undefined) {
+            // Tem lista de erro
+            let erros = ''
+            error.response.data.lista.forEach((item) => {
+              erros += `${item.mensagem} \n`
+            })
+            apresentarModal("Aviso", erros, setDisplayModal, setTituloModal, setConteudoModal)
           } else {
-            apresentarModal("Aviso", "Erro interno do sistema", setDisplayModal, setTituloModal, setConteudoModal)
+            apresentarModal("Aviso", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
           }
-        })
-    }else{
-      apresentarModal("Aviso", "Informe o usuário e senha", setDisplayModal, setTituloModal, setConteudoModal)
-    }
+        } else {
+          apresentarModal("Aviso", "Erro interno do sistema", setDisplayModal, setTituloModal, setConteudoModal)
+        }
+      })
   }
 
   return (
