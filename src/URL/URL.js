@@ -4,8 +4,8 @@ const ATUALIZAR_USUARIO = "/atualizar-usuario"
 const GERAR_RELATORIO_PRATICANTE = "/gerar-relatorio-de-praticante"
 const LOGIN = "/"
 const ESQUECI_MINHA_SENHA = "/esqueci-minha-senha"
-//const DOMINIO = "https://equoterapia.up.railway.app/" // produção
-const DOMINIO = "http://localhost:8080/" // desenvolvimento
+const DOMINIO = "https://equoterapia.up.railway.app/" // produção
+//const DOMINIO = "http://localhost:8080/" // desenvolvimento
 
 export {
   LOGIN,

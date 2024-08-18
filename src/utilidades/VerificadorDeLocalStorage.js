@@ -34,7 +34,7 @@ const atualizarDadosPessoaisDoPraticante = async (setDisplayModal, setTituloModa
     .then((response) => {
       if (response.status === HttpStatusCode.Created)
         apresentarModal("Aviso", `Cadastro do praticante ${dados.nomeCompleto} finalizado com sucesso!`, setDisplayModal, setTituloModal, setConteudoModal)
-      limparLocalStorage()
+        limparLocalStorage()
     })
     .catch((error) => {
       apresentarModal("Aviso", "Erro ao finalizar cadastro do praticante!", setDisplayModal, setTituloModal, setConteudoModal)
@@ -62,7 +62,7 @@ const buscarDadosPessoisDoPraticante = async (setDisplayModal, setTituloModal, s
       }
     )
     .catch((error) => {
-      console.log("error " + error.response.data)
+      apresentarModal("Aviso",error.response.data,setDisplayModal, setTituloModal, setConteudoModal)
     })
 
 }

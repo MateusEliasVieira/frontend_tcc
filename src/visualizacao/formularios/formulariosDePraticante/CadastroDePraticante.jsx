@@ -51,7 +51,7 @@ const CadastroDePraticante = () => {
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
   useEffect(() => {
-    verificarSeEstaFinalizado()
+    verificarSeEstaFinalizado(setDisplayModal,setTituloModal,setConteudoModal)
     const login = JSON.parse(localStorage.getItem("login"));
     const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
     if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
