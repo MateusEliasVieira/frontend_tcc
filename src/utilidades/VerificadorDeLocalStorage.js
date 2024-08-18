@@ -1,15 +1,12 @@
 import {CADASTRADO, NAO_CADASTRADO} from "../constantes/Constantes";
 import {apresentarModal} from "./ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
-import {DOMINIO} from "../URL/URL";
 import {
   ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT, BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET,
-  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
-import {useState} from "react";
 
 const login = JSON.parse(localStorage.getItem('login'));
-const idPraticanteSalvo = Number(JSON.parse(localStorage.getItem("idPraticanteSalvo")))
+const idPraticanteSalvo = Number(localStorage.getItem("idPraticanteSalvo"))
 
 const variaveisDeCadastroLocalStorage = [
   'avaliacaoFisioterapeutica', 'coordenacaoMotora', 'emPE', 'equilibrioDinamico', 'equilibrioEstatico', 'formaDeComunicacao',
@@ -20,11 +17,11 @@ const variaveisDeCadastroLocalStorage = [
   'outrasAtividadesTarde', 'responsavelPeloPraticante', 'planoTerapeuticoSingular'
 ]
 
-const [dados, setDados] = useState({})
+var dados = {}
 
 
-const atualizarDadosPessoaisDoPraticante = async () => {
-  await axios.put(`${DOMINIO}${ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT}`,
+const atualizarDadosPessoaisDoPraticante = async (setDisplayModal, setTituloModal, setConteudoModal) => {
+  await axios.put(ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
     JSON.stringify({...dados}),
     {
       headers: {
@@ -36,16 +33,16 @@ const atualizarDadosPessoaisDoPraticante = async () => {
   )
     .then((response) => {
       if (response.status === HttpStatusCode.Created)
-        apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
+        apresentarModal("Aviso", `Cadastro do praticante ${dados.nomeCompleto} finalizado com sucesso!`, setDisplayModal, setTituloModal, setConteudoModal)
       limparLocalStorage()
     })
     .catch((error) => {
-      apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal)
+      apresentarModal("Aviso", "Erro ao finalizar cadastro do praticante!", setDisplayModal, setTituloModal, setConteudoModal)
     })
 }
 
-const buscarDadosPessoisDoPraticante = async () => {
-  await axios.get(`${DOMINIO}${BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET}`,
+const buscarDadosPessoisDoPraticante = async (setDisplayModal, setTituloModal, setConteudoModal) => {
+  await axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -57,9 +54,9 @@ const buscarDadosPessoisDoPraticante = async () => {
     })
     .then((response) => {
         if (response.status === HttpStatusCode.Ok) {
-          setDados(response.data)
-          setDados({...dados, finalizado: true})
-          atualizarDadosPessoaisDoPraticante()
+          dados = {...response.data}
+          dados = {...dados, finalizado: true}
+          atualizarDadosPessoaisDoPraticante(setDisplayModal, setTituloModal, setConteudoModal)
         }
 
       }
@@ -78,7 +75,7 @@ const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoM
     }
   })
   if (contador === variaveisDeCadastroLocalStorage.length) {
-    buscarDadosPessoisDoPraticante()
+    buscarDadosPessoisDoPraticante(setDisplayModal, setTituloModal, setConteudoModal)
   }
 }
 
