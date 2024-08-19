@@ -5,7 +5,7 @@ const AppRodaPe = () => {
   return (
     <CFooter>
       <div>
-        <span className="ms-1">&copy; Equoterapia IFG Urutaí.</span>
+        <span className="ms-1">&copy; Equoterapia IF Goiano Urutaí.</span>
       </div>
       <div className="ms-auto">
         <span className="me-1">V1.0</span>
