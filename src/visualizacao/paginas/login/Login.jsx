@@ -55,9 +55,9 @@ const Login = () => {
     setForm({...form, senha: senha})
   }, [senha]);
 
-  const logar = () => {
+  const logar = async () => {
 
-    axios.post(LOGIN_POST,
+    await axios.post(LOGIN_POST,
       JSON.stringify({...form}),
       {
         headers: {

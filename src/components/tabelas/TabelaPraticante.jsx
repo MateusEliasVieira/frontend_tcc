@@ -8,7 +8,6 @@ import {ATUALIZAR_PRATICANTE, GERAR_RELATORIO_PRATICANTE} from "../../URL/URL";
 
 const TabelaPraticante = (props) => {
 
-
   return (
     <CTable hover>
       <CTableHead>

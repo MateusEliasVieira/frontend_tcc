@@ -8,6 +8,8 @@ import {
 } from "../../endpoints/praticante/evolucao/Endpoint";
 import Campo from "../campos/Campo";
 import {formatarDataParaDiaMesAno} from "../../utilidades/ManipuladorDeDatas";
+import Modal from "./Modal";
+import {apresentarModal, esconderModal} from "../../utilidades/ManipuladorDeModal";
 
 const ModalComEvolucaoGraficoDeLinhas = (props) => {
 
@@ -25,14 +27,18 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
   const [dadosFaltas, setDadosFaltas] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [meses, setMeses] = useState(null)
 
+  const [displayModal, setDisplayModal] = useState("none")
+  const [tituloModal, setTituloModal] = useState("")
+  const [conteudoModal, setConteudoModal] = useState("")
+
   const conteudoDocumento = useRef();
   const manipuladorDeImpressao = useReactToPrint({
     content: () => conteudoDocumento.current,
   });
 
 
-  const buscar = () => {
-    axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
+  const buscar = async () => {
+    await axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
       JSON.stringify({...formularioDados}),
       {
         headers: {
@@ -42,19 +48,29 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
       })
       .then((response) => {
         if (response.status === HttpStatusCode.Ok) {
-          console.log(response.data)
-          setDadosFrequencia(response.data.frequencia)
-          setDadosFaltas(response.data.faltas)
-          setMeses(response.data.meses)
+          // Verificação com mais segurança
+          if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
+            apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante ${props.nomeCompleto} no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
+          } else {
+            setDadosFrequencia(response.data.frequencia);
+            setDadosFaltas(response.data.faltas);
+            setMeses(response.data.meses);
+          }
         }
       })
       .catch((erro) => {
-        console.log(erro)
+        console.log(erro.response.data)
       })
   }
 
   return (
     <div>
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
       <div>
         <button
           title={`Gerar gráfico de linhas para ${props.nomeCompleto}`}
@@ -90,7 +106,8 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <CCard ref={conteudoDocumento}>
-              <CCardHeader>Evolução: {props.nomeCompleto} - Período: De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>
+              <CCardHeader>Evolução: {props.nomeCompleto} - Período:
+                De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>
               <CCardBody>
                 <CChartLine
                   data={{
@@ -117,7 +134,7 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
                 />
               </CCardBody>
             </CCard>
-            <CContainer style={{padding: "10px"}} style={{overflowX:'scroll'}}>
+            <CContainer style={{padding: "10px"}} style={{overflowX: 'scroll'}}>
               <CRow className="justify-content-center align-items-center" style={{minHeight: "100vh"}}>
                 <CCol
                   xs="auto"
