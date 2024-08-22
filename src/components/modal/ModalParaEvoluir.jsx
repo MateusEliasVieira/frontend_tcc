@@ -36,25 +36,30 @@ const ModalParaEvoluir = (props) => {
 
   const salvarEvolucao = () => {
     if (dados.data !== '') {
-      if (dados.praticante.idPraticante) {
-        axios.post(SALVAR_EVOLUCAO_DO_PRATICANTE_POST,
-          JSON.stringify({...dados}),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${login.token}`
-            },
-          })
-          .then((response) => {
-            if (response.status === HttpStatusCode.Created) {
-              apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-            }
-          })
-          .catch((erro) => {
-            apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-          })
+      if (dados.estavaPresente !== '') {
+        if (dados.praticante.idPraticante) {
+          axios.post(SALVAR_EVOLUCAO_DO_PRATICANTE_POST,
+            JSON.stringify({...dados}),
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${login.token}`
+              },
+            })
+            .then((response) => {
+              if (response.status === HttpStatusCode.Created) {
+                apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+              }
+            })
+            .catch((erro) => {
+              apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+            })
+        } else {
+          apresentarModal("Aviso", "Erro ao evoluir praticante!", setDisplayModal, setTituloModal, setConteudoModal);
+        }
       } else {
-        apresentarModal("Aviso", "Erro ao evoluir praticante!", setDisplayModal, setTituloModal, setConteudoModal);
+        apresentarModal("Aviso", "Informe se o praticante esteve presente ou não!", setDisplayModal, setTituloModal, setConteudoModal);
+
       }
     } else {
       apresentarModal("Aviso", "Informe a data para prosseguir com a evolução!", setDisplayModal, setTituloModal, setConteudoModal);
