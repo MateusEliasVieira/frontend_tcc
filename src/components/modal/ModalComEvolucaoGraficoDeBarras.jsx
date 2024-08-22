@@ -23,7 +23,7 @@ const ModalComEvolucaoGraficoDeBarras = (props) => {
 
   const [dadosFrequencia, setDadosFrequencia] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [dadosFaltas, setDadosFaltas] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [meses, setMeses] = useState([]) // Iniciar com array vazio
+  const [meses, setMeses] = useState(null)
 
   const [displayModal, setDisplayModal] = useState("none")
   const [tituloModal, setTituloModal] = useState("")
@@ -34,38 +34,9 @@ const ModalComEvolucaoGraficoDeBarras = (props) => {
     content: () => conteudoDocumento.current,
   });
 
-  const ordenarDados = (frequencia, faltas, meses) => {
-    const months = {
-      "Jan": 0, "Fev": 1, "Mar": 2, "Abr": 3,
-      "Maio": 4, "Jun": 5, "Jul": 6, "Ago": 7,
-      "Set": 8, "Out": 9, "Nov": 10, "Dez": 11
-    };
-
-    const combined = meses.map((mes, index) => ({
-      mes,
-      frequencia: frequencia[index],
-      faltas: faltas[index]
-    }));
-
-    const sortedCombined = combined.sort((a, b) => {
-      const [monthA, yearA] = a.mes.split('/');
-      const [monthB, yearB] = b.mes.split('/');
-
-      return yearA - yearB || months[monthA] - months[monthB];
-    });
-
-    const sortedMeses = sortedCombined.map(item => item.mes);
-    const sortedFrequencia = sortedCombined.map(item => item.frequencia);
-    const sortedFaltas = sortedCombined.map(item => item.faltas);
-
-    setMeses(sortedMeses);
-    setDadosFrequencia(sortedFrequencia);
-    setDadosFaltas(sortedFaltas);
-  }
-
-  const buscar = async () => {
+  const buscar = () => {
     if (formularioDados.dataInicial !== '' && formularioDados.dataFinal !== '') {
-      await axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
+      axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
         JSON.stringify({...formularioDados}),
         {
           headers: {
@@ -79,8 +50,9 @@ const ModalComEvolucaoGraficoDeBarras = (props) => {
             if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
               apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante ${props.nomeCompleto} no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
             } else {
-              const {frequencia, faltas, meses} = response.data;
-              ordenarDados(frequencia, faltas, meses);
+              setDadosFrequencia(response.data.frequencia);
+              setDadosFaltas(response.data.faltas);
+              setMeses(response.data.meses);
             }
           }
         })
