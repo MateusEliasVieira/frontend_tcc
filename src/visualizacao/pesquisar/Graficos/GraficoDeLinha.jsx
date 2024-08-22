@@ -37,33 +37,35 @@ const GraficoDeLinha = (props) => {
   });
 
   const buscar = () => {
-    axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
-      JSON.stringify({...formularioDados}),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        }
-      })
-      .then((response) => {
-        if (response.status === HttpStatusCode.Ok) {
-          // Verificação com mais segurança
-          if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
-            apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
-          } else {
-            setDadosFrequencia(response.data.frequencia);
-            setDadosFaltas(response.data.faltas);
-            setMeses(response.data.meses);
+    if (formularioDados.dataInicial !== '' && formularioDados.dataFinal !== '') {
+      axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
+        JSON.stringify({...formularioDados}),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${login.token}`
           }
-        }
-      })
-      .catch((erro) => {
-        if(erro.response.data.titulo){
-          apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-        }else{
-          apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
-        }
-      })
+        })
+        .then((response) => {
+          if (response.status === HttpStatusCode.Ok) {
+            // Verificação com mais segurança
+            if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
+              apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
+            } else {
+              setDadosFrequencia(response.data.frequencia);
+              setDadosFaltas(response.data.faltas);
+              setMeses(response.data.meses);
+            }
+          }
+        })
+        .catch((erro) => {
+          if (erro.response.data.titulo) {
+            apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+          } else {
+            apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
+          }
+        })
+    }
   };
 
   return (
@@ -77,7 +79,7 @@ const GraficoDeLinha = (props) => {
       <CCard ref={conteudoDocumento}>
         <CCardHeader>Período:
           De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>
-        <CCardBody style={{overflowX:"hidden"}}>
+        <CCardBody style={{overflowX: "hidden"}}>
           <CChartLine
             data={{
               labels: meses,

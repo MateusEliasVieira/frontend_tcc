@@ -41,33 +41,35 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
   }, [dadosFrequencia, dadosFaltas]);
 
   const buscar = () => {
-    axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
-      JSON.stringify({...formularioDados}),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        }
-      })
-      .then((response) => {
-        if (response.status === HttpStatusCode.Ok) {
-          // Verificação com mais segurança
-          if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
-            apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante ${props.nomeCompleto} no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
-          } else {
-            setDadosFrequencia(response.data.frequencia);
-            setDadosFaltas(response.data.faltas);
-            setMeses(response.data.meses);
+    if (formularioDados.dataInicial !== '' && formularioDados.dataFinal !== '') {
+      axios.post(BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST,
+        JSON.stringify({...formularioDados}),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${login.token}`
           }
-        }
-      })
-      .catch((erro) => {
-        if(erro.response.data.titulo){
-          apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-        }else{
-          apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
-        }
-      })
+        })
+        .then((response) => {
+          if (response.status === HttpStatusCode.Ok) {
+            // Verificação com mais segurança
+            if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
+              apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante ${props.nomeCompleto} no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
+            } else {
+              setDadosFrequencia(response.data.frequencia);
+              setDadosFaltas(response.data.faltas);
+              setMeses(response.data.meses);
+            }
+          }
+        })
+        .catch((erro) => {
+          if (erro.response.data.titulo) {
+            apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+          } else {
+            apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
+          }
+        })
+    }
   };
 
   return (
@@ -86,8 +88,10 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
           data-toggle="modal"
           data-target={`#modalLine-${props.nomeCompleto}-torta`} // ID único para cada praticante
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pie-chart-fill" viewBox="0 0 16 16">
-            <path d="M15.985 8.5H8.207l-5.5 5.5a8 8 0 0 0 13.277-5.5zM2 13.292A8 8 0 0 1 7.5.015v7.778zM8.5.015V7.5h7.485A8 8 0 0 0 8.5.015"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+               className="bi bi-pie-chart-fill" viewBox="0 0 16 16">
+            <path
+              d="M15.985 8.5H8.207l-5.5 5.5a8 8 0 0 0 13.277-5.5zM2 13.292A8 8 0 0 1 7.5.015v7.778zM8.5.015V7.5h7.485A8 8 0 0 0 8.5.015"/>
           </svg>
         </button>
       </div>
@@ -103,7 +107,8 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <CCard ref={conteudoDocumento}>
-              <CCardHeader>Evolução: {props.nomeCompleto} - Período: De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>
+              <CCardHeader>Evolução: {props.nomeCompleto} - Período:
+                De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>
               <CCardBody>
                 <CChartPie
                   data={{
