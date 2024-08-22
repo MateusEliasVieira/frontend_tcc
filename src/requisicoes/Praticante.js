@@ -129,8 +129,7 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
           'Authorization': `Bearer ${login.token}`
         },
       }
-    )
-      .then((response) => {
+    ).then((response) => {
         if (response.status === HttpStatusCode.Created) {
           localStorage.setItem(chaveLocalStorage, CADASTRADO);
           setDesabilitar("disabled");

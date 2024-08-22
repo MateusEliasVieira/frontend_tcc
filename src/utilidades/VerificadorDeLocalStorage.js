@@ -2,7 +2,9 @@ import {CADASTRADO, NAO_CADASTRADO} from "../constantes/Constantes";
 import {apresentarModal} from "./ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
 import {
-  ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT, BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET,
+  ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
 const login = JSON.parse(localStorage.getItem('login'));
@@ -32,15 +34,19 @@ const atualizarDadosPessoaisDoPraticante = async (setDisplayModal, setTituloModa
     }
   )
     .then((response) => {
-      if (response.status === HttpStatusCode.Created)
-        apresentarModal("Aviso", `Cadastro do praticante ${dados.nomeCompleto} finalizado com sucesso!`, setDisplayModal, setTituloModal, setConteudoModal)
+      if (response.status === HttpStatusCode.Created) {
         limparLocalStorage()
+        window.location.href="/pesquisar-praticante"
+      }else{
+         apresentarModal("Aviso", `Falhou ao finalizar o cadastro do praticante ${dados.nomeCompleto}!`, setDisplayModal, setTituloModal, setConteudoModal)
+      }
     })
     .catch((error) => {
       apresentarModal("Aviso", "Erro ao finalizar cadastro do praticante!", setDisplayModal, setTituloModal, setConteudoModal)
     })
 }
 
+// vai buscar os dados para poder setar o status de finalizado igual verdadeiro
 const buscarDadosPessoisDoPraticante = async (setDisplayModal, setTituloModal, setConteudoModal) => {
   await axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET,
     {
@@ -62,7 +68,7 @@ const buscarDadosPessoisDoPraticante = async (setDisplayModal, setTituloModal, s
       }
     )
     .catch((error) => {
-      apresentarModal("Aviso",error.response.data,setDisplayModal, setTituloModal, setConteudoModal)
+      console.log(error)
     })
 
 }
@@ -75,6 +81,7 @@ const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoM
     }
   })
   if (contador === variaveisDeCadastroLocalStorage.length) {
+    // só entra aqui se tiver finalizado todos os formularios de cadastro do praticante
     buscarDadosPessoisDoPraticante(setDisplayModal, setTituloModal, setConteudoModal)
   }
 }

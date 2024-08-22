@@ -6,6 +6,8 @@ import axios, {HttpStatusCode} from "axios";
 import {BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST} from "../../endpoints/praticante/evolucao/Endpoint";
 import Campo from "../campos/Campo";
 import {formatarDataParaDiaMesAno} from "../../utilidades/ManipuladorDeDatas";
+import {apresentarModal, esconderModal} from "../../utilidades/ManipuladorDeModal";
+import Modal from "./Modal";
 
 const ModalComEvolucaoGraficoDeBarras = (props) => {
 
@@ -23,6 +25,10 @@ const ModalComEvolucaoGraficoDeBarras = (props) => {
   const [dadosFaltas, setDadosFaltas] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [meses, setMeses] = useState(null)
 
+  const [displayModal, setDisplayModal] = useState("none")
+  const [tituloModal, setTituloModal] = useState("")
+  const [conteudoModal, setConteudoModal] = useState("")
+
   const conteudoDocumento = useRef();
   const manipuladorDeImpressao = useReactToPrint({
     content: () => conteudoDocumento.current,
@@ -39,19 +45,33 @@ const ModalComEvolucaoGraficoDeBarras = (props) => {
       })
       .then((response) => {
         if (response.status === HttpStatusCode.Ok) {
-          console.log(response.data)
-          setDadosFrequencia(response.data.frequencia)
-          setDadosFaltas(response.data.faltas)
-          setMeses(response.data.meses)
+          // Verificação com mais segurança
+          if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
+            apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante ${props.nomeCompleto} no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
+          } else {
+            setDadosFrequencia(response.data.frequencia);
+            setDadosFaltas(response.data.faltas);
+            setMeses(response.data.meses);
+          }
         }
       })
       .catch((erro) => {
-        alert(erro.response.data.titulo)
+        if(erro.response.data.titulo){
+          apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+        }else{
+          apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
+        }
       })
   }
 
   return (
     <div>
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
       <div>
         <button
           title={`Gerar gráfico de barras para ${props.nomeCompleto}`}

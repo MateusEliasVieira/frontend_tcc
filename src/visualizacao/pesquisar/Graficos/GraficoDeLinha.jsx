@@ -8,6 +8,8 @@ import axios, {HttpStatusCode} from "axios";
 import {
   BUSCAR_EVOLUCAO_DO_PRATICANTE_POR_INTERVALO_DE_DATAS_POST
 } from "../../../endpoints/praticante/evolucao/Endpoint";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import Modal from "../../../components/modal/Modal";
 
 const GraficoDeLinha = (props) => {
 
@@ -25,6 +27,10 @@ const GraficoDeLinha = (props) => {
   const [dadosFaltas, setDadosFaltas] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [meses, setMeses] = useState(null)
 
+  const [displayModal, setDisplayModal] = useState("none")
+  const [tituloModal, setTituloModal] = useState("")
+  const [conteudoModal, setConteudoModal] = useState("")
+
   const conteudoDocumento = useRef();
   const manipuladorDeImpressao = useReactToPrint({
     content: () => conteudoDocumento.current,
@@ -41,22 +47,33 @@ const GraficoDeLinha = (props) => {
       })
       .then((response) => {
         if (response.status === HttpStatusCode.Ok) {
-          console.log(response.data)
-          setDadosFrequencia(response.data.frequencia)
-          setDadosFaltas(response.data.faltas)
-          setMeses(response.data.meses)
-        }else{
-          console.log("Erro then = "+erro)
-
+          // Verificação com mais segurança
+          if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
+            apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
+          } else {
+            setDadosFrequencia(response.data.frequencia);
+            setDadosFaltas(response.data.faltas);
+            setMeses(response.data.meses);
+          }
         }
       })
       .catch((erro) => {
-        console.log("Erro = "+erro)
+        if(erro.response.data.titulo){
+          apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+        }else{
+          apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
+        }
       })
-  }
+  };
 
   return (
     <div>
+      <Modal
+        dsp={displayModal}
+        titulo={tituloModal}
+        conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+        esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
+      />
       <CCard ref={conteudoDocumento}>
         <CCardHeader>Período:
           De {formatarDataParaDiaMesAno(formularioDados.dataInicial)} à {formatarDataParaDiaMesAno(formularioDados.dataFinal)}</CCardHeader>

@@ -59,7 +59,11 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
         }
       })
       .catch((erro) => {
-        console.log(erro.response.data)
+        if(erro.response.data.titulo){
+          apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+        }else{
+          apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
+        }
       })
   }
 
