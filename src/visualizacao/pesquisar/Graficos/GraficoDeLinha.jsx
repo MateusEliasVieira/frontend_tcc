@@ -65,6 +65,8 @@ const GraficoDeLinha = (props) => {
             apresentarModal("Aviso", "Houve uma falha ao realizar a pesquisa no intervalo de datas especificados!", setDisplayModal, setTituloModal, setConteudoModal);
           }
         })
+    } else {
+      apresentarModal("Aviso", "Informe a data inicial e final para realizar a pesquisa de frequência do praticante!", setDisplayModal, setTituloModal, setConteudoModal);
     }
   };
 
