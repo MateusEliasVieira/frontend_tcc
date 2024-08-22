@@ -53,6 +53,7 @@ const ModalComEvolucaoGraficoDeLinhas = (props) => {
             if (Array.isArray(response.data.frequencia) && Array.isArray(response.data.faltas) && response.data.frequencia.length === 0 && response.data.faltas.length === 0) {
               apresentarModal("Aviso", `No momento não há nenhuma informação sobre a evolução do praticante ${props.nomeCompleto} no intervalo do período ${formatarDataParaDiaMesAno(formularioDados.dataInicial)} à ${formatarDataParaDiaMesAno(formularioDados.dataFinal)}!`, setDisplayModal, setTituloModal, setConteudoModal);
             } else {
+              console.log(response.data)
               setDadosFrequencia(response.data.frequencia);
               setDadosFaltas(response.data.faltas);
               setMeses(response.data.meses);
