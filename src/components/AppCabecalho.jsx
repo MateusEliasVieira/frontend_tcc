@@ -18,29 +18,7 @@ const AppCabecalho = () => {
   const dispatch = useDispatch();
   const sidebarShow = useSelector((state) => state.sidebarShow);
 
-  const [min, setMin] = useState(null);
-  const [seg, setSeg] = useState(null);
-
-  const temporizador = (minutos, segundos) => {
-    setMin(minutos)
-    setSeg(segundos)
-    const interval = setInterval(() => {
-      if (segundos > 0) {
-        segundos -= 1
-        setSeg(segundos)
-      } else {
-        if (minutos > 0) {
-          segundos = 59
-          setSeg(segundos)
-          minutos -= 1
-          setMin(minutos)
-        } else {
-          clearInterval(interval)
-          window.location.href = `${LOGIN}?expirado=true`;
-        }
-      }
-    }, 1000);
-  };
+  const [data, setData] = useState('')
 
   useEffect(() => {
     const login = JSON.parse(localStorage.getItem('login'));
@@ -56,18 +34,26 @@ const AppCabecalho = () => {
       dataExpiracao.setMinutes(horarioExpiracaoMinutos);
       dataExpiracao.setSeconds(horarioExpiracaoSegundos);
 
-      const horarioAtual = new Date();
-      const tempoRestante = (dataExpiracao.getTime() - horarioAtual.getTime()) / 1000; // tempo restante em segundos
+      let data_atual = new Date()
 
+      console.log("data atual "+data_atual)
+      console.log("data expira "+dataExpiracao)
 
-      if (tempoRestante <= 0) {
+      if (data_atual.getMilliseconds() > dataExpiracao.getMilliseconds()) {
         window.location.href = `${LOGIN}?expirado=true`;
       } else {
-        const minutos = Math.floor((tempoRestante / 60));
-        const segundosRestantes = Math.floor(tempoRestante % 60);
-        temporizador(minutos, segundosRestantes);
-      }
 
+        let dia = dataExpiracao.getDate() < 10 ? "0" + dataExpiracao.getDate() : dataExpiracao.getDate()
+        let mes = dataExpiracao.getMonth() < 10 ? "0" + dataExpiracao.getMonth() : dataExpiracao.getMonth()
+        let ano = dataExpiracao.getFullYear()
+
+        let horario = dataExpiracao.getHours() < 10 ? "0" + dataExpiracao.getHours() : dataExpiracao.getHours()
+        let minutos = dataExpiracao.getMinutes() < 10 ? "0" + dataExpiracao.getMinutes() : dataExpiracao.getMinutes()
+
+        let data_formatada = `${dia}/${mes}/${ano} às ${horario}:${minutos}`
+
+        setData(data_formatada)
+      }
     }
   }, []);
 
@@ -83,8 +69,7 @@ const AppCabecalho = () => {
         <CHeaderBrand className="mx-auto d-md-none" to="/"/>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
-            Sessão: {String(min).padStart(2, '0')}:
-            {String(seg).padStart(2, '0')}
+            Sessão válida até {data}
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-3"/>
