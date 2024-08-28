@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {CButton, CCard, CCardBody, CCardHeader} from "@coreui/react";
+import {CButton, CCard, CCardBody, CCardHeader, CTable} from "@coreui/react";
 
 import Campo from "../campos/Campo";
 import {presente} from "../../constantes/Constantes";
 import axios, {HttpStatusCode} from "axios";
-import {SALVAR_EVOLUCAO_DO_PRATICANTE_POST} from "../../endpoints/praticante/evolucao/Endpoint";
+import {
+  BUSCAR_EVOLUCOES_DO_PRATICANTE_POR_ID_GET,
+  SALVAR_EVOLUCAO_DO_PRATICANTE_POST
+} from "../../endpoints/praticante/evolucao/Endpoint";
 import Modal from "./Modal";
 import {apresentarModal, esconderModal} from "../../utilidades/ManipuladorDeModal";
+import TabelaEvolucaoPraticante from "../tabelas/TabelaEvolucaoPraticante";
 
 const ModalParaEvoluir = (props) => {
 
@@ -25,6 +29,7 @@ const ModalParaEvoluir = (props) => {
   })
 
   useEffect(() => {
+
     setDados(prevDados => ({
       ...prevDados,
       praticante: {
@@ -32,6 +37,7 @@ const ModalParaEvoluir = (props) => {
         idPraticante: props.idPraticante // substitua 'novoValor' pelo valor desejado
       }
     }));
+
   }, []);
 
   const salvarEvolucao = () => {
@@ -130,9 +136,12 @@ const ModalParaEvoluir = (props) => {
                   valor={dados.observacao}
                   setar={(e) => setDados({...dados, observacao: e.target.value})}
                 />
-                <CButton color="danger" style={{color: "white"}} onClick={() => {
+                <CButton color="danger" style={{color: "white", float:'left', margin:'10px 0px 20px 0px'}} onClick={() => {
                   salvarEvolucao()
                 }}>Evoluir {props.nomeCompleto}</CButton>
+
+                <TabelaEvolucaoPraticante id={props.idPraticante}/>
+
               </CCardBody>
             </CCard>
           </div>
