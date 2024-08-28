@@ -11,7 +11,7 @@ import {
 import {estadoCivil, role, simOuNao, vinculo} from '../../../constantes/Constantes';
 import Modal from '../../../components/modal/Modal';
 import {converterImagemEmBase64} from '../../../utilidades/ConversorDeImagem';
-import {esconderModal} from '../../../utilidades/ManipuladorDeModal';
+import {apresentarModal, esconderModal} from '../../../utilidades/ManipuladorDeModal';
 import Campo from "../../../components/campos/Campo";
 import {atualizarDadosDoUsuario, buscarUsuarioPorId, salvar} from "../../../requisicoes/Usuario";
 import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas"; // Certifique-se de que o caminho está correto para o seu projeto
@@ -242,8 +242,8 @@ const AtualizacaoDeUsuario = () => {
                     (<></>)
                 }
 
-                <CButton color="danger" style={{color:"white"}} onClick={() => {
-                  atualizarDadosDoUsuario(formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal)
+                <CButton color="danger" style={{color: "white"}} onClick={() => {
+                    atualizarDadosDoUsuario(formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal)
                 }
                 }>
                   Atualizar Usuário

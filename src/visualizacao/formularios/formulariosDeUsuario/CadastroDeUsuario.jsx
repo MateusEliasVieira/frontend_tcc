@@ -16,6 +16,7 @@ import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeM
 import {salvar} from "../../../requisicoes/Usuario";
 import Campo from "../../../components/campos/Campo";
 import {aplicaMascaraDeCPF, aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos";
+import VerSenhaCadUsuario from "../../../components/campos/VerSenhaCadUsuario";
 
 const CadastroDeUsuario = () => {
 
@@ -26,9 +27,10 @@ const CadastroDeUsuario = () => {
   const [fotoAtual, setFotoAtual] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
     nome: '', foto: '', dataNascimento: '', cpf: '', estadoCivil: '', telefone: '',
-    email: '', nomeUsuario: '', senha: '', detalhesFormacao: 'Sem Formação',
+    email: '', nomeUsuario: '', senha: '', detalhesFormacao: '',
     cidade: '', bairro: '', logradouro: '', role: '', vinculo: '', possuiFormacao: '',
   });
+  const[senha,setSenha]=useState('')
 
   return (
     <CRow>
@@ -144,12 +146,9 @@ const CadastroDeUsuario = () => {
                   />
                 </CCol>
                 <CCol>
-                  <Campo
-                    legenda="Senha"
-                    id="senha"
-                    tipo="password"
-                    valor={formularioDeDados.senha}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, senha: e.target.value})}
+                  <VerSenhaCadUsuario
+                    setSenha={setSenha}
+                    legenda={"Senha"}
                   />
                 </CCol>
               </CRow>
@@ -221,7 +220,7 @@ const CadastroDeUsuario = () => {
               </CRow>
 
               {
-                possuiFormacao === 'true' ?
+                possuiFormacao === 'SIM' ?
                   (
                     <CRow>
                       <CCol>
@@ -240,6 +239,7 @@ const CadastroDeUsuario = () => {
               }
 
               <CButton color="danger" style={{color:"white"}} onClick={() => {
+                setFormularioDeDados({...formularioDeDados, senha: senha})
                 salvar(formularioDeDados, SALVAR_NOVO_USUARIO_POST, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar

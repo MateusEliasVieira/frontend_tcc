@@ -9,6 +9,7 @@ import {
 } from "../endpoints/usuario/Endpoints";
 import {resolve} from "chart.js/helpers";
 import {useTimeout} from "primereact/hooks";
+import {aplicarValorParaCampoVazioCasoExista} from "../utilidades/ValidadorDeCampos";
 
 var login = JSON.parse(localStorage.getItem("login"));
 const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
@@ -42,7 +43,12 @@ const mensagemParaListaDeErros = (error, setDisplayModal, setTituloModal, setCon
 }
 
 const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloModal, setConteudoModal) => {
-  if (camposPreenchidos(formularioDeDados)) {
+
+  if (formularioDeDados.possuiFormacao === 'SIM' && formularioDeDados.detalhesFormacao === '') {
+    apresentarModal("Aviso", "Você informou que o novo usuário possui formação, mas não informou os detalhes da formação. Por favor, informe os detalhes da formação!", setDisplayModal, setTituloModal, setConteudoModal);
+  } else if (formularioDeDados.possuiFormacao === 'NAO') {
+    formularioDeDados = {...formularioDeDados, detalhesFormacao: 'Sem Formação'}
+  } else if (camposPreenchidos(formularioDeDados)) {
     try {
       const response = await axios.post(endpoint, JSON.stringify({...formularioDeDados}), {
         headers: {
@@ -65,27 +71,31 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloMod
     apresentarModal("Atenção", "Por favor, preencha todos os campos!", setDisplayModal, setTituloModal, setConteudoModal);
   }
 };
+
 const atualizarDadosDoUsuario = async (formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal) => {
+
+  if(formularioDeDados.possuiFormacao === 'NAO'){
+    formularioDeDados = {...formularioDeDados, detalhesFormacao: "Sem Formação"}
+  }
+
   if (camposPreenchidos(formularioDeDados)) {
-    const dados = {
-      ...formularioDeDados,
-    };
-    try {
-      const response = await axios.put(
-        ATUALIZAR_USUARIO_PUT,
-        JSON.stringify(dados),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${login.token}`
-          },
-        }
-      );
+    await axios.put(
+      ATUALIZAR_USUARIO_PUT,
+      JSON.stringify({...formularioDeDados}),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+      }
+    ).then((response) => {
       apresentarModal("Resposta", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-    } catch (error) {
-      mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
-      mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
-    }
+    })
+      .catch((error) => {
+        mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
+        mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
+      })
+
   } else {
     apresentarModal("Atenção", "Por favor, preencha todos os campos obrigatórios!", setDisplayModal, setTituloModal, setConteudoModal);
   }
