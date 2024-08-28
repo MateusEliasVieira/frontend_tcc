@@ -13,8 +13,19 @@ import {aplicarValorParaCampoVazioCasoExista} from "../utilidades/ValidadorDeCam
 
 var login = JSON.parse(localStorage.getItem("login"));
 const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
-  console.log(error)
-  if (error.response.data.titulo) {
+
+  if (error.response.data.lista) {
+    alert("Entrou")
+    let lista = "";
+    let lista_erros = error.response.data.lista
+
+    for(let i = 0; i < lista_erros.length; i++){
+      lista += `<strong>*</strong> ${lista_erros[i].mensagem}` + "<br/>"
+    }
+
+    apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
+  }
+  else if (error.response.data.titulo) {
     apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
   } else if (error.response.data.mensagem) {
     if (error.response.data.redirecionar) {
@@ -29,26 +40,13 @@ const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoMod
   }
 }
 
-const mensagemParaListaDeErros = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
-  if (error.response.data.titulo !== undefined) {
-    apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-  }
-  if (error.response.data.lista !== undefined) {
-    let lista = "";
-    error.response.data.lista.forEach((item) => {
-      lista += `<strong>*</strong> ${item.titulo}` + "<br/>";
-    });
-    apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
-  }
-}
-
 const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloModal, setConteudoModal) => {
 
-  if (formularioDeDados.possuiFormacao === 'SIM' && formularioDeDados.detalhesFormacao === '') {
-    apresentarModal("Aviso", "Você informou que o novo usuário possui formação, mas não informou os detalhes da formação. Por favor, informe os detalhes da formação!", setDisplayModal, setTituloModal, setConteudoModal);
-  } else if (formularioDeDados.possuiFormacao === 'NAO') {
-    formularioDeDados = {...formularioDeDados, detalhesFormacao: 'Sem Formação'}
-  } else if (camposPreenchidos(formularioDeDados)) {
+  if (formularioDeDados.possuiFormacao === 'NAO') {
+    formularioDeDados = {...formularioDeDados, detalhesFormacao: "Sem Formação"}
+  }
+
+  if (camposPreenchidos(formularioDeDados)) {
     try {
       const response = await axios.post(endpoint, JSON.stringify({...formularioDeDados}), {
         headers: {
@@ -62,8 +60,6 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloMod
         apresentarModal("Aviso", "Houve um erro ao salvar o novo usuário!", setDisplayModal, setTituloModal, setConteudoModal);
       }
     } catch (error) {
-      console.log("Erro = " + error.response.data.mensagem)
-      mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
       mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
     }
   } else {
@@ -74,7 +70,7 @@ const salvar = async (formularioDeDados, endpoint, setDisplayModal, setTituloMod
 
 const atualizarDadosDoUsuario = async (formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal) => {
 
-  if(formularioDeDados.possuiFormacao === 'NAO'){
+  if (formularioDeDados.possuiFormacao === 'NAO') {
     formularioDeDados = {...formularioDeDados, detalhesFormacao: "Sem Formação"}
   }
 
@@ -92,7 +88,7 @@ const atualizarDadosDoUsuario = async (formularioDeDados, setDisplayModal, setTi
       apresentarModal("Resposta", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
     })
       .catch((error) => {
-        mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
+       // mensagemParaListaDeErros(error, setDisplayModal, setTituloModal, setConteudoModal)
         mensagemParaErro(error, setDisplayModal, setTituloModal, setConteudoModal)
       })
 
