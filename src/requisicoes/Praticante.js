@@ -8,17 +8,17 @@ import {
 import {CADASTRADO} from "../constantes/Constantes";
 import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeLocalStorage";
 import {apresentarModal} from "../utilidades/ManipuladorDeModal";
-import {camposPreenchidos} from "../utilidades/VerificadorDeCampos";
 import {
   aplicarValorParaCamposDaAPI_NAO_INFORMADO,
   aplicarValorParaCampoVazioCasoExista
 } from "../utilidades/ValidadorDeCampos";
 import {DOMINIO} from "../URL/URL";
+import {camposPreenchidosPraticante} from "../utilidades/VerificadorDeCamposPraticante";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
 const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal) => {
-  if (camposPreenchidos(formularioDeDados)) {
+  if (camposPreenchidosPraticante(formularioDeDados)) {
     limparLocalStorage()
     try {
       const response = await axios.post(
@@ -67,7 +67,7 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
 };
 
 const atualizarDadosPessoais = async (formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal) => {
-  if (camposPreenchidos(formularioDeDados)) {
+  if (camposPreenchidosPraticante(formularioDeDados)) {
     try {
       const response = await axios.put(
         ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
