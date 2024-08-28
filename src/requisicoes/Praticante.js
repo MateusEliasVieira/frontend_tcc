@@ -14,6 +14,7 @@ import {
 } from "../utilidades/ValidadorDeCampos";
 import {DOMINIO} from "../URL/URL";
 import {camposPreenchidosPraticante} from "../utilidades/VerificadorDeCamposPraticante";
+import {ATUALIZAR_EVOLUCAO_DO_PRATICANTE_PUT} from "../endpoints/praticante/evolucao/Endpoint";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
@@ -308,6 +309,61 @@ const buscarDadosPessoaisDosPraticantes = (setDados, setAtivar) => {
     })
 }
 
+
+const atualizarEvolucao = (dados,setDisplayModal, setTituloModal, setConteudoModal) => {
+  if (dados.data !== '') {
+    if (dados.estavaPresente !== '') {
+      if (dados.praticante.idPraticante) {
+        axios.put(ATUALIZAR_EVOLUCAO_DO_PRATICANTE_PUT,
+          JSON.stringify({...dados}),
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${login.token}`
+            },
+          })
+          .then((response) => {
+            if (response.status === HttpStatusCode.Created) {
+              apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+            }
+          })
+          .catch((error) => {
+            if (error.response.data.lista) {
+              let lista = "";
+              let lista_erros = error.response.data.lista
+
+              for(let i = 0; i < lista_erros.length; i++){
+                lista += `<strong>*</strong> ${lista_erros[i].mensagem}` + "<br/>"
+              }
+
+              apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
+            }
+            else if (error.response.data.titulo) {
+              apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+            } else if (error.response.data.mensagem) {
+              if (error.response.data.redirecionar) {
+                window.location = error.response.data.redirecionar
+              } else {
+                apresentarModal("Atenção", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+              }
+            } else if (error.response.data.urlRedirecionamento) {
+              window.location = error.response.data.urlRedirecionamento
+            } else {
+              apresentarModal("Atenção", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+            }
+          })
+      } else {
+        apresentarModal("Aviso", "Erro ao atualizar evolução do praticante!", setDisplayModal, setTituloModal, setConteudoModal);
+      }
+    } else {
+      apresentarModal("Aviso", "Informe se o praticante esteve presente ou não!", setDisplayModal, setTituloModal, setConteudoModal);
+
+    }
+  } else {
+    apresentarModal("Aviso", "Informe a data para prosseguir com a atualização da evolução!", setDisplayModal, setTituloModal, setConteudoModal);
+  }
+}
+
 export {
   salvar,
   atualizar,
@@ -316,5 +372,6 @@ export {
   atualizarDadosPessoais,
   buscarPraticantePorNome,
   buscarPraticantePorID,
-  buscarDadosPessoaisDosPraticantes
+  buscarDadosPessoaisDosPraticantes,
+  atualizarEvolucao
 }

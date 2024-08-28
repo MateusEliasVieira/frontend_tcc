@@ -15,7 +15,6 @@ var login = JSON.parse(localStorage.getItem("login"));
 const mensagemParaErro = (error, setDisplayModal, setTituloModal, setConteudoModal) => {
 
   if (error.response.data.lista) {
-    alert("Entrou")
     let lista = "";
     let lista_erros = error.response.data.lista
 

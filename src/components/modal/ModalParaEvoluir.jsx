@@ -11,6 +11,8 @@ import {
 import Modal from "./Modal";
 import {apresentarModal, esconderModal} from "../../utilidades/ManipuladorDeModal";
 import TabelaEvolucaoPraticante from "../tabelas/TabelaEvolucaoPraticante";
+import {formatarDataPadraoAnoMesDia} from "../../utilidades/ManipuladorDeDatas";
+import {atualizarEvolucao} from "../../requisicoes/Praticante";
 
 const ModalParaEvoluir = (props) => {
 
@@ -19,7 +21,10 @@ const ModalParaEvoluir = (props) => {
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
 
+  const[disabled,setDisabled]=useState(true)
+
   const [dados, setDados] = useState({
+    idEvolucao:'',
     data: '',
     observacao: '',
     estavaPresente: '',
@@ -72,7 +77,6 @@ const ModalParaEvoluir = (props) => {
     }
   }
 
-
   return (
     <div>
       <div>
@@ -124,7 +128,7 @@ const ModalParaEvoluir = (props) => {
                   id="dataEvolucao"
                   legenda="Data"
                   tipo="date"
-                  valor={dados.data}
+                  valor={formatarDataPadraoAnoMesDia(dados.data)}
                   setar={(e) => {
                     setDados({...dados, data: e.target.value})
                   }}
@@ -140,7 +144,11 @@ const ModalParaEvoluir = (props) => {
                   salvarEvolucao()
                 }}>Evoluir {props.nomeCompleto}</CButton>
 
-                <TabelaEvolucaoPraticante id={props.idPraticante}/>
+                <CButton color="danger" disabled={disabled} style={{color: "white", float:'left', margin:'10px 0px 20px 10px'}} onClick={() => {
+                  atualizarEvolucao(dados, setDisplayModal, setTituloModal, setConteudoModal)
+                }}>Atualizar evolução de {props.nomeCompleto}</CButton>
+
+                <TabelaEvolucaoPraticante id={props.idPraticante} setDados={setDados} setDisabled={setDisabled}/>
 
               </CCardBody>
             </CCard>
