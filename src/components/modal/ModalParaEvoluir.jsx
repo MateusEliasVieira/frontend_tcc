@@ -1,81 +1,68 @@
-import React, {useEffect, useState} from "react";
-import {CButton, CCard, CCardBody, CCardHeader, CTable} from "@coreui/react";
-
+import React, { useEffect, useState } from "react";
+import { CButton, CCard, CCardBody, CCardHeader } from "@coreui/react";
 import Campo from "../campos/Campo";
-import {presente} from "../../constantes/Constantes";
-import axios, {HttpStatusCode} from "axios";
-import {
-  BUSCAR_EVOLUCOES_DO_PRATICANTE_POR_ID_GET,
-  SALVAR_EVOLUCAO_DO_PRATICANTE_POST
-} from "../../endpoints/praticante/evolucao/Endpoint";
+import { presente } from "../../constantes/Constantes";
+import axios, { HttpStatusCode } from "axios";
+import { SALVAR_EVOLUCAO_DO_PRATICANTE_POST } from "../../endpoints/praticante/evolucao/Endpoint";
 import Modal from "./Modal";
-import {apresentarModal, esconderModal} from "../../utilidades/ManipuladorDeModal";
+import { apresentarModal, esconderModal } from "../../utilidades/ManipuladorDeModal";
 import TabelaEvolucaoPraticante from "../tabelas/TabelaEvolucaoPraticante";
-import {formatarDataPadraoAnoMesDia} from "../../utilidades/ManipuladorDeDatas";
-import {atualizarEvolucao} from "../../requisicoes/Praticante";
+import { formatarDataPadraoAnoMesDia } from "../../utilidades/ManipuladorDeDatas";
+import { atualizarEvolucao } from "../../requisicoes/Praticante";
 
 const ModalParaEvoluir = (props) => {
-
   const login = JSON.parse(localStorage.getItem('login'));
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
-
-  const[disabled,setDisabled]=useState(true)
-
   const [dados, setDados] = useState({
-    idEvolucao:'',
+    idEvolucao: '',
     data: '',
     observacao: '',
     estavaPresente: '',
     praticante: {
       idPraticante: ''
     }
-  })
+  });
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-
     setDados(prevDados => ({
       ...prevDados,
       praticante: {
         ...prevDados.praticante,
-        idPraticante: props.idPraticante // substitua 'novoValor' pelo valor desejado
+        idPraticante: props.idPraticante
       }
     }));
+  }, [props.idPraticante]);
 
-  }, []);
+  const atualizarTabela = () => {
+    if (props.refreshTabela) {
+      props.refreshTabela();
+    }
+  };
 
   const salvarEvolucao = () => {
-    if (dados.data !== '') {
-      if (dados.estavaPresente !== '') {
-        if (dados.praticante.idPraticante) {
-          axios.post(SALVAR_EVOLUCAO_DO_PRATICANTE_POST,
-            JSON.stringify({...dados}),
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${login.token}`
-              },
-            })
-            .then((response) => {
-              if (response.status === HttpStatusCode.Created) {
-                apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
-              }
-            })
-            .catch((erro) => {
-              apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-            })
-        } else {
-          apresentarModal("Aviso", "Erro ao evoluir praticante!", setDisplayModal, setTituloModal, setConteudoModal);
+    if (dados.data !== '' && dados.estavaPresente !== '' && dados.praticante.idPraticante) {
+      axios.post(SALVAR_EVOLUCAO_DO_PRATICANTE_POST, JSON.stringify({ ...dados }), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
         }
-      } else {
-        apresentarModal("Aviso", "Informe se o praticante esteve presente ou não!", setDisplayModal, setTituloModal, setConteudoModal);
-
-      }
+      })
+        .then((response) => {
+          if (response.status === HttpStatusCode.Created) {
+            apresentarModal("Aviso", response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal);
+            atualizarTabela(); // Atualiza a tabela após salvar
+          }
+        })
+        .catch((erro) => {
+          apresentarModal("Aviso", erro.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
+        });
     } else {
-      apresentarModal("Aviso", "Informe a data para prosseguir com a evolução!", setDisplayModal, setTituloModal, setConteudoModal);
+      apresentarModal("Aviso", "Preencha todos os campos obrigatórios!", setDisplayModal, setTituloModal, setConteudoModal);
     }
-  }
+  };
 
   return (
     <div>
@@ -83,21 +70,19 @@ const ModalParaEvoluir = (props) => {
         <button
           title={`Evoluir praticante ${props.nomeCompleto}`}
           type="button"
-          style={{border: "none", background: "none"}}
+          style={{ border: "none", background: "none" }}
           data-toggle="modal"
-          data-target={`#modalLine-${props.nomeCompleto}-evolucao`} // ID único para cada praticante
+          data-target={`#modalLine-${props.nomeCompleto}-evolucao`}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-               className="bi bi-graph-up-arrow" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                  d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
           </svg>
         </button>
       </div>
 
       <div
         className="modal fade"
-        id={`modalLine-${props.nomeCompleto}-evolucao`} // ID único para a modal
+        id={`modalLine-${props.nomeCompleto}-evolucao`}
         tabIndex="-1"
         role="dialog"
         aria-labelledby="myLargeModalLabel"
@@ -109,7 +94,7 @@ const ModalParaEvoluir = (props) => {
               <Modal
                 dsp={displayModal}
                 titulo={tituloModal}
-                conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
+                conteudo={<div dangerouslySetInnerHTML={{ __html: conteudoModal }} />}
                 esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
               />
               <CCardHeader>
@@ -122,40 +107,32 @@ const ModalParaEvoluir = (props) => {
                   tipo="select"
                   opcoes={presente}
                   valor={dados.estavaPresente}
-                  setar={(e) => setDados({...dados, estavaPresente: e.target.value})}
+                  setar={(e) => setDados({ ...dados, estavaPresente: e.target.value })}
                 />
                 <Campo
                   id="dataEvolucao"
                   legenda="Data"
                   tipo="date"
                   valor={formatarDataPadraoAnoMesDia(dados.data)}
-                  setar={(e) => {
-                    setDados({...dados, data: e.target.value})
-                  }}
+                  setar={(e) => setDados({ ...dados, data: e.target.value })}
                 />
                 <Campo
                   legenda="Observações"
                   id="observacoes"
                   tipo="textarea"
                   valor={dados.observacao}
-                  setar={(e) => setDados({...dados, observacao: e.target.value})}
+                  setar={(e) => setDados({ ...dados, observacao: e.target.value })}
                 />
-                <CButton color="danger" style={{color: "white", float:'left', margin:'10px 0px 20px 0px'}} onClick={() => {
-                  salvarEvolucao()
-                }}>Evoluir {props.nomeCompleto}</CButton>
-
-                <CButton color="danger" disabled={disabled} style={{color: "white", float:'left', margin:'10px 0px 20px 10px'}} onClick={() => {
-                  atualizarEvolucao(dados, setDisplayModal, setTituloModal, setConteudoModal)
-                }}>Atualizar evolução de {props.nomeCompleto}</CButton>
-
-                <TabelaEvolucaoPraticante id={props.idPraticante} setDados={setDados} setDisabled={setDisabled}/>
-
+                <CButton color="danger" style={{ color: "white", float: 'left', margin: '10px 0px 20px 0px' }} onClick={salvarEvolucao}>Evoluir {props.nomeCompleto}</CButton>
+                <CButton color="danger" disabled={disabled} style={{ color: "white", float: 'left', margin: '10px 0px 20px 10px' }} onClick={() => atualizarEvolucao(dados, setDisplayModal, setTituloModal, setConteudoModal)}>Atualizar evolução de {props.nomeCompleto}</CButton>
+                <TabelaEvolucaoPraticante id={props.idPraticante} setDados={setDados} setDisabled={setDisabled} refreshTabela={atualizarTabela} />
               </CCardBody>
             </CCard>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
 export default ModalParaEvoluir;

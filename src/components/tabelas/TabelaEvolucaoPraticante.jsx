@@ -1,16 +1,8 @@
-import {
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow
-} from "@coreui/react";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
 import {BUSCAR_EVOLUCOES_DO_PRATICANTE_POR_ID_GET} from "../../endpoints/praticante/evolucao/Endpoint";
 import {formatarDataParaDiaMesAno} from "../../utilidades/ManipuladorDeDatas";
-
 
 const TabelaEvolucaoPraticante = (props) => {
   const login = JSON.parse(localStorage.getItem('login'));
@@ -18,30 +10,34 @@ const TabelaEvolucaoPraticante = (props) => {
   const [ativar, setAtivar] = useState(true);
 
   useEffect(() => {
-    axios.get(BUSCAR_EVOLUCOES_DO_PRATICANTE_POR_ID_GET, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${login.token}`
-      },
-      params: {
-        id: props.id
-      }
-    })
-      .then((response) => {
-        setEvolucoes(response.data);
-        setAtivar(false);
+    const fetchEvolucoes = () => {
+      axios.get(BUSCAR_EVOLUCOES_DO_PRATICANTE_POR_ID_GET, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: props.id
+        }
       })
-      .catch((erro) => {
-        console.log(erro.response.data.titulo);
-        setAtivar(false);
-      });
-  }, [props.id, login.token]);
+        .then((response) => {
+          setEvolucoes(response.data);
+          setAtivar(false);
+        })
+        .catch((erro) => {
+          console.log(erro.response.data.titulo);
+          setAtivar(false);
+        });
+    };
+
+    fetchEvolucoes();
+  }, [props.id, login.token, props.refreshTabela]);
 
   return (
     <>
       {evolucoes.length !== 0 ? (
         <div style={{maxHeight: '300px', width: '100%', overflowY: 'auto'}}>
-          <CTable hover style={{height: '100px',zIndex:'1000'}}>
+          <CTable hover style={{height: '100px', zIndex: '1000'}}>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell style={{width: "20px", textAlign: "center"}}>Código</CTableHeaderCell>
@@ -73,20 +69,20 @@ const TabelaEvolucaoPraticante = (props) => {
                     </CTableDataCell>
                     <CTableDataCell style={{cursor: 'pointer'}}
                                     title={`Atualizar evolução do dia ${formatarDataParaDiaMesAno(item.data)}`}
-                    onClick={()=>{
-                      props.setDisabled(false)
-                      props.setDados(
-                        {
-                          idEvolucao:item.idEvolucao,
-                          data: item.data,
-                          observacao: item.observacao,
-                          estavaPresente: item.estavaPresente,
-                          praticante: {
-                            idPraticante: item.praticante.idPraticante
-                          }
-                        }
-                      )
-                    }}
+                                    onClick={() => {
+                                      props.setDisabled(false)
+                                      props.setDados(
+                                        {
+                                          idEvolucao: item.idEvolucao,
+                                          data: item.data,
+                                          observacao: item.observacao,
+                                          estavaPresente: item.estavaPresente,
+                                          praticante: {
+                                            idPraticante: item.praticante.idPraticante
+                                          }
+                                        }
+                                      )
+                                    }}
                     >
 
                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
