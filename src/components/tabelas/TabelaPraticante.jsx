@@ -4,7 +4,7 @@ import ModalComEvolucaoGraficoDeLinhas from "../modal/ModalComEvolucaoGraficoDeL
 import ModalComEvolucaoGraficoDeBarras from "../modal/ModalComEvolucaoGraficoDeBarras";
 import ModalParaEvoluir from "../modal/ModalParaEvoluir";
 import ModalComEvolucaoGraficoDeTorta from "../modal/ModalComEvolucaoGraficoDeTorta";
-import {ATUALIZAR_PRATICANTE, GERAR_RELATORIO_PRATICANTE} from "../../URL/URL";
+import {ATUALIZAR_PRATICANTE, FINALIZAR_CADASTRO_PRATICANTE, GERAR_RELATORIO_PRATICANTE} from "../../URL/URL";
 
 const TabelaPraticante = (props) => {
 
@@ -29,11 +29,17 @@ const TabelaPraticante = (props) => {
                 <CTableDataCell style={{textAlign: "center"}}>
                   {
                     item.finalizado ?
-                      <a href={`${ATUALIZAR_PRATICANTE}?id=${item.praticante.idPraticante}`}
-                         style={{textDecoration: "none", color:"red"}}
-                         title={"Atualizar cadastro do(a) praticante " + item.nomeCompleto}>{item.nomeCompleto} <i>[Finalizado]</i></a>
+
+                        <a href={`${ATUALIZAR_PRATICANTE}?id=${item.praticante.idPraticante}`}
+                           style={{textDecoration: "none", color: "green"}}
+                           title={"Atualizar cadastro do(a) praticante " + item.nomeCompleto}>{item.nomeCompleto} <strong>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-circle" viewBox="0 0 16 16">
+                            <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"/>
+                            <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                          </svg>
+                        </strong></a>
                       :
-                      <p>{item.nomeCompleto} <i>[Pendente]</i></p>
+                      <p>{item.nomeCompleto} <i>[<a href={FINALIZAR_CADASTRO_PRATICANTE}>Pendente</a>]</i></p>
                   }
                 </CTableDataCell>
                 <CTableDataCell style={{textAlign: "center"}}>{item.diagnosticoClinico}</CTableDataCell>
