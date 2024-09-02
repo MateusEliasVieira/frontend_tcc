@@ -6,7 +6,7 @@ import {
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
-import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeLocalStorage";
+import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeStatusCadastro";
 import {apresentarModal} from "../utilidades/ManipuladorDeModal";
 import {
   aplicarValorParaCamposDaAPI_NAO_INFORMADO,

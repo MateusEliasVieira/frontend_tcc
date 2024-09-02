@@ -17,7 +17,7 @@ import "./Login.css"
 import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {ESQUECI_MINHA_SENHA} from "../../../URL/URL";
 import VerSenha from "../../../components/campos/VerSenha";
-import {limparLocalStorage} from "../../../utilidades/VerificadorDeLocalStorage";
+import {limparLocalStorage} from "../../../utilidades/VerificadorDeStatusCadastro";
 
 const Login = () => {
 

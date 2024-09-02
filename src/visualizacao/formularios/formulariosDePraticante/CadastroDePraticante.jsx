@@ -36,7 +36,7 @@ import "./CadastroDePraticante.css"
 import EmPE from "./avaliacaoFisioterapeutica/EmPe";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import Modal from "../../../components/modal/Modal";
-import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeLocalStorage";
+import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeStatusCadastro";
 
 const CadastroDePraticante = () => {
 
