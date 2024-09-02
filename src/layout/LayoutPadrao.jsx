@@ -5,8 +5,8 @@ const LayoutPadrao = () => {
     useEffect(() => {
       let login = JSON.parse(localStorage.getItem("login"))
       if (!(login.idUsuario !== "" && login.nomeUsuario !== "" && login.token !== "" && login.role !== "")) {
-        // Esta logado
-        window.location.href = "/#/login"
+        // Não está logado
+        window.location.href = "/"
       }
     }, []);
     return (

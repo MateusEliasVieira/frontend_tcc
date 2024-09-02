@@ -41,6 +41,8 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
       }
     } catch (error) {
       // Verifique se error.response e error.response.data existem
+      console.log("Erro ao cadastrar dados pessoais: ")
+      console.log(error.response)
       const resposta = error.response;
 
       if (resposta && resposta.data) {
@@ -131,12 +133,15 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
         },
       }
     ).then((response) => {
-        if (response.status === HttpStatusCode.Created) {
-          localStorage.setItem(chaveLocalStorage, CADASTRADO);
-          setDesabilitar("disabled");
-          verificarSeEstaFinalizado(setDisplayModal, setTituloModal, setConteudoModal);
+      if (response.status === HttpStatusCode.Created) {
+        localStorage.setItem(chaveLocalStorage, CADASTRADO);
+        setDesabilitar("disabled");
+        if (verificarSeEstaFinalizado(setDisplayModal, setTituloModal, setConteudoModal) === false) {
+          // Ainda não terminou, mas pode ser mostrado a mensagem de cadastro atual realizado com sucesso
+          apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
         }
-      })
+      }
+    })
       .catch((error) => {
         if (error.response) {
           if (error.response.data) {
@@ -271,7 +276,7 @@ const buscarPraticantePorNome = (nome, setDados, setAtivar) => {
     })
 }
 
-const buscarPraticantePorID = (id,setDados, setAtivo) => {
+const buscarPraticantePorID = (id, setDados, setAtivo) => {
   setAtivo(true)
   axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
     headers: {
@@ -310,7 +315,7 @@ const buscarDadosPessoaisDosPraticantes = (setDados, setAtivar) => {
 }
 
 
-const atualizarEvolucao = (dados,setDisplayModal, setTituloModal, setConteudoModal) => {
+const atualizarEvolucao = (dados, setDisplayModal, setTituloModal, setConteudoModal) => {
   if (dados.data !== '') {
     if (dados.estavaPresente !== '') {
       if (dados.praticante.idPraticante) {
@@ -332,13 +337,12 @@ const atualizarEvolucao = (dados,setDisplayModal, setTituloModal, setConteudoMod
               let lista = "";
               let lista_erros = error.response.data.lista
 
-              for(let i = 0; i < lista_erros.length; i++){
+              for (let i = 0; i < lista_erros.length; i++) {
                 lista += `<strong>*</strong> ${lista_erros[i].mensagem}` + "<br/>"
               }
 
               apresentarModal("Atenção", lista, setDisplayModal, setTituloModal, setConteudoModal);
-            }
-            else if (error.response.data.titulo) {
+            } else if (error.response.data.titulo) {
               apresentarModal("Atenção", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
             } else if (error.response.data.mensagem) {
               if (error.response.data.redirecionar) {

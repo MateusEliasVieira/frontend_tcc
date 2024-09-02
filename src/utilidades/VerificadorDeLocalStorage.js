@@ -36,12 +36,13 @@ const atualizarDadosPessoaisDoPraticante = async (setDisplayModal, setTituloModa
     .then((response) => {
       if (response.status === HttpStatusCode.Created) {
         limparLocalStorage()
-        window.location.href="/pesquisar-praticante"
-      }else{
-         apresentarModal("Aviso", `Falhou ao finalizar o cadastro do praticante ${dados.nomeCompleto}!`, setDisplayModal, setTituloModal, setConteudoModal)
+        window.location.href = "/pesquisar-praticante"
+      } else {
+        apresentarModal("Aviso", `Falhou ao finalizar o cadastro do praticante ${dados.nomeCompleto}!`, setDisplayModal, setTituloModal, setConteudoModal)
       }
     })
     .catch((error) => {
+      console.log(error.response.data)
       apresentarModal("Aviso", "Erro ao finalizar cadastro do praticante!", setDisplayModal, setTituloModal, setConteudoModal)
     })
 }
@@ -54,37 +55,99 @@ const buscarDadosPessoisDoPraticante = async (setDisplayModal, setTituloModal, s
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${login.token}`
       }, params: {
-        id: idPraticanteSalvo
+        id: idPraticanteSalvo // trabalhar aqui
       }
 
     })
     .then((response) => {
         if (response.status === HttpStatusCode.Ok) {
           dados = {...response.data}
-          dados = {...dados, finalizado: true}
-          atualizarDadosPessoaisDoPraticante(setDisplayModal, setTituloModal, setConteudoModal)
+          if (dados.finalizado === true || dados.finalizado === 'true') {
+            // já foi finalizado
+            return true
+          } else {
+            // não foi finalizado
+            dados = {...dados, finalizado: true}
+            atualizarDadosPessoaisDoPraticante(setDisplayModal, setTituloModal, setConteudoModal)
+          }
+        } else {
+          return false
         }
-
       }
     )
     .catch((error) => {
       console.log(error)
+      return false
     })
 
 }
 
-const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoModal) => {
-  let contador = 0;
-  variaveisDeCadastroLocalStorage.map((variavel) => {
-    if (localStorage.getItem(variavel) === CADASTRADO) {
-      contador++
-    }
-  })
-  if (contador === variaveisDeCadastroLocalStorage.length) {
-    // só entra aqui se tiver finalizado todos os formularios de cadastro do praticante
-    buscarDadosPessoisDoPraticante(setDisplayModal, setTituloModal, setConteudoModal)
-  }
+
+const finalizado = async () => {
+  await axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${login.token}`
+      }, params: {
+        id: idPraticanteSalvo // trabalhar aqui
+      }
+
+    })
+    .then((response) => {
+        if (response.status === HttpStatusCode.Ok) {
+          dados = {...response.data}
+          if (dados.finalizado === true || dados.finalizado === 'true') {
+            // já foi finalizado
+            return true
+          } else {
+            // não foi finalizado
+            return false
+          }
+        } else {
+          return false
+        }
+      }
+    )
+    .catch((error) => {
+      return false
+    })
+
 }
+
+
+const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoModal) => {
+
+    if(finalizado() === true){
+
+    }
+
+}
+
+
+// const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoModal) => {
+//
+//   // Essa verificação, apenas vale para quando estou fazendo um novo cadastro.
+//   let contador = 0;
+//   variaveisDeCadastroLocalStorage.map((variavel) => {
+//     if (localStorage.getItem(variavel) === CADASTRADO) {
+//       contador++
+//     }
+//   })
+//   if (contador === variaveisDeCadastroLocalStorage.length) {
+//     // só entra aqui se tiver finalizado todos os formularios de cadastro do praticante
+//     buscarDadosPessoisDoPraticante(setDisplayModal, setTituloModal, setConteudoModal)
+//   } else {
+//
+//     // Essa verificação, vale, caso já tenha sido feito o cadastro. (verificamos por pre-calção)
+//     if(finalizado() === true){
+//       return true
+//     }
+//
+//
+//     return false
+//   }
+// }
 
 const limparLocalStorage = () => {
   localStorage.setItem("idPraticanteSalvo", '')

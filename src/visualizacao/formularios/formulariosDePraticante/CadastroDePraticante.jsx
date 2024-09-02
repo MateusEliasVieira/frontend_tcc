@@ -20,10 +20,6 @@ import HabilidadesSociais from "./avaliacaoPsicologica/HabilidadesSociais";
 import Afetividade from "./avaliacaoPsicologica/Afetividade";
 import RelacaoDaFamiliaComOExaminado from "./avaliacaoPsicologica/RelacaoDaFamiliaComOExaminado";
 import AvaliacaoPsicologica from "./avaliacaoPsicologica/AvaliacaoPsicologica";
-import axios from "axios";
-import {
-  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
-} from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import AvaliacaoFisioterapeutica from "./avaliacaoFisioterapeutica/AvaliacaoFisioterapeutica";
 import CoordenacaoMotora from "./avaliacaoFisioterapeutica/CoordenacaoMotora";
 import EquilibrioDinamico from "./avaliacaoFisioterapeutica/EquilibrioDinamico";
@@ -37,10 +33,10 @@ import SaudeGeralDoPraticante from "./avaliacaoFisioterapeutica/SaudeGeralDoPrat
 import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeuticoSingular";
 
 import "./CadastroDePraticante.css"
-import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeLocalStorage";
 import EmPE from "./avaliacaoFisioterapeutica/EmPe";
-import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import Modal from "../../../components/modal/Modal";
+import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeLocalStorage";
 
 const CadastroDePraticante = () => {
 
@@ -51,27 +47,34 @@ const CadastroDePraticante = () => {
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
   useEffect(() => {
-    verificarSeEstaFinalizado(setDisplayModal,setTituloModal,setConteudoModal)
-    const login = JSON.parse(localStorage.getItem("login"));
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
-      axios
-        .get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
-          params: {
-            id: idPraticanteSalvo,
-          },
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${login.token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          apresentarModal("Aviso","Finalize o cadastro pendente de <strong>" + response.data.nomeCompleto + "</strong>!",setDisplayModal,setTituloModal,setConteudoModal);
-        })
-        .catch((erro) => {
-        });
+
+    const id = Number(window.location.href.split("?id=")[1]);
+
+    if (id) {
+      localStorage.setItem("idPraticanteSalvo",id)
     }
+
+     verificarSeEstaFinalizado(setDisplayModal,setTituloModal,setConteudoModal)
+    // const login = JSON.parse(localStorage.getItem("login"));
+    // const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+    // if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
+    //   axios
+    //     .get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
+    //       params: {
+    //         id: idPraticanteSalvo,
+    //       },
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${login.token}`,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //       apresentarModal("Aviso","Finalize o cadastro pendente de <strong>" + response.data.nomeCompleto + "</strong>!",setDisplayModal,setTituloModal,setConteudoModal);
+    //     })
+    //     .catch((erro) => {
+    //     });
+    // }
   }, []);
 
   const renderComponent = () => {

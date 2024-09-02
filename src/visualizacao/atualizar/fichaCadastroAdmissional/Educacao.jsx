@@ -12,7 +12,7 @@ import Campo from '../../../components/campos/Campo'; // Importando o componente
 import {classeDeEscola, tipoInstituicaoEducacional, periodo} from '../../../constantes/Constantes';
 import {atualizar, salvar} from "../../../requisicoes/Praticante";
 import {
-  ATUALIZAR_EDUCACAO_DO_PRATICANTE_PUT,BUSCAR_EDUCACAO_DO_PRATICANTE_POR_ID_GET
+  ATUALIZAR_EDUCACAO_DO_PRATICANTE_PUT, BUSCAR_EDUCACAO_DO_PRATICANTE_POR_ID_GET
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
@@ -26,7 +26,7 @@ const Educacao = () => {
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
   const [formularioDeDados, setFormularioDeDados] = useState({
-    idEducacao:'',
+    idEducacaoPraticante: '',
     serieEscolar: '',
     classeDeEscola: '',
     instituicaoEducacional: '',
@@ -59,10 +59,24 @@ const Educacao = () => {
         }
       })
         .then((response) => {
-          setFormularioDeDados(response.data);
+          alert("Then")
+          // Existe a evolução no banco de dados
+          if (response.data.idEvolucao) {
+            setFormularioDeDados(response.data);
+          } else {
+            // não existe ainda
+            setFormularioDeDados(prevState => ({
+              ...prevState,
+              praticante: {idPraticante}
+            }));
+          }
         })
         .catch((error) => {
-          console.log("Error", error);
+          // não existe ainda
+          setFormularioDeDados(prevState => ({
+            ...prevState,
+            praticante: {idPraticante}
+          }));
         });
     }
   }, [idPraticante]);

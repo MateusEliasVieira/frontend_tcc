@@ -17,8 +17,14 @@ import Campo from '../../../../components/campos/Campo';
 import {salvarDadosPessoais} from "../../../../requisicoes/Praticante";
 import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
+import axios, {HttpStatusCode} from "axios";
+import {
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
+} from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 
 const DadosPessoais = (props) => {
+
+  const login = JSON.parse(localStorage.getItem('login'));
 
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
@@ -46,12 +52,39 @@ const DadosPessoais = (props) => {
   });
 
   useEffect(() => {
-    const dadosPessoaisCadastrados = localStorage.getItem("dadosPessoaisCadastrado")
-    if (dadosPessoaisCadastrados === CADASTRADO) {
-      setDesabilitar("disabled")
-    } else {
-      setDesabilitar("")
+
+    const id = Number(window.location.href.split("?id=")[1]);
+
+    if (id) {
+      // Vai terminar o cadastro
+      // Verificar se esse formulário já não foi cadastrado, se já estiver sido cadastrado, mostrar os dados nos campos e deixar bloqueados. Caso contrário, deixar a pessoa finalizar o cadastro
+      axios.get(`${BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: id
+        }
+      })
+        .then((response) => {
+          if (response.status === HttpStatusCode.Ok) {
+            setFormularioDeDados({...response.data})
+            setDesabilitar(true) // desabilitamos os campos
+          } else {
+            // Não encontrou, pois ainda não existe, concertamos a url para ele iniciar o cadastro
+            window.location.href = '/cadastrar-praticante'
+          }
+        })
+        .catch((error) => {
+          // deu algum erro para encontrar ou não existe ainda o cadastro, conertamos a url para ele iniciar o cadastro
+          window.location.href = '/cadastrar-praticante'
+          console.log(error)
+        })
     }
+
+    // Se não tiver o id, significa que é um novo cadastro
+
   }, []);
 
   return (
@@ -64,16 +97,9 @@ const DadosPessoais = (props) => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Dados Pessoais do Praticante</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Dados Pessoais do Praticante</strong>
+          </CCardHeader>
           <CCardBody>
             <Modal
               dsp={displayModal}

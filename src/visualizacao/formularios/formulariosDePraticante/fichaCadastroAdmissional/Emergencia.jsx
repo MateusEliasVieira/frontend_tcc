@@ -8,16 +8,20 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo'; // Importando o componente Campo
-import {CADASTRADO, simOuNao} from '../../../../constantes/Constantes';
+import {simOuNao} from '../../../../constantes/Constantes';
 import {salvar} from "../../../../requisicoes/Praticante";
 import {
+  BUSCAR_EMERGENCIA_DO_PRATICANTE_POR_ID_GET,
   SALVAR_EMERGENCIA_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
-import {aplicaMascaraDeTelefone} from "../../../../utilidades/ValidadorDeCampos"; // Ajuste o caminho conforme a estrutura do seu projeto
+import {aplicaMascaraDeTelefone} from "../../../../utilidades/ValidadorDeCampos";
+import axios, {HttpStatusCode} from "axios"; // Ajuste o caminho conforme a estrutura do seu projeto
 
 const Emergencia = () => {
+
+  const login = JSON.parse(localStorage.getItem('login'));
 
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
@@ -36,22 +40,41 @@ const Emergencia = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const emergencia = localStorage.getItem("emergencia")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
+
+    const id = Number(window.location.href.split("?id=")[1]);
+
+    if (id) {
+      // Vai terminar o cadastro
+      // Verificar se esse formulário já não foi cadastrado, se já estiver sido cadastrado, mostrar os dados nos campos e deixar bloqueados. Caso contrário, deixar a pessoa finalizar o cadastro
+      axios.get(`${BUSCAR_EMERGENCIA_DO_PRATICANTE_POR_ID_GET}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: id
         }
-      }));
-      if (emergencia === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
+      })
+        .then((response) => {
+          if (response.status === HttpStatusCode.Ok) {
+            setFormularioDeDados({...response.data})
+            setDesabilitar(true) // desabilitamos os campos
+          } else {
+            setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: id}});
+          }
+        })
+        .catch((error) => {
+          setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: id}});
+        })
+    } else {
+      // Se não tiver o id, significa que é um novo cadastro
+      // Pegamos o id do cadastro atual (é preciso já ter cadastrado os dados pessoais primeiro)
+      const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+      if (idPraticanteSalvo) {
+        setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: idPraticanteSalvo}});
       }
     }
+
   }, []);
 
   return (
@@ -64,16 +87,9 @@ const Emergencia = () => {
             conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
             esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
           />
-          {
-            desabilitar === "disabled" ?
-              <CCardHeader style={{backgroundColor: "#e55353"}}>
-                <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-              </CCardHeader>
-              :
-              <CCardHeader>
-                <strong>Em caso de emergência</strong>
-              </CCardHeader>
-          }
+          <CCardHeader>
+            <strong>Em caso de emergência</strong>
+          </CCardHeader>
           <CCardBody>
             <CContainer>
               <CRow>
@@ -82,7 +98,10 @@ const Emergencia = () => {
                     tipo="text"
                     id="ligarPara"
                     valor={formularioDeDados.ligarPara}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, ligarPara: aplicaMascaraDeTelefone(e.target.value)})}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      ligarPara: aplicaMascaraDeTelefone(e.target.value)
+                    })}
                     legenda="Ligar para"
                     disabled={desabilitar}
                   />
@@ -92,7 +111,10 @@ const Emergencia = () => {
                     tipo="text"
                     id="telefone"
                     valor={formularioDeDados.telefone}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone:  aplicaMascaraDeTelefone(e.target.value)})}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      telefone: aplicaMascaraDeTelefone(e.target.value)
+                    })}
                     legenda="Telefone"
                     disabled={desabilitar}
                   />
@@ -104,7 +126,7 @@ const Emergencia = () => {
                     valor={formularioDeDados.possuiPlanoDeSaude}
                     setar={(e) => {
                       setFormularioDeDados({...formularioDeDados, possuiPlanoDeSaude: e.target.value})
-                      if(formularioDeDados.possuiPlanoDeSaude === 'NAO'){
+                      if (formularioDeDados.possuiPlanoDeSaude === 'NAO') {
                         setFormularioDeDados({...formularioDeDados, plano: ''})
                       }
                     }}
@@ -131,8 +153,8 @@ const Emergencia = () => {
                   (<></>)
                 }
               </CRow>
-              <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EMERGENCIA_DO_PRATICANTE_POST, "emergencia", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+              <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
+                salvar(formularioDeDados, SALVAR_EMERGENCIA_DO_PRATICANTE_POST, "emergencia", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

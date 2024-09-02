@@ -138,9 +138,8 @@ const AtualizacaoDePraticante = () => {
           ? <div className="spinner-border" role="status" style={{margin: '50px auto', display: 'block'}}>
             <strong className="sr-only">Loading...</strong>
           </div>
-          : dados.finalizado
-            ?
 
+          :
 
             <>
               <Modal
@@ -422,8 +421,6 @@ const AtualizacaoDePraticante = () => {
               </div>
             </>
 
-            :
-            <p style={{display:"block", margin:"50px auto", width:'100%', textAlign:'center'}}>Finalize o cadastro do praticante <strong>{dados.nomeCompleto}</strong> para liberar a funcionalidade de atualização.</p>
       }
 
     </div>

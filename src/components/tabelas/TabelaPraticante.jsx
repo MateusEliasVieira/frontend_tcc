@@ -4,7 +4,12 @@ import ModalComEvolucaoGraficoDeLinhas from "../modal/ModalComEvolucaoGraficoDeL
 import ModalComEvolucaoGraficoDeBarras from "../modal/ModalComEvolucaoGraficoDeBarras";
 import ModalParaEvoluir from "../modal/ModalParaEvoluir";
 import ModalComEvolucaoGraficoDeTorta from "../modal/ModalComEvolucaoGraficoDeTorta";
-import {ATUALIZAR_PRATICANTE, FINALIZAR_CADASTRO_PRATICANTE, GERAR_RELATORIO_PRATICANTE} from "../../URL/URL";
+import {
+  ATUALIZAR_PRATICANTE,
+  CADASTRO_PRATICANTE,
+  FINALIZAR_CADASTRO_PRATICANTE,
+  GERAR_RELATORIO_PRATICANTE
+} from "../../URL/URL";
 
 const TabelaPraticante = (props) => {
 
@@ -39,7 +44,7 @@ const TabelaPraticante = (props) => {
                           </svg>
                         </strong></a>
                       :
-                      <p>{item.nomeCompleto} <i>[<a href={FINALIZAR_CADASTRO_PRATICANTE}>Pendente</a>]</i></p>
+                      <p>{item.nomeCompleto} <i>[<a href={`${CADASTRO_PRATICANTE}?id=${item.praticante.idPraticante}`}>Pendente</a>]</i></p>
                   }
                 </CTableDataCell>
                 <CTableDataCell style={{textAlign: "center"}}>{item.diagnosticoClinico}</CTableDataCell>

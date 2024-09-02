@@ -8,19 +8,25 @@ import {
   CRow,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
-import {CADASTRADO, preencherLegenda} from "../../../../constantes/Constantes";
-import {SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {preencherLegenda} from "../../../../constantes/Constantes";
+import {
+  BUSCAR_COMPORTAMENTO_DO_PRATICANTE_POR_ID_GET,
+  SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST
+} from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import {salvar} from "../../../../requisicoes/Praticante";
 import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
+import axios, {HttpStatusCode} from "axios";
 
 const Comportamento = () => {
+
+  const login = JSON.parse(localStorage.getItem('login'));
 
   const [displayModal, setDisplayModal] = useState("none");
   const [tituloModal, setTituloModal] = useState("");
   const [conteudoModal, setConteudoModal] = useState("");
 
-  const [desabilitar,setDesabilitar] = useState("")
+  const [desabilitar, setDesabilitar] = useState("")
   const [formularioDeDados, setFormularioDeDados] = useState({
     agitacao: '',
     toleranciaFrustracao: '',
@@ -33,22 +39,41 @@ const Comportamento = () => {
   });
 
   useEffect(() => {
-    const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    const comportamento = localStorage.getItem("comportamento")
-    if (idPraticanteSalvo) {
-      setFormularioDeDados(prevFormData => ({
-        ...prevFormData,
-        praticante: {
-          ...prevFormData.praticante,
-          idPraticante: idPraticanteSalvo
+
+    const id = Number(window.location.href.split("?id=")[1]);
+
+    if (id) {
+      // Vai terminar o cadastro
+      // Verificar se esse formulário já não foi cadastrado, se já estiver sido cadastrado, mostrar os dados nos campos e deixar bloqueados. Caso contrário, deixar a pessoa finalizar o cadastro
+      axios.get(`${BUSCAR_COMPORTAMENTO_DO_PRATICANTE_POR_ID_GET}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${login.token}`
+        },
+        params: {
+          id: id
         }
-      }));
-      if (comportamento === CADASTRADO) {
-        setDesabilitar("disabled")
-      } else {
-        setDesabilitar("")
+      })
+        .then((response) => {
+          if (response.status === HttpStatusCode.Ok) {
+            setFormularioDeDados({...response.data})
+            setDesabilitar(true) // desabilitamos os campos
+          } else {
+            setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: id}});
+          }
+        })
+        .catch((error) => {
+          setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: id}});
+        })
+    } else {
+      // Se não tiver o id, significa que é um novo cadastro
+      // Pegamos o id do cadastro atual (é preciso já ter cadastrado os dados pessoais primeiro)
+      const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+      if (idPraticanteSalvo) {
+        setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: idPraticanteSalvo}});
       }
     }
+
   }, []);
 
   return (
@@ -59,16 +84,9 @@ const Comportamento = () => {
         conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
         esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
       />
-      {
-        desabilitar === "disabled" ?
-          <CCardHeader style={{backgroundColor: "#e55353"}}>
-            <strong style={{color: "white"}}>Cadastrado com sucesso!</strong>
-          </CCardHeader>
-          :
-          <CCardHeader>
-            <strong>Comportamento</strong>
-          </CCardHeader>
-      }
+      <CCardHeader>
+        <strong>Comportamento</strong>
+      </CCardHeader>
       <CCardBody>
         <CContainer>
           <CRow>
@@ -128,8 +146,8 @@ const Comportamento = () => {
               />
             </CCol>
           </CRow>
-          <CButton color="danger" style={{color:"white"}} disabled={desabilitar} onClick={() => {
-            salvar(formularioDeDados, SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST,"comportamento", setDesabilitar,setDisplayModal, setTituloModal, setConteudoModal)
+          <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
+            salvar(formularioDeDados, SALVAR_COMPORTAMENTO_DO_PRATICANTE_POST, "comportamento", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
           }
           }>
             Salvar

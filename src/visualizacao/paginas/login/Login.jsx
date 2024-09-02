@@ -105,7 +105,7 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <div>
-                    <h2>Bem Vindo!</h2>
+                    <h2>Bem-Vindo!</h2>
                     <p className="text-medium-emphasis">Entre com sua conta! <a href={`${ESQUECI_MINHA_SENHA}`}
                                                                                 style={{textDecoration: "none"}}>Esqueceu
                       a senha?</a></p>
