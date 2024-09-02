@@ -62,7 +62,7 @@ const TabelaPraticante = (props) => {
                     </strong>
                       <div className="progress" role="progressbar" aria-label="Success example" aria-valuenow="0"
                            aria-valuemin="0" aria-valuemax="100" style={{marginTop: "5px"}}>
-                        <div className="progress-bar bg-success"
+                        <div className="progress-bar bg-success progress-bar-striped progress-bar-animated"
                              style={{width: `${(Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total)}%`}}>
                           {Math.round((Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total))}%
                         </div>
@@ -75,7 +75,7 @@ const TabelaPraticante = (props) => {
                         href={`${CADASTRO_PRATICANTE}?id=${item.praticante.idPraticante}`}>{item.statusCadastro?.finalizados}/{item.statusCadastro?.total}</a>]</i>
                       <div className="progress" role="progressbar" aria-label="Danger example" aria-valuenow="0"
                            aria-valuemin="0" aria-valuemax="100" style={{marginTop: "5px"}}>
-                        <div className="progress-bar bg-danger"
+                        <div className="progress-bar bg-danger progress-bar-striped progress-bar-animated"
                              style={{width: `${(Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total)}%`}}>
                           {Math.round((Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total))}%
                         </div>
