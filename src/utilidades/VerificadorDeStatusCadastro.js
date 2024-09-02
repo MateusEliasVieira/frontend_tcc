@@ -16,7 +16,6 @@ const verificarSeEstaFinalizado = async (idPraticante) => {
     });
 
     if (response.status === HttpStatusCode.Ok) {
-      console.log(response.data)
       return response.data;
     } else {
       return { finalizados: 0, status: false, total: 0 };

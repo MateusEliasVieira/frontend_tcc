@@ -59,7 +59,6 @@ const Educacao = () => {
         }
       })
         .then((response) => {
-          alert("Then")
           // Existe a evolução no banco de dados
           if (response.data.idEvolucao) {
             setFormularioDeDados(response.data);

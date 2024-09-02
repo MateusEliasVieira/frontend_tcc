@@ -132,7 +132,14 @@ const salvar = async (formularioDeDados, endpoint, setDesabilitar, setDisplayMod
       if (response.status === HttpStatusCode.Created) {
         setDesabilitar("disabled");
         apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
-        verificarSeEstaFinalizado(idPraticante)
+
+        verificarSeEstaFinalizado(idPraticante).then((verificacao)=>{
+          console.log(verificacao)
+          if(verificacao.status === true){
+            apresentarModal("Aviso", "Cadastro do praticante concluído com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
+          }
+        })
+
       }
     })
       .catch((error) => {
@@ -379,9 +386,9 @@ const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, f
       }
     })
       .then((response) => {
-        if (response.status === HttpStatusCode.Ok && response.data.status === true) {
+        if (response.status === HttpStatusCode.Ok) {
           setFormularioDeDados({...response.data})
-          setDesabilitar(true) // desabilitamos os campos
+          setDesabilitar("disabled") // desabilitamos os campos
         } else {
           setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: id}});
         }
