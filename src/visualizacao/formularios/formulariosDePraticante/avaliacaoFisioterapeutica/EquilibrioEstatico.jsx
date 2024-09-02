@@ -338,7 +338,7 @@ const EquilibrioEstatico = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POST, "equilibrioEstatico", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+                salvar(formularioDeDados, SALVAR_EQUILIBRIO_ESTATICO_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

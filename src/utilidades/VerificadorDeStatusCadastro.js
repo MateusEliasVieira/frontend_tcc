@@ -18,6 +18,7 @@ const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoM
     .then((response) => {
       if (response.status === HttpStatusCode.Ok) {
         if (response.data.status === true) {
+          localStorage.setItem("idPraticante", null)
           apresentarModal("Aviso", "Cadastro finalizado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
           return true
         } else {

@@ -341,7 +341,7 @@ const HabilidadesMotorasAVD = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_HABILIDADES_MOTORAS_AVD_DO_PRATICANTE_POST, "habilidadesMotorasAVD", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+                salvar(formularioDeDados, SALVAR_HABILIDADES_MOTORAS_AVD_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

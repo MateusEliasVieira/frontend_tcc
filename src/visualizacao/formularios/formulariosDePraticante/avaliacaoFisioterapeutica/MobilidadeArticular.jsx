@@ -477,7 +477,7 @@ const MobilidadeArticular = () => {
               </CRow>
 
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POST, "mobilidadeArticular", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+                salvar(formularioDeDados, SALVAR_MOBILIDADE_ARTICULAR_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

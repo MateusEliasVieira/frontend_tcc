@@ -6,7 +6,7 @@ import {
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
-import {limparLocalStorage, verificarSeEstaFinalizado} from "../utilidades/VerificadorDeStatusCadastro";
+import {verificarSeEstaFinalizado} from "../utilidades/VerificadorDeStatusCadastro";
 import {apresentarModal} from "../utilidades/ManipuladorDeModal";
 import {
   aplicarValorParaCamposDaAPI_NAO_INFORMADO,
@@ -20,7 +20,6 @@ const login = JSON.parse(localStorage.getItem('login'));
 
 const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal) => {
   if (camposPreenchidosPraticante(formularioDeDados)) {
-    limparLocalStorage()
     try {
       const response = await axios.post(
         SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST,
@@ -33,7 +32,7 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
         }
       );
       if (response.status === HttpStatusCode.Created) {
-        localStorage.setItem('idPraticanteSalvo', response.data.praticante.idPraticante);
+        localStorage.setItem('idPraticante', response.data.praticante.idPraticante);
         localStorage.setItem("dadosPessoaisCadastrado", CADASTRADO)
         setDesabilitar("disabled")
       } else {
@@ -41,10 +40,7 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
       }
     } catch (error) {
       // Verifique se error.response e error.response.data existem
-      console.log("Erro ao cadastrar dados pessoais: ")
-      console.log(error.response)
       const resposta = error.response;
-
       if (resposta && resposta.data) {
         if (resposta.data.lista) {
           const lista = resposta.data.lista.map((item) => item.mensagem).join("\n");
@@ -115,11 +111,11 @@ const atualizarDadosPessoais = async (formularioDeDados, setDisplayModal, setTit
   }
 };
 
-const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal) => {
+const salvar = async (formularioDeDados, endpoint, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal) => {
 
-  const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
+  const idPraticante = localStorage.getItem("idPraticante");
 
-  if (idPraticanteSalvo) {
+  if (idPraticante) {
 
     formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados);
 
@@ -134,12 +130,9 @@ const salvar = async (formularioDeDados, endpoint, chaveLocalStorage, setDesabil
       }
     ).then((response) => {
       if (response.status === HttpStatusCode.Created) {
-        localStorage.setItem(chaveLocalStorage, CADASTRADO);
         setDesabilitar("disabled");
-        if (verificarSeEstaFinalizado(setDisplayModal, setTituloModal, setConteudoModal) === false) {
-          // Ainda não terminou, mas pode ser mostrado a mensagem de cadastro atual realizado com sucesso
-          apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
-        }
+        apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
+        verificarSeEstaFinalizado(setDisplayModal, setTituloModal, setConteudoModal, idPraticante)
       }
     })
       .catch((error) => {

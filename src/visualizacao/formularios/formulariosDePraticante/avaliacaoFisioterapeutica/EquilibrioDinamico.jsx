@@ -201,7 +201,7 @@ const EquilibrioDinamico = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST, "equilibrioDinamico", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+                salvar(formularioDeDados, SALVAR_EQUILIBRIO_DINAMICO_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

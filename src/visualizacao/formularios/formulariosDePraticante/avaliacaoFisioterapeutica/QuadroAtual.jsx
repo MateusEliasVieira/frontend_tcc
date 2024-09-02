@@ -126,7 +126,7 @@ const QuadroAtual = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST, "quadroAtual", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+                salvar(formularioDeDados, SALVAR_QUADRO_ATUAL_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

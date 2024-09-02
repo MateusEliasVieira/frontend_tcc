@@ -36,7 +36,6 @@ import "./CadastroDePraticante.css"
 import EmPE from "./avaliacaoFisioterapeutica/EmPe";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import Modal from "../../../components/modal/Modal";
-import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeStatusCadastro";
 
 const CadastroDePraticante = () => {
 
@@ -51,30 +50,9 @@ const CadastroDePraticante = () => {
     const id = Number(window.location.href.split("?id=")[1]);
 
     if (id) {
-      localStorage.setItem("idPraticanteSalvo",id)
+      localStorage.setItem("idPraticante", id)
     }
 
-     verificarSeEstaFinalizado(setDisplayModal,setTituloModal,setConteudoModal)
-    // const login = JSON.parse(localStorage.getItem("login"));
-    // const idPraticanteSalvo = localStorage.getItem("idPraticanteSalvo");
-    // if (idPraticanteSalvo !== null && idPraticanteSalvo !== "" && login.idUsuario !== "" && login.idUsuario !== undefined) {
-    //   axios
-    //     .get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
-    //       params: {
-    //         id: idPraticanteSalvo,
-    //       },
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${login.token}`,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //       apresentarModal("Aviso","Finalize o cadastro pendente de <strong>" + response.data.nomeCompleto + "</strong>!",setDisplayModal,setTituloModal,setConteudoModal);
-    //     })
-    //     .catch((erro) => {
-    //     });
-    // }
   }, []);
 
   const renderComponent = () => {

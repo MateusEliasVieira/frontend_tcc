@@ -55,7 +55,7 @@ const AvaliacaoFisioterapeutica = () => {
         }
       })
         .then((response) => {
-          if (response.status === HttpStatusCode.Ok) {
+          if (response.status === HttpStatusCode.Ok && response.data.finalizado === true) {
             setFormularioDeDados({...response.data})
             setDesabilitar(true) // desabilitamos os campos
           } else {
@@ -146,7 +146,7 @@ const AvaliacaoFisioterapeutica = () => {
                 </CCol>
               </CRow>
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
-                salvar(formularioDeDados, SALVAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POST, "avaliacaoFisioterapeutica", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+                salvar(formularioDeDados, SALVAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
               </CButton>

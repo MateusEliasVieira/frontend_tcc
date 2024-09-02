@@ -122,7 +122,7 @@ const AvaliacaoPsicologica = () => {
             disabled={desabilitar}
           />
           <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
-            salvar(formularioDeDados, SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST, "avaliacaoPsicologica", setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
+            salvar(formularioDeDados, SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
           }
           }>
             Salvar
