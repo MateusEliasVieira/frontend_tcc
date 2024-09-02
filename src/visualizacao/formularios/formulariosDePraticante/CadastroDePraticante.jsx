@@ -51,6 +51,8 @@ const CadastroDePraticante = () => {
 
     if (id) {
       localStorage.setItem("idPraticante", id)
+    }else{
+      localStorage.setItem("idPraticante",null)
     }
 
   }, []);

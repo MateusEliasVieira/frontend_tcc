@@ -45,8 +45,8 @@ const TabelaPraticante = (props) => {
         {
           listaAtualizada.map((item, key) => (
             <CTableRow key={key}>
-              <CTableDataCell style={{textAlign: "center"}}>{item.praticante.idPraticante}</CTableDataCell>
-              <CTableDataCell style={{textAlign: "center"}}>
+              <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>{item.praticante.idPraticante}</CTableDataCell>
+              <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>
                 {
                   item.statusCadastro?.status === true ?
                     <a href={`${ATUALIZAR_PRATICANTE}?id=${item.praticante.idPraticante}`}
@@ -59,14 +59,31 @@ const TabelaPraticante = (props) => {
                         <path
                           d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
                       </svg>
-                    </strong></a>
+                    </strong>
+                      <div className="progress" role="progressbar" aria-label="Success example" aria-valuenow="0"
+                           aria-valuemin="0" aria-valuemax="100" style={{marginTop: "5px"}}>
+                        <div className="progress-bar bg-success"
+                             style={{width: `${(Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total)}%`}}>
+                          {Math.round((Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total))}%
+                        </div>
+                      </div>
+                    </a>
                     :
-                    <p title={`Para o praticante ${item.nomeCompleto}, foi cadastrado ${item.statusCadastro?.finalizados} formulário(s), porém ainda resta(m) ${(Number(item.statusCadastro?.total) - Number(item.statusCadastro?.finalizados))} formulário(s) para concluir todo o cadastro.`}>{item.nomeCompleto} <i>[<a
-                      href={`${CADASTRO_PRATICANTE}?id=${item.praticante.idPraticante}`}>Pendente {item.statusCadastro?.finalizados}/{item.statusCadastro?.total}</a>]</i>
+                    <p
+                      title={`Para o praticante ${item.nomeCompleto}, foi cadastrado ${item.statusCadastro?.finalizados} formulário(s), porém ainda resta(m) ${(Number(item.statusCadastro?.total) - Number(item.statusCadastro?.finalizados))} formulário(s) para concluir todo o cadastro.`}>{item.nomeCompleto}
+                      <i> [<a
+                        href={`${CADASTRO_PRATICANTE}?id=${item.praticante.idPraticante}`}>{item.statusCadastro?.finalizados}/{item.statusCadastro?.total}</a>]</i>
+                      <div className="progress" role="progressbar" aria-label="Danger example" aria-valuenow="0"
+                           aria-valuemin="0" aria-valuemax="100" style={{marginTop: "5px"}}>
+                        <div className="progress-bar bg-danger"
+                             style={{width: `${(Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total)}%`}}>
+                          {Math.round((Number(item.statusCadastro?.finalizados) * 100) / Number(item.statusCadastro?.total))}%
+                        </div>
+                      </div>
                     </p>
                 }
               </CTableDataCell>
-              <CTableDataCell style={{textAlign: "center"}}>{item.diagnosticoClinico}</CTableDataCell>
+              <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>{item.diagnosticoClinico}</CTableDataCell>
               <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>
                 <ModalComEvolucaoGraficoDeLinhas nomeCompleto={item.nomeCompleto}
                                                  idPraticante={item.praticante.idPraticante}/>

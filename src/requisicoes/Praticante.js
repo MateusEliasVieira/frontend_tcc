@@ -115,7 +115,7 @@ const salvar = async (formularioDeDados, endpoint, setDesabilitar, setDisplayMod
 
   const idPraticante = localStorage.getItem("idPraticante");
 
-  if (idPraticante) {
+  if (idPraticante !== null && idPraticante !== "") {
 
     formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados);
 
@@ -136,6 +136,7 @@ const salvar = async (formularioDeDados, endpoint, setDesabilitar, setDisplayMod
         verificarSeEstaFinalizado(idPraticante).then((verificacao)=>{
           console.log(verificacao)
           if(verificacao.status === true){
+            localStorage.setItem("idPraticante",null)
             apresentarModal("Aviso", "Cadastro do praticante concluído com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
           }
         })
