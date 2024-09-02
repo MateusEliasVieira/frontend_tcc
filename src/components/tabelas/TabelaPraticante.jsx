@@ -1,5 +1,5 @@
 import {CButton, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
-import React from "react";
+import React, {useEffect} from "react";
 import ModalComEvolucaoGraficoDeLinhas from "../modal/ModalComEvolucaoGraficoDeLinhas";
 import ModalComEvolucaoGraficoDeBarras from "../modal/ModalComEvolucaoGraficoDeBarras";
 import ModalParaEvoluir from "../modal/ModalParaEvoluir";
@@ -10,8 +10,16 @@ import {
   FINALIZAR_CADASTRO_PRATICANTE,
   GERAR_RELATORIO_PRATICANTE
 } from "../../URL/URL";
+import {verificarSeEstaFinalizado} from "../../utilidades/VerificadorDeStatusCadastro";
 
 const TabelaPraticante = (props) => {
+
+
+  useEffect(() => {
+    props.lista.map((item, key) => {
+      item.finalizado = verificarSeEstaFinalizado(item.praticante.idPraticante) // adiciona o campo finalizado com valor true ou false para cada registro
+    })
+  }, []);
 
   return (
     <CTable hover>
@@ -33,7 +41,7 @@ const TabelaPraticante = (props) => {
                 <CTableDataCell style={{textAlign: "center"}}>{item.praticante.idPraticante}</CTableDataCell>
                 <CTableDataCell style={{textAlign: "center"}}>
                   {
-                    item.finalizado ?
+                    item.finalizado === true ?
 
                         <a href={`${ATUALIZAR_PRATICANTE}?id=${item.praticante.idPraticante}`}
                            style={{textDecoration: "none", color: "green"}}

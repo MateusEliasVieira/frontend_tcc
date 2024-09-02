@@ -3,11 +3,11 @@ import {DOMINIO} from '../../../URL/URL'
 // DADOS PESSOAIS
 
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-id'
+const BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes'
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_DO_PRATICANTE_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-id-do-praticante'
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_CPF_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-cpf'
 const BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-do-praticante-por-nome'
 
-const BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET = DOMINIO+'praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes'
 const SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST = DOMINIO+'praticante/dados-pessoais/salvar-dados-pessoais-do-praticante'
 const ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT = DOMINIO+'praticante/dados-pessoais/atualizar-dados-pessoais-do-praticante'
 

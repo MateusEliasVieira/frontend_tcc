@@ -2,7 +2,7 @@ import axios, {HttpStatusCode} from "axios";
 import {
   ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
-  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET, BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET,
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
@@ -12,9 +12,9 @@ import {
   aplicarValorParaCamposDaAPI_NAO_INFORMADO,
   aplicarValorParaCampoVazioCasoExista
 } from "../utilidades/ValidadorDeCampos";
-import {DOMINIO} from "../URL/URL";
 import {camposPreenchidosPraticante} from "../utilidades/VerificadorDeCamposPraticante";
 import {ATUALIZAR_EVOLUCAO_DO_PRATICANTE_PUT} from "../endpoints/praticante/evolucao/Endpoint";
+import {BUSCAR_SAUDE_DO_PRATICANTE_POR_ID_GET} from "../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
@@ -33,7 +33,6 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
       );
       if (response.status === HttpStatusCode.Created) {
         localStorage.setItem('idPraticante', response.data.praticante.idPraticante);
-        localStorage.setItem("dadosPessoaisCadastrado", CADASTRADO)
         setDesabilitar("disabled")
       } else {
         apresentarModal("Aviso", 'Não foi possível cadastrar os dados do praticante!', setDisplayModal, setTituloModal, setConteudoModal);
@@ -132,7 +131,7 @@ const salvar = async (formularioDeDados, endpoint, setDesabilitar, setDisplayMod
       if (response.status === HttpStatusCode.Created) {
         setDesabilitar("disabled");
         apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
-        verificarSeEstaFinalizado(setDisplayModal, setTituloModal, setConteudoModal, idPraticante)
+        verificarSeEstaFinalizado(idPraticante)
       }
     })
       .catch((error) => {
@@ -291,7 +290,7 @@ const buscarPraticantePorID = (id, setDados, setAtivo) => {
 }
 
 const buscarDadosPessoaisDosPraticantes = (setDados, setAtivar) => {
-  axios.get(`${DOMINIO}praticante/dados-pessoais/buscar-dados-pessoais-dos-praticantes`, {
+  axios.get(BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${login.token}`
@@ -361,6 +360,46 @@ const atualizarEvolucao = (dados, setDisplayModal, setTituloModal, setConteudoMo
   }
 }
 
+
+const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, setDesabilitar) => {
+
+  const id = Number(window.location.href.split("?id=")[1]);
+
+  if (id) {
+    // Vai terminar o cadastro
+    // Verificar se esse formulário já não foi cadastrado, se já estiver sido cadastrado, mostrar os dados nos campos e deixar bloqueados. Caso contrário, deixar a pessoa finalizar o cadastro
+    axios.get(endpoint, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${login.token}`
+      },
+      params: {
+        id: id
+      }
+    })
+      .then((response) => {
+        if (response.status === HttpStatusCode.Ok) {
+          setFormularioDeDados({...response.data})
+          setDesabilitar(true) // desabilitamos os campos
+        } else {
+          setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: id}});
+        }
+      })
+      .catch((error) => {
+        setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: id}});
+      })
+  } else {
+    // Se não tiver o id, significa que é um novo cadastro
+    // Pegamos o id do cadastro atual (é preciso já ter cadastrado os dados pessoais primeiro)
+    const idPraticante = localStorage.getItem("idPraticante");
+    if (idPraticante) {
+      setFormularioDeDados({...formularioDeDados, praticante: {idPraticante: idPraticante}});
+    }
+  }
+
+}
+
+
 export {
   salvar,
   atualizar,
@@ -370,5 +409,6 @@ export {
   buscarPraticantePorNome,
   buscarPraticantePorID,
   buscarDadosPessoaisDosPraticantes,
-  atualizarEvolucao
+  atualizarEvolucao,
+  verificarStatusDoFormularioDeCadastro
 }

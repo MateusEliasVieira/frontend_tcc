@@ -4,9 +4,9 @@ import {STATUS_CADASTRO_GET} from "../endpoints/praticante/statusCadastro/Endpoi
 
 const login = JSON.parse(localStorage.getItem('login'));
 
-const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoModal, idPraticante) => {
+const verificarSeEstaFinalizado = async (idPraticante) => {
 
-  axios.get(STATUS_CADASTRO_GET, {
+  await axios.get(STATUS_CADASTRO_GET, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${login.token}`
@@ -16,10 +16,10 @@ const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoM
     }
   })
     .then((response) => {
+      console.log(response.data)
       if (response.status === HttpStatusCode.Ok) {
         if (response.data.status === true) {
           localStorage.setItem("idPraticante", null)
-          apresentarModal("Aviso", "Cadastro finalizado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
           return true
         } else {
           return false
@@ -27,6 +27,7 @@ const verificarSeEstaFinalizado = (setDisplayModal, setTituloModal, setConteudoM
       }
     })
     .catch((error) => {
+      console.log(error.response.data)
       return false
     })
 }
