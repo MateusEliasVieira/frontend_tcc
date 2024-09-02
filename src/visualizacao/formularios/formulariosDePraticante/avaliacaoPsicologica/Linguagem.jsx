@@ -41,7 +41,7 @@ const Linguagem = () => {
 
   useEffect(() => {
 
-    verificarStatusDoFormularioDeCadastro(BUSCAR_LINGUAGEM_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setDesabilitar)
+    verificarStatusDoFormularioDeCadastro(BUSCAR_LINGUAGEM_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, formularioDeDados, setDesabilitar)
 
   }, []);
 

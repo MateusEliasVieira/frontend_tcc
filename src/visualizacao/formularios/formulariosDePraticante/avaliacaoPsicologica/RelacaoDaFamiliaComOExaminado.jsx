@@ -40,7 +40,7 @@ const RelacaoDaFamiliaComOExaminado = () => {
 
   useEffect(() => {
 
-    verificarStatusDoFormularioDeCadastro(BUSCAR_RELACAO_FAMILIAR_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setDesabilitar)
+    verificarStatusDoFormularioDeCadastro(BUSCAR_RELACAO_FAMILIAR_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, formularioDeDados, setDesabilitar)
 
   }, []);
 

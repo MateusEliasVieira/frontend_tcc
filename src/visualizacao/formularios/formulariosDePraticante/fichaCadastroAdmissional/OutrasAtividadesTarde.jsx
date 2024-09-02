@@ -40,7 +40,7 @@ const OutrasAtividadesTarde = () => {
 
   useEffect(() => {
 
-    verificarStatusDoFormularioDeCadastro(BUSCAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setDesabilitar)
+    verificarStatusDoFormularioDeCadastro(BUSCAR_OUTRAS_ATIVIDADE_TARDE_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, formularioDeDados, setDesabilitar)
 
   }, []);
 

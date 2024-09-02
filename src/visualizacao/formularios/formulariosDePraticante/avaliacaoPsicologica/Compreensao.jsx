@@ -36,7 +36,7 @@ const Compreensao = () => {
 
   useEffect(() => {
 
-    verificarStatusDoFormularioDeCadastro(BUSCAR_COMPREENSAO_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setDesabilitar)
+    verificarStatusDoFormularioDeCadastro(BUSCAR_COMPREENSAO_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, formularioDeDados, setDesabilitar)
 
   }, []);
 

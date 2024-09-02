@@ -1,5 +1,5 @@
 import {CButton, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import ModalComEvolucaoGraficoDeLinhas from "../modal/ModalComEvolucaoGraficoDeLinhas";
 import ModalComEvolucaoGraficoDeBarras from "../modal/ModalComEvolucaoGraficoDeBarras";
 import ModalParaEvoluir from "../modal/ModalParaEvoluir";
@@ -15,11 +15,20 @@ import {verificarSeEstaFinalizado} from "../../utilidades/VerificadorDeStatusCad
 const TabelaPraticante = (props) => {
 
 
+  const [listaAtualizada, setListaAtualizada] = useState(props.lista);
+
   useEffect(() => {
-    props.lista.map((item, key) => {
-      item.finalizado = verificarSeEstaFinalizado(item.praticante.idPraticante) // adiciona o campo finalizado com valor true ou false para cada registro
-    })
-  }, []);
+    const atualizarLista = async () => {
+      const listaComStatus = await Promise.all(props.lista.map(async (item) => {
+        const finalizado = await verificarSeEstaFinalizado(item.praticante.idPraticante);
+        return { ...item, finalizado };
+      }));
+      setListaAtualizada(listaComStatus);
+    };
+
+    atualizarLista();
+  }, [props.lista]);
+
 
   return (
     <CTable hover>
@@ -36,7 +45,7 @@ const TabelaPraticante = (props) => {
 
       <CTableBody>
         {
-          props.lista.map((item, key) => (
+          listaAtualizada.map((item, key) => (
               <CTableRow key={key}>
                 <CTableDataCell style={{textAlign: "center"}}>{item.praticante.idPraticante}</CTableDataCell>
                 <CTableDataCell style={{textAlign: "center"}}>

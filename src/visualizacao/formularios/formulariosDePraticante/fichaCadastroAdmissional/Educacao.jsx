@@ -39,7 +39,7 @@ const Educacao = () => {
 
   useEffect(() => {
 
-    verificarStatusDoFormularioDeCadastro(BUSCAR_EDUCACAO_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setDesabilitar)
+    verificarStatusDoFormularioDeCadastro(BUSCAR_EDUCACAO_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, formularioDeDados, setDesabilitar)
 
   }, []);
 

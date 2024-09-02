@@ -34,6 +34,7 @@ const salvarDadosPessoais = async (formularioDeDados, setDesabilitar, setDisplay
       if (response.status === HttpStatusCode.Created) {
         localStorage.setItem('idPraticante', response.data.praticante.idPraticante);
         setDesabilitar("disabled")
+        apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
       } else {
         apresentarModal("Aviso", 'Não foi possível cadastrar os dados do praticante!', setDisplayModal, setTituloModal, setConteudoModal);
       }
@@ -361,7 +362,7 @@ const atualizarEvolucao = (dados, setDisplayModal, setTituloModal, setConteudoMo
 }
 
 
-const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, setDesabilitar) => {
+const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, formularioDeDados, setDesabilitar) => {
 
   const id = Number(window.location.href.split("?id=")[1]);
 
@@ -378,7 +379,7 @@ const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, s
       }
     })
       .then((response) => {
-        if (response.status === HttpStatusCode.Ok) {
+        if (response.status === HttpStatusCode.Ok && response.data.status === true) {
           setFormularioDeDados({...response.data})
           setDesabilitar(true) // desabilitamos os campos
         } else {
