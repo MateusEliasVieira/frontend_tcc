@@ -2,10 +2,15 @@ import {CCard, CCardBody, CCardHeader} from "@coreui/react";
 import React, {useEffect, useState} from "react";
 import TabelaPraticante from "../../components/tabelas/TabelaPraticante";
 import Campo from "../../components/campos/Campo";
-import {buscarDadosPessoaisDosPraticantes, buscarPraticantePorNome} from "../../requisicoes/Praticante";
+import {
+  buscarDadosPessoaisDosPraticantes,
+  buscarPraticantePorNome,
+  buscarQuantidadeTotalDePraticantes
+} from "../../requisicoes/Praticante";
 
 const Pesquisar = () => {
 
+  const [total, setTotal] = useState(null)
   const [dados, setDados] = useState([])
   const [nome, setNome] = useState('')
   const [ativar, setAtivar] = useState(true)
@@ -18,10 +23,19 @@ const Pesquisar = () => {
     buscarPraticantePorNome(nome, setDados, setAtivar)
   }, [nome])
 
+  useEffect(() => {
+    buscarQuantidadeTotalDePraticantes(setTotal)
+  }, [])
+
   return (
     <CCard style={{overflowX: 'auto'}}>
       <CCardHeader>
-        <strong>Pesquisar</strong>
+        <div style={{display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+          <strong>Pesquisar</strong>
+          <div>
+            <p style={{marginTop:'20px'}}>Praticantes: <strong>{total}</strong></p>
+          </div>
+        </div>
       </CCardHeader>
 
       <CCardBody>
@@ -44,7 +58,7 @@ const Pesquisar = () => {
 
             :
 
-            <TabelaPraticante lista={dados}/>
+             <TabelaPraticante lista={dados}/>
 
         }
       </CCardBody>

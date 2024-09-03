@@ -19,6 +19,10 @@ import {PESQUISAR_PRATICANTE} from "../URL/URL";
 import {
   BUSCAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POR_ID_GET
 } from "../endpoints/praticante/planoTerapeuticoSingular/Endpoints";
+import {
+  BUSCAR_PAGINA_GET,
+  BUSCAR_QUANTIDADE_TOTAL_DE_PRATICANTES_GET
+} from "../endpoints/praticante/paginacao/Endpoints";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
@@ -324,6 +328,41 @@ const buscarDadosPessoaisDosPraticantes = (setDados, setAtivar) => {
     })
 }
 
+const buscarQuantidadeTotalDePraticantes = async (setTotal) => {
+  await axios.get(BUSCAR_QUANTIDADE_TOTAL_DE_PRATICANTES_GET, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    }
+  })
+    .then((response) => {
+      setTotal(response.data.quantidade)
+    })
+    .catch((error) => {
+      setTotal(0)
+    })
+}
+
+const buscarPagina = async (pagina, setDadosPagina, setListaAtualizada) => {
+  await axios.get(BUSCAR_PAGINA_GET, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${login.token}`
+    },
+    params: {
+      pagina: pagina
+    }
+  })
+    .then((response) => {
+      setDadosPagina(response.data)
+      setListaAtualizada(response.data.dadosPessoais)
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 
 const atualizarEvolucao = (dados, setDisplayModal, setTituloModal, setConteudoModal) => {
   if (dados.data !== '') {
@@ -417,37 +456,51 @@ const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, f
 
 }
 
-
-const verificarStatusDoFormularioDeAtualizacao = (endpoint, setFormularioDeDados) => {
+const verificarStatusCadastroParaAtualizacao = async (endpoint, setFormularioDeDados, setIdPraticante) => {
 
   const id = Number(window.location.href.split("?id=")[1]);
 
   if (id) {
 
-    axios.get(endpoint, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${login.token}`
-      },
-      params: {
-        id: id
+    setIdPraticante(id)
+
+    try {
+      const verificacao = await verificarSeEstaFinalizado(id);
+      if (verificacao.status === true || verificacao.status === 'true') {
+        // Finalizou, pode atualizar
+        axios.get(endpoint, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${login.token}`
+          },
+          params: {
+            id: id
+          }
+        })
+          .then((response) => {
+            setFormularioDeDados(response.data);
+          })
+          .catch((error) => {
+            if (error.response.data.urlRedirecionamento) {
+              window.location.href = error.response.data.urlRedirecionamento
+            }
+          });
+      } else {
+        // Ainda não finalizou o cadastro, então não pode continuar com a atualização
+        window.location.href = PESQUISAR_PRATICANTE;
       }
-    })
-      .then((response) => {
-        setFormularioDeDados(response.data);
-      })
-      .catch((error) => {
-        if (error.response.data.urlRedirecionamento) {
-          window.location.href = error.response.data.urlRedirecionamento
-        }
-      });
+
+    } catch (error) {
+      window.location.href = PESQUISAR_PRATICANTE;
+    }
 
   } else {
+    // Não tem id na url, não pode prosseguir com a atualização
     window.location.href = PESQUISAR_PRATICANTE;
   }
 
-}
 
+}
 
 export {
   salvar,
@@ -458,7 +511,9 @@ export {
   buscarPraticantePorNome,
   buscarPraticantePorID,
   buscarDadosPessoaisDosPraticantes,
+  buscarQuantidadeTotalDePraticantes,
+  buscarPagina,
   atualizarEvolucao,
   verificarStatusDoFormularioDeCadastro,
-  verificarStatusDoFormularioDeAtualizacao
+  verificarStatusCadastroParaAtualizacao
 }

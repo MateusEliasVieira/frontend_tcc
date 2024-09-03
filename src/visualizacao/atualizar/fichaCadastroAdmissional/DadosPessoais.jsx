@@ -14,7 +14,7 @@ import {
   CRow
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {atualizarDadosPessoais} from "../../../requisicoes/Praticante";
+import {atualizarDadosPessoais, verificarStatusCadastroParaAtualizacao} from "../../../requisicoes/Praticante";
 import Modal from "../../../components/modal/Modal";
 import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {
@@ -58,36 +58,10 @@ const DadosPessoais = () => {
 
   useEffect(() => {
 
-    const id = Number(window.location.href.split("?id=")[1]);
-    if (id) {
-      setIdPraticante(id);
-    } else {
-      window.location.href = PESQUISAR_PRATICANTE;
-    }
+    verificarStatusCadastroParaAtualizacao(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setIdPraticante)
 
-    if (idPraticante) {
-      const login = JSON.parse(localStorage.getItem('login'));
-
-      axios.get(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-        params: {
-          id: idPraticante
-        }
-      })
-        .then((response) => {
-          setFormularioDeDados(response.data);
-        })
-        .catch((error) => {
-          if(error.response.data.urlRedirecionamento){
-            window.location.href=error.response.data.urlRedirecionamento
-          }
-          console.log("Error", error);
-        });
-    }
   }, [idPraticante]);
+
 
   return (
     <CRow>

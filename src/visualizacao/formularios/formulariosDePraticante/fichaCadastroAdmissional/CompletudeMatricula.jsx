@@ -14,9 +14,8 @@ import {
   BUSCAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POR_ID_GET,
   SALVAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POST
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
-import {CADASTRADO} from "../../../../constantes/Constantes";
 import Modal from "../../../../components/modal/Modal";
-import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
 import {formatarDataPadraoAnoMesDia} from "../../../../utilidades/ManipuladorDeDatas";
 
@@ -74,18 +73,19 @@ const CompletudeMatricula = () => {
                   <Campo
                     tipo="file"
                     id="imagemAssinaturaResponsavel"
-                    setar={(e) => {
-                      converterImagemEmBase64(e.target.files[0])
-                        .then((resolve) => {
-                          setFormularioDeDados({...formularioDeDados, imagemAssinaturaResponsavel: resolve});
-                        })
-                        .catch((reject) => {
-                          console.log(reject);
-                        });
+                    setar={async (e) => {
+                      try {
+                        const base64 = await converterImagemEmBase64(e.target.files[0]);
+                        setFormularioDeDados({ ...formularioDeDados, imagemAssinaturaResponsavel: base64 });
+                      } catch (error) {
+                        alert(error.message); // Certifique-se de usar error.message
+                        apresentarModal("Aviso", error.message, setDisplayModal, setTituloModal, setConteudoModal);
+                      }
                     }}
                     legenda="Imagem da assinatura do responsável"
                     disabled={desabilitar}
                   />
+
                 </CCol>
               </CRow>
               <CRow>

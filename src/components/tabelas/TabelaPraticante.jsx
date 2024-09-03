@@ -11,6 +11,7 @@ import {
   GERAR_RELATORIO_PRATICANTE
 } from "../../URL/URL";
 import {verificarSeEstaFinalizado} from "../../utilidades/VerificadorDeStatusCadastro";
+import Pagination from "../pagination/Pagination";
 
 const TabelaPraticante = (props) => {
 
@@ -117,6 +118,9 @@ const TabelaPraticante = (props) => {
           ))
         }
       </CTableBody>
+
+      {/*<Pagination setListaAtualizada={setListaAtualizada}/>*/}
+
     </CTable>
   );
 }
