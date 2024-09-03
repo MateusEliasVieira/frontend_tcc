@@ -57,17 +57,17 @@ const TabelaEvolucaoPraticante = (props) => {
                 {evolucoes.map((item, key) => (
 
                   <CTableRow key={key}>
-                    <CTableDataCell style={{textAlign: "center"}}>{item.idEvolucao}</CTableDataCell>
-                    <CTableDataCell style={{textAlign: "center"}}>
+                    <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>{item.idEvolucao}</CTableDataCell>
+                    <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>
                       {formatarDataParaDiaMesAno(item.data)}
                     </CTableDataCell>
-                    <CTableDataCell style={{textAlign: "center"}}>
+                    <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>
                       <strong>{item.estavaPresente ? 'Sim' : 'Não'}</strong>
                     </CTableDataCell>
-                    <CTableDataCell style={{textAlign: "center"}}>
+                    <CTableDataCell style={{verticalAlign: "middle", textAlign: "center"}}>
                       {item.observacao === '' ? 'Nenhuma observação' : item.observacao}
                     </CTableDataCell>
-                    <CTableDataCell style={{cursor: 'pointer'}}
+                    <CTableDataCell style={{cursor: 'pointer', verticalAlign: "middle", textAlign: "center"}}
                                     title={`Atualizar evolução do dia ${formatarDataParaDiaMesAno(item.data)}`}
                                     onClick={() => {
                                       props.setDisabled(false)
