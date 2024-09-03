@@ -15,7 +15,7 @@ import {
 } from "../../../endpoints/praticante/avaliacaoFisioterapeutica/Endpoints";
 import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
 import axios from "axios";
-import {atualizar} from "../../../requisicoes/Praticante";
+import {atualizar, verificarStatusCadastroParaAtualizacaoDosDemaisFormularios} from "../../../requisicoes/Praticante";
 import Modal from "../../../components/modal/Modal";
 import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 
@@ -39,32 +39,8 @@ const AvaliacaoFisioterapeutica = () => {
 
   useEffect(() => {
 
-    const id = Number(window.location.href.split("?id=")[1]);
-    if (id) {
-      setIdPraticante(id);
-    } else {
-      window.location.href = PESQUISAR_PRATICANTE;
-    }
+    verificarStatusCadastroParaAtualizacaoDosDemaisFormularios(BUSCAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setIdPraticante)
 
-    if (idPraticante) {
-      const login = JSON.parse(localStorage.getItem('login'));
-
-      axios.get(BUSCAR_AVALIACAO_FISIOTERAPEUTICA_DO_PRATICANTE_POR_ID_GET, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-        params: {
-          id: idPraticante
-        }
-      })
-        .then((response) => {
-          setFormularioDeDados(response.data);
-        })
-        .catch((error) => {
-          console.log("Error", error);
-        });
-    }
   }, [idPraticante]);
 
   return (

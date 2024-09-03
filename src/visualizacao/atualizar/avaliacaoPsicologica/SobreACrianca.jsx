@@ -10,7 +10,11 @@ import {
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
 import {simOuNao, alimentacao, CADASTRADO} from "../../../constantes/Constantes";
-import {atualizar, salvar} from "../../../requisicoes/Praticante";
+import {
+  atualizar,
+  salvar,
+  verificarStatusCadastroParaAtualizacaoDosDemaisFormularios
+} from "../../../requisicoes/Praticante";
 import {
   ATUALIZAR_SOBRE_A_CRIANCA_DO_PRATICANTE_PUT,
   BUSCAR_SOBRE_A_CRIANCA_DO_PRATICANTE_POR_ID_GET,
@@ -42,32 +46,8 @@ const SobreACrianca = () => {
 
   useEffect(() => {
 
-    const id = Number(window.location.href.split("?id=")[1]);
-    if (id) {
-      setIdPraticante(id);
-    } else {
-      window.location.href = PESQUISAR_PRATICANTE;
-    }
+    verificarStatusCadastroParaAtualizacaoDosDemaisFormularios(BUSCAR_SOBRE_A_CRIANCA_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setIdPraticante)
 
-    if (idPraticante) {
-      const login = JSON.parse(localStorage.getItem('login'));
-
-      axios.get(BUSCAR_SOBRE_A_CRIANCA_DO_PRATICANTE_POR_ID_GET, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-        params: {
-          id: idPraticante
-        }
-      })
-        .then((response) => {
-          setFormularioDeDados(response.data);
-        })
-        .catch((error) => {
-          console.log("Error", error);
-        });
-    }
   }, [idPraticante]);
 
   return (

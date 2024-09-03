@@ -10,7 +10,11 @@ import {
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
 import {preencherLegenda} from '../../../constantes/Constantes';
-import {atualizar, salvar} from "../../../requisicoes/Praticante";
+import {
+  atualizar,
+  salvar,
+  verificarStatusCadastroParaAtualizacaoDosDemaisFormularios
+} from "../../../requisicoes/Praticante";
 import {
   ATUALIZAR_RELACAO_FAMILIAR_DO_PRATICANTE_PUT,
   BUSCAR_RELACAO_FAMILIAR_DO_PRATICANTE_POR_ID_GET,
@@ -41,32 +45,8 @@ const RelacaoDaFamiliaComOExaminado = () => {
 
   useEffect(() => {
 
-    const id = Number(window.location.href.split("?id=")[1]);
-    if (id) {
-      setIdPraticante(id);
-    } else {
-      window.location.href = PESQUISAR_PRATICANTE;
-    }
+    verificarStatusCadastroParaAtualizacaoDosDemaisFormularios(BUSCAR_RELACAO_FAMILIAR_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setIdPraticante)
 
-    if (idPraticante) {
-      const login = JSON.parse(localStorage.getItem('login'));
-
-      axios.get(BUSCAR_RELACAO_FAMILIAR_DO_PRATICANTE_POR_ID_GET, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-        params: {
-          id: idPraticante
-        }
-      })
-        .then((response) => {
-          setFormularioDeDados(response.data);
-        })
-        .catch((error) => {
-          console.log("Error", error);
-        });
-    }
   }, [idPraticante]);
 
   return (

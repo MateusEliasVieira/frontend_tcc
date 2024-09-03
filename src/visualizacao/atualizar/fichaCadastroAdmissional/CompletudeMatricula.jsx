@@ -9,7 +9,7 @@ import {
 } from '@coreui/react';
 import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
 import Campo from '../../../components/campos/Campo';
-import {atualizar} from "../../../requisicoes/Praticante";
+import {atualizar, verificarStatusCadastroParaAtualizacaoDosDemaisFormularios} from "../../../requisicoes/Praticante";
 import {
   ATUALIZAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_PUT, BUSCAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POR_ID_GET,
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
@@ -37,32 +37,8 @@ const CompletudeMatricula = () => {
 
   useEffect(() => {
 
-    const id = Number(window.location.href.split("?id=")[1]);
-    if (id) {
-      setIdPraticante(id);
-    } else {
-      window.location.href = PESQUISAR_PRATICANTE;
-    }
+    verificarStatusCadastroParaAtualizacaoDosDemaisFormularios(BUSCAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setIdPraticante)
 
-    if (idPraticante) {
-      const login = JSON.parse(localStorage.getItem('login'));
-
-      axios.get(BUSCAR_COMPLETUDE_MATRICULA_DO_PRATICANTE_POR_ID_GET, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-        params: {
-          id: idPraticante
-        }
-      })
-        .then((response) => {
-          setFormularioDeDados(response.data);
-        })
-        .catch((error) => {
-          console.log("Error", error);
-        });
-    }
   }, [idPraticante]);
 
   return (
