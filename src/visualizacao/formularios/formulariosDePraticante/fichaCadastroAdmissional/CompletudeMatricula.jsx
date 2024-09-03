@@ -4,7 +4,7 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CCol, CContainer,
+  CCol, CContainer, CImage,
   CRow,
 } from '@coreui/react';
 import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
@@ -18,6 +18,7 @@ import {CADASTRADO} from "../../../../constantes/Constantes";
 import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
+import {formatarDataPadraoAnoMesDia} from "../../../../utilidades/ManipuladorDeDatas";
 
 const CompletudeMatricula = () => {
 
@@ -60,7 +61,7 @@ const CompletudeMatricula = () => {
                   <Campo
                     tipo="date"
                     id="dataCompletudeMatricula"
-                    valor={formularioDeDados.dataCompletudeMatricula}
+                    valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataCompletudeMatricula)}
                     setar={(e) => {
                       setFormularioDeDados({...formularioDeDados, dataCompletudeMatricula: e.target.value})
                     }
@@ -86,6 +87,16 @@ const CompletudeMatricula = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
+                {formularioDeDados.imagemAssinaturaResponsavel !== '' ?
+                  <CCol>
+                    <CImage src={formularioDeDados.imagemAssinaturaResponsavel} width={600} height={300}
+                            style={{margin: "20px auto"}}/>
+                  </CCol>
+                  :
+                  <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
+                }
               </CRow>
 
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {

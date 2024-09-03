@@ -16,7 +16,8 @@ import Campo from '../../../../components/campos/Campo';
 import {salvar, verificarStatusDoFormularioDeCadastro} from "../../../../requisicoes/Praticante";
 import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
-import {aplicaMascaraDeTelefone} from "../../../../utilidades/ValidadorDeCampos"; // Importando o componente Campo
+import {aplicaMascaraDeTelefone} from "../../../../utilidades/ValidadorDeCampos";
+import {formatarDataPadraoAnoMesDia} from "../../../../utilidades/ManipuladorDeDatas"; // Importando o componente Campo
 
 const ResponsavelPeloPraticante = () => {
 
@@ -87,7 +88,7 @@ const ResponsavelPeloPraticante = () => {
                   <Campo
                     tipo="date"
                     id="dataNascimento"
-                    valor={formularioDeDados.dataNascimento}
+                    valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataNascimento)}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, dataNascimento: e.target.value})}
                     legenda="Data de nascimento"
                     disabled={desabilitar}

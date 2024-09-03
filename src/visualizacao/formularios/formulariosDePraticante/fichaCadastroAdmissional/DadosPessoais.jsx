@@ -21,6 +21,7 @@ import axios, {HttpStatusCode} from "axios";
 import {
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
 } from "../../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
+import {formatarDataPadraoAnoMesDia} from "../../../../utilidades/ManipuladorDeDatas";
 
 const DadosPessoais = (props) => {
 
@@ -149,7 +150,7 @@ const DadosPessoais = (props) => {
                   <Campo
                     tipo="date"
                     id="dataNascimento"
-                    valor={formularioDeDados.dataNascimento}
+                    valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataNascimento)}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, dataNascimento: e.target.value})}
                     legenda="Data de Nascimento"
                     disabled={desabilitar}

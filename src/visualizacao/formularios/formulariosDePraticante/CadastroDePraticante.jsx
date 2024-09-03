@@ -34,8 +34,9 @@ import PlanoTerapeuticoSingular from "./planoTerapeuticoSingular/PlanoTerapeutic
 
 import "./CadastroDePraticante.css"
 import EmPE from "./avaliacaoFisioterapeutica/EmPe";
-import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import Modal from "../../../components/modal/Modal";
+import {verificarSeEstaFinalizado} from "../../../utilidades/VerificadorDeStatusCadastro";
 
 const CadastroDePraticante = () => {
 

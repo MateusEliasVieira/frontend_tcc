@@ -4,7 +4,7 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CContainer,
+  CContainer, CImage, CRow,
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
 import {salvar, verificarStatusDoFormularioDeCadastro} from "../../../../requisicoes/Praticante";
@@ -87,6 +87,16 @@ const AvaliacaoPsicologica = () => {
             legenda="Imagem da assinatura ou CRP e carimbo"
             disabled={desabilitar}
           />
+          <CRow>
+            {formularioDeDados.imagemAssinaturaOuCRPECarimbo !== '' ?
+              <div>
+                <CImage src={formularioDeDados.imagemAssinaturaOuCRPECarimbo} width={600} height={300}
+                        style={{margin: "20px auto"}}/>
+              </div>
+              :
+              <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
+            }
+          </CRow>
           <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
             salvar(formularioDeDados, SALVAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)
           }

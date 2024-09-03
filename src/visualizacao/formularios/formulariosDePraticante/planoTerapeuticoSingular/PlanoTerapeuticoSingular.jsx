@@ -5,7 +5,7 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CContainer,
+  CContainer, CImage,
   CRow
 } from '@coreui/react';
 import Campo from '../../../../components/campos/Campo';
@@ -18,6 +18,7 @@ import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem"
 import Modal from "../../../../components/modal/Modal";
 import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
+import {formatarDataPadraoAnoMesDia} from "../../../../utilidades/ManipuladorDeDatas";
 
 const PlanoTerapeuticoSingular = () => {
 
@@ -68,7 +69,7 @@ const PlanoTerapeuticoSingular = () => {
                   <Campo
                     tipo="date"
                     id="dataPlanejamento"
-                    valor={formularioDeDados.dataPlanejamento}
+                    valor={formatarDataPadraoAnoMesDia(formularioDeDados.dataPlanejamento)}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, dataPlanejamento: e.target.value})}
                     legenda="Data do planejamento"
                     disabled={desabilitar}
@@ -194,6 +195,16 @@ const PlanoTerapeuticoSingular = () => {
                     disabled={desabilitar}
                   />
                 </CCol>
+              </CRow>
+              <CRow>
+                {formularioDeDados.fisioterapeutaImagemDaAssinaturaOuCarimbo !== '' ?
+                  <CCol>
+                    <CImage src={formularioDeDados.fisioterapeutaImagemDaAssinaturaOuCarimbo} width={600} height={300}
+                            style={{margin: "20px auto"}}/>
+                  </CCol>
+                  :
+                  <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
+                }
               </CRow>
               <CButton color="danger" style={{color: "white"}} disabled={desabilitar} onClick={() => {
                 salvar(formularioDeDados, SALVAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POST, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal)

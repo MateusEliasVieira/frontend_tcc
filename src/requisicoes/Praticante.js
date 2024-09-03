@@ -15,6 +15,7 @@ import {
 import {camposPreenchidosPraticante} from "../utilidades/VerificadorDeCamposPraticante";
 import {ATUALIZAR_EVOLUCAO_DO_PRATICANTE_PUT} from "../endpoints/praticante/evolucao/Endpoint";
 import {BUSCAR_SAUDE_DO_PRATICANTE_POR_ID_GET} from "../endpoints/praticante/avaliacaoPsicologica/Endpoints";
+import {PESQUISAR_PRATICANTE} from "../URL/URL";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
@@ -111,65 +112,70 @@ const atualizarDadosPessoais = async (formularioDeDados, setDisplayModal, setTit
   }
 };
 
+
 const salvar = async (formularioDeDados, endpoint, setDesabilitar, setDisplayModal, setTituloModal, setConteudoModal) => {
 
   const idPraticante = localStorage.getItem("idPraticante");
 
-  if (idPraticante !== null && idPraticante !== "") {
+  if (idPraticante !== null && idPraticante !== "" && idPraticante !== "null") {
 
     formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados);
 
-    await axios.post(
-      endpoint,
-      JSON.stringify({...formularioDeDados}),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${login.token}`
-        },
-      }
-    ).then((response) => {
+    try {
+      const response = await axios.post(
+        endpoint,
+        JSON.stringify({...formularioDeDados}),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${login.token}`
+          },
+        }
+      );
+
       if (response.status === HttpStatusCode.Created) {
         setDesabilitar("disabled");
-        apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
+        apresentarModal("Aviso", "Formulário cadastrado com sucesso!", setDisplayModal, setTituloModal, setConteudoModal);
 
-        verificarSeEstaFinalizado(idPraticante).then((verificacao)=>{
-          console.log(verificacao)
-          if(verificacao.status === true){
-            localStorage.setItem("idPraticante",null)
-            apresentarModal("Aviso", "Cadastro do praticante concluído com sucesso!", setDisplayModal, setTituloModal, setConteudoModal)
+        try {
+          const verificacao = await verificarSeEstaFinalizado(idPraticante);
+
+          if (verificacao.status === true) {
+            localStorage.setItem("idPraticante", null);
+            window.location.href = PESQUISAR_PRATICANTE // envia o usuário para pesquisa, caso esteja finalizado o cadastro
           }
-        })
-
+        } catch (error) {
+          console.log(error);
+        }
       }
-    })
-      .catch((error) => {
-        if (error.response) {
-          if (error.response.data) {
-            if (error.response.data.lista) {
-              const lista = error.response.data.lista.map((item) => item.titulo).join("\n");
-              apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
-            } else if (error.response.data.titulo) {
-              if (error.response.data.redirect) {
-                window.location = error.response.data.redirect;
-              } else {
-                apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
-              }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.data) {
+          if (error.response.data.lista) {
+            const lista = error.response.data.lista.map((item) => item.titulo).join("\n");
+            apresentarModal("Aviso", lista, setDisplayModal, setTituloModal, setConteudoModal);
+          } else if (error.response.data.titulo) {
+            if (error.response.data.redirect) {
+              window.location = error.response.data.redirect;
             } else {
-              apresentarModal("Aviso", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
+              apresentarModal("Aviso", error.response.data.titulo, setDisplayModal, setTituloModal, setConteudoModal);
             }
           } else {
-            apresentarModal("Aviso", "Erro interno do sistema! Resposta sem dados.", setDisplayModal, setTituloModal, setConteudoModal);
+            apresentarModal("Aviso", "Erro interno do sistema!", setDisplayModal, setTituloModal, setConteudoModal);
           }
         } else {
-          apresentarModal("Aviso", "Erro interno do sistema! Nenhuma resposta recebida.", setDisplayModal, setTituloModal, setConteudoModal);
+          apresentarModal("Aviso", "Erro interno do sistema! Resposta sem dados.", setDisplayModal, setTituloModal, setConteudoModal);
         }
-      })
-
+      } else {
+        apresentarModal("Aviso", "Erro interno do sistema! Nenhuma resposta recebida.", setDisplayModal, setTituloModal, setConteudoModal);
+      }
+    }
   } else {
     apresentarModal("Aviso", "Cadastre os Dados Pessoais do Praticante primeiro!", setDisplayModal, setTituloModal, setConteudoModal);
   }
 };
+
+
 const atualizar = async (formularioDeDados, endpoint, setDisplayModal, setTituloModal, setConteudoModal) => {
 
   formularioDeDados = aplicarValorParaCampoVazioCasoExista(formularioDeDados);
