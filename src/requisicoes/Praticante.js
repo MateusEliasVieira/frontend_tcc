@@ -16,6 +16,9 @@ import {camposPreenchidosPraticante} from "../utilidades/VerificadorDeCamposPrat
 import {ATUALIZAR_EVOLUCAO_DO_PRATICANTE_PUT} from "../endpoints/praticante/evolucao/Endpoint";
 import {BUSCAR_SAUDE_DO_PRATICANTE_POR_ID_GET} from "../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import {PESQUISAR_PRATICANTE} from "../URL/URL";
+import {
+  BUSCAR_PLANO_TERAPEUTICO_SINGULAR_DO_PRATICANTE_POR_ID_GET
+} from "../endpoints/praticante/planoTerapeuticoSingular/Endpoints";
 
 const login = JSON.parse(localStorage.getItem('login'));
 
@@ -415,6 +418,37 @@ const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, f
 }
 
 
+const verificarStatusDoFormularioDeAtualizacao = (endpoint, setFormularioDeDados) => {
+
+  const id = Number(window.location.href.split("?id=")[1]);
+
+  if (id) {
+
+    axios.get(endpoint, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${login.token}`
+      },
+      params: {
+        id: id
+      }
+    })
+      .then((response) => {
+        setFormularioDeDados(response.data);
+      })
+      .catch((error) => {
+        if (error.response.data.urlRedirecionamento) {
+          window.location.href = error.response.data.urlRedirecionamento
+        }
+      });
+
+  } else {
+    window.location.href = PESQUISAR_PRATICANTE;
+  }
+
+}
+
+
 export {
   salvar,
   atualizar,
@@ -425,5 +459,6 @@ export {
   buscarPraticantePorID,
   buscarDadosPessoaisDosPraticantes,
   atualizarEvolucao,
-  verificarStatusDoFormularioDeCadastro
+  verificarStatusDoFormularioDeCadastro,
+  verificarStatusDoFormularioDeAtualizacao
 }
