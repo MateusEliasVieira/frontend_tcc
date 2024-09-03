@@ -14,15 +14,16 @@ import {
   CRow
 } from '@coreui/react';
 import Campo from '../../../components/campos/Campo';
-import {atualizarDadosPessoais, verificarStatusCadastroParaAtualizacao} from "../../../requisicoes/Praticante";
+import {
+  atualizarDadosPessoais,
+  verificarStatusCadastroParaAtualizacaoDadosPessoais
+} from "../../../requisicoes/Praticante";
 import Modal from "../../../components/modal/Modal";
-import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
-import axios from "axios";
 import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
-import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
 
 const DadosPessoais = () => {
 
@@ -58,7 +59,7 @@ const DadosPessoais = () => {
 
   useEffect(() => {
 
-    verificarStatusCadastroParaAtualizacao(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setIdPraticante)
+    verificarStatusCadastroParaAtualizacaoDadosPessoais(BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET, setFormularioDeDados, setIdPraticante)
 
   }, [idPraticante]);
 

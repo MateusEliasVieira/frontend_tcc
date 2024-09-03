@@ -2,7 +2,9 @@ import axios, {HttpStatusCode} from "axios";
 import {
   ATUALIZAR_DADOS_PESSOAIS_DO_PRATICANTE_PUT,
   BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_ID_GET,
-  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET, BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET,
+  BUSCAR_DADOS_PESSOAIS_DO_PRATICANTE_POR_NOME_GET,
+  BUSCAR_DADOS_PESSOAIS_DOS_PRATICANTES_GET,
+  BUSCAR_EDUCACAO_DO_PRATICANTE_POR_ID_GET,
   SALVAR_DADOS_PESSOAIS_DO_PRATICANTE_POST
 } from "../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../constantes/Constantes";
@@ -456,7 +458,7 @@ const verificarStatusDoFormularioDeCadastro = (endpoint, setFormularioDeDados, f
 
 }
 
-const verificarStatusCadastroParaAtualizacao = async (endpoint, setFormularioDeDados, setIdPraticante) => {
+const verificarStatusCadastroParaAtualizacaoDadosPessoais = async (endpoint, setFormularioDeDados, setIdPraticante) => {
 
   const id = Number(window.location.href.split("?id=")[1]);
 
@@ -499,21 +501,83 @@ const verificarStatusCadastroParaAtualizacao = async (endpoint, setFormularioDeD
     window.location.href = PESQUISAR_PRATICANTE;
   }
 
+}
+
+
+const verificarStatusCadastroParaAtualizacaoDosDemaisFormularios = async (endpoint, setFormularioDeDados, setIdPraticante) => {
+
+  const id = Number(window.location.href.split("?id=")[1]);
+
+  if (id) {
+
+    setIdPraticante(id)
+
+    try {
+
+      const verificacao = await verificarSeEstaFinalizado(id);
+
+      if (verificacao.status === true || verificacao.status === 'true') {
+
+        // Finalizou, pode atualizar
+        axios.get(endpoint, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${login.token}`
+          },
+          params: {
+            id: id
+          }
+        })
+          .then((response) => {
+            if (response.status === HttpStatusCode.Ok && response.data) {
+              setFormularioDeDados(response.data);
+            } else {
+              // não existe ainda
+              setFormularioDeDados(prevState => ({
+                ...prevState,
+                praticante: {id}
+              }));
+            }
+          })
+          .catch((error) => {
+            // não existe ainda
+            setFormularioDeDados(prevState => ({
+              ...prevState,
+              praticante: {id}
+            }));
+          });
+
+      } else {
+        // Ainda não finalizou o cadastro, então não pode continuar com a atualização
+        window.location.href = PESQUISAR_PRATICANTE;
+      }
+
+    } catch (error) {
+      window.location.href = PESQUISAR_PRATICANTE;
+    }
+
+  } else {
+    // Não tem id na url, não pode prosseguir com a atualização
+    window.location.href = PESQUISAR_PRATICANTE;
+  }
 
 }
+
+
 
 export {
   salvar,
   atualizar,
-  salvarDadosPessoais,
-  buscarDadosPraticante,
-  atualizarDadosPessoais,
-  buscarPraticantePorNome,
-  buscarPraticantePorID,
-  buscarDadosPessoaisDosPraticantes,
-  buscarQuantidadeTotalDePraticantes,
   buscarPagina,
   atualizarEvolucao,
+  salvarDadosPessoais,
+  buscarDadosPraticante,
+  buscarPraticantePorID,
+  atualizarDadosPessoais,
+  buscarPraticantePorNome,
+  buscarDadosPessoaisDosPraticantes,
+  buscarQuantidadeTotalDePraticantes,
   verificarStatusDoFormularioDeCadastro,
-  verificarStatusCadastroParaAtualizacao
+  verificarStatusCadastroParaAtualizacaoDadosPessoais,
+  verificarStatusCadastroParaAtualizacaoDosDemaisFormularios
 }
