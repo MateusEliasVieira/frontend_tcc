@@ -33,37 +33,37 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
     <CTable hover>
       <CTableHead>
         <CTableRow>
-          <CTableHeaderCell>Nome</CTableHeaderCell>
-          <CTableHeaderCell>Email</CTableHeaderCell>
-          <CTableHeaderCell>Telefone</CTableHeaderCell>
-          <CTableHeaderCell>Formação</CTableHeaderCell>
-          <CTableHeaderCell>Nível</CTableHeaderCell>
-          <CTableHeaderCell>Vínculo</CTableHeaderCell>
-          <CTableHeaderCell>Ações</CTableHeaderCell>
+          <CTableHeaderCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>Nome</CTableHeaderCell>
+          <CTableHeaderCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>Email</CTableHeaderCell>
+          <CTableHeaderCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>Telefone</CTableHeaderCell>
+          <CTableHeaderCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>Formação</CTableHeaderCell>
+          <CTableHeaderCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>Nível</CTableHeaderCell>
+          <CTableHeaderCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>Vínculo</CTableHeaderCell>
+          <CTableHeaderCell colSpan="2" style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>Ações</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
       <CTableBody>
         {
           list.map((item) => (
             <CTableRow key={item.idUsuario} style={{cursor:"pointer"}}>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.nome}</CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.email}</CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.telefone}</CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{item.possuiFormacao ? 'Sim' : 'Não'}</CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", fontWeight:"bold", color: item.role === 'ROLE_USER' ? '#e55353':'#e55353' }}>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>{item.nome}</CTableDataCell>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}><a href={`mailto:${item.email}`}>{item.email}</a></CTableDataCell>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>{item.telefone}</CTableDataCell>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "50px", textAlign: "center" }}>{item.possuiFormacao ? 'Sim' : 'Não'}</CTableDataCell>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center", fontWeight:"bold", color: item.role === 'ROLE_USER' ? '#e55353':'#e55353' }}>
                 {item.role === 'ROLE_USER' ? 'Usuário' : 'Administrador'}
               </CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>{formatarVinculo(item.vinculo)}</CTableDataCell>
-              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px" }}>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>{formatarVinculo(item.vinculo)}</CTableDataCell>
+              <CTableDataCell style={{ verticalAlign: "middle", minWidth: "150px", textAlign: "center" }}>
                 <div className="container text-center">
                   <div className="row">
                     <div className="col">
                       <CButton color="" title={`Será redirecionado para atualizar os dados de ${item.nome}`} onClick={() => {
                         window.location.href = `${ATUALIZAR_USUARIO}?id=${item.idUsuario}`
-                      }}><CIcon icon={cilSettings}/></CButton>
+                      }}><CIcon icon={cilSettings} width={20}/></CButton>
                     </div>
                     <div className="col">
-                      <CButton color="" title={`Esta ação deleta ${item.nome}`} onClick={() => {
+                      <CButton color="" title={`Esta ação deletará ${item.nome}`} onClick={() => {
                         apresentarModalDeOpcoes("Atenção",
                         "Deseja realmente deletar este usuário?",
                         setDisplayModalOpcoes,
@@ -71,7 +71,7 @@ const TabelaDeUsuarios = ({ list , setDisplayModalOpcoes, setTituloModalOpcoes, 
                         setConteudoModalOpcoes)
                         setIdParaDeletar(item.idUsuario)
                       }
-                      }><CIcon icon={cilTrash}/></CButton>
+                      }><CIcon icon={cilTrash} width={20}/></CButton>
                     </div>
                   </div>
                 </div>

@@ -345,7 +345,8 @@ const buscarQuantidadeTotalDePraticantes = async (setTotal) => {
     })
 }
 
-const buscarPagina = async (pagina, setDadosPagina, setListaAtualizada) => {
+const buscarPagina = async (pagina, setDadosPagina, setDados, setAtivar) => {
+  setAtivar(true)
   await axios.get(BUSCAR_PAGINA_GET, {
     headers: {
       'Content-Type': 'application/json',
@@ -357,11 +358,11 @@ const buscarPagina = async (pagina, setDadosPagina, setListaAtualizada) => {
   })
     .then((response) => {
       setDadosPagina(response.data)
-      setListaAtualizada(response.data.dadosPessoais)
-      console.log(response.data)
+      setDados(response.data.dadosPessoais)
+      setAtivar(false)
     })
     .catch((error) => {
-      console.log(error)
+      setAtivar(false)
     })
 }
 

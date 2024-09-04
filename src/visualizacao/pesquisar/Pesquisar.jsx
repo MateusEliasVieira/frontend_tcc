@@ -7,6 +7,7 @@ import {
   buscarPraticantePorNome,
   buscarQuantidadeTotalDePraticantes
 } from "../../requisicoes/Praticante";
+import Pagination from "../../components/pagination/Pagination";
 
 const Pesquisar = () => {
 
@@ -16,7 +17,7 @@ const Pesquisar = () => {
   const [ativar, setAtivar] = useState(true)
 
   useEffect(() => {
-    buscarDadosPessoaisDosPraticantes(setDados, setAtivar)
+    buscarDadosPessoaisDosPraticantes(setDados, setAtivar) // o back-end devolve a primeira página com 5 registros
   }, []);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const Pesquisar = () => {
   }, [nome])
 
   useEffect(() => {
-    buscarQuantidadeTotalDePraticantes(setTotal)
+    buscarQuantidadeTotalDePraticantes(setTotal) // back-end retorna o número total de praticantes cadastrados
   }, [])
 
   return (
@@ -62,6 +63,8 @@ const Pesquisar = () => {
 
         }
       </CCardBody>
+
+      <Pagination setDados={setDados} setAtivar={setAtivar}/>
 
     </CCard>
   )

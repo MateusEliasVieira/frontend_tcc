@@ -7,7 +7,6 @@ import ModalComEvolucaoGraficoDeTorta from "../modal/ModalComEvolucaoGraficoDeTo
 import {
   ATUALIZAR_PRATICANTE,
   CADASTRO_PRATICANTE,
-  FINALIZAR_CADASTRO_PRATICANTE,
   GERAR_RELATORIO_PRATICANTE
 } from "../../URL/URL";
 import {verificarSeEstaFinalizado} from "../../utilidades/VerificadorDeStatusCadastro";
