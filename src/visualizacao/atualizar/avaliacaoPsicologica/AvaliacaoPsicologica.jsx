@@ -14,7 +14,7 @@ import {
 } from "../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
 import Modal from "../../../components/modal/Modal";
-import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
 import axios from "axios";
 
@@ -71,28 +71,29 @@ const AvaliacaoPsicologica = () => {
             }
             legenda="Síntese do caso e observações complementares"
           />
+
           <Campo
             tipo="file"
             id="imagemAssinaturaOuCRPECarimbo"
-            setar={(e) =>
+            setar={(e) => {
               converterImagemEmBase64(e.target.files[0])
-                .then((imagemBase64) => {
-                  setFormularioDeDados({...formularioDeDados, imagemAssinaturaOuCRPECarimbo: imagemBase64})
+                .then((resolve) => {
+                  setFormularioDeDados({...formularioDeDados, imagemAssinaturaOuCRPECarimbo: resolve})
                 })
-                .catch(() => {
-                  alert("Falha ao selecionar imagem!")
-                })
-            }
+                .catch((reject) => {
+                  apresentarModal("Aviso", reject, setDisplayModal, setTituloModal, setConteudoModal)
+                });
+            }}
             legenda="Imagem da assinatura ou CRP e carimbo"
           />
-            {formularioDeDados.imagemAssinaturaOuCRPECarimbo !== '' ?
-              <div>
-                <CImage src={formularioDeDados.imagemAssinaturaOuCRPECarimbo} width={600} height={300}
-                        style={{margin: "20px auto"}}/>
-              </div>
-              :
-              <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
-            }
+          {formularioDeDados.imagemAssinaturaOuCRPECarimbo !== '' ?
+            <div>
+              <CImage src={formularioDeDados.imagemAssinaturaOuCRPECarimbo} width={600} height={300}
+                      style={{margin: "20px auto"}}/>
+            </div>
+            :
+            <strong style={{margin: "20px auto"}}>Nenhuma imagem selecionada</strong>
+          }
           <CButton color="danger" style={{color: "white"}} onClick={() => {
             atualizar(formularioDeDados, ATUALIZAR_AVALIACAO_PSICOLOGICA_DO_PRATICANTE_PUT, setDisplayModal, setTituloModal, setConteudoModal)
           }

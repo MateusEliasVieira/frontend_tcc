@@ -16,7 +16,7 @@ import {
 } from "../../../../endpoints/praticante/planoTerapeuticoSingular/Endpoints";
 import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
 import Modal from "../../../../components/modal/Modal";
-import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
 import {formatarDataPadraoAnoMesDia} from "../../../../utilidades/ManipuladorDeDatas";
 
@@ -178,17 +178,16 @@ const PlanoTerapeuticoSingular = () => {
                   <Campo
                     tipo="file"
                     id="fisioterapeutaImagemDaAssinaturaOuCarimbo"
-                    valor={formularioDeDados.fisioterapeutaImagemDaAssinaturaOuCarimbo}
                     setar={(e) => {
                       converterImagemEmBase64(e.target.files[0])
                         .then((resolve) => {
                           setFormularioDeDados({
                             ...formularioDeDados,
                             fisioterapeutaImagemDaAssinaturaOuCarimbo: resolve
-                          });
+                          })
                         })
                         .catch((reject) => {
-                          console.log(reject);
+                          apresentarModal("Aviso", reject, setDisplayModal, setTituloModal, setConteudoModal)
                         });
                     }}
                     legenda={"Imagem do carimbo/assinatura do fisioterapeuta"}

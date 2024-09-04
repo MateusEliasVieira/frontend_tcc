@@ -18,7 +18,7 @@ import {
 import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
 import axios from "axios";
 import {converterImagemEmBase64} from "../../../utilidades/ConversorDeImagem";
-import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
 
 const PlanoTerapeuticoSingular = () => {
@@ -180,7 +180,7 @@ const PlanoTerapeuticoSingular = () => {
                           });
                         })
                         .catch((reject) => {
-                          console.log(reject);
+                          apresentarModal("Aviso", reject, setDisplayModal, setTituloModal, setConteudoModal)
                         });
                     }}
                     legenda={"Imagem do carimbo/assinatura do fisioterapeuta"}

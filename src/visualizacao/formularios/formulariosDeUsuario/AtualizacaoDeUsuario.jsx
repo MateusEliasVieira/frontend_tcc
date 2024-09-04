@@ -14,7 +14,9 @@ import {converterImagemEmBase64} from '../../../utilidades/ConversorDeImagem';
 import {apresentarModal, esconderModal} from '../../../utilidades/ManipuladorDeModal';
 import Campo from "../../../components/campos/Campo";
 import {atualizarDadosDoUsuario, buscarUsuarioPorId, salvar} from "../../../requisicoes/Usuario";
-import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas"; // Certifique-se de que o caminho está correto para o seu projeto
+import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
+import {aplicaMascaraDeCPF, aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos";
+import {FOTO} from "../../../assets/imagens/FotoPadraoUsuarioBase64"; // Certifique-se de que o caminho está correto para o seu projeto
 
 const AtualizacaoDeUsuario = () => {
   const [displayModal, setDisplayModal] = useState("none");
@@ -119,8 +121,11 @@ const AtualizacaoDeUsuario = () => {
                       legenda="CPF"
                       id="cpf"
                       tipo="text"
-                      valor={formularioDeDados.cpf}
-                      setar={(e) => setFormularioDeDados({...formularioDeDados, cpf: e.target.value})}
+                      valor={aplicaMascaraDeCPF(formularioDeDados.cpf)}
+                      setar={(e) => setFormularioDeDados({
+                        ...formularioDeDados,
+                        cpf: aplicaMascaraDeCPF(e.target.value)
+                      })}
                     />
                   </CCol>
                   <CCol md="auto">
@@ -140,8 +145,11 @@ const AtualizacaoDeUsuario = () => {
                       legenda="Telefone"
                       id="telefone"
                       tipo="tel"
-                      valor={formularioDeDados.telefone}
-                      setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: e.target.value})}
+                      valor={aplicaMascaraDeTelefone(formularioDeDados.telefone)}
+                      setar={(e) => setFormularioDeDados({
+                        ...formularioDeDados,
+                        telefone: aplicaMascaraDeTelefone(e.target.value)
+                      })}
                     />
                   </CCol>
                   <CCol>
@@ -243,7 +251,10 @@ const AtualizacaoDeUsuario = () => {
                 }
 
                 <CButton color="danger" style={{color: "white"}} onClick={() => {
-                    atualizarDadosDoUsuario(formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal)
+                  if (formularioDeDados.foto === '') {
+                    setFormularioDeDados({...formularioDeDados, foto: FOTO})
+                  }
+                  atualizarDadosDoUsuario(formularioDeDados, setDisplayModal, setTituloModal, setConteudoModal)
                 }
                 }>
                   Atualizar Usuário

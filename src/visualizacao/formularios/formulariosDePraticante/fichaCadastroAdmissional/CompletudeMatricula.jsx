@@ -73,19 +73,18 @@ const CompletudeMatricula = () => {
                   <Campo
                     tipo="file"
                     id="imagemAssinaturaResponsavel"
-                    setar={async (e) => {
-                      try {
-                        const base64 = await converterImagemEmBase64(e.target.files[0]);
-                        setFormularioDeDados({ ...formularioDeDados, imagemAssinaturaResponsavel: base64 });
-                      } catch (error) {
-                        alert(error.message); // Certifique-se de usar error.message
-                        apresentarModal("Aviso", error.message, setDisplayModal, setTituloModal, setConteudoModal);
-                      }
+                    setar={(e) => {
+                      converterImagemEmBase64(e.target.files[0])
+                        .then((resolve) => {
+                          setFormularioDeDados({...formularioDeDados, imagemAssinaturaResponsavel: resolve})
+                        })
+                        .catch((reject) => {
+                          apresentarModal("Aviso", reject, setDisplayModal, setTituloModal, setConteudoModal)
+                        });
                     }}
                     legenda="Imagem da assinatura do responsável"
                     disabled={desabilitar}
                   />
-
                 </CCol>
               </CRow>
               <CRow>

@@ -14,7 +14,7 @@ import {
 } from "../../../../endpoints/praticante/avaliacaoPsicologica/Endpoints";
 import {converterImagemEmBase64} from "../../../../utilidades/ConversorDeImagem";
 import Modal from "../../../../components/modal/Modal";
-import {esconderModal} from "../../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../../utilidades/ManipuladorDeModal";
 import axios, {HttpStatusCode} from "axios";
 
 const AvaliacaoPsicologica = () => {
@@ -75,15 +75,15 @@ const AvaliacaoPsicologica = () => {
           <Campo
             tipo="file"
             id="imagemAssinaturaOuCRPECarimbo"
-            setar={(e) =>
+            setar={(e) => {
               converterImagemEmBase64(e.target.files[0])
-                .then((imagemBase64) => {
-                  setFormularioDeDados({...formularioDeDados, imagemAssinaturaOuCRPECarimbo: imagemBase64})
+                .then((resolve) => {
+                  setFormularioDeDados({...formularioDeDados, imagemAssinaturaOuCRPECarimbo: resolve})
                 })
-                .catch(() => {
-                  alert("Falha ao selecionar imagem!")
-                })
-            }
+                .catch((reject) => {
+                  apresentarModal("Aviso", reject, setDisplayModal, setTituloModal, setConteudoModal)
+                });
+            }}
             legenda="Imagem da assinatura ou CRP e carimbo"
             disabled={desabilitar}
           />

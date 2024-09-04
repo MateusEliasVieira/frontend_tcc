@@ -15,7 +15,7 @@ import {
 } from "../../../endpoints/praticante/fichaCadastroAdmissional/Endpoints";
 import {CADASTRADO} from "../../../constantes/Constantes";
 import Modal from "../../../components/modal/Modal";
-import {esconderModal} from "../../../utilidades/ManipuladorDeModal";
+import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {PESQUISAR_PRATICANTE} from "../../../URL/URL";
 import axios from "axios";
 import {formatarDataPadraoAnoMesDia} from "../../../utilidades/ManipuladorDeDatas";
@@ -79,7 +79,7 @@ const CompletudeMatricula = () => {
                           setFormularioDeDados({...formularioDeDados, imagemAssinaturaResponsavel: resolve});
                         })
                         .catch((reject) => {
-                          console.log(reject);
+                          apresentarModal("Aviso", reject, setDisplayModal, setTituloModal, setConteudoModal)
                         });
                     }}
                     legenda="Imagem da assinatura do responsável"

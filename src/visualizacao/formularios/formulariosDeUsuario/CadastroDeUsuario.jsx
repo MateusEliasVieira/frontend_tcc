@@ -17,6 +17,7 @@ import {salvar} from "../../../requisicoes/Usuario";
 import Campo from "../../../components/campos/Campo";
 import {aplicaMascaraDeCPF, aplicaMascaraDeTelefone} from "../../../utilidades/ValidadorDeCampos";
 import VerSenhaCadUsuario from "../../../components/campos/VerSenhaCadUsuario";
+import {FOTO} from "../../../assets/imagens/FotoPadraoUsuarioBase64";
 
 const CadastroDeUsuario = () => {
 
@@ -30,7 +31,7 @@ const CadastroDeUsuario = () => {
     email: '', nomeUsuario: '', senha: '', detalhesFormacao: '',
     cidade: '', bairro: '', logradouro: '', role: '', vinculo: '', possuiFormacao: '',
   });
-  const[senha,setSenha]=useState('')
+  const [senha, setSenha] = useState('')
 
   return (
     <CRow>
@@ -64,7 +65,7 @@ const CadastroDeUsuario = () => {
                     id="foto"
                     legenda="Foto (Tamanho máximo: 8MB)"
                     tipo="file"
-                    setar={ async (e) => {
+                    setar={async (e) => {
                       await converterImagemEmBase64(e.target.files[0])
                         .then((resolve) => {
                           setFormularioDeDados({...formularioDeDados, foto: resolve});
@@ -99,7 +100,7 @@ const CadastroDeUsuario = () => {
                     legenda="CPF"
                     id="cpf"
                     tipo="text"
-                    valor={formularioDeDados.cpf}
+                    valor={aplicaMascaraDeCPF(formularioDeDados.cpf)}
                     setar={(e) => setFormularioDeDados({...formularioDeDados, cpf: aplicaMascaraDeCPF(e.target.value)})}
                   />
                 </CCol>
@@ -120,8 +121,11 @@ const CadastroDeUsuario = () => {
                     legenda="Telefone"
                     id="telefone"
                     tipo="tel"
-                    valor={formularioDeDados.telefone}
-                    setar={(e) => setFormularioDeDados({...formularioDeDados, telefone: aplicaMascaraDeTelefone(e.target.value)})}
+                    valor={aplicaMascaraDeTelefone(formularioDeDados.telefone)}
+                    setar={(e) => setFormularioDeDados({
+                      ...formularioDeDados,
+                      telefone: aplicaMascaraDeTelefone(e.target.value)
+                    })}
                   />
                 </CCol>
                 <CCol>
@@ -238,8 +242,11 @@ const CadastroDeUsuario = () => {
                   (<></>)
               }
 
-              <CButton color="danger" style={{color:"white"}} onClick={() => {
+              <CButton color="danger" style={{color: "white"}} onClick={() => {
                 setFormularioDeDados({...formularioDeDados, senha: senha})
+                if (formularioDeDados.foto === '') {
+                  setFormularioDeDados({...formularioDeDados, foto: FOTO})
+                }
                 salvar(formularioDeDados, SALVAR_NOVO_USUARIO_POST, setDisplayModal, setTituloModal, setConteudoModal)
               }}>
                 Salvar
