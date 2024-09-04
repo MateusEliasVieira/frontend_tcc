@@ -83,19 +83,18 @@ const AtualizacaoDeUsuario = () => {
                 <CRow>
                   <CCol>
                     <Campo
-                      id="foto"
-                      legenda="Foto (Tamanho máximo: 8MB)"
                       tipo="file"
+                      id="foto"
                       setar={(e) => {
                         converterImagemEmBase64(e.target.files[0])
                           .then((resolve) => {
-                            setFormularioDeDados({...formularioDeDados, foto: resolve});
-                            setFotoAtual(resolve);
+                            setFormularioDeDados({...formularioDeDados, foto: resolve})
                           })
                           .catch((reject) => {
-                            console.log(reject);
+                            apresentarModal("Aviso", reject, setDisplayModal, setTituloModal, setConteudoModal)
                           });
                       }}
+                      legenda="Foto (Tamanho máximo: 8MB)"
                     />
                   </CCol>
                   {formularioDeDados.foto !== "" ? (
