@@ -17,7 +17,7 @@ import "./Login.css"
 import {apresentarModal, esconderModal} from "../../../utilidades/ManipuladorDeModal";
 import {ESQUECI_MINHA_SENHA} from "../../../URL/URL";
 import VerSenha from "../../../components/campos/VerSenha";
-import {limparLocalStorage} from "../../../utilidades/VerificadorDeStatusCadastro";
+import ModalTermosDeUso from "../../../components/modal/ModalTermosDeUso";
 
 const Login = () => {
 
@@ -39,6 +39,7 @@ const Login = () => {
   }
 
   useEffect(() => {
+
     const expirado = obterParametroDaURL()
     if (expirado === 'true') {
       apresentarModal("Aviso", "Sessão expirada! Para continuar faça o login novamente!", setDisplayModal, setTituloModal, setConteudoModal)
@@ -57,47 +58,60 @@ const Login = () => {
   }, [senha]);
 
   const logar = async () => {
-    await axios.post(LOGIN_POST,
-      JSON.stringify({...form}),
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      }
-    )
-      .then((response) => {
-        if (response.status === 202) {
-          localStorage.setItem('login', JSON.stringify(response.data));
-          window.location.href = "/dashboard"
-          console.log("Dados login = " + response.data)
+
+    const termos_de_uso = localStorage.getItem('termos_de_uso');
+
+    if (termos_de_uso === "ACEITO") {
+
+      // Aceitou os termos de uso
+
+      await axios.post(LOGIN_POST,
+        JSON.stringify({...form}),
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
         }
-      })
-      .catch((error) => {
-        if (error.response.data !== undefined) {
-          if (error.response.data.lista !== undefined) {
-            // Tem lista de erro
-            let erros = ''
-            error.response.data.lista.forEach((item) => {
-              erros += `${item.mensagem} \n`
-            })
-            apresentarModal("Aviso", erros, setDisplayModal, setTituloModal, setConteudoModal)
-          } else {
-            apresentarModal("Aviso", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
+      )
+        .then((response) => {
+          if (response.status === 202) {
+            localStorage.setItem('login', JSON.stringify(response.data));
+            window.location.href = "/dashboard"
+            console.log("Dados login = " + response.data)
           }
-        } else {
-          apresentarModal("Aviso", "Erro interno do sistema", setDisplayModal, setTituloModal, setConteudoModal)
-        }
-      })
+        })
+        .catch((error) => {
+          if (error.response.data !== undefined) {
+            if (error.response.data.lista !== undefined) {
+              // Tem lista de erro
+              let erros = ''
+              error.response.data.lista.forEach((item) => {
+                erros += `${item.mensagem} \n`
+              })
+              apresentarModal("Aviso", erros, setDisplayModal, setTituloModal, setConteudoModal)
+            } else {
+              apresentarModal("Aviso", error.response.data.mensagem, setDisplayModal, setTituloModal, setConteudoModal)
+            }
+          } else {
+            apresentarModal("Aviso", "Erro interno do sistema", setDisplayModal, setTituloModal, setConteudoModal)
+          }
+        })
+    } else {
+      // Não aceitou os termos de uso
+      apresentarModal("Aviso", "Infelizmente só é possível prosseguir se você concordar com os termos de uso apresentado!", setDisplayModal, setTituloModal, setConteudoModal)
+    }
   }
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+
       <Modal
         dsp={displayModal}
         titulo={tituloModal}
         conteudo={<div dangerouslySetInnerHTML={{__html: conteudoModal}}/>}
         esconderModal={() => esconderModal(setDisplayModal, setTituloModal, setConteudoModal)}
       />
+
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={8}>
@@ -135,6 +149,11 @@ const Login = () => {
                         >
                           Entrar
                         </CButton>
+                      </CCol>
+                      <CCol>
+
+                        <ModalTermosDeUso/>
+
                       </CCol>
                     </CRow>
                   </div>

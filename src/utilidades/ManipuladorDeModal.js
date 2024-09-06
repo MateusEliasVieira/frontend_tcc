@@ -35,8 +35,9 @@ const confirmar = (idParaDeletar, deletar, esconderModalDeOpcoes,setDisplayModal
   }
 };
 
+
 export {
   apresentarModal, esconderModal,
   apresentarModalDeOpcoes, esconderModalDeOpcoes,
-  confirmar, apresentarModalDeCarregamento
+  confirmar, apresentarModalDeCarregamento,
 };
