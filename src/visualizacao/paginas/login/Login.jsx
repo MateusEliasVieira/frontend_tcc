@@ -150,10 +150,10 @@ const Login = () => {
                           Entrar
                         </CButton>
                       </CCol>
+                    </CRow>
+                    <CRow>
                       <CCol>
-
                         <ModalTermosDeUso/>
-
                       </CCol>
                     </CRow>
                   </div>

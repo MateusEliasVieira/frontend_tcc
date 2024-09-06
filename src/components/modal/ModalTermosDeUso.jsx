@@ -23,14 +23,14 @@ const ModalTermosDeUso = () => {
   return (
     <div>
       <button
-        className="btn btn-danger"
-        style={{ color: "white", fontSize: "20px", marginTop: '5px' }}
+        className="btn btn-link"
+        style={{ fontSize: "16px", textDecoration:'none', display:'block', padding:'0', marginTop:'10px', float:'right'}}
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasTop"
         aria-controls="offcanvasTop"
       >
-        Termos de Uso
+       <strong>Termos de Uso</strong>
       </button>
 
       <div
