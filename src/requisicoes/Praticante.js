@@ -377,7 +377,7 @@ const atualizarEvolucao = (dados, setDisplayModal, setTituloModal, setConteudoMo
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${login.token}`
-            },
+            }
           })
           .then((response) => {
             if (response.status === HttpStatusCode.Created) {
