@@ -24,7 +24,7 @@ const ModalTermosDeUso = () => {
     <div>
       <button
         className="btn btn-danger"
-        style={{ color: "white", fontSize: "20px" }}
+        style={{ color: "white", fontSize: "20px", marginTop: '5px' }}
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasTop"

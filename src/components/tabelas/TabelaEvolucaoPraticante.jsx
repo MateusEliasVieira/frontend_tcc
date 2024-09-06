@@ -104,7 +104,7 @@ const TabelaEvolucaoPraticante = (props) => {
       ) : (
         <div>
           <br/>
-          <p style={{textAlign: 'center', display: 'block'}}><strong>Nenhuma evolução cadastrada no momento!</strong>
+          <p style={{textAlign: 'center', display: 'block'}}><strong>Sem evolução!</strong>
           </p>
         </div>
       )}
