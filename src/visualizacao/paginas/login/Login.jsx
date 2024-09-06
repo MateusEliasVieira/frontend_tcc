@@ -153,7 +153,9 @@ const Login = () => {
                     </CRow>
                     <CRow>
                       <CCol>
-                        <ModalTermosDeUso/>
+                        {
+                          localStorage.getItem("termos_de_uso") !== "ACEITO" ? <ModalTermosDeUso/> : <></>
+                        }
                       </CCol>
                     </CRow>
                   </div>
