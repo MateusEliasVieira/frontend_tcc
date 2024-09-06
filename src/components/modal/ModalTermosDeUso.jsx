@@ -108,11 +108,14 @@ const ModalTermosDeUso = () => {
               id="flexSwitchCheckChecked"
               checked={aceitou}
               onChange={handleChange}
+              style={{padding:'10px',width:'50px'}}
             />
-            <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
-              {aceitou
+            <label className="form-check-label" htmlFor="flexSwitchCheckChecked" style={{padding:"0px 20px"}}>
+             <strong>
+               {aceitou
                 ? "Sim, eu li, concordo e aceito todos os termos de uso!"
                 : "Não aceito os termos de uso!"}
+             </strong>
             </label>
           </div>
         </div>
