@@ -51,13 +51,19 @@ const ModalTermosDeUso = () => {
           ></button>
         </div>
         <div className="offcanvas-body">
+
+          <p>
+            De acordo com o <a href="https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/lgpd/termo-de-uso">Termo de Uso e a
+            Política de Privacidade da Receita Federal</a>, estes documentos foram elaborados em conformidade com a <strong>Lei Federal nº 12.965,
+            de 23 de abril de 2014 (Marco Civil da Internet), e com a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais - LGPD).</strong> Assim, este site segue as diretrizes da LGPD e, portanto, destaca seus termos de uso abaixo. O uso e armazenamento de informações no
+            computador do usuário são necessários para garantir o funcionamento adequado do site e proporcionar uma experiência de navegação otimizada.
+          </p>
+
           <p>
             <strong>1. Armazenamento Local</strong>
             <br />
-            Este site utiliza armazenamento local (<code>localStorage</code>)
-            para melhorar a experiência do usuário. Ao utilizar nosso site, você
-            concorda com o uso desse armazenamento para as finalidades descritas
-            abaixo.
+            Este site utiliza o armazenamento local (Local Storage) para aprimorar a experiência do usuário. Ao navegar em nosso site, você
+            concorda com o uso deste recurso para as finalidades descritas a seguir.
           </p>
 
           <p>
@@ -65,39 +71,38 @@ const ModalTermosDeUso = () => {
             <br />
             Armazenamos informações necessárias para garantir o correto
             funcionamento e desempenho das funcionalidades do site. Esses dados
-            podem incluir, mas não estão limitados a, preferências do usuário,
-            histórico de sessões e outras informações relevantes para oferecer
+            podem incluir, entre outros, tempo de sessão, dados para futuras requisições, e outras informações relevantes para proporcionar
             um serviço mais personalizado.
           </p>
 
           <p>
             <strong>3. Proteção de Dados</strong>
             <br />
-            Asseguramos que nenhum dado sensível, como senhas e informações
+            Garantimos que nenhum dado sensível, como senhas ou informações
             pessoais identificáveis, será armazenado localmente. A segurança e
-            privacidade de suas informações são nossas prioridades.
+            privacidade das suas informações são nossas maiores prioridades.
           </p>
 
           <p>
             <strong>4. Consentimento</strong>
             <br />
-            Ao prosseguir, você confirma que leu e entendeu nossos termos de uso
-            e concorda com o armazenamento local das informações conforme
-            descrito.
+            Ao continuar utilizando o site, você confirma que leu, entendeu e
+            concorda com os termos de uso, inclusive com o armazenamento local
+            das informações conforme descrito.
           </p>
 
           <p>
             <strong>5. Alterações nos Termos</strong>
             <br />
-            Reservamos o direito de atualizar nossos termos de uso a qualquer
-            momento.
+            Reservamo-nos o direito de atualizar os termos de uso a qualquer
+            momento, com as alterações sendo aplicadas imediatamente após sua publicação.
           </p>
 
           <p>
             <strong>6. Contato</strong>
             <br />
-            Se você tiver dúvidas sobre nossos termos de uso ou a maneira como
-            suas informações são tratadas, entre em contato conosco.
+            Caso tenha dúvidas sobre os nossos termos de uso ou sobre como
+            tratamos suas informações, entre em contato conosco.
           </p>
 
           <div className="form-check form-switch">

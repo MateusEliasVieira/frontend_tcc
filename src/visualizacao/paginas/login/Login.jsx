@@ -39,7 +39,6 @@ const Login = () => {
   }
 
   useEffect(() => {
-
     const expirado = obterParametroDaURL()
     if (expirado === 'true') {
       apresentarModal("Aviso", "Sessão expirada! Para continuar faça o login novamente!", setDisplayModal, setTituloModal, setConteudoModal)
