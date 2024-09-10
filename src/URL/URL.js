@@ -5,8 +5,10 @@ const GERAR_RELATORIO_PRATICANTE = "/gerar-relatorio-de-praticante"
 const CADASTRO_PRATICANTE = "/cadastrar-praticante"
 const LOGIN = "/"
 const ESQUECI_MINHA_SENHA = "/esqueci-minha-senha"
+
 const DOMINIO = "https://equoterapia.up.railway.app/" // produção
 //const DOMINIO = "http://localhost:8080/" // desenvolvimento
+//const DOMINIO = "https://ec2-54-160-199-171.compute-1.amazonaws.com:8080/" // AWS EC2 - produção
 
 export {
   LOGIN,

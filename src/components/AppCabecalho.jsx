@@ -44,7 +44,7 @@ const AppCabecalho = () => {
       } else {
 
         let dia = dataExpiracao.getDate() < 10 ? "0" + dataExpiracao.getDate() : dataExpiracao.getDate()
-        let mes = dataExpiracao.getMonth() < 10 ? "0" + dataExpiracao.getMonth() : dataExpiracao.getMonth()
+        let mes = (dataExpiracao.getMonth() + 1) < 10 ? "0" + (dataExpiracao.getMonth() + 1) : (dataExpiracao.getMonth() + 1)
         let ano = dataExpiracao.getFullYear()
 
         let horario = dataExpiracao.getHours() < 10 ? "0" + dataExpiracao.getHours() : dataExpiracao.getHours()
